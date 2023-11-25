@@ -5,22 +5,20 @@ const nextConfig = {
   swcMinify: true,
   i18n,
   env:{
-    PROJECT:"NAMINTRAVEL",
-    THEME : "ITOURS_IR",
-    //THEME : "STYLE_2",
-    //THEME : "NAMINTRAVELCOM"
+    PROJECT:"SAFARANEH",
+    THEME : "THEME1",
     PROJECT_SERVER_TYPE : "https://",
-    PROJECT_SERVER_USER : "cidentity.itours.ir",
-    PROJECT_SERVER_PAYMENT : "payline2.itours.ir",
-    PROJECT_SERVER_LOCALSERVER : "itours.ir",
-    PROJECT_SERVER_APIKEY : "ACE01BF4-AAEE-45D6-ABE7-F3FF519052DB",
-    PROJECT_SERVER_HOTEL : "hotel.itours.no",
-    PROJECT_SERVER_FLIGHT : "flight.itours.ir",
-    PROJECT_SERVER_PACKAGE : "packages.itours.no",
-    PROJECT_SERVER_TENANTID : "6",
-    PROJECT_SERVER_NATIONALITY : "IR",
-    PORT : '4200',
-    PROJECT_SERVER_GA_ID :"UA-215089365-2"
+    PROJECT_SERVER_USER : "",
+    PROJECT_SERVER_PAYMENT : "",
+    PROJECT_SERVER_LOCALSERVER : "",
+    PROJECT_SERVER_APIKEY : "",
+    PROJECT_SERVER_HOTEL : "",
+    PROJECT_SERVER_FLIGHT : "",
+    PROJECT_SERVER_PACKAGE : "",
+    PROJECT_SERVER_TENANTID : "",
+    PROJECT_SERVER_NATIONALITY : "",
+    PORT : '',
+    PROJECT_SERVER_GA_ID :""
     // DEFAULT_lAN:"US",
     // LANGUAGES:["US","NO","FA"]
     
