@@ -1,10 +1,12 @@
 import { i18n } from 'next-i18next';
 import { useRouter } from 'next/router';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 
 const Language: React.FC = () => {
 
     const router = useRouter();
+
+    const wrapperRef = useRef<HTMLDivElement>(null);
 
     const languages = ["fa", "en"];
 
@@ -22,8 +24,23 @@ const Language: React.FC = () => {
         router.push(router.asPath, router.asPath, { locale: locale });
     }
 
+    const handleClickOutside = (e: any) => {
+        if (wrapperRef.current && !wrapperRef.current.contains(e.target)) {
+            setOpen(false);
+        }
+    };
+
+    useEffect(() => {
+        document.addEventListener('mousedown', handleClickOutside);
+
+        return () => {
+            document.removeEventListener('mousedown', handleClickOutside);
+        };
+    }, []);
+
+
     return (
-        <div className='relative' >
+        <div className='relative' ref={wrapperRef}>
             <button type='button' aria-label='language switch' className='px-3 py-2' onClick={() => { setOpen(prevState => !prevState) }} >
                 {currentLang}
             </button>

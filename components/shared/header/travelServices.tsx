@@ -1,10 +1,13 @@
 import Link from "next/link";
 import Image from "next/image";
+import { useTranslation } from "next-i18next";
 import { useState, useEffect, useRef } from "react";
 
-import {Menu,DownCaret,Home, Close, User, UserAdd, Ticket, Wallet,Bed,Blog,Suitcase, Travel} from "../ui/icons";
+import { Menu, DownCaret, Home, Close, User, UserAdd, Ticket, Wallet, Bed, Blog, Suitcase, Travel } from "../ui/icons";
 
 export default function TravelServices() {
+
+    const { t } = useTranslation('common');
 
     const [openMenu, setOpenMenu] = useState(false);
 
@@ -42,7 +45,7 @@ export default function TravelServices() {
                 <button type="button" aria-label='Button to open navigation' className="text-sm p-3 md:px-0 md:py-2 text-blue-700 hover:text-blue-500 flex gap-1 items-center" onClick={toggleMenu}>
                     <Menu className="w-8 h-8 fill-neutral-600 md:hidden" />
                     <span className="hidden md:block">
-                        امکانات سفر
+                        {t('TravelFacilities')}
                     </span>
                     <DownCaret className="fill-current w-5 h-5 hidden md:block" />
                 </button>
@@ -52,7 +55,7 @@ export default function TravelServices() {
                         <Link href="/" className="block">
                             <Image src={'/images/logofa.png'} width={115} height={48} alt="سفرانه" />
                         </Link>
-                        <button type="button" onClick={() => { setOpenMenu(false) }}>
+                        <button aria-label={t('close-menu')} type="button" onClick={() => { setOpenMenu(false) }}>
                             <Close className="w-6 h-6 fill-neutral-400" />
                         </button>
                     </div>
@@ -60,19 +63,19 @@ export default function TravelServices() {
 
                         <Link href="" className={`${linkWithIconClassName} md:hidden`}>
                             <Home className={iconClassName} />
-                            خانه
+                            {t('home')}
                         </Link>
                         <Link href="" className={`${linkWithIconClassName} md:hidden`}>
                             <User className={iconClassName} />
-                            ورود
+                            {t('sign-in')}
                         </Link>
                         <Link href="" className={`${linkWithIconClassName} md:hidden`}>
                             <UserAdd className={iconClassName} />
-                            ثبت نام
+                            {t('create-account')}
                         </Link>
                         <Link href="" className={`${linkWithIconClassName} md:hidden`}>
                             <Ticket className={iconClassName} />
-                            پیگیری رزرو
+                            {t('retrieve-my-booking')}
                         </Link>
                         <Link href="" className={`${linkWithIconClassName} md:hidden`}>
                             <Wallet className={iconClassName} />
@@ -83,37 +86,37 @@ export default function TravelServices() {
 
                         <Link href='/hotels-home' className={linkWithIconClassName} >
                             <Bed className={iconClassName} />
-                            هتل داخلی
+                            {t('domestic-hotel')}
                         </Link>
                         <Link href='/flights-home' className={linkWithIconClassName} >
                             <Travel className={iconClassName} />
-                            پرواز داخلی
+                            {t('domestic-flight')}
                         </Link>
                         <Link href='/hotels-foreign-home' className={linkWithIconClassName} >
                             <Bed className={iconClassName} />
-                            هتل خارجی
+                            {t('foreign-hotel')}
                         </Link>
                         <Link href='/flight-foreign-home' className={linkWithIconClassName} >
                             <Travel className={iconClassName} />
-                            پرواز خارجی
+                            {t('foreign-flight')}
                         </Link>
                         <Link href='/cip' className={linkWithIconClassName} >
                             <Suitcase className={iconClassName} />
-                            تشریفات فرودگاهی
+                            {t('cip')}
                         </Link>
                         <Link href='/blog' className={linkWithIconClassName}>
                             <Blog className={iconClassName} />
-                            وبلاگ
+                            {t('blog')}
                         </Link>
 
                         <div className="border-b border-neutral-200 m-5 md:hidden" />
 
-                        <Link href='/organizational-reservation' className={linkClassName} > رزروهای سازمانی </Link>
-                        <Link href='/contact' className={linkClassName} > تماس با ما </Link>
-                        <Link href='/privacy' className={linkClassName} > حفظ حریم خصوصی </Link>
-                        <Link href='/faq' className={linkClassName} > سوالات متداول </Link>
-                        <Link href='/terms' className={linkClassName} > قوانین و مقررات </Link>
-                        <Link href='/about' className={linkClassName} > درباره ما </Link>
+                        <Link href='/organizational-reservation' className={linkClassName} > {t('organizational-reservation')} </Link>
+                        <Link href='/contact' className={linkClassName} > {t('contact-us')} </Link>
+                        <Link href='/privacy' className={linkClassName} > {t('privacy')} </Link>
+                        <Link href='/faq' className={linkClassName} > {t('faq')} </Link>
+                        <Link href='/terms' className={linkClassName} > {t('rules-regulations')} </Link>
+                        <Link href='/about' className={linkClassName} > {t('about-us')} </Link>
                     </nav>
                 </div>
             </div>

@@ -1,9 +1,14 @@
 import Image from "next/image";
 import Link from "next/link";
+import { useTranslation } from "next-i18next";
+
 import TravelServices from "./travelServices";
 import Language from "./Language";
 
 export default function Header() {
+    
+    const { t } = useTranslation('common');
+
     return (
         <header className="bg-white">
 
@@ -18,12 +23,12 @@ export default function Header() {
                 <div className="gap-4 items-center hidden md:flex">
                     <Language />
 
-                    <button type="button" className="text-sm text-blue-700 hover:text-blue-500" >
-                        پیگیری رزرو
+                    <button type="button" aria-label={t('retrieve-my-booking')} className="text-sm text-blue-700 hover:text-blue-500" >
+                        {t('retrieve-my-booking')}
                     </button>
                     
-                    <button type="button" className="text-sm text-blue-700 hover:text-blue-500" >
-                        ورود یا ثبت نام
+                    <button type="button" aria-label={t('sign-in-up')} className="text-sm text-blue-700 hover:text-blue-500" >
+                        {t('sign-in-up')}
                     </button>
                 </div>
 

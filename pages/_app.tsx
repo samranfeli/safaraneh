@@ -37,7 +37,7 @@ function MyApp({ Component, pageProps }: AppProps) {
   return (
     <Provider store={store}>
       <Head>
-        <title>Safaranehf</title>
+        <title>رزرو هتل | بیشترین %تخفیف% جدیدترین اطلاعات و تصاویر - سفرانه</title>
       </Head>
       <Layout>
         <Component {...pageProps} />

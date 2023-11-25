@@ -1,8 +1,13 @@
 import Link from "next/link";
 
+import { useTranslation } from "next-i18next";
+
 export default function Footer() {
 
+    const { t } = useTranslation('common');
+
     const linkClassNames = "block hover:text-blue-600 hover:underline";
+
     return (
         <footer>
 
@@ -15,38 +20,38 @@ export default function Footer() {
                     <img src='/images/footer/tandis-04.png' className="h-12 sm:h-18 object-contain" alt='' width={62} height={72} />
                     <img src='/images/footer/tandis-05.png' className="h-12 sm:h-18 object-contain" alt='' width={62} height={72} />
                     <a href="#" aria-label="نماد اعتماد">
-                        <img src='/images/footer/enamad.png' className="h-12 sm:h-18 object-contain" alt='' width={43} height={72}  />
+                        <img src='/images/footer/enamad.png' className="h-12 sm:h-18 object-contain" alt='' width={43} height={72} />
                     </a>
                     <a href="#" aria-label="رسانه">
-                        <img src='/images/footer/resaneh.png' className="h-12 sm:h-18 object-contain" alt='' width={60} height={72}  />
+                        <img src='/images/footer/resaneh.png' className="h-12 sm:h-18 object-contain" alt='' width={60} height={72} />
                     </a>
                 </div>
 
                 <nav className="hidden sm:flex justify-center gap-6 text-xs mb-6">
-                    <Link title="تماس با ما" href="/contact" className={linkClassNames} >
-                        تماس با ما
+                    <Link title={t('contact-us')} href="/contact" className={linkClassNames} >
+                        {t('contact-us')}
                     </Link>
-                    <Link title="سوالات متداول" href="/faq" className={linkClassNames} >
-                        سوالات متداول
+                    <Link title={t('faq')} href="/faq" className={linkClassNames} >
+                        {t('faq')}
                     </Link>
-                    <Link title="قوانین و مقررات" href="/terms" className={linkClassNames} >
-                        قوانین و مقررات
+                    <Link title={t('rules-regulations')} href="/terms" className={linkClassNames} >
+                        {t('rules-regulations')}
                     </Link>
-                    <Link title="حفظ حریم خصوصی" href="/privacy" className={linkClassNames} >
-                        حفظ حریم خصوصی
+                    <Link title={t('privacy')} href="/privacy" className={linkClassNames} >
+                        {t('privacy')}
                     </Link>
-                    <Link title="درباره ما" href="/about" className={linkClassNames} >
-                        درباره ما
+                    <Link title={t("about-us")} href="/about" className={linkClassNames} >
+                        {t("about-us")}
                     </Link>
-                    <Link title="رزروهای سازمانی" href="/organizational-reservation" className={linkClassNames} >
-                        رزروهای سازمانی
+                    <Link title={t('organizational-reservation')} href="/organizational-reservation" className={linkClassNames} >
+                        {t('organizational-reservation')}
                     </Link>
                 </nav>
 
                 <img src='/images/logofa.png' width={115} height={48} alt="سفرانه" className="block mx-auto mb-4" />
 
                 <div className="flex gap-4 justify-center mb-4">
-                    پشتیبانی
+                    {t('support')}
                     <a href="tel:02126150051" className="text-lg font-bold">
                         02126150051
                     </a>
@@ -66,12 +71,6 @@ export default function Footer() {
                         <img src='/images/footer/Linkedin.svg' width={30} height={30} className="block" alt="Linkedin" />
                     </a>
                 </div>
-
-
-
-
-
-
 
             </div>
 
