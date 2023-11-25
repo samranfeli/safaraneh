@@ -47,6 +47,13 @@ const config: Config = {
       boxShadow: {
         'normal': '0 0 10px 0 rgba(0, 0, 0, 0.1)',
       },
+      fontSize: {
+        '3xs':'10px',
+        '2xs': '12px',
+        xs: '13px',
+        sm: '14px',
+        '2xl': '22px'
+      }
     },
   },
   plugins: [],

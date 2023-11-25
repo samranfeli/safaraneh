@@ -1,6 +1,6 @@
 import { useTranslation } from 'next-i18next';
 
-//import HotelSearchForm from '../hotel/searchForm';
+import SearchForm from '../hotel/SearchForm';
 import {Apartment,Travel} from '../shared/ui/icons';
 import Tabs from '../shared/ui/tabs';
 
@@ -14,13 +14,13 @@ const Banner :React.FC = () => {
     const items = [
         {
           key: '1',
-          label: (<div className='text-center'> <Apartment className='w-6 h-6 fill-current block mx-auto mb-1' /> هتل داخلی </div>),
-          children: '<HotelSearchForm />',
+          label: (<div className='text-center'> <Apartment className='w-6 h-6 fill-current block mx-auto mb-1' /> {t('domestic-hotel')} </div>),
+          children: <SearchForm />,
         },
         {
           key: '2',
-          label: (<div className='text-center'> <Travel className='w-6 h-6 fill-current block mx-auto mb-1' /> پرواز داخلی </div>),
-          children: 'فرم سرچ پرواز',
+          label: (<div className='text-center'> <Travel className='w-6 h-6 fill-current block mx-auto mb-1' /> {t('domestic-flight')} </div>),
+          children: (<div className='py-20'></div>),
         }
     ];
 
