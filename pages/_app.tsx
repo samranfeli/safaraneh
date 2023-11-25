@@ -37,7 +37,7 @@ function MyApp({ Component, pageProps }: AppProps) {
   return (
     <Provider store={store}>
       <Head>
-        <title>Itours Travel</title>
+        <title>Safaranehf</title>
       </Head>
       <Layout>
         <Component {...pageProps} />
