@@ -15,7 +15,7 @@ export default function Header() {
             <div className="max-w-container mx-auto px-3 py-3 flex justify-center md:justify-between">
                 <div className="flex gap-8 items-center">
                     <Link href="/" className="block">
-                        <img src='/images/logofa.png' width={115} height={48} alt="سفرانه" />
+                        <Image src='/images/logofa.png' width={115} height={48} alt="سفرانه" />
                     </Link>
                     <TravelServices />
                 </div>
