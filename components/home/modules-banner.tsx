@@ -7,7 +7,7 @@ const ModulesBanner: React.FC = () => {
 
   const { t } = useTranslation('common');
 
-  const linkClassName = "block relative before:block before:absolute before:top-0 before:left-0 before:right-0 before:h-40 before:bg-gradient-to-b before:from-black/75 before:to-transparent";
+  const linkClassName = "rounded-lg overflow-hidden block relative before:block before:absolute before:top-0 before:left-0 before:right-0 before:h-40 before:bg-gradient-to-b before:from-black/75 before:to-transparent";
 
   return (
     <div className="">

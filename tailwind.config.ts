@@ -11,9 +11,6 @@ const config: Config = {
       fontFamily: {
         'yekan': ['Yekan', 'sans-serif']
       },
-      backgroundImage: {
-        'banner': "url('/images/home/banner.png')"
-      },
       spacing: {
         '18': '4.5rem',
       },

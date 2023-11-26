@@ -4,6 +4,7 @@ import SearchForm from '../hotel/SearchForm';
 import {Apartment,Travel} from '../shared/ui/icons';
 import Tabs from '../shared/ui/tabs';
 import { TabItem } from '@/types/common';
+import Image from 'next/image';
 
 
 const Banner :React.FC = () => {
@@ -26,8 +27,15 @@ const Banner :React.FC = () => {
     ];
 
     return(
-        <div className="bg-banner bg-no-repeat bg-cover bg-center">
-             <div className="max-w-container mx-auto pt-5 sm:px-3 sm:py-10 sm:pb-28">
+        <div className="relative">
+            <Image 
+              src='/images/home/banner.jpg'
+              alt="blue sky"
+              width={1900}
+              height={414}
+              className='absolute top-0 left-0 w-full h-full object-cover object-center z-10'
+            />
+             <div className="max-w-container mx-auto pt-5 sm:px-3 sm:py-10 sm:pb-28 relative z-20">
 
                 <h1 className="text-white text-center font-bold text-xl sm:text-3xl mb-6 sm:mb-10" > {tHome("Plan-your-trip")} </h1>
                 
