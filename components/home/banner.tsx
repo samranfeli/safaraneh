@@ -34,7 +34,6 @@ const Banner :React.FC = () => {
               width={1900}
               height={414}
               priority
-              placeholder="blur"
               className='absolute top-0 left-0 w-full h-full object-cover object-center z-10'
             />
              <div className="max-w-container mx-auto pt-5 sm:px-3 sm:py-10 sm:pb-28 relative z-20">
