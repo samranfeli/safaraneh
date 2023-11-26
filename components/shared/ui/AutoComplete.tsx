@@ -147,7 +147,7 @@ function AutoComplete<T>(props: PropsWithChildren<Props<T>>) {
             data = items;
         }
         listElement = (
-            <div className='shadow-normal absolute bg-white min-w-full sm:w-72 rtl:right-0 ltr:left-0 top-full text-sm rounded-lg max-h-64 overflow-auto'>
+            <div className='shadow-normal absolute z-20 bg-white min-w-full sm:w-72 rtl:right-0 ltr:left-0 top-full text-sm rounded-lg max-h-64 overflow-auto'>
                 {data!.map((item, index) => <div
                     onClick={selectItemHandle.bind(null, item)}
                     key={index}
@@ -232,6 +232,7 @@ function AutoComplete<T>(props: PropsWithChildren<Props<T>>) {
         <div className={`relative ${props.wrapperClassName || ""}`} ref={wrapperRef}>
             <div className='relative'>
                 <input
+                    autoComplete="off"
                     id={props.inputId || undefined}
                     type="text"
                     onChange={changeTypingValue}

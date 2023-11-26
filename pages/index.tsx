@@ -2,10 +2,14 @@ import type { NextPage } from 'next';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 
 import Banner from '@/components/home/banner'
+import ModulesBanner from '@/components/home/modules-banner';
 
 const Home:NextPage = () => {
   return (
-    <Banner />
+    <>
+      <Banner />
+      <ModulesBanner />
+    </>
   )
 }
 

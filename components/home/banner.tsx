@@ -26,12 +26,12 @@ const Banner :React.FC = () => {
     ];
 
     return(
-        <div className="bg-banner bg-no-repeat bg-cover">
-             <div className="max-w-container mx-auto px-3 py-10 pb-28">
+        <div className="bg-banner bg-no-repeat bg-cover bg-center">
+             <div className="max-w-container mx-auto pt-5 sm:px-3 sm:py-10 sm:pb-28">
 
-                <h1 className="text-white text-center font-bold text-3xl mb-10" > {tHome("Plan-your-trip")} </h1>
+                <h1 className="text-white text-center font-bold text-xl sm:text-3xl mb-6 sm:mb-10" > {tHome("Plan-your-trip")} </h1>
                 
-                <div className="p-5 bg-white rounded-lg">
+                <div className="px-5 pt-3 sm:p-5 bg-white sm:rounded-lg">
                    <Tabs items={items} />
                 </div>
 
