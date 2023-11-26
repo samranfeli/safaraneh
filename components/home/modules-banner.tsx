@@ -8,6 +8,8 @@ const ModulesBanner: React.FC = () => {
   const { t } = useTranslation('common');
   const { t: tHome } = useTranslation('home');
 
+  const linkClassName = "block relative before:block before:absolute before:top-0 before:left-0 before:right-0 before:h-40 before:bg-gradient-to-b before:from-black/75 before:to-transparent";
+
   return (
     <div className="">
       <div className="max-w-container mx-auto p-5 md:py-10">
@@ -18,7 +20,7 @@ const ModulesBanner: React.FC = () => {
 
           <Link
             href='/hotels/هتل-های-شیراز'
-            className='block md:row-span-2 relative'
+            className={`${linkClassName} md:row-span-2`}
           >
             <div className='absolute top-0 right-0 left-0 p-5 text-white'>
               <h2 className='bg-black/25 text-sm md:text-lg px-3 py-1 mb-2 rounded inline-block font-bold'>
@@ -41,7 +43,7 @@ const ModulesBanner: React.FC = () => {
           </Link>
 
 
-          <Link href='/cip/فرودگاه-بین-المللی-امام-خمینی-Cip-خدمات' className='block relative' >
+          <Link href='/cip/فرودگاه-بین-المللی-امام-خمینی-Cip-خدمات' className={linkClassName} >
 
             <div className='absolute top-0 right-0 left-0 p-5 text-white'>
               <h2 className='bg-black/25 text-sm md:text-lg px-3 py-1 mb-2 rounded inline-block font-bold'>
@@ -61,7 +63,7 @@ const ModulesBanner: React.FC = () => {
           </Link>
 
 
-          <Link href='/hotels/هتل-های-تهران' className='block relative'>
+          <Link href='/hotels/هتل-های-تهران' className={linkClassName}>
 
             <div className='absolute top-0 right-0 left-0 p-5 text-white'>
               <h2 className='bg-black/25 text-sm md:text-lg px-3 py-1 mb-2 rounded inline-block font-bold'>
