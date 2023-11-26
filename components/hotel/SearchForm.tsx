@@ -178,11 +178,12 @@ const SearchForm: React.FC = () => {
 
 
 
-                    <label htmlFor="destination" className="absolute top-0 rtl:right-8 ltr:left-8 text-4xs z-10 leading-5">
+                    <label htmlFor="checkin_date" className="absolute top-0 rtl:right-8 ltr:left-8 text-4xs z-10 leading-5">
                         {t('checkin-date')}
                     </label>
                     <input
                         type="date"
+                        id="checkin_date"
                         className='w-full outline-none border text-right rounded-lg border-neutral-400 px-3 pt-2 h-12 text-right text-neutral-500 placeholder:text-neutral-500 focus:border-neutral-900'
                         onChange={(e: any) => { setCheckin(e.target.value) }}
                     />
@@ -190,12 +191,13 @@ const SearchForm: React.FC = () => {
                 </div>
                 <div className="col-span-1 md:col-span-3 relative">
 
-                    <label htmlFor="destination" className="absolute top-0 rtl:right-8 ltr:left-8 text-4xs z-10 leading-5">
+                    <label htmlFor="checkout_date" className="absolute top-0 rtl:right-8 ltr:left-8 text-4xs z-10 leading-5">
                         {t('checkout-date')}
                     </label>
 
 
                     <input
+                        id="checkout_date"
                         type="date"
                         className='w-full outline-none border rounded-lg border-neutral-400 px-3 pt-2 h-12 text-right text-neutral-500 placeholder:text-neutral-500 focus:border-neutral-900'
                         onChange={(e: any) => { setCheckout(e.target.value) }}

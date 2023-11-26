@@ -6,7 +6,6 @@ import Image from 'next/image';
 const ModulesBanner: React.FC = () => {
 
   const { t } = useTranslation('common');
-  const { t: tHome } = useTranslation('home');
 
   const linkClassName = "block relative before:block before:absolute before:top-0 before:left-0 before:right-0 before:h-40 before:bg-gradient-to-b before:from-black/75 before:to-transparent";
 
@@ -33,7 +32,7 @@ const ModulesBanner: React.FC = () => {
 
             <Image
               src="https://cdn2.safaraneh.com/images/home/shirazhomebanner.jpg"
-              alt={t('big-banner-h4')}
+              alt="حافظیه شیراز"
               title={t('big-banner-h4')}
               width={570}
               height={370}
@@ -53,7 +52,7 @@ const ModulesBanner: React.FC = () => {
 
             <Image
               src="https://cdn2.safaraneh.com/images/home/cipemamhomebanner.jpg"
-              alt={t('small-banner1-h4')}
+              alt="تشریفات فرودگاهی"
               title={t('small-banner1-h4')}
               width={570}
               height={190}
@@ -76,7 +75,7 @@ const ModulesBanner: React.FC = () => {
 
             <Image
               src="https://cdn2.safaraneh.com/images/home/hotelhomebanner.jpg"
-              alt={t('big-banner2-h4')}
+              alt="هتل های تهران"
               title={t('big-banner2-h4')}
               width={570}
               height={190}
