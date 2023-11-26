@@ -85,6 +85,13 @@ export const Apartment: React.FC<Props> = props => {
     )
 }
 
+export const ApartmentOutline: React.FC<Props> = props => {
+    return (
+        <svg className={props.className || ""} viewBox="0 -960 960 960"><path d="M80-120v-720h390v165h410v555H80Zm60-60h105v-105H140v105Zm0-165h105v-105H140v105Zm0-165h105v-105H140v105Zm0-165h105v-105H140v105Zm165 495h105v-105H305v105Zm0-165h105v-105H305v105Zm0-165h105v-105H305v105Zm0-165h105v-105H305v105Zm165 495h350v-435H470v105h80v60h-80v105h80v60h-80v105Zm185-270v-60h60v60h-60Zm0 165v-60h60v60h-60Z"/></svg>
+    )
+}
+
+
 export const Loading: React.FC<Props> = props => {
     return (
         <svg className={props.className || ""} viewBox="0 0 1170 1024"><path d="M480-80q-84 0-157-31t-127-85q-54-54-85-127T80-480q0-84 31-157t85-127q54-54 127-85t157-31q12 0 21 9t9 21q0 12-9 21t-21 9q-141 0-240.5 99.5T140-480q0 141 99.5 240.5T480-140q141 0 240.5-99.5T820-480q0-12 9-21t21-9q12 0 21 9t9 21q0 84-31 157t-85 127q-54 54-127 85T480-80Z" /></svg>
@@ -94,5 +101,11 @@ export const Loading: React.FC<Props> = props => {
 export const Location: React.FC<Props> = props => {
     return (
         <svg className={props.className || ""} viewBox="0 -960 960 960" ><path d="M480.089-490Q509-490 529.5-510.589q20.5-20.588 20.5-49.5Q550-589 529.411-609.5q-20.588-20.5-49.5-20.5Q451-630 430.5-609.411q-20.5 20.588-20.5 49.5Q410-531 430.589-510.5q20.588 20.5 49.5 20.5ZM480-159q133-121 196.5-219.5T740-552q0-117.79-75.292-192.895Q589.417-820 480-820t-184.708 75.105Q220-669.79 220-552q0 75 65 173.5T480-159Zm0 79Q319-217 239.5-334.5T160-552q0-150 96.5-239T480-880q127 0 223.5 89T800-552q0 100-79.5 217.5T480-80Zm0-480Z"/></svg>
+    )
+}
+
+export const Home2: React.FC<Props> = props => {
+    return (
+        <svg className={props.className || ""} viewBox="0 -960 960 960"><path d="M212-241v-339h60v339h-60Zm242 0v-339h60v339h-60ZM80-121v-60h800v60H80Zm608-120v-339h60v339h-60ZM80-640v-53l400-228 400 228v53H80Zm134-60h532-532Zm0 0h532L480-852 214-700Z"/></svg>
     )
 }

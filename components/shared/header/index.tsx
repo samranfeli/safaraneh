@@ -10,9 +10,9 @@ export default function Header() {
     const { t } = useTranslation('common');
 
     return (
-        <header className="bg-white">
+        <header className="bg-white z-30 relative">
 
-            <div className="max-w-container mx-auto px-3 py-3 flex justify-center md:justify-between relative">
+            <div className="max-w-container mx-auto px-3 py-3 flex justify-center md:justify-between">
                 <div className="flex gap-8 items-center">
                     <Link href="/" className="block">
                         <img src='/images/logofa.png' width={115} height={48} alt="سفرانه" />

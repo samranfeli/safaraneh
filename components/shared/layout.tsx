@@ -14,7 +14,7 @@ const Layout : React.FC<PropsWithChildren> = props => {
             <div className={`wrapper rtl:font-yekan leading-7 ${process.env.THEME || ""} lang-${locale} ${locale==="fa"?"rtl":""}`} >
                 <Error />
                 <Header />
-                <main id="main"  className='min-h-desktop-main'>
+                <main id="main"  className='min-h-desktop-main relative z-10'>
                     {props.children}
                 </main>
                 <Footer />          

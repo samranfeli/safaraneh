@@ -9,7 +9,9 @@ type Props<T> = {
     placeholder?: string;
     url: string;
     inputId?: string;
+    acceptLanguage? : 'fa-IR' | 'en-US';
     min: number;
+    defaultList?:T[] ;
     renderOption: (option: T, direction: "rtl" | "ltr" | undefined) => ReactNode;
     onChangeHandle: (value: T | undefined) => void;
     inputClassName?: string;
@@ -32,6 +34,7 @@ function AutoComplete<T>(props: PropsWithChildren<Props<T>>) {
     const [selectedItem, setSelectedItem] = useState<string>("");
     const [errorText, setErrorText] = useState<string>("");
     const [items, setItems] = useState<T[]>([]);
+    const [showList,setShowList] = useState<boolean>(false);
 
     let direction: "rtl" | "ltr" | undefined;
     if (props.checkTypingLanguage) {
@@ -92,7 +95,7 @@ function AutoComplete<T>(props: PropsWithChildren<Props<T>>) {
         }
 
         if (typingValue.length >= props.min) {
-            fetchTimeout = setTimeout(() => { fetchData(typingValue, direction === "rtl" ? "fa-IR" : "en-US") }, 300);
+            fetchTimeout = setTimeout(() => { fetchData(typingValue, props.acceptLanguage || direction === "rtl" ? "fa-IR" : "en-US") }, 300);
         }
 
         return () => {
@@ -103,6 +106,7 @@ function AutoComplete<T>(props: PropsWithChildren<Props<T>>) {
 
     const selectItemHandle = (item: T) => {
         props.onChangeHandle(item);
+        setShowList(false);
     }
 
     const resetInput = () => {
@@ -122,6 +126,7 @@ function AutoComplete<T>(props: PropsWithChildren<Props<T>>) {
             if (items.length) {
                 setItems([]);
             }
+            setShowList(false);
         }
     };
 
@@ -136,13 +141,17 @@ function AutoComplete<T>(props: PropsWithChildren<Props<T>>) {
     let errorElement: ReactNode | null = null;
     let loadingElement: ReactNode | null = null;
 
-    if (items?.length) {
+    if (items?.length || props.defaultList?.length) {
+        let data = props.defaultList;
+        if (items?.length){
+            data = items;
+        }
         listElement = (
-            <div className='autocomplete-content-box'>
-                {items?.map((item, index) => <div
+            <div className='shadow-normal absolute bg-white min-w-full sm:w-72 rtl:right-0 ltr:left-0 top-full text-sm rounded-lg max-h-64 overflow-auto'>
+                {data!.map((item, index) => <div
                     onClick={selectItemHandle.bind(null, item)}
                     key={index}
-                    className="py-2 px-4 border-b border-gray-200 first:rounded-t last:rounded-b last:border-none cursor-pointer text-cyan-500 hover:bg-gray-100 transition-all"
+                    className="border-b border-gray-200 first:rounded-t last:rounded-b last:border-none cursor-pointer transition-all"
                 >
                     {props.renderOption && props.renderOption(item, direction)}
                 </div>)}
@@ -182,9 +191,11 @@ function AutoComplete<T>(props: PropsWithChildren<Props<T>>) {
         setTypingValue(e.target.value);
     }
 
-    const inputClassNames: string[] = ['bg-white py-1 w-full border outline-none border-gray-300 focus:border-sky-400'];
+    const inputClassNames: string[] = [];
     if (props.inputClassName) {
         inputClassNames.push(props.inputClassName)
+    } else {
+        inputClassNames.push('bg-white py-1 w-full border outline-none border-gray-300 focus:border-sky-400')
     }
 
     if (!direction) {
@@ -224,6 +235,7 @@ function AutoComplete<T>(props: PropsWithChildren<Props<T>>) {
                     id={props.inputId || undefined}
                     type="text"
                     onChange={changeTypingValue}
+                    onFocus={()=>{setShowList(true)}}
                     className={inputClassNames.join(" ")}
                     ref={inputRef}
                     placeholder={props.placeholder || ""}
@@ -235,7 +247,7 @@ function AutoComplete<T>(props: PropsWithChildren<Props<T>>) {
                 </span>}
             </div>
 
-            {errorElement || loadingElement || listElement}
+            {errorElement || loadingElement || showList ? listElement : null }
         </div>
     )
 }

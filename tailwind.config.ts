@@ -31,6 +31,18 @@ const config: Config = {
           800: 'var(--color-primary-800)',
           900: 'var(--color-primary-900)',
         },
+        blue: {
+          50: '#ebf2f9',
+          100: '#cfe3fc',
+          200: '#a0c8f8',
+          300: '#70acf5',
+          400: '#589ef3',
+          500: '#2882f0',
+          600: '#0f69d7',
+          700: '#0d5ab9',
+          800: '#0a468f',
+          900: '#072f5f',
+        },
 
         'body-background': 'var(--body-background)'
 
@@ -48,11 +60,15 @@ const config: Config = {
         'normal': '0 0 10px 0 rgba(0, 0, 0, 0.1)',
       },
       fontSize: {
-        '3xs':'10px',
+        '4xs':'10px',
+        '3xs':'11px',
         '2xs': '12px',
         xs: '13px',
         sm: '14px',
         '2xl': '22px'
+      },
+      gridTemplateColumns: {
+        '14': 'repeat(14, minmax(0, 1fr))',
       }
     },
   },

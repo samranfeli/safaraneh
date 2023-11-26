@@ -3,6 +3,7 @@ import { useTranslation } from 'next-i18next';
 import SearchForm from '../hotel/SearchForm';
 import {Apartment,Travel} from '../shared/ui/icons';
 import Tabs from '../shared/ui/tabs';
+import { TabItem } from '@/types/common';
 
 
 const Banner :React.FC = () => {
@@ -11,7 +12,7 @@ const Banner :React.FC = () => {
   const {t} = useTranslation('common');
   const {t:tHome} = useTranslation('home');
 
-    const items = [
+    const items: TabItem[] = [
         {
           key: '1',
           label: (<div className='text-center'> <Apartment className='w-6 h-6 fill-current block mx-auto mb-1' /> {t('domestic-hotel')} </div>),

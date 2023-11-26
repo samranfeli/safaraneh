@@ -1,12 +1,9 @@
 
+import { TabItem } from '@/types/common';
 import { useState } from 'react';
 
 type Props = {
-    items: {
-        key: string | number;
-        label: React.ReactNode;
-        children: React.ReactNode;
-    }[]
+    items: TabItem[];
 }
 
 const Tabs: React.FC<Props> = props => {
@@ -22,7 +19,7 @@ const Tabs: React.FC<Props> = props => {
                     type="button"
                     key={item.key}
                     onClick={() => setActiveTabKey(item.key)}
-                    className={`text-sm px-5 py-2 border-b-2 transition-all ${activetabKey === item.key ? "text-primary-600 border-primary-600" : "border-transparent text-neutral-600"}`}
+                    className={`text-sm px-5 py-2 border-b-2 transition-all ${activetabKey === item.key ? "text-primary-700 border-primary-700" : "border-transparent text-neutral-600"}`}
                 >
                     {item.label}
                 </button>)}
