@@ -73,3 +73,16 @@ body {
     )
     rgb(var(--background-start-rgb));
 }
+
+
+
+label.mbsc-form-control-wrapper {
+  margin: 0 !important;
+}
+
+label.mbsc-form-control-wrapper .mbsc-textfield {
+  border: 1px solid #aaa;
+  border-radius: 8px;
+  padding-top: 10px;
+  height: 48px;
+}

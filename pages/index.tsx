@@ -3,12 +3,14 @@ import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 
 import Banner from '@/components/home/banner'
 import ModulesBanner from '@/components/home/modules-banner';
+import SuggestedHotels from '@/components/home/SuggestedHotels';
 
 const Home:NextPage = () => {
   return (
     <>
       <Banner />
       <ModulesBanner />
+      <SuggestedHotels />
     </>
   )
 }

@@ -9,6 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@mobiscroll/react": "npm:@mobiscroll/react-trial@^5.27.3",
     "@reduxjs/toolkit": "^1.9.7",
     "axios": "^1.6.2",
     "next": "14.0.3",

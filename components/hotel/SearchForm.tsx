@@ -3,8 +3,8 @@ import { useCallback, useEffect, useState } from 'react';
 import { AxiosResponse } from 'axios';
 import { useRouter } from "next/router";
 
-// import { Datepicker } from "@mobiscroll/react";
-// import "@mobiscroll/react/dist/css/mobiscroll.min.css";
+import '@mobiscroll/react/dist/css/mobiscroll.min.css';
+import { Datepicker, setOptions, localeFa } from '@mobiscroll/react';
 
 
 import useHttp from '../../hooks/use-http';
@@ -16,6 +16,13 @@ import { EntitySearchResultItemType } from "@/types/hotel";
 import { useAppDispatch } from "@/hooks/use-store";
 import { setReduxError } from "@/store/errorSlice";
 
+
+setOptions({
+    theme: 'ios',
+    themeVariant: 'light'
+});
+
+
 const SearchForm: React.FC = () => {
 
     const { t } = useTranslation('common');
@@ -24,8 +31,14 @@ const SearchForm: React.FC = () => {
 
     const dispatch = useAppDispatch();
 
-    const [checkin, setCheckin] = useState();
-    const [checkout, setCheckout] = useState();
+    const [dates, setDates] = useState([]);
+
+    const dateChangeHandle = (event:any, inst:any) => {
+
+        if (event.value[0] && event.value[1]){
+            setDates(event.value)
+        }
+    }
 
     const [defaultDestinations, setDefaultDestinations] = useState<EntitySearchResultItemType[] | undefined>();
 
@@ -61,11 +74,7 @@ const SearchForm: React.FC = () => {
 
 
     const submitHandler = async () => {
-        if (!checkin) {
-            // TODO validation message
-            return;
-        }
-        if (!checkout) {
+        if (dates.length < 2) {
             // TODO validation message
             return;
         }
@@ -131,7 +140,7 @@ const SearchForm: React.FC = () => {
         }
 
 
-        url += `/location-${selectedDestination.id}/checkin-${checkin}/checkout-${checkout}`;
+        url += `/location-${selectedDestination.id}/checkin-${dates[0]}/checkout-${dates[1]}`;
 
         router.push(url);
 
@@ -141,8 +150,8 @@ const SearchForm: React.FC = () => {
     return (
         <div>
 
-            <div className="grid grid-cols-2 md:grid-cols-14 gap-2 py-5">
-                <div className="relative col-span-2 md:col-span-6">
+            <div className="grid grid-cols-1 md:grid-cols-7 gap-2 py-5">
+                <div className="relative col-span-1 md:col-span-3">
                     <label htmlFor="destination" className="absolute top-1 rtl:right-10 ltr:left-10 text-4xs z-10 leading-5">
                         {t('searchHotelDestination')}
                     </label>
@@ -179,17 +188,109 @@ const SearchForm: React.FC = () => {
 
 
                     <label htmlFor="checkin_date" className="absolute top-0 rtl:right-8 ltr:left-8 text-4xs z-10 leading-5">
-                        {t('checkin-date')}
+                        {t('checkin-date')} / {t('checkout-date')}
                     </label>
-                    <input
+                    {/* <input
                         type="date"
                         id="checkin_date"
                         className='w-full outline-none border text-right rounded-lg border-neutral-400 px-3 pt-2 h-12 text-right text-neutral-500 placeholder:text-neutral-500 focus:border-neutral-900'
                         onChange={(e: any) => { setCheckin(e.target.value) }}
-                    />
+                    /> */}
+
+
+
+
+
+<Datepicker
+                controls={['calendar']}
+                select="range"
+                    returnFormat="iso8601"
+                responsive={{
+                    small:{
+                        pages:1,
+                        touchUi:true
+                    },
+                    large: {
+                        pages:2,
+                        touchUi:false
+                        
+                    }
+                }}
+
+
+                // responsive: {
+                //     small: {
+                //         display: 'bottom'
+                //     },
+                //     custom: { // Custom breakpoint
+                //         breakpoint: 600,
+                //         display: 'center'
+                //     },
+                //     large: {
+                //         display: 'anchored'
+                //     }
+                // }
+                rtl
+                locale={localeFa}
+                inputProps={{
+                    inputStyle: 'box',
+                    placeholder: 'Please Select...'
+                }}
+                onActiveDateChange = {(event, inst) => {
+                    // Logic for the active date change
+                }}
+                onCancel = {(event, inst) => {
+                    // Logic for cancel button click
+                }}
+                onCellClick = {(event, inst) => {
+                    // Logic for event click
+                }}
+                onCellHoverIn = {(event, inst) => {
+                    // Logic for handling cell hover in
+                }}
+                onCellHoverOut = {(event, inst) => {
+                    // Logic for handling cell hover out
+                }}
+                onChange = {dateChangeHandle}
+                onClose = {(event, inst) => {
+                    // Your custom event handler goes here
+                }}
+                onDestroy = {(event, inst) => {
+                    // Your custom event handler goes here 
+                }}
+                onInit = {(event, inst) => {
+                    // Logic running on component init
+                }}
+                onLabelClick = {(event, inst) => {
+                    // Logic for label click
+                }}
+                onOpen = {(event, inst) => {
+                    // Your custom event handler goes here 
+                }}
+                onPageChange = {(event, inst) => {
+                    // Your custom event handler goes here 
+                }}
+                onPageLoaded = {(event, inst) => {
+                    // Use it to inject custom markup & attach custom listeners
+                }}
+                onPageLoading = {(event, inst) => {
+                    // Use it to load data on demand 
+                }}
+                onPosition = {(event:any, inst:any) => {
+                    // Logic for component positioning
+                }}
+                onTempChange = {(event, inst)=> {
+                    // Logic for temporary value change
+                }}
+            />
+
+
+
+
+
 
                 </div>
-                <div className="col-span-1 md:col-span-3 relative">
+                {/* <div className="col-span-1 md:col-span-3 relative">
 
                     <label htmlFor="checkout_date" className="absolute top-0 rtl:right-8 ltr:left-8 text-4xs z-10 leading-5">
                         {t('checkout-date')}
@@ -202,8 +303,8 @@ const SearchForm: React.FC = () => {
                         className='w-full outline-none border rounded-lg border-neutral-400 px-3 pt-2 h-12 text-right text-neutral-500 placeholder:text-neutral-500 focus:border-neutral-900'
                         onChange={(e: any) => { setCheckout(e.target.value) }}
                     />
-                </div>
-                <div className="col-span-2 md:col-span-2 pt-5 md:pt-0">
+                </div> */}
+                <div className="col-span-1 md:col-span-1 pt-5 md:pt-0">
                     <button
                         type='button'
                         className='bg-primary-700 text-white rounded-lg text-center min-w-sm h-12 block w-full'

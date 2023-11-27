@@ -10,7 +10,6 @@ const ModulesBanner: React.FC = () => {
   const linkClassName = "rounded-lg overflow-hidden block relative before:block before:absolute before:top-0 before:left-0 before:right-0 before:h-40 before:bg-gradient-to-b before:from-black/75 before:to-transparent";
 
   return (
-    <div className="">
       <div className="max-w-container mx-auto p-5 md:py-10">
 
         <h2 className='text-xl font-bold mb-4'>ویژه‌های سفر</h2>
@@ -87,7 +86,6 @@ const ModulesBanner: React.FC = () => {
 
 
       </div>
-    </div>
   )
 }
 
