@@ -37,7 +37,7 @@ const Banner :React.FC = () => {
             />
              <div className="max-w-container mx-auto pt-5 sm:px-3 sm:py-10 sm:pb-28 relative z-20">
 
-                <h1 className="text-white text-center font-bold text-xl sm:text-3xl mb-6 sm:mb-10" > {tHome("Plan-your-trip")} </h1>
+                <h1 className="text-white drop-shadow-lg text-center font-bold text-xl sm:text-3xl mb-6 sm:mb-10" > {tHome("Plan-your-trip")} </h1>
                 
                 <div className="px-5 pt-3 sm:p-5 bg-white sm:rounded-lg">
                    <Tabs items={items} />
