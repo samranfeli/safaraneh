@@ -31,6 +31,7 @@ const ModulesBanner: React.FC = () => {
             </div>
 
             <Image
+              priority
               src="https://cdn2.safaraneh.com/images/home/shirazhomebanner.jpg"
               alt="حافظیه شیراز"
               title={t('big-banner-h4')}
