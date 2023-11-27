@@ -33,8 +33,8 @@ export default function TravelServices() {
 
     const menuWrapperClassNames = ` bg-white text-sm text-neutral-700 transition-all md:shadow-normal
     fixed top-0 h-screen rtl:right-0 rtl:left-1/4 ltr:left-0 ltr:right-1/4        
-    md:absolute md:top-full md:h-auto md:rtl:left-auto md:ltr:right-auto md:rounded-lg md:w-80 
-    ${openMenu ? "translate-x-0 md:visible md:opacity-100 md:mt-0" : "translate-x-full md:translate-x-0 md:invisible md:opacity-0 md:-mt-3"}`
+    md:absolute md:top-full md:h-auto md:rtl:left-auto md:ltr:right-auto md:rounded-lg md:w-80
+    ${openMenu ? "translate-x-0 visible opacity-100 md:mt-0" : "translate-x-full md:translate-x-0 invisible opacity-0 md:-mt-3"}`
 
     const iconClassName = 'w-5 h-5 fill-current opacity-90';
 

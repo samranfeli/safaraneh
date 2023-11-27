@@ -1,10 +1,15 @@
 /** @type {import('next').NextConfig} */
 const { i18n } = require('./next-i18next.config');
 const nextConfig = {
-  images : {
-    domains : [
-        'cdn2.safaraneh.com'
-    ]
+  images: {
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: 'cdn2.safaraneh.com',
+        port: '',
+        pathname: '**',
+      },
+    ],
   },
   reactStrictMode: false,
   swcMinify: true,

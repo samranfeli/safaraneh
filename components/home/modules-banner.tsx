@@ -36,7 +36,7 @@ const ModulesBanner: React.FC = () => {
               title={t('big-banner-h4')}
               width={570}
               height={370}
-              className='h-auto md:h-full w-full object-cover object-center rounded-lg'
+              className='h-48 md:h-full w-full object-cover object-center rounded-lg'
             />
 
           </Link>
@@ -56,7 +56,7 @@ const ModulesBanner: React.FC = () => {
               title={t('small-banner1-h4')}
               width={570}
               height={190}
-              className='h-auto md:h-48 w-full object-cover object-center rounded-lg'
+              className='h-48 w-full object-cover object-center rounded-lg'
             />
 
           </Link>
@@ -79,7 +79,7 @@ const ModulesBanner: React.FC = () => {
               title={t('big-banner2-h4')}
               width={570}
               height={190}
-              className='h-auto md:h-48 w-full object-cover object-center rounded-lg'
+              className='h-48 w-full object-cover object-center rounded-lg'
             />
           </Link>
 

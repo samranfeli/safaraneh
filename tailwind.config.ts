@@ -14,6 +14,15 @@ const config: Config = {
       spacing: {
         '18': '4.5rem',
       },
+      keyframes: {
+        skeleton: {
+          '0% ': { transform: 'translateX(100%)' },
+          '100%': { transform: 'translateX(-100%)' },
+        }
+      },
+      animation: {
+        skeleton: 'skeleton 1s linear infinite',
+      },
       colors: {
 
         primary: {

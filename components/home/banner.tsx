@@ -27,14 +27,14 @@ const Banner :React.FC = () => {
     ];
 
     return(
-        <div className="relative">
+        <div className="relative bg-cyan-800/50">
             <Image 
               src='/images/home/banner.jpg'
               alt="blue sky"
               width={1900}
               height={414}
               priority
-              className='absolute top-0 left-0 w-full h-full object-cover object-center z-10'
+              className='hidden sm:block absolute top-0 left-0 w-full h-full object-cover object-center z-10'
             />
              <div className="max-w-container mx-auto pt-5 sm:px-3 sm:py-10 sm:pb-28 relative z-20">
 

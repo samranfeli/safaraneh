@@ -1,6 +1,6 @@
 import { i18n } from 'next-i18next';
 import { useRouter } from 'next/router';
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef, useCallback } from 'react';
 import { DownCaret } from '../ui/icons';
 
 const Language: React.FC = () => {
@@ -15,15 +15,16 @@ const Language: React.FC = () => {
 
     const [currentLang, setCurrentLang] = useState<string>(i18n?.language || "");
 
+    const changeLocale =  useCallback ((locale: string) => {
+        localStorage.setItem("publicLocale", locale);
+        router.push(router.asPath, router.asPath, { locale: locale });
+    },[]);
+
     useEffect(() => {
         changeLocale(currentLang);
         setOpen(false);
-    }, [currentLang]);
+    }, [currentLang,changeLocale]);
 
-    const changeLocale = (locale: string) => {
-        localStorage.setItem("publicLocale", locale);
-        router.push(router.asPath, router.asPath, { locale: locale });
-    }
 
     const handleClickOutside = (e: any) => {
         if (wrapperRef.current && !wrapperRef.current.contains(e.target)) {

@@ -26,7 +26,7 @@ const Tabs: React.FC<Props> = props => {
             </div>
 
             <div>
-                {items.map(item => <div key={item.key} className={`${activetabKey === item.key ? "block" : "hidden"}`}>
+                {items.map(item => <div key={item.key} style={{display: activetabKey === item.key ? "block" : "none"}} >
                     {item.children}
                 </div>)}
 

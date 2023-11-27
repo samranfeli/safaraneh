@@ -4,14 +4,15 @@ import { AxiosResponse } from 'axios';
 import useHttp from '../../../hooks/use-http';
 import { Header } from '../../../enum/url';
 import { Loading, Close } from '../ui/icons';
+import Skeleton from './Skeleton';
 
 type Props<T> = {
     placeholder?: string;
     url: string;
     inputId?: string;
-    acceptLanguage? : 'fa-IR' | 'en-US';
+    acceptLanguage?: 'fa-IR' | 'en-US';
     min: number;
-    defaultList?:T[] ;
+    defaultList?: T[];
     renderOption: (option: T, direction: "rtl" | "ltr" | undefined) => ReactNode;
     onChangeHandle: (value: T | undefined) => void;
     inputClassName?: string;
@@ -25,6 +26,8 @@ type Props<T> = {
 
 function AutoComplete<T>(props: PropsWithChildren<Props<T>>) {
 
+    const { checkTypingLanguage, url, noResultMessage, onChangeHandle, acceptLanguage, min } = props;
+
     const inputRef = useRef<HTMLInputElement>(null);
     const wrapperRef = useRef<HTMLDivElement>(null);
 
@@ -34,10 +37,10 @@ function AutoComplete<T>(props: PropsWithChildren<Props<T>>) {
     const [selectedItem, setSelectedItem] = useState<string>("");
     const [errorText, setErrorText] = useState<string>("");
     const [items, setItems] = useState<T[]>([]);
-    const [showList,setShowList] = useState<boolean>(false);
+    const [showList, setShowList] = useState<boolean>(false);
 
     let direction: "rtl" | "ltr" | undefined;
-    if (props.checkTypingLanguage) {
+    if (checkTypingLanguage) {
         const persianInput = /^[\u0600-\u06FF\s]+$/;
         if (selectedItem) {
             if (persianInput.test(selectedItem)) {
@@ -58,7 +61,7 @@ function AutoComplete<T>(props: PropsWithChildren<Props<T>>) {
 
     const fetchData = useCallback((value: string, acceptLanguage?: "fa-IR" | "en-US") => {
         sendRequest({
-            url: `${props.url}?input=${value}`,
+            url: `${url}?input=${value}`,
             header: {
                 ...Header,
                 "Accept-Language": acceptLanguage || "en-US",
@@ -68,10 +71,10 @@ function AutoComplete<T>(props: PropsWithChildren<Props<T>>) {
             if (response.data.result) {
                 setItems(response.data.result);
             } else if (response.data.success) {
-                setErrorText(props.noResultMessage || 'No result found!');
+                setErrorText(noResultMessage || 'No result found!');
             }
         })
-    }, []);
+    }, [noResultMessage, url]);
 
     useEffect(() => {
         if (fetchErrorMessage) {
@@ -84,33 +87,30 @@ function AutoComplete<T>(props: PropsWithChildren<Props<T>>) {
         let fetchTimeout: ReturnType<typeof setTimeout>;
 
         if (selectedItem) {
-            props.onChangeHandle(undefined);
+            onChangeHandle(undefined);
             setSelectedItem("");
-        }
-        if (items.length) {
-            setItems([]);
         }
         if (errorText) {
             setErrorText("");
         }
 
-        if (typingValue.length >= props.min) {
-            fetchTimeout = setTimeout(() => { fetchData(typingValue, props.acceptLanguage || direction === "rtl" ? "fa-IR" : "en-US") }, 300);
+        if (typingValue.length >= min) {
+            fetchTimeout = setTimeout(() => { fetchData(typingValue, acceptLanguage || direction === "rtl" ? "fa-IR" : "en-US") }, 300);
         }
 
         return () => {
             clearTimeout(fetchTimeout);
         }
 
-    }, [typingValue, fetchData, props.min]);
+    }, [typingValue, fetchData, min, direction, errorText, acceptLanguage, onChangeHandle]);
 
     const selectItemHandle = (item: T) => {
-        props.onChangeHandle(item);
+        onChangeHandle(item);
         setShowList(false);
     }
 
     const resetInput = () => {
-        props.onChangeHandle(undefined);
+        onChangeHandle(undefined);
         inputRef.current!.value = "";
         setSelectedItem("");
         setItems([]);
@@ -118,24 +118,21 @@ function AutoComplete<T>(props: PropsWithChildren<Props<T>>) {
         setTypingValue("");
     }
 
-    const handleClickOutside = (e: any) => {
+    const handleClickOutside = useCallback((e: any) => {
         if (wrapperRef.current && !wrapperRef.current.contains(e.target)) {
             if (errorText) {
                 setErrorText("");
             }
-            if (items.length) {
-                setItems([]);
-            }
             setShowList(false);
         }
-    };
+    }, [items.length, errorText]);
 
     useEffect(() => {
         document.addEventListener('mousedown', handleClickOutside);
         return () => {
             document.removeEventListener('mousedown', handleClickOutside);
         };
-    }, []);
+    }, [handleClickOutside]);
 
     let listElement: ReactNode | null = null;
     let errorElement: ReactNode | null = null;
@@ -143,25 +140,21 @@ function AutoComplete<T>(props: PropsWithChildren<Props<T>>) {
 
     if (items?.length || props.defaultList?.length) {
         let data = props.defaultList;
-        if (items?.length){
+        if (items?.length) {
             data = items;
         }
-        listElement = (
-            <div className='shadow-normal absolute z-20 bg-white min-w-full sm:w-72 rtl:right-0 ltr:left-0 top-full text-sm rounded-lg max-h-64 overflow-auto'>
-                {data!.map((item, index) => <div
-                    onClick={selectItemHandle.bind(null, item)}
-                    key={index}
-                    className="border-b border-gray-200 first:rounded-t last:rounded-b last:border-none cursor-pointer transition-all"
-                >
-                    {props.renderOption && props.renderOption(item, direction)}
-                </div>)}
-            </div>
-        )
+        listElement = data!.map((item, index) => <div
+            onClick={selectItemHandle.bind(null, item)}
+            key={index}
+            className="border-b border-gray-200 first:rounded-t last:rounded-b last:border-none cursor-pointer transition-all"
+        >
+            {props.renderOption && props.renderOption(item, direction)}
+        </div>)
     }
 
     if (errorText) {
         errorElement = (
-            <div className='autocomplete-content-box mt-2 py-2 px-4 text-red-500'>
+            <div className='mt-2 py-2 px-4 text-red-500'>
                 {errorText}
             </div>
         )
@@ -176,15 +169,12 @@ function AutoComplete<T>(props: PropsWithChildren<Props<T>>) {
                 setItems([]);
             }
         }
-    }, [val]);
+    }, [val, items.length]);
 
     if (loading) {
-        loadingElement = (
-            <div className={`autocomplete-content-box ${!direction ? "" : direction === 'rtl' ? "rtl" : "ltr"}`}>
-                {[1, 2, 3].map(item => <div key={item} className="py-2 px-4 border-b border-gray-200 first:rounded-t last:rounded-b last:border-none cursor-pointer text-cyan-500 hover:bg-gray-100 transition-all">
-                    loading ...
-                </div>)}
-            </div>)
+        loadingElement = [1, 2, 3, 4].map(item => <div key={item} className="py-2 px-4 border-b border-gray-200 first:rounded-t last:rounded-b last:border-none cursor-pointer text-cyan-500 hover:bg-gray-100">
+            <Skeleton className='my-2' />
+        </div>)
     }
 
     const changeTypingValue = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -228,6 +218,17 @@ function AutoComplete<T>(props: PropsWithChildren<Props<T>>) {
         </span>
     }
 
+    let content = null;
+    if (listElement) {
+        content = listElement;
+    }
+    if (loadingElement) {
+        content = loadingElement;
+    }
+    if (errorElement) {
+        content = errorElement;
+    }
+
     return (
         <div className={`relative ${props.wrapperClassName || ""}`} ref={wrapperRef}>
             <div className='relative'>
@@ -236,19 +237,23 @@ function AutoComplete<T>(props: PropsWithChildren<Props<T>>) {
                     id={props.inputId || undefined}
                     type="text"
                     onChange={changeTypingValue}
-                    onFocus={()=>{setShowList(true)}}
+                    onFocus={() => { setShowList(true) }}
                     className={inputClassNames.join(" ")}
                     ref={inputRef}
                     placeholder={props.placeholder || ""}
                 />
                 {icon}
-                {loading && <Loading className={`rotate w-7 absolute top-2/4 -mt-3.5 ${!direction ? "ltr:right-3 rtl:left-3" : direction === 'rtl' ? "left-3" : "right-3"}`} />}
+                {loading && <span className={`animate-spin block border-2 border-neutral-400 rounded-full border-r-transparent border-t-transparent  w-6 h-6 absolute top-1/2 -mt-3.5 ${!direction ? "ltr:right-3 rtl:left-3" : direction === 'rtl' ? "left-3" : "right-3"}`} />}
                 {!!selectedItem && <span onClick={resetInput} className={`absolute bg-white top-2/4 -mt-3.5 cursor-pointer ${!direction ? "ltr:right-3 rtl:left-3" : direction === 'rtl' ? "left-3" : "right-3"}`}>
                     <Close className="w-7" />
                 </span>}
             </div>
-
-            {errorElement || loadingElement || showList ? listElement : null }
+            {showList ? (<div
+                className='shadow-normal absolute z-20 bg-white min-w-full sm:w-72 rtl:right-0 ltr:left-0 top-full text-sm rounded-lg max-h-64 overflow-auto'
+            >
+                {content}
+            </div>)
+                : null}
         </div>
     )
 }

@@ -49,7 +49,7 @@ const SearchForm: React.FC = () => {
             }
         });
 
-    }, []);
+    }, [sendRequest]);
 
 
     //mobiscroll :
@@ -165,7 +165,7 @@ const SearchForm: React.FC = () => {
                         icon={<Location className="h-5 w-5 fill-current" />}
                         inputClassName={`w-full outline-none border rounded-lg border-neutral-400 pt-4 h-12 text-sm text-neutral-500 placeholder:text-neutral-500 focus:border-neutral-900`}
                         placeholder={t('search-hotel-or-city')}
-                        min={3}
+                        min={2}
                         value={selectedDestination}
                         onChangeHandle={setSelectedDestination}
                         url={url}
