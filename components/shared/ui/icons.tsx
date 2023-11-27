@@ -109,3 +109,9 @@ export const Home2: React.FC<Props> = props => {
         <svg className={props.className || ""} viewBox="0 -960 960 960"><path d="M212-241v-339h60v339h-60Zm242 0v-339h60v339h-60ZM80-121v-60h800v60H80Zm608-120v-339h60v339h-60ZM80-640v-53l400-228 400 228v53H80Zm134-60h532-532Zm0 0h532L480-852 214-700Z"/></svg>
     )
 }
+
+export const Star: React.FC<Props> = props => {
+    return (
+        <svg className={props.className || ""} viewBox="0 -960 960 960"><path d="m233-80 65-281L80-550l288-25 112-265 112 265 288 25-218 189 65 281-247-149L233-80Z"/></svg>
+    )
+}
