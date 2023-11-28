@@ -876,5 +876,8 @@
     "pq5": "What kind of fees can I pay to use the wallet privileges?",
     "pq5-desc": "On the web and schedule, all flight and hotel bookings paid immediately are eligible. Wallet points can not be purchased for holiday packages and Pay Later hotel reservations.If you use a website or app, please make sure you have the UAE as your country of choice.",
     "pq6": "Can I use a coupon code or any other discount when repaying my wallet points?",
-    "pq6-desc": "No, wallet points are not used in connection with coupon codes or automatic discounts."
+    "pq6-desc": "No, wallet points are not used in connection with coupon codes or automatic discounts.",
+
+    "iranianCalendar":"Iranian calendar",
+    "gregorianCalendar":"Gregorian calendar"
 }

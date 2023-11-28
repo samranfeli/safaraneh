@@ -3,10 +3,6 @@ import { useCallback, useEffect, useState } from 'react';
 import { AxiosResponse } from 'axios';
 import { useRouter } from "next/router";
 
-import '@mobiscroll/react/dist/css/mobiscroll.min.css';
-import { Datepicker, setOptions, localeFa } from '@mobiscroll/react';
-
-
 import useHttp from '../../hooks/use-http';
 import { getHotelDetail } from "@/actions/hotelActions";
 import { Header } from '../../enum/url';
@@ -15,12 +11,11 @@ import { ApartmentOutline, Home2, Location } from "../shared/ui/icons";
 import { EntitySearchResultItemType } from "@/types/hotel";
 import { useAppDispatch } from "@/hooks/use-store";
 import { setReduxError } from "@/store/errorSlice";
+import DatePicker from "../shared/ui/DatePicker";
+import { localeFa } from "@mobiscroll/react";
 
 
-setOptions({
-    theme: 'ios',
-    themeVariant: 'light'
-});
+
 
 
 const SearchForm: React.FC = () => {
@@ -150,7 +145,7 @@ const SearchForm: React.FC = () => {
     return (
         <div>
 
-            <div className="grid grid-cols-1 md:grid-cols-7 gap-2 py-5">
+            <div className="domestic-hotel-search-form grid grid-cols-1 md:grid-cols-7 gap-2 py-5">
                 <div className="relative col-span-1 md:col-span-3">
                     <label htmlFor="destination" className="absolute top-1 rtl:right-10 ltr:left-10 text-4xs z-10 leading-5">
                         {t('searchHotelDestination')}
@@ -182,128 +177,19 @@ const SearchForm: React.FC = () => {
                 </div>
                 <div className="col-span-1 md:col-span-3 relative">
 
-
-                    {/* <Datepicker value={dates} onChange={onDatesChange} label={t('checkin-date')} /> */}
-
-
-
-                    <label htmlFor="destination" className="absolute top-1 rtl:right-10 ltr:left-10 text-4xs z-10 leading-5">
+                    <label className="absolute top-1 rtl:right-10 ltr:left-10 text-4xs z-10 leading-5 pointer-events-none">
                         {t('checkin-date')} / {t('checkout-date')}
                     </label>
-                    {/* <input
-                        type="date"
-                        id="checkin_date"
-                        className='w-full outline-none border text-right rounded-lg border-neutral-400 px-3 pt-2 h-12 text-right text-neutral-500 placeholder:text-neutral-500 focus:border-neutral-900'
-                        onChange={(e: any) => { setCheckin(e.target.value) }}
-                    /> */}
 
-
-
-
-
-<Datepicker
-                controls={['calendar']}
-                select="range"
-                    returnFormat="iso8601"
-                responsive={{
-                    small:{
-                        pages:1,
-                        touchUi:true
-                    },
-                    large: {
-                        pages:2,
-                        touchUi:false
-                        
-                    }
-                }}
-
-
-                // responsive: {
-                //     small: {
-                //         display: 'bottom'
-                //     },
-                //     custom: { // Custom breakpoint
-                //         breakpoint: 600,
-                //         display: 'center'
-                //     },
-                //     large: {
-                //         display: 'anchored'
-                //     }
-                // }
-                rtl
-                locale={localeFa}
-                inputProps={{
-                    inputStyle: 'box',
-                    placeholder: 'انتخاب تاریخ'
-                }}
-                onActiveDateChange = {(event, inst) => {
-                    // Logic for the active date change
-                }}
-                onCancel = {(event, inst) => {
-                    // Logic for cancel button click
-                }}
-                onCellClick = {(event, inst) => {
-                    // Logic for event click
-                }}
-                onCellHoverIn = {(event, inst) => {
-                    // Logic for handling cell hover in
-                }}
-                onCellHoverOut = {(event, inst) => {
-                    // Logic for handling cell hover out
-                }}
-                onChange = {dateChangeHandle}
-                onClose = {(event, inst) => {
-                    // Your custom event handler goes here
-                }}
-                onDestroy = {(event, inst) => {
-                    // Your custom event handler goes here 
-                }}
-                onInit = {(event, inst) => {
-                    // Logic running on component init
-                }}
-                onLabelClick = {(event, inst) => {
-                    // Logic for label click
-                }}
-                onOpen = {(event, inst) => {
-                    // Your custom event handler goes here 
-                }}
-                onPageChange = {(event, inst) => {
-                    // Your custom event handler goes here 
-                }}
-                onPageLoaded = {(event, inst) => {
-                    // Use it to inject custom markup & attach custom listeners
-                }}
-                onPageLoading = {(event, inst) => {
-                    // Use it to load data on demand 
-                }}
-                onPosition = {(event:any, inst:any) => {
-                    // Logic for component positioning
-                }}
-                onTempChange = {(event, inst)=> {
-                    // Logic for temporary value change
-                }}
-            />
-
-
-
-
-
+                    <DatePicker
+                        onChange = {dateChangeHandle}
+                        rtl
+                        locale={localeFa}
+                        range
+                    />
 
                 </div>
-                {/* <div className="col-span-1 md:col-span-3 relative">
 
-                    <label htmlFor="checkout_date" className="absolute top-0 rtl:right-8 ltr:left-8 text-4xs z-10 leading-5">
-                        {t('checkout-date')}
-                    </label>
-
-
-                    <input
-                        id="checkout_date"
-                        type="date"
-                        className='w-full outline-none border rounded-lg border-neutral-400 px-3 pt-2 h-12 text-right text-neutral-500 placeholder:text-neutral-500 focus:border-neutral-900'
-                        onChange={(e: any) => { setCheckout(e.target.value) }}
-                    />
-                </div> */}
                 <div className="col-span-1 md:col-span-1 pt-5 md:pt-0">
                     <button
                         type='button'
@@ -314,9 +200,6 @@ const SearchForm: React.FC = () => {
                     </button>
                 </div>
             </div>
-
-
-
 
         </div>
 

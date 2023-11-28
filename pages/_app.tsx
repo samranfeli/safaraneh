@@ -1,4 +1,3 @@
-//import 'antd/dist/antd.css';
 import { i18n } from 'next-i18next';
 import { useEffect } from 'react';
 import { useRouter } from 'next/router';
@@ -7,9 +6,7 @@ import type { AppProps } from 'next/app';
 import { Provider } from 'react-redux';
 import Head from 'next/head';
 
-import '../styles/globals.css';
-//import '../styles/style.scss';
-//import '../styles/custom-antd.scss';
+import '../styles/globals.scss';
 import Layout from '../components/shared/layout';
 import { store } from '../store';
 

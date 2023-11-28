@@ -1,6 +1,5 @@
 
 import { useTranslation } from "next-i18next";
-// import { Modal } from "antd";
 import Router from "next/router";
 
 // import { Error as ErrorIcon } from "../../dist/icons";

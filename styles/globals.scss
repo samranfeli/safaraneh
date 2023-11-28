@@ -78,9 +78,29 @@ label.mbsc-form-control-wrapper {
   margin: 0 !important;
 }
 
+
 label.mbsc-form-control-wrapper .mbsc-textfield {
-  border: 1px solid #aaa;
-  border-radius: 8px;
-  padding-top: 10px;
-  height: 48px;
+  .domestic-hotel-search-form &{
+    border: 1px solid #aaa;
+    border-radius: 8px;
+    padding-top: 15px;
+    height: 48px;
+    font-size: 14px;
+    padding-right: 38px;
+  }
+  .persian-datepicker-wrapper & {
+    font-family: 'samim',sans-serif;
+  }
+}
+
+.persian-date-picker .mbsc-font,.mobi-date-picker-footer {
+  font-family: 'samim',sans-serif;
+}
+
+.mbsc-range-control-wrapper {
+  display: none;
+}
+
+.red .mbsc-calendar-day-text {
+  color: red;
 }
