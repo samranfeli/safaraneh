@@ -187,7 +187,7 @@ const SearchForm: React.FC = () => {
 
 
 
-                    <label htmlFor="checkin_date" className="absolute top-0 rtl:right-8 ltr:left-8 text-4xs z-10 leading-5">
+                    <label htmlFor="destination" className="absolute top-1 rtl:right-10 ltr:left-10 text-4xs z-10 leading-5">
                         {t('checkin-date')} / {t('checkout-date')}
                     </label>
                     {/* <input
@@ -234,7 +234,7 @@ const SearchForm: React.FC = () => {
                 locale={localeFa}
                 inputProps={{
                     inputStyle: 'box',
-                    placeholder: 'Please Select...'
+                    placeholder: 'انتخاب تاریخ'
                 }}
                 onActiveDateChange = {(event, inst) => {
                     // Logic for the active date change

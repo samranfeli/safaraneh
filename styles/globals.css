@@ -2,32 +2,47 @@
 @tailwind components;
 @tailwind utilities;
 
+
+
+
 @font-face {
-  font-family: 'Yekan';
-  src: url('/fonts/iranyekanweblight.woff') format('woff'),
-      url('/fonts/iranyekanweblight.ttf') format('truetype');
+  font-family: 'Vazir';
+  src: url('/fonts/vazir/Vazirmatn-Light.ttf') format('truetype'),
+    url('/fonts/vazir/Vazirmatn-Light.woff2') format('woff2');
   font-weight: 100;
   font-style: normal;
   font-display: swap;
 }
 
 @font-face {
-  font-family: 'Yekan';
-  src: url('/fonts/iranyekanregular.woff') format('woff'),
-      url('/fonts/iranyekan-regular.ttf') format('truetype');
+  font-family: 'Vazir';
+  src: url('/fonts/vazir/Vazirmatn-Regular.ttf') format('truetype'),
+    url('/fonts/vazir/Vazirmatn-Regular.woff2') format('woff2');
   font-weight: normal;
   font-style: normal;
   font-display: swap;
 }
 
 @font-face {
-  font-family: 'Yekan';
-  src: url('/fonts/iranyekanwebbold.woff') format('woff'),
-      url('/fonts/iranyekanwebbold.ttf') format('truetype');
-  font-weight: bold;
+  font-family: 'Vazir';
+  src: url('/fonts/vazir/Vazirmatn-SemiBold.ttf') format('truetype'),
+    url('/fonts/vazir/Vazirmatn-SemiBold.woff2') format('woff2');
+  font-weight: 600;
   font-style: normal;
   font-display: swap;
 }
+
+@font-face {
+  font-family: 'Vazir';
+  src: url('/fonts/vazir/Vazirmatn-Bold.ttf') format('truetype'),
+    url('/fonts/vazir/Vazirmatn-Bold.woff2') format('woff2');
+  font-weight: 800;
+  font-style: normal;
+  font-display: swap;
+}
+
+
+
 
 
 :root {
