@@ -11,7 +11,7 @@ const Layout : React.FC<PropsWithChildren> = props => {
 
     return(
         <>
-            <div className={`wrapper rtl:font-vazir leading-7 ${process.env.THEME || ""} lang-${locale} ${locale==="fa"?"rtl":""}`} >
+            <div className={`wrapper rtl:font-samim leading-7 ${process.env.THEME || ""} lang-${locale} ${locale==="fa"?"rtl":""}`} >
                 <Error />
                 <Header />
                 <main id="main"  className='min-h-desktop-main relative z-10'>

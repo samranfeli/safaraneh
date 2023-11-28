@@ -9,8 +9,7 @@ const config: Config = {
   theme: {
     extend: {
       fontFamily: {
-        'yekan': ['Yekan', 'sans-serif'],
-        'vazir': ['Vazir', 'sans-serif']
+        'samim': ['samim', 'sans-serif']
       },
       spacing: {
         '18': '4.5rem',

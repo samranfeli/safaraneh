@@ -5,37 +5,20 @@
 
 
 
-@font-face {
-  font-family: 'Vazir';
-  src: url('/fonts/vazir/Vazirmatn-Light.ttf') format('truetype'),
-    url('/fonts/vazir/Vazirmatn-Light.woff2') format('woff2');
-  font-weight: 100;
-  font-style: normal;
-  font-display: swap;
-}
+
 
 @font-face {
-  font-family: 'Vazir';
-  src: url('/fonts/vazir/Vazirmatn-Regular.ttf') format('truetype'),
-    url('/fonts/vazir/Vazirmatn-Regular.woff2') format('woff2');
+  font-family: 'samim';
+  src: url('/fonts/samim/Samim-FD.woff2') format('woff2');
   font-weight: normal;
   font-style: normal;
   font-display: swap;
 }
 
-@font-face {
-  font-family: 'Vazir';
-  src: url('/fonts/vazir/Vazirmatn-SemiBold.ttf') format('truetype'),
-    url('/fonts/vazir/Vazirmatn-SemiBold.woff2') format('woff2');
-  font-weight: 600;
-  font-style: normal;
-  font-display: swap;
-}
 
 @font-face {
-  font-family: 'Vazir';
-  src: url('/fonts/vazir/Vazirmatn-Bold.ttf') format('truetype'),
-    url('/fonts/vazir/Vazirmatn-Bold.woff2') format('woff2');
+  font-family: 'samim';
+  src: url('/fonts/samim/Samim-Bold-FD.woff2') format('woff2');
   font-weight: 800;
   font-style: normal;
   font-display: swap;
