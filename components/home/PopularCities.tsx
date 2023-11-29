@@ -1,46 +1,10 @@
 import { useTranslation } from 'next-i18next';
-import "slick-carousel/slick/slick.css";
-import "slick-carousel/slick/slick-theme.css";
-import Slider from "react-slick";
+import Slider from '../shared/ui/Slider';
 import Image from 'next/image';
 
 const PopularCities: React.FC = () => {
 
     const { t } = useTranslation('common');
-
-    const settings = {
-        infinite: true,
-        speed: 500,
-        slidesToShow: 5,
-        slidesToScroll: 1,
-        dots: false,
-        rtl: true,
-        responsive: [{
-            breakpoint: 992,
-            settings: {
-                slidesToShow: 3,
-                dots: true,
-                arrows: false
-
-            }
-        },
-        {
-            breakpoint: 700,
-            settings: {
-                slidesToShow: 2,
-                dots: true,
-                arrows: false
-            }
-        },
-        {
-            breakpoint: 480,
-            settings: {
-                slidesToShow: 1,
-                dots: true,
-                arrows: false
-            }
-        }]
-    };
 
     const cities: {
         imageUrl: string;
@@ -94,31 +58,48 @@ const PopularCities: React.FC = () => {
                 شهرهای محبوب
             </h2>
 
-            <Slider {...settings}>
-
-                {cities.map(city => (
-                    <div key={city.name} className='px-2'>
-                        <a href={city.url} className='grid grid-cols-9 bg-white rounded-lg overflow-hidden' target='_blank' title={city.name}>
-                            <Image
-                                src={city.imageUrl}
-                                alt={city.title}
-                                width={272}
-                                height={142}
-                                className='col-span-5 h-auto'
-                            />
-                            <div className="col-span-4 p-2 text-xs">
-                                <div className='mb-3'>
-                                    رزرو هتل در
-                                    <b className='text-sm'> {city.name} </b>
-                                </div>
-                                <small className='text-3xs'>بیش از {city.quantity} هتل</small>
+            <Slider
+                className='popular-cities-slider'
+                items={cities.map(city => (
+                    <a key={city.name} href={city.url} className='grid grid-cols-9 bg-white rounded-lg overflow-hidden' target='_blank' title={city.name}>
+                        <Image
+                            src={city.imageUrl}
+                            alt={city.title}
+                            width={272}
+                            height={142}
+                            className='col-span-5 h-auto'
+                        />
+                        <div className="col-span-4 p-2 text-xs">
+                            <div className='mb-3'>
+                                رزرو هتل در
+                                <b className='text-sm'> {city.name} </b>
                             </div>
-                        </a>
-                    </div>
-
+                            <small className='text-3xs'>بیش از {city.quantity} هتل</small>
+                        </div>
+                    </a>
                 ))}
+                slidesPerView={5}
+                navigation
+                pagination
+                spaceBetween={20}
+                rtl
+                responsive={{
+                    1200: {
+                        slidesPerView: 5
+                    },
+                    768: {
+                        slidesPerView: 3
+                    },
+                    500: {
+                        slidesPerView: 2
+                    },
+                    0: {
+                        slidesPerView: 1
+                    }
 
-            </Slider>
+                }}
+
+            />
 
         </div>
 

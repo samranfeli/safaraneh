@@ -2,7 +2,6 @@ import { useTranslation } from 'next-i18next';
 import Link from 'next/link';
 import Image from 'next/image';
 
-
 const ModulesBanner: React.FC = () => {
 
   const { t } = useTranslation('common');

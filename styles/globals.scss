@@ -207,3 +207,20 @@ label.mbsc-form-control-wrapper .mbsc-textfield {
     direction: ltr;
   }
 }
+
+
+.suggested-hotels-slider,
+.beach-hotels-slider,
+.popular-cities-slider {
+  @media screen and (max-width: 1199px) {    
+  padding-bottom: 40px !important;
+  }
+  .swiper-pagination {
+    bottom: 0;
+  }
+  @media screen and (min-width: 1200px){
+    .swiper-pagination {
+      display: none;
+    }
+  }
+}
