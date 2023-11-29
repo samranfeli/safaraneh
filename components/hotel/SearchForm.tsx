@@ -11,7 +11,7 @@ import { ApartmentOutline, Home2, Location } from "../shared/ui/icons";
 import { EntitySearchResultItemType } from "@/types/hotel";
 import { useAppDispatch } from "@/hooks/use-store";
 import { setReduxError } from "@/store/errorSlice";
-import DatePicker from "../shared/ui/DatePicker";
+import DatePicker from "../shared/ui/RangePicker";
 import { localeFa } from "@mobiscroll/react";
 
 
@@ -177,15 +177,11 @@ const SearchForm: React.FC = () => {
                 </div>
                 <div className="col-span-1 md:col-span-3 relative">
 
-                    <label className="absolute top-1 rtl:right-10 ltr:left-10 text-4xs z-10 leading-5 pointer-events-none">
-                        {t('checkin-date')} / {t('checkout-date')}
-                    </label>
 
                     <DatePicker
                         onChange = {dateChangeHandle}
                         rtl
-                        locale={localeFa}
-                        range
+                        locale={localeFa}                        
                     />
 
                 </div>

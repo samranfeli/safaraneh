@@ -879,5 +879,6 @@
     "pq6-desc": "No, wallet points are not used in connection with coupon codes or automatic discounts.",
 
     "iranianCalendar":"Iranian calendar",
-    "gregorianCalendar":"Gregorian calendar"
+    "gregorianCalendar":"Gregorian calendar",
+    "goToToday":"go to today"
 }
