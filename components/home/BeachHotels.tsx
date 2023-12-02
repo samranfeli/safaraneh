@@ -1,7 +1,10 @@
 import { useTranslation } from 'next-i18next';
 import Image from 'next/image';
 import Rating from '../shared/ui/Rating';
-import Slider from '../shared/ui/Slider';
+
+import Slider from "react-slick";
+import 'slick-carousel/slick/slick.css';
+import 'slick-carousel/slick/slick-theme.css';
 
 const BeachHotels: React.FC = () => {
 
@@ -52,54 +55,69 @@ const BeachHotels: React.FC = () => {
 
 
         ]
+        const settings = {
+            infinite: true,
+            speed: 500,
+            slidesToShow: 3,
+            slidesToScroll: 1,
+            dots: false,
+            rtl: true,
+            responsive: [{
+                breakpoint: 992,
+                settings: {
+                    slidesToShow: 3,
+                    dots: true,
+                    arrows: false
+    
+                }
+            },
+            {
+                breakpoint: 700,
+                settings: {
+                    slidesToShow: 2,
+                    dots: true,
+                    arrows: false
+                }
+            },
+            {
+                breakpoint: 480,
+                settings: {
+                    slidesToShow: 1,
+                    dots: true,
+                    arrows: false
+                }
+            }]
+        };
 
     return (
         <div className="max-w-container mx-auto p-5 md:py-6">
             <h2 className='text-xl font-bold mb-4'>
                 هتل‌‌های ساحلی
             </h2>
-            <Slider
-                className="beach-hotels-slider"
-                items={hotels.map(hotel => (
-                    <a key={hotel.name} href={hotel.url} className='block bg-white rounded-lg overflow-hidden' target='_blank' title={hotel.name}>
-                        <Image
-                            src={hotel.imageUrl}
-                            alt={`رزرو ${hotel.name}`}
-                            width={272}
-                            height={142}
-                            className='w-full h-auto'
-                        />
-                        <div className='p-3'>
-                            <h2 className='mb-1 text-sm font-semibold'>
-                                {hotel.name}
-                            </h2>
-                            <Rating number={hotel.rating} />
-                        </div>
-                    </a>
+                   <Slider {...settings}>
+
+                {hotels.map(hotel => (
+                    <div className='px-2' key={hotel.name} dir="rtl">
+                        <a href={hotel.url} className='block bg-white rounded-lg overflow-hidden' target='_blank' title={hotel.name}>
+                            <Image
+                                src={hotel.imageUrl}
+                                alt={`رزرو ${hotel.name}`}
+                                width={272}
+                                height={142}
+                                className='w-full h-auto'
+                            />
+                            <div className='p-3'>
+                                <h2 className='mb-1 text-sm font-semibold'>
+                                    {hotel.name}
+                                </h2>
+                                <Rating number={hotel.rating} />
+                            </div>
+
+                        </a>
+                    </div>
                 ))}
-                slidesPerView={3}
-                navigation
-                pagination
-                spaceBetween={20}
-                rtl
-                responsive={{
-                    1200: {
-                        slidesPerView: 3
-                    },
-                    768: {
-                        slidesPerView: 3
-                    },
-                    500: {
-                        slidesPerView: 2
-                    },
-                    0: {
-                        slidesPerView: 1
-                    }
 
-                }}
-
-
-            />
+            </Slider>
 
 
 
