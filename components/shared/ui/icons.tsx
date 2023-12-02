@@ -134,7 +134,3 @@ export const ArrowLeft: React.FC<Props> = props => {
         <svg className={props.className || ""} viewBox="0 -960 960 960"><path d="M360-200 80-480l280-280 42 42-208 208h686v60H194l208 208-42 42Z"/></svg>
     )
 }
-
-
-
-
