@@ -105,14 +105,14 @@ const RangePicker: React.FC<Props> = props => {
                         {t('checkin-date')}
                     </label>
                     <Calendar className='w-5 h-5 fill-current absolute right-2 top-1/2 -mt-2.5 z-10 pointer-events-none' />
-                    <input className='border w-full h-12 border-neutral-400 rounded-r-lg pr-10 pt-5 leading-4 border-l-0' value={start} />
+                    <input className='border w-full h-12 border-neutral-400 rounded-r-lg pr-10 pt-5 leading-4 border-l-0' value={start} readOnly/>
                 </div>
                 <div className='relative'>
                     <label className="absolute top-1 rtl:right-10 ltr:left-10 text-4xs z-10 leading-5 pointer-events-none">
                         {t('checkout-date')}
                     </label>
                     <Calendar className='w-5 h-5 fill-current absolute right-2 top-1/2 -mt-2.5 z-10 pointer-events-none' />
-                    <input className='border w-full h-12 border-neutral-400 rounded-l-lg pr-10 pt-5 leading-4' value={end} />
+                    <input className='border w-full h-12 border-neutral-400 rounded-l-lg pr-10 pt-5 leading-4' value={end} readOnly />
                 </div>
 
             </div>
