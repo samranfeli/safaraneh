@@ -21,10 +21,6 @@ const Services = dynamic(() =>
 
 const Home:NextPage = ({blogs}:{blogs?:BlogItemType[]}) => {
 
-  if (blogs){
-    debugger;
-  }
-
   return (
     <>
       <Banner />

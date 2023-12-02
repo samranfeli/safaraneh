@@ -125,10 +125,10 @@ const SuggestedHotels: React.FC = () => {
 
                     {hotels.map(hotel => (
                         <div className='px-2' key={hotel.name}>
-                            <a href={hotel.url} className='block bg-white rounded-lg overflow-hidden' target='_blank' title={hotel.name}>
+                            <a href={hotel.url} className='block bg-white rounded-lg overflow-hidden' target='_blank'>
                                 <Image
                                     src={hotel.imageUrl}
-                                    alt={hotel.name}
+                                    alt={hotel.alt}
                                     width={272}
                                     height={142}
                                     className='w-full h-auto'

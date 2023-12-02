@@ -43,7 +43,7 @@ const Language: React.FC = () => {
 
     return (
         <div className='relative' ref={wrapperRef}>
-            <button type='button' aria-label='language switch' className='p-1 flex items-center gap-1' onClick={() => { setOpen(prevState => !prevState) }} >
+            <button type='button' aria-label={`Language: ${i18n?.language === "en"?"English (US)":"فارسی (Fa)"}`} className='p-1 flex items-center gap-1' onClick={() => { setOpen(prevState => !prevState) }} >
                 {currentLang} <DownCaret className='w-5 h-5 fill-current' />
             </button>
             <div className={`absolute rounded overflow-hidden top-full left-0 right-0 shadow-normal bg-white ${open ? "transition-all visible opacity-100 mt-0" : "invisible opacity-0 -mt-3"}`} >

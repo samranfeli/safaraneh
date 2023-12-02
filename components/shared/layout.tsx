@@ -7,6 +7,7 @@ import { useRouter } from "next/router";
 import { getPortal } from "@/actions/portalActions";
 import { useAppDispatch, useAppSelector } from "@/hooks/use-store";
 import { setReduxPortal } from "@/store/portalSlice";
+import { i18n } from "next-i18next";
 
 const Layout: React.FC<PropsWithChildren> = props => {
     const router = useRouter();
@@ -17,15 +18,16 @@ const Layout: React.FC<PropsWithChildren> = props => {
     const portalInformation = useAppSelector(state => state.portal)
 
     const fetchPortalInfo = useCallback(async () => {
-        const portalInfo = await getPortal();
-
-        dispatch(setReduxPortal({
-            MetaTags: portalInfo.data.MetaTags,
-            Phrases: portalInfo.data.Phrases
-        }));
+        const portalInfo = await getPortal(i18n?.language === "en"?'en-US':'fa-IR');
+        if (portalInfo.data){
+            dispatch(setReduxPortal({
+                MetaTags: portalInfo.data.MetaTags,
+                Phrases: portalInfo.data.Phrases
+            }));
+        }
 
         const portalName = portalInfo.data.Phrases.find((item: { Keyword: string }) => item.Keyword === 'Name');
-        localStorage.setItem('whiteLabelProjectName', portalName.Value);
+        localStorage.setItem('whiteLabelProjectName', portalName?.Value);
 
     }, []);
 

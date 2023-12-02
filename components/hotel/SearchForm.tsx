@@ -28,6 +28,8 @@ const SearchForm: React.FC = () => {
 
     const [dates, setDates] = useState([]);
 
+    const [submitLoading,setSubmitLoading] = useState<boolean>(false);
+
     const dateChangeHandle = (event:any, inst:any) => {
 
         if (event.value[0] && event.value[1]){
@@ -78,6 +80,8 @@ const SearchForm: React.FC = () => {
             // TODO validation message
             return;
         }
+
+        setSubmitLoading(true);
 
         let url: string = "";
 
@@ -189,10 +193,11 @@ const SearchForm: React.FC = () => {
                 <div className="col-span-1 md:col-span-1 pt-5 md:pt-0">
                     <button
                         type='button'
-                        className='bg-primary-700 text-white rounded-lg text-center min-w-sm h-12 block w-full'
+                        className='bg-primary-700 hover:bg-primary-800 transition-all text-white rounded-lg text-center min-w-sm h-12 block w-full flex gap-3 items-center justify-center'
                         onClick={submitHandler}
                     >
                         جستجو
+                        {submitLoading ? <span className="animate-spin block border-2 border-white rounded-full border-r-transparent border-t-transparent w-5 h-5" />: null}
                     </button>
                 </div>
             </div>

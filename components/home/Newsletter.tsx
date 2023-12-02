@@ -11,7 +11,7 @@ const Newsletter: React.FC = () => {
             <div className="bg-white p-5 sm:p-7 md:py-10 rounded-lg leading-10 text-justify">
                 <div className='grid items-center grid-cols-1 md:grid-cols-2 gap-5'>
                     <div className='text-neutral-600'>
-                        <h3 className='text-lg sm:text-3xl font-semibold mb-3'>{t('subscribe')}</h3>
+                        <h3 className='text-lg sm:text-2xl font-semibold mb-3'>{t('subscribe')}</h3>
                         <p className='leading-6 text-xs sm:text-sm'>{t('subscribe-desc')}</p>
                     </div>
                     <div className='grid grid-cols-1 sm:grid-cols-9 gap-3'>

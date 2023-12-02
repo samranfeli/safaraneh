@@ -101,18 +101,18 @@ const RangePicker: React.FC<Props> = props => {
             <div className='grid grid-cols-2'>
 
                 <div className='relative'>
-                    <label className="absolute top-1 rtl:right-10 ltr:left-10 text-4xs z-10 leading-5 pointer-events-none">
+                    <label htmlFor='checkin_date' className="absolute top-1 rtl:right-10 ltr:left-10 text-4xs z-10 leading-5 pointer-events-none">
                         {t('checkin-date')}
                     </label>
-                    <Calendar className='w-5 h-5 fill-current absolute right-2 top-1/2 -mt-2.5 z-10 pointer-events-none' />
-                    <input className='border w-full h-12 border-neutral-400 rounded-r-lg pr-10 pt-5 leading-4 border-l-0' value={start} readOnly/>
+                    <Calendar className='w-5 h-5 fill-current absolute  rtl:right-2 ltr:left-2 top-1/2 -mt-2.5 z-10 pointer-events-none' />
+                    <input id="checkin_date" className='border w-full h-12 border-neutral-400 rtl:rounded-r-lg ltr:rounded-l-lg rtl:pr-10 ltr:pl-10 pt-5 leading-4 rtl:border-l-0 ltr:border-r-0' value={start} readOnly/>
                 </div>
                 <div className='relative'>
-                    <label className="absolute top-1 rtl:right-10 ltr:left-10 text-4xs z-10 leading-5 pointer-events-none">
+                    <label htmlFor='checkout_date' className="absolute top-1 rtl:right-10 ltr:left-10 text-4xs z-10 leading-5 pointer-events-none">
                         {t('checkout-date')}
                     </label>
-                    <Calendar className='w-5 h-5 fill-current absolute right-2 top-1/2 -mt-2.5 z-10 pointer-events-none' />
-                    <input className='border w-full h-12 border-neutral-400 rounded-l-lg pr-10 pt-5 leading-4' value={end} readOnly />
+                    <Calendar className='w-5 h-5 fill-current absolute rtl:right-2 ltr:left-2 top-1/2 -mt-2.5 z-10 pointer-events-none' />
+                    <input id="checkout_date" className='border w-full h-12 border-neutral-400 rtl:rounded-l-lg ltr:rounded-r-lg rtl:pr-10 ltr:pl-10 pt-5 leading-4' value={end} readOnly />
                 </div>
 
             </div>
