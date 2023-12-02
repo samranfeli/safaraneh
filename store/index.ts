@@ -1,9 +1,11 @@
 import { configureStore } from "@reduxjs/toolkit";
 import errorSlice from "./errorSlice";
+import portalSlice from "./portalSlice";
 
 export const store = configureStore({
     reducer:{
-        error: errorSlice
+        error: errorSlice,
+        portal : portalSlice
     }
 })
 

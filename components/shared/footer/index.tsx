@@ -3,6 +3,7 @@ import Link from "next/link";
 import { useTranslation } from "next-i18next";
 
 import Image from "next/image";
+import Logo from "../Logo";
 
 export default function Footer() {
 
@@ -50,7 +51,7 @@ export default function Footer() {
                     </Link>
                 </nav>
 
-                <Image src='/images/logofa.png' width={115} height={48} alt="سفرانه" className="block mx-auto mb-4" />
+                <Logo className="block mx-auto mb-4" />
 
                 <div className="flex gap-4 justify-center mb-4">
                     {t('support')}

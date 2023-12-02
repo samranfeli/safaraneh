@@ -1,9 +1,9 @@
 import Link from "next/link";
-import Image from "next/image";
 import { useTranslation } from "next-i18next";
 import { useState, useEffect, useRef } from "react";
 
 import { Menu, DownCaret, Home, Close, User, UserAdd, Ticket, Wallet, Bed, Blog, Suitcase, Travel } from "../ui/icons";
+import Logo from "../Logo";
 
 export default function TravelServices() {
 
@@ -53,7 +53,7 @@ export default function TravelServices() {
                 <div className={menuWrapperClassNames}  >
                     <div className="md:hidden border-b border-neutral-200 p-5 flex justify-between items-center">
                         <Link href="/" className="block">
-                            <Image src={'/images/logofa.png'} width={115} height={48} alt="سفرانه" />
+                            <Logo />
                         </Link>
                         <button aria-label={t('close-menu')} type="button" onClick={() => { setOpenMenu(false) }}>
                             <Close className="w-6 h-6 fill-neutral-400" />

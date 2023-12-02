@@ -146,7 +146,7 @@ const RangePicker: React.FC<Props> = props => {
                     onChange={onChange}
                 >
 
-                    <header className='direction-root font-samim mobi-date-picker-header px-5 py-3 border-b border-neutral-300  gap-5 justify text-sm hidden md:flex h-12 '>
+                    <header className='direction-root font-samim mobi-date-picker-header px-5 py-3 border-b border-neutral-300  gap-5 text-sm hidden md:flex h-12 '>
 
                         <div className={`min-w-24 bold text-sm border-b-2 border-transparent ${values && values[0] && !values[1] ? "border-blue-600" : ""}`}>
                             {startFormated}

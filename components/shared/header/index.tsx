@@ -1,12 +1,12 @@
-import Image from "next/image";
 import Link from "next/link";
 import { useTranslation } from "next-i18next";
 
 import TravelServices from "./travelServices";
 import Language from "./Language";
+import Logo from "../Logo";
 
 export default function Header() {
-    
+
     const { t } = useTranslation('common');
 
     return (
@@ -15,7 +15,7 @@ export default function Header() {
             <div className="max-w-container mx-auto px-3 py-3 flex justify-center md:justify-between">
                 <div className="flex gap-8 items-center">
                     <Link href="/" className="block">
-                        <Image src='/images/logofa.png' width={115} height={48} alt="سفرانه" />
+                        <Logo />
                     </Link>
                     <TravelServices />
                 </div>
@@ -26,7 +26,7 @@ export default function Header() {
                     <button type="button" aria-label={t('retrieve-my-booking')} className="text-sm text-blue-700 hover:text-blue-500" >
                         {t('retrieve-my-booking')}
                     </button>
-                    
+
                     <button type="button" aria-label={t('sign-in-up')} className="text-sm text-blue-700 hover:text-blue-500" >
                         {t('sign-in-up')}
                     </button>
