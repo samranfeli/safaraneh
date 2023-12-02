@@ -10,7 +10,7 @@ type Props = {
 const RecentBlogs: React.FC<Props> = props => {
 
     return (
-        <div className="max-w-container mx-auto p-5 md:py-10 md:pb-2">
+        <div className="max-w-container mx-auto p-5 md:py-10">
 
             <h2 className='text-xl font-bold mb-4'> آخرین مطالب وبلاگ </h2>
 
@@ -27,7 +27,7 @@ const RecentBlogs: React.FC<Props> = props => {
                             height={176}
                             className='w-full'
                         />
-                        <div className="bg-white relative rounded-lg p-4 pb-2 mx-3 -top-8 text-sm text-neutral-600">
+                        <div className="bg-white relative rounded-lg p-4 pb-2 mx-3 -mt-8 text-sm text-neutral-600">
                             <h2 className='font-semibold mb-3 leading-6'>{blog.title.rendered}</h2>
                             <small className='text-xs'>{blog.date}</small>
                         </div>

@@ -208,19 +208,17 @@ label.mbsc-form-control-wrapper .mbsc-textfield {
   }
 }
 
+.slick-slider ul.slick-dots li {
+  margin: 0;
+}
 
-.suggested-hotels-slider,
-.beach-hotels-slider,
-.popular-cities-slider {
-  @media screen and (max-width: 1199px) {    
-  padding-bottom: 40px !important;
+.slick-slider .slick-arrow {
+  background: #888;
+  &:hover{
+    background: #aaa;
   }
-  .swiper-pagination {
-    bottom: 0;
-  }
-  @media screen and (min-width: 1200px){
-    .swiper-pagination {
-      display: none;
-    }
-  }
+  width: 25px;
+  height: 25px;
+  fill: #fff;
+  border-radius: 50%;
 }

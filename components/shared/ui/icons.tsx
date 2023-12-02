@@ -1,5 +1,6 @@
 type Props = {
     className?: string;
+    onClick?: any;
 }
 
 export const UpCaret: React.FC<Props> = props => {
@@ -13,6 +14,35 @@ export const DownCaret: React.FC<Props> = props => {
         <svg className={props.className || ""} viewBox="0 -960 960 960"><path d="M480-345 240-585l43-43 197 198 197-197 43 43-240 239Z" /></svg>
     );
 }
+
+export const LeftCaret: React.FC<Props> = props => {
+    return (
+        <svg className={props.className || ""} onClick={props.onClick} viewBox="0 -960 960 960"><path d="M400-80 0-480l400-400 56 57-343 343 343 343-56 57Z"/></svg>
+    );
+}
+
+export const RightCaret: React.FC<Props> = props => {
+    return (
+        <svg className={props.className || ""} onClick={props.onClick} viewBox="0 -960 960 960"><path d="m304-82-56-57 343-343-343-343 56-57 400 400L304-82Z"/></svg>
+    );
+}
+
+
+export const LeftCaretBold: React.FC<Props> = props => {
+    return (
+        <svg className={props.className || ""} onClick={props.onClick}  viewBox="0 -960 960 960"><path d="M560-217.333 296.667-480.667 560-744l71.333 72-191.334 191.333 191.334 191.334-71.333 72Z"/></svg>
+    );
+}
+
+export const RightCaretBold: React.FC<Props> = props => {
+    return (
+        <svg className={props.className || ""} onClick={props.onClick} viewBox="0 -960 960 960"><path d="M496.001-480.667 304.667-672 376-744l263.333 263.333L376-217.333l-71.333-72 191.334-191.334Z"/></svg>
+    );
+}
+
+
+
+
 
 export const Bed: React.FC<Props> = props => {
     return (
@@ -165,5 +195,10 @@ export const QuestionCircle: React.FC<Props> = props => {
     )
 }
 
+export const Send: React.FC<Props> = props => {
+    return (
+        <svg className={props.className || ""} viewBox="0 -960 960 960"><path d="M120-160v-640l760 320-760 320Zm60-93 544-227-544-230v168l242 62-242 60v167Zm0 0v-457 457Z"/></svg>
+    )
+}
 
 

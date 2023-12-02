@@ -4,6 +4,7 @@ import { DownCaret } from "./icons";
 type Props = {
     content: React.ReactNode;
     title: React.ReactNode;
+    WrapperClassName?: string;
 }
 
 const Accordion: React.FC<Props> = props => {
@@ -23,16 +24,16 @@ const Accordion: React.FC<Props> = props => {
     }, [open]);
 
     return (
-        <div className="border border-neutral-200 rounded-lg text-base text-neutral-700 mb-4">
-            <div onClick={toggle} className="select-none flex justify-between cursor-pointer p-5">
+        <div className={`border border-neutral-200 rounded-lg text-sm sm:text-base text-neutral-700 ${props.WrapperClassName || ""}`}>
+            <div onClick={toggle} className="select-none flex gap-3 leading-5 justify-between cursor-pointer p-3 sm:p-5">
                 {props.title}
-                <DownCaret className={`w-6 h-6 fill-curent transition-all duration-300 ${open ? "rtl:rotate-180 ltr:-rotate-180" : "rotate-0"}`} />
+                <DownCaret className={`w-6 h-6 fill-curent transition-all shrink-0 duration-300 ${open ? "rtl:rotate-180 ltr:-rotate-180" : "rotate-0"}`} />
             </div>
             <div
                 ref={contentRef}
                 className="overflow-hidden transition-all duration-300"
             >
-                <div className="bg-neutral-100 p-5 m-5 mt-0">
+                <div className="bg-neutral-100 p-3 m-3 sm:p-5 sm:m-5 mt-0">
                     {props.content}
                 </div>
             </div>

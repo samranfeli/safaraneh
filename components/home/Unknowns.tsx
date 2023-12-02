@@ -6,6 +6,8 @@ import Slider from "react-slick";
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
 
+import {LeftCaretBold,RightCaretBold} from '../shared/ui/icons';
+
 const Unknowns: React.FC = () => {
 
     const { t } = useTranslation('common');
@@ -61,8 +63,10 @@ const Unknowns: React.FC = () => {
         slidesToScroll: 1,
         dots: false,
         rtl: true,
+        nextArrow: <LeftCaretBold className='w-5 h-5 bg-neutral-400 rounded-full fill-white p-1 text-center' />,
+        prevArrow: <RightCaretBold className='w-5 h-5 bg-neutral-400 rounded-full fill-white p-1 text-center' />,
         responsive: [{
-            breakpoint: 992,
+            breakpoint: 1023,
             settings: {
                 slidesToShow: 3,
                 dots: true,
@@ -93,35 +97,37 @@ const Unknowns: React.FC = () => {
             <h2 className='text-xl font-bold mb-4'>
                 ناشناخته ها
             </h2>
-            <Slider {...settings}>
+            <div className='lg:mx-2 xl:-mx-2'>
+                <Slider {...settings}>
 
-                {items.map(item => (
-                    <div className='px-2' key={item.title} dir="rtl">
-                        <a href={item.url} className='block bg-white rounded-lg overflow-hidden' target='_blank' title={item.title}>
-                            <div className='relative'>
-                                <Image
-                                    src={item.imageUrl}
-                                    alt={`رزرو ${item.title}`}
-                                    width={272}
-                                    height={142}
-                                    className='w-full h-auto'
-                                />
-                                <div className='absolute bottom-3 px-5'>
-                                    <span className='bg-primary-800 text-white px-5 pt-2 pb-3 inline-block leading-4 text-sm rounded-lg'> {item.location} </span>
+                    {items.map(item => (
+                        <div className='px-2' key={item.title}>
+                            <a href={item.url} className='block bg-white rounded-lg overflow-hidden' target='_blank' title={item.title}>
+                                <div className='relative'>
+                                    <Image
+                                        src={item.imageUrl}
+                                        alt={`رزرو ${item.title}`}
+                                        width={272}
+                                        height={142}
+                                        className='w-full h-auto'
+                                    />
+                                    <div className='absolute bottom-3 px-5'>
+                                        <span className='bg-primary-800 text-white px-5 pt-2 pb-3 inline-block leading-4 text-sm rounded-lg'> {item.location} </span>
+                                    </div>
                                 </div>
-                            </div>
-                            <div className='p-3'>
-                                <h2 className='mb-1 text-sm font-semibold'>
-                                    {item.title}
-                                </h2>
-                                <div className="text-sm text-blue-700 rtl:text-left ltr:text-right">{t('more-details')}</div>
-                            </div>
+                                <div className='p-3'>
+                                    <h2 className='mb-1 text-sm font-semibold'>
+                                        {item.title}
+                                    </h2>
+                                    <div className="text-sm text-blue-700 rtl:text-left ltr:text-right">{t('more-details')}</div>
+                                </div>
 
-                        </a>
-                    </div>
-                ))}
+                            </a>
+                        </div>
+                    ))}
 
-            </Slider>
+                </Slider>
+            </div>
 
         </div>
 

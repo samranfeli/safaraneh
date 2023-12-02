@@ -6,6 +6,8 @@ import Slider from "react-slick";
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
 
+import {LeftCaretBold,RightCaretBold} from '../shared/ui/icons';
+
 const BeachHotels: React.FC = () => {
 
     const { t } = useTranslation('common');
@@ -62,8 +64,10 @@ const BeachHotels: React.FC = () => {
             slidesToScroll: 1,
             dots: false,
             rtl: true,
+            nextArrow: <LeftCaretBold className='w-5 h-5 bg-neutral-400 rounded-full fill-white p-1 text-center' />,
+            prevArrow: <RightCaretBold className='w-5 h-5 bg-neutral-400 rounded-full fill-white p-1 text-center' />,
             responsive: [{
-                breakpoint: 992,
+                breakpoint: 1023,
                 settings: {
                     slidesToShow: 3,
                     dots: true,
@@ -94,34 +98,33 @@ const BeachHotels: React.FC = () => {
             <h2 className='text-xl font-bold mb-4'>
                 هتل‌‌های ساحلی
             </h2>
-                   <Slider {...settings}>
+            <div className='lg:mx-2 xl:-mx-2'>
 
-                {hotels.map(hotel => (
-                    <div className='px-2' key={hotel.name} dir="rtl">
-                        <a href={hotel.url} className='block bg-white rounded-lg overflow-hidden' target='_blank' title={hotel.name}>
-                            <Image
-                                src={hotel.imageUrl}
-                                alt={`رزرو ${hotel.name}`}
-                                width={272}
-                                height={142}
-                                className='w-full h-auto'
-                            />
-                            <div className='p-3'>
-                                <h2 className='mb-1 text-sm font-semibold'>
-                                    {hotel.name}
-                                </h2>
-                                <Rating number={hotel.rating} />
-                            </div>
+                <Slider {...settings}>
 
-                        </a>
-                    </div>
-                ))}
+                    {hotels.map(hotel => (
+                        <div className='px-2' key={hotel.name}>
+                            <a href={hotel.url} className='outline-none block bg-white rounded-lg overflow-hidden' target='_blank' title={hotel.name}>
+                                <Image
+                                    src={hotel.imageUrl}
+                                    alt={`رزرو ${hotel.name}`}
+                                    width={376}
+                                    height={183}
+                                    className='w-full h-auto'
+                                />
+                                <div className='p-3'>
+                                    <h2 className='mb-1 text-sm font-semibold'>
+                                        {hotel.name}
+                                    </h2>
+                                    <Rating number={hotel.rating} />
+                                </div>
 
-            </Slider>
+                            </a>
+                        </div>
+                    ))}
 
-
-
-
+                </Slider>
+            </div>
 
         </div>
 

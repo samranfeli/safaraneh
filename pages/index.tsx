@@ -13,6 +13,7 @@ import RecentBlogs from '@/components/home/RecentBlogs';
 import { BlogItemType } from '@/types/blog';
 import AboutSummary from '@/components/home/AboutSummary';
 import HomeFAQ from '@/components/home/HomeFAQ';
+import Newsletter from '@/components/home/Newsletter';
 
 const Services = dynamic(() =>
   import('@/components/home/Services'),
@@ -36,6 +37,7 @@ const Home:NextPage = ({blogs}:{blogs?:BlogItemType[]}) => {
       <Services />
       <AboutSummary />
       <HomeFAQ />
+      <Newsletter />
     </>
   )
 }
