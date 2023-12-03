@@ -112,11 +112,14 @@ export const getServerSideProps: GetServerSideProps = async ({ locale, query, re
 
   const url = encodeURI(`/${locale}/hotel/${query.hotelDetail![0]}`);
 
-  const pageDetails: any = await getpageByUrl(url, i18n?.language);
-  const hotelData: any = await getDomesticHotelDetailByUrl(url, i18n?.language);
-  const hotelScoreData: any = await getScore(hotelData.data.HotelId, i18n?.language);
-  const accommodationData: any = await getAccommodationById(hotelData.data.HotelId, i18n?.language);
-
+  const [pageDetails, hotelData] = await Promise.all<any>([
+       getpageByUrl(url, i18n?.language),
+       getDomesticHotelDetailByUrl(url, i18n?.language),
+  ]);
+  const [hotelScoreData,accommodationData] = await Promise.all<any>([
+    getScore(hotelData.data.HotelId, i18n?.language),
+    getAccommodationById(hotelData.data.HotelId, i18n?.language)
+]);
 
   return ({
     props: {
