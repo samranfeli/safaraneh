@@ -961,6 +961,7 @@
 
       "iranianCalendar":"تقویم شمسی",
       "gregorianCalendar":"تقویم میلادی",
-      "goToToday":"برو به امروز"
+      "goToToday":"برو به امروز",
+      "seeHotelsIn":"مشاهده هتل های  {{city}}"
   
   }

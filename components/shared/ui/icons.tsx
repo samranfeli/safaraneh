@@ -17,26 +17,26 @@ export const DownCaret: React.FC<Props> = props => {
 
 export const LeftCaret: React.FC<Props> = props => {
     return (
-        <svg className={props.className || ""} onClick={props.onClick} viewBox="0 -960 960 960"><path d="M400-80 0-480l400-400 56 57-343 343 343 343-56 57Z"/></svg>
+        <svg className={props.className || ""} onClick={props.onClick} viewBox="0 -960 960 960"><path d="M400-80 0-480l400-400 56 57-343 343 343 343-56 57Z" /></svg>
     );
 }
 
 export const RightCaret: React.FC<Props> = props => {
     return (
-        <svg className={props.className || ""} onClick={props.onClick} viewBox="0 -960 960 960"><path d="m304-82-56-57 343-343-343-343 56-57 400 400L304-82Z"/></svg>
+        <svg className={props.className || ""} onClick={props.onClick} viewBox="0 -960 960 960"><path d="m304-82-56-57 343-343-343-343 56-57 400 400L304-82Z" /></svg>
     );
 }
 
 
 export const LeftCaretBold: React.FC<Props> = props => {
     return (
-        <svg className={props.className || ""} onClick={props.onClick}  viewBox="0 -960 960 960"><path d="M560-217.333 296.667-480.667 560-744l71.333 72-191.334 191.333 191.334 191.334-71.333 72Z"/></svg>
+        <svg className={props.className || ""} onClick={props.onClick} viewBox="0 -960 960 960"><path d="M560-217.333 296.667-480.667 560-744l71.333 72-191.334 191.333 191.334 191.334-71.333 72Z" /></svg>
     );
 }
 
 export const RightCaretBold: React.FC<Props> = props => {
     return (
-        <svg className={props.className || ""} onClick={props.onClick} viewBox="0 -960 960 960"><path d="M496.001-480.667 304.667-672 376-744l263.333 263.333L376-217.333l-71.333-72 191.334-191.334Z"/></svg>
+        <svg className={props.className || ""} onClick={props.onClick} viewBox="0 -960 960 960"><path d="M496.001-480.667 304.667-672 376-744l263.333 263.333L376-217.333l-71.333-72 191.334-191.334Z" /></svg>
     );
 }
 
@@ -197,8 +197,22 @@ export const QuestionCircle: React.FC<Props> = props => {
 
 export const Send: React.FC<Props> = props => {
     return (
-        <svg className={props.className || ""} viewBox="0 -960 960 960"><path d="M120-160v-640l760 320-760 320Zm60-93 544-227-544-230v168l242 62-242 60v167Zm0 0v-457 457Z"/></svg>
+        <svg className={props.className || ""} viewBox="0 -960 960 960"><path d="M120-160v-640l760 320-760 320Zm60-93 544-227-544-230v168l242 62-242 60v167Zm0 0v-457 457Z" /></svg>
     )
 }
+
+export const ArrowRight: React.FC<Props> = props => {
+    return (
+        <svg className={props.className || ""} viewBox="0 -960 960 960"><path d="m560-242-43-42 168-168H160v-60h525L516-681l43-42 241 241-240 240Z" /></svg>
+    )
+}
+
+export const Phone: React.FC<Props> = props => {
+    return (
+        <svg className={props.className || ""} viewBox="0 -960 960 960"><path d="M165-120q-19 0-32-13t-13-32v-135q0-15 10-27t25-16l119-26q13-2 26 2t23 15l95 98q45-24 86-55.5t78-69.5q35-34 64-72t55-82L601-634q-8-8-10.5-19.5T590-679l27-126q4-15 14-25t24-10h140q19 0 32 13t13 32q0 116-56 236.5T625-335Q522-232 401.5-176T165-120Z" /></svg>
+    )
+}
+
+
 
 
