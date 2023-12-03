@@ -9,6 +9,7 @@ import { DomesticHotelDetailType } from '@/types/hotel';
 import { useRouter } from 'next/router';
 import BackToList from '@/components/hotel/hotelDetails/BackToList';
 import { Phone } from '@/components/shared/ui/icons';
+import Gallery from '@/components/hotel/hotelDetails/Gallery';
 
 type Props = {
   pageData: PageDataType;
@@ -88,16 +89,16 @@ const HotelDetail: NextPage<Props> = props => {
 
 
       <div className="max-w-container mx-auto p-5">
+        
         <div className='bg-white p-3'>
           {!!hotelData.IsCovid && <div className='bg-emerald-700 p-4 text-white text-sm rounded-md flex gap-2 items-center m-1 mb-3'>
             <Phone className='w-6 h-6 fill-current block' />
             جهت رزرو با شماره <a href="tel:+982126150051" className='underline text-base'> 02126150051 </a> تماس بگیرید.
           </div>}
           <BackToList checkin={checkin} checkout={checkout} cityId={hotelData.CityId} cityName={hotelData.CityName} />
-
-
-
         </div>
+
+        <Gallery images={hotelData.Gallery} />
 
       </div>
 
