@@ -1,6 +1,5 @@
 import type { NextPage } from 'next';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
-import dynamic from 'next/dynamic';
 
 import Banner from '@/components/home/banner'
 import ModulesBanner from '@/components/home/modules-banner';
@@ -14,10 +13,7 @@ import { BlogItemType } from '@/types/blog';
 import AboutSummary from '@/components/home/AboutSummary';
 import HomeFAQ from '@/components/home/HomeFAQ';
 import Newsletter from '@/components/home/Newsletter';
-
-const Services = dynamic(() =>
-  import('@/components/home/Services'),
-)
+import Services from '@/components/home/Services';
 
 const Home:NextPage = ({blogs}:{blogs?:BlogItemType[]}) => {
 

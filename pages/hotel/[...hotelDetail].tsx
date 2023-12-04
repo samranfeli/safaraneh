@@ -108,7 +108,14 @@ const HotelDetail: NextPage<Props> = props => {
 }
 
 
-export const getServerSideProps: GetServerSideProps = async ({ locale, query, req }) => {
+
+
+// const res = await fetch(`http://localhost:3001/${locale}`);
+// const data = await res.json();
+
+
+
+export const getServerSideProps: GetServerSideProps = async ({ locale, query }) => {
 
   const url = encodeURI(`/${locale}/hotel/${query.hotelDetail![0]}`);
 
@@ -123,7 +130,7 @@ export const getServerSideProps: GetServerSideProps = async ({ locale, query, re
 
   return ({
     props: {
-      ...await serverSideTranslations(locale as string, ['common', 'header']),
+      ...await (serverSideTranslations(locale as string, ['common'])),
       pageData: pageDetails.data,
       hotelData: hotelData.data,
       hotelScoreData: hotelScoreData.data,
