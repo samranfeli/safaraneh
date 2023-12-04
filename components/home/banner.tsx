@@ -5,6 +5,7 @@ import {Apartment,Travel} from '../shared/ui/icons';
 import Tabs from '../shared/ui/tabs';
 import { TabItem } from '@/types/common';
 import Image from 'next/image';
+import moment from 'moment-jalaali';
 
 
 const Banner :React.FC = () => {
@@ -13,11 +14,14 @@ const Banner :React.FC = () => {
   const {t} = useTranslation('common');
   const {t:tHome} = useTranslation('home');
 
+  const domesticHotelDefaultDates: [string, string] = [moment().format("YYYY-MM-DD") , moment().add(1,'days').format("YYYY-MM-DD") ];
+
+
     const items: TabItem[] = [
         {
           key: '1',
           label: (<div className='text-center'> <Apartment className='w-6 h-6 fill-current block mx-auto mb-1' /> {t('domestic-hotel')} </div>),
-          children: <SearchForm />,
+          children: <SearchForm defaultDates={domesticHotelDefaultDates} />,
         },
         {
           key: '2',
@@ -38,7 +42,7 @@ const Banner :React.FC = () => {
             />
              <div className="max-w-container mx-auto pt-5 sm:px-3 sm:py-10 sm:pb-28 relative z-20">
 
-                <h1 className="text-white drop-shadow-lg text-center font-bold text-xl sm:text-3xl mb-6 sm:mb-10" > {tHome("Plan-your-trip")} </h1>
+                <h1 className="text-white drop-shadow-lg text-center font-bold text-xl sm:text-4xl mb-6 sm:mb-10" > {tHome("Plan-your-trip")} </h1>
                 
                 <div className="px-5 pt-3 sm:p-5 bg-white sm:rounded-lg">
                    <Tabs items={items} />

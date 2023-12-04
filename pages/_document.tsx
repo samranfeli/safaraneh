@@ -5,7 +5,7 @@ export default function Document() {
   return (
     <Html lang={i18n?.language === "en" ? "en" :"fa"} dir={i18n?.language === "en" ? "ltr" :"rtl"}>
       <Head />
-      <body className="bg-body-background" >
+      <body className="bg-body-background text-neutral-700" >
         <Main />
         <NextScript />
       </body>

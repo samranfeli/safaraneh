@@ -3,7 +3,7 @@ import { AxiosResponse } from 'axios';
 
 import useHttp from '../../../hooks/use-http';
 import { Header } from '../../../enum/url';
-import { Loading, Close } from '../ui/icons';
+import { Close } from '../ui/icons';
 import Skeleton from './Skeleton';
 
 type Props<T> = {

@@ -71,7 +71,9 @@ const config: Config = {
         '2xs': '12px',
         xs: '13px',
         sm: '14px',
-        '2xl': '22px'
+        '2xl': '22px',
+        '3xl': '24px',
+        '4xl': '28px',
       },
       gridTemplateColumns: {
         '14': 'repeat(14, minmax(0, 1fr))',

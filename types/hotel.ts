@@ -6,7 +6,7 @@ export interface EntitySearchResultItemType {
     id: number;
 }
 
-interface DomesticHotelFacilitieType {
+export interface DomesticHotelFacilitieType {
     FacilityId?: number;
     Title?: string;
     Image?: string;
@@ -37,6 +37,19 @@ interface DomesticHotelMainType {
 }
 
 interface DomesticHotelNearBy extends DomesticHotelMainType {
+    DistanceText?: string;
+    DistanceValue?: number;
+}
+
+export interface DistancePointType {
+    Url?: string;
+    AttractionName?: string;
+    DurationText?: string;
+    Mode?: string;
+    DurationValue?: number;
+    ImageAlt?: string;
+    ImageTitle?: string;
+    Image?: string;
     DistanceText?: string;
     DistanceValue?: number;
 }
@@ -92,14 +105,99 @@ export interface DomesticHotelDetailType {
     Facilities?: DomesticHotelFacilitieType[];
 
     Policies?: {
-
-    }[];
-    DistancePoints?: {
-
-    }[];
+        FacilityId:any;
+        Title?:string;
+        Image?:string;
+        ImageUrl?:string;
+        Keyword?:string;
+        ImageAlt?:string;
+        ImageTitle?:string;
+        CssClass?:string;
+        Description?:string;
+        IsSpecial:boolean; 
+      }[];
+    DistancePoints?: DistancePointType[];
     DistancePointTemporarys?: {
 
     }[];
     Similars?: DomesticHotelMainType[];
     NearBys?: DomesticHotelNearBy[]
+}
+
+export interface HotelScoreDataType {
+    Comments: {
+        CommentId?: number;
+        FullName?: string;
+        CityName?: string;
+        Comment?: string;
+        IsRecommended?: boolean;
+        Satisfaction?: number;
+        RoomService?: number;
+        ResturantQuality?: number;
+        DealWithPassanger?: number;
+        CreateDate?: string;
+        ModifyDate?: string;
+        PageUrl?: string;
+        AccommodationName?: string;
+        IsStay?: boolean;
+    }[];
+    TotalScore?: number;
+    Satisfaction?: number;
+    RoomService?: number;
+    ResturantQuality?: number;
+    DealWithPassanger?: number;
+    CommentCount?: number;
+}
+
+export interface DomesticAccomodationType {
+    type: "Hotel" | "Apartments" | "Guesthouse" | "Motel" | "TraditionalHouse" | "Ecolodge" | "TourismComplex" | "BoutiqueHotel" | "Pansion";
+    rating?: number;
+    cityId?: number;
+    name?: string;
+    displayName?: string;
+    address?: string;
+    instruction?: string;
+    briefDescription?: string;
+    description?: string;
+    mendatoryFee?: string;
+    alertNote?: string;
+    telNumber?: string;
+    city: {
+        title?: string;
+        type?: string;
+        isActive: boolean;
+        parentId?: number;
+        name?: string;
+        searchValue?: string;
+        displayName?: string;
+        id: number;
+    };
+    coordinates: {
+        latitude: number;
+        longitude: number;
+    };
+    picture: {
+        path?: string;
+        altAttribute?: string;
+        titleAttribute?: string;
+    };
+    faqs: {
+        title?: string;
+        isActive: boolean;
+        priority: number;
+        entity: {
+            title?: string;
+            type?: string;
+            isActive: boolean;
+            parentId?: number;
+            name?: string;
+            searchValue?: string;
+            displayName?: string;
+            id: number;
+        };
+        question?: string;
+        answer?: string;
+        id: number;
+    }[]
+    id: number;
 }

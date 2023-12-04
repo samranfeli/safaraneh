@@ -881,5 +881,6 @@
     "iranianCalendar":"Iranian calendar",
     "gregorianCalendar":"Gregorian calendar",
     "goToToday":"go to today",
-    "seeHotelsIn":"See Hotels in {{city}}"
+    "seeHotelsIn":"See Hotels in {{city}}",
+    "walking":"Walking"
 }

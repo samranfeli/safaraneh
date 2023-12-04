@@ -18,6 +18,14 @@
 
 @font-face {
   font-family: 'samim';
+  src: url('/fonts/samim/Samim-Medium-FD.woff2') format('woff2');
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'samim';
   src: url('/fonts/samim/Samim-Bold-FD.woff2') format('woff2');
   font-weight: 800;
   font-style: normal;
@@ -234,4 +242,15 @@ label.mbsc-form-control-wrapper .mbsc-textfield {
 .yarl__slide_description {
   font-family: 'samim';
   font-size: 14px;
+}
+
+.inserted-content {
+  li{
+    list-style-position: inside;
+    list-style-type: disc;
+    margin-bottom: 1rem;
+  }
+  p{
+    margin-bottom: 13px;
+  }
 }

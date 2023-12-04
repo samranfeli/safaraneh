@@ -10,6 +10,7 @@ type Props = {
     onChange: (args: any, inst: any) => void;
     rtl?: boolean;
     locale?: any;
+    value?: [string, string];
 }
 
 type RangePickerValue = {
@@ -28,7 +29,7 @@ const RangePicker: React.FC<Props> = props => {
 
     const [locale, setLocale] = useState<any>(localeFa);
 
-    const [values, setValues] = useState<[string | null, string | null]>([null, null]);
+    const [values, setValues] = useState<[string | null, string | null]>(props.value || [null, null]);
 
     const datePickerRef = useRef<any>(null);
     const endInput = useRef<any>(null);
@@ -105,7 +106,7 @@ const RangePicker: React.FC<Props> = props => {
                         {t('checkin-date')}
                     </label>
                     <Calendar className='w-5 h-5 fill-current absolute  rtl:right-2 ltr:left-2 top-1/2 -mt-2.5 z-10 pointer-events-none' />
-                    <input id="checkin_date" className='border w-full h-12 border-neutral-400 rtl:rounded-r-lg ltr:rounded-l-lg rtl:pr-10 ltr:pl-10 pt-5 leading-4 rtl:border-l-0 ltr:border-r-0' value={start} readOnly/>
+                    <input id="checkin_date" className='border w-full h-12 border-neutral-400 rtl:rounded-r-lg ltr:rounded-l-lg rtl:pr-10 ltr:pl-10 pt-5 leading-4 rtl:border-l-0 ltr:border-r-0' value={start} readOnly />
                 </div>
                 <div className='relative'>
                     <label htmlFor='checkout_date' className="absolute top-1 rtl:right-10 ltr:left-10 text-4xs z-10 leading-5 pointer-events-none">
@@ -151,7 +152,7 @@ const RangePicker: React.FC<Props> = props => {
                         <div className={`min-w-24 bold text-sm border-b-2 border-transparent ${values && values[0] && !values[1] ? "border-blue-600" : ""}`}>
                             {startFormated}
                         </div>
-                        
+
                         <ArrowLeft className='w-6 h-6 fill-current' />
 
                         <div className={`min-w-24 bold text-sm border-b-2 border-transparent ${values && values[0] && !values[1] ? "border-blue-600" : ""}`}>

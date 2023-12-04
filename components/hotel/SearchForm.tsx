@@ -16,23 +16,29 @@ import { localeFa } from "@mobiscroll/react";
 
 
 
+type Props = {
+    defaultDestination?: EntitySearchResultItemType;
+    defaultDates?: [string, string];
+}
 
+const SearchForm: React.FC<Props> = props => {
 
-const SearchForm: React.FC = () => {
+    const { defaultDestination } = props;
 
     const { t } = useTranslation('common');
 
     const router = useRouter();
+    const routerPath = router.asPath;
 
     const dispatch = useAppDispatch();
 
-    const [dates, setDates] = useState([]);
+    const [dates, setDates] = useState<[string, string] | undefined>(props.defaultDates);
 
-    const [submitLoading,setSubmitLoading] = useState<boolean>(false);
+    const [submitLoading, setSubmitLoading] = useState<boolean>(false);
 
-    const dateChangeHandle = (event:any, inst:any) => {
+    const dateChangeHandle = (event: any) => {
 
-        if (event.value[0] && event.value[1]){
+        if (event.value[0] && event.value[1]) {
             setDates(event.value)
         }
     }
@@ -40,6 +46,16 @@ const SearchForm: React.FC = () => {
     const [defaultDestinations, setDefaultDestinations] = useState<EntitySearchResultItemType[] | undefined>();
 
     const [selectedDestination, setSelectedDestination] = useState<EntitySearchResultItemType>();
+
+    useEffect(() => {
+        if (defaultDestination) {
+            setSelectedDestination(defaultDestination);
+        }
+    }, [defaultDestination]);
+
+    useEffect(() => {
+        setSubmitLoading(false);
+    }, [routerPath]);
 
     const { sendRequest } = useHttp();
 
@@ -62,16 +78,8 @@ const SearchForm: React.FC = () => {
     }, [sendRequest]);
 
 
-    //mobiscroll :
-    // const [dates, setDates] = useState(null);
-    // const onDatesChange = (ev:any) => {
-    //     setDates(ev.value);
-    // }
-
-
-
     const submitHandler = async () => {
-        if (dates.length < 2) {
+        if (!dates || dates.length < 2) {
             // TODO validation message
             return;
         }
@@ -138,7 +146,6 @@ const SearchForm: React.FC = () => {
                 url = "";
         }
 
-
         url += `/location-${selectedDestination.id}/checkin-${dates[0]}/checkout-${dates[1]}`;
 
         router.push(url);
@@ -147,64 +154,59 @@ const SearchForm: React.FC = () => {
 
 
     return (
-        <div>
-
-            <div className="domestic-hotel-search-form grid grid-cols-1 md:grid-cols-7 gap-2 py-5">
-                <div className="relative col-span-1 md:col-span-3">
-                    <label htmlFor="destination" className="absolute top-1 rtl:right-10 ltr:left-10 text-4xs z-10 leading-5">
-                        {t('searchHotelDestination')}
-                    </label>
-                    <AutoComplete
-                        defaultList={defaultDestinations}
-                        inputId="destination"
-                        //checkTypingLanguage
-                        noResultMessage={t('NoResultsFound')}
-                        textPropertyName='displayName'
-                        acceptLanguage="fa-IR"
-                        renderOption={useCallback((option: EntitySearchResultItemType, direction: "ltr" | "rtl" | undefined) => (
-                            <div className={`px-3 py-2 flex gap-3 hover:bg-neutral-800 hover:text-white items-center ${!direction ? "" : direction === 'rtl' ? "rtl" : "ltr"}`}>
-                                {option.type === "Hotel" ? <ApartmentOutline className="w-5 h-5 fill-current" /> : option.type === "Province" ? <Home2 className="w-5 h-5 fill-current" /> : <Location className="w-5 h-5 fill-current" />}
-                                <div className="leading-5">
-                                    <div className='text-xs'>{option.name}</div>
-                                    <div className='text-3xs'>{option.displayName}</div>
-                                </div>
+        <div className="domestic-hotel-search-form grid grid-cols-1 md:grid-cols-7 gap-2">
+            <div className="relative col-span-1 md:col-span-3">
+                <label htmlFor="destination" className="absolute top-1 rtl:right-10 ltr:left-10 text-4xs z-10 leading-5">
+                    {t('searchHotelDestination')}
+                </label>
+                <AutoComplete
+                    defaultList={defaultDestinations}
+                    inputId="destination"
+                    //checkTypingLanguage
+                    noResultMessage={t('NoResultsFound')}
+                    textPropertyName='displayName'
+                    acceptLanguage="fa-IR"
+                    renderOption={useCallback((option: EntitySearchResultItemType, direction: "ltr" | "rtl" | undefined) => (
+                        <div className={`px-3 py-2 flex gap-3 hover:bg-neutral-800 hover:text-white items-center ${!direction ? "" : direction === 'rtl' ? "rtl" : "ltr"}`}>
+                            {option.type === "Hotel" ? <ApartmentOutline className="w-5 h-5 fill-current" /> : option.type === "Province" ? <Home2 className="w-5 h-5 fill-current" /> : <Location className="w-5 h-5 fill-current" />}
+                            <div className="leading-5">
+                                <div className='text-xs'>{option.name}</div>
+                                <div className='text-3xs'>{option.displayName}</div>
                             </div>
-                        ), [])}
-                        icon={<Location className="h-5 w-5 fill-current" />}
-                        inputClassName={`w-full outline-none border rounded-lg border-neutral-400 pt-4 h-12 text-sm text-neutral-500 placeholder:text-neutral-500 focus:border-neutral-900`}
-                        placeholder={t('search-hotel-or-city')}
-                        min={2}
-                        value={selectedDestination}
-                        onChangeHandle={setSelectedDestination}
-                        url={url}
-                    />
-                </div>
-                <div className="col-span-1 md:col-span-3 relative">
+                        </div>
+                    ), [])}
+                    icon={<Location className="h-5 w-5 fill-current" />}
+                    inputClassName={`w-full outline-none border rounded-lg border-neutral-400 pt-4 h-12 text-sm text-neutral-500 placeholder:text-neutral-500 focus:border-neutral-900`}
+                    placeholder={t('search-hotel-or-city')}
+                    min={2}
+                    value={selectedDestination}
+                    onChangeHandle={setSelectedDestination}
+                    url={url}
+                />
+            </div>
+            <div className="col-span-1 md:col-span-3 relative">
 
 
-                    <DatePicker
-                        onChange = {dateChangeHandle}
-                        rtl
-                        locale={localeFa}                        
-                    />
+                <DatePicker
+                    value={dates}
+                    onChange={dateChangeHandle}
+                    rtl
+                    locale={localeFa}
+                />
 
-                </div>
-
-                <div className="col-span-1 md:col-span-1 pt-5 md:pt-0">
-                    <button
-                        type='button'
-                        className='bg-primary-700 hover:bg-primary-800 transition-all text-white rounded-lg text-center min-w-sm h-12 block w-full flex gap-3 items-center justify-center'
-                        onClick={submitHandler}
-                    >
-                        جستجو
-                        {submitLoading ? <span className="animate-spin block border-2 border-white rounded-full border-r-transparent border-t-transparent w-5 h-5" />: null}
-                    </button>
-                </div>
             </div>
 
+            <div className="col-span-1 md:col-span-1 pt-5 md:pt-0">
+                <button
+                    type='button'
+                    className='bg-primary-700 hover:bg-primary-800 transition-all text-white rounded-lg text-center min-w-sm h-12 block w-full flex gap-3 items-center justify-center'
+                    onClick={submitHandler}
+                >
+                    جستجو
+                    {submitLoading ? <span className="animate-spin block border-2 border-white rounded-full border-r-transparent border-t-transparent w-5 h-5" /> : null}
+                </button>
+            </div>
         </div>
-
-
     )
 }
 

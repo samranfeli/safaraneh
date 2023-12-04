@@ -116,7 +116,7 @@ const SuggestedHotels: React.FC = () => {
     return (
         <div className="max-w-container mx-auto p-5 md:py-6">
 
-            <h2 className='text-xl font-bold mb-4'>
+            <h2 className='text-xl font-semibold mb-4'>
                 {t('suggested-hotels')}
             </h2>
 

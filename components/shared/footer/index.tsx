@@ -55,7 +55,7 @@ export default function Footer() {
 
                 <div className="flex gap-4 justify-center mb-4">
                     {t('support')}
-                    <a href="tel:02126150051" className="text-lg font-bold">
+                    <a href="tel:02126150051" className="text-lg font-semibold">
                         02126150051
                     </a>
                 </div>
