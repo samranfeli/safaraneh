@@ -4,7 +4,7 @@ import type { GetServerSideProps, NextPage } from 'next';
 import { i18n, useTranslation } from 'next-i18next';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 import Head from 'next/head';
-import {useEffect} from 'react';
+import { useEffect } from 'react';
 import { PageDataType, PortalDataType } from '@/types/common';
 import { DomesticAccomodationType, DomesticHotelDetailType, EntitySearchResultItemType, HotelScoreDataType } from '@/types/hotel';
 import { useRouter } from 'next/router';
@@ -18,8 +18,9 @@ import HotelTerms from '@/components/hotel/hotelDetails/HotelTerms';
 import HotelAbout from '@/components/hotel/hotelDetails/HotelAbout';
 import { getPortal } from '@/actions/portalActions';
 import Attractions from '@/components/hotel/hotelDetails/Attractions';
-import { useAppDispatch,useAppSelector } from '@/hooks/use-store';
+import { useAppDispatch, useAppSelector } from '@/hooks/use-store';
 import { setReduxPortal } from '@/store/portalSlice';
+import FAQ from '@/components/hotel/hotelDetails/FAQ';
 
 type Props = {
   pageData: PageDataType;
@@ -37,14 +38,14 @@ const HotelDetail: NextPage<Props> = props => {
   const dispatch = useAppDispatch();
   const portalInformation = useAppSelector(state => state.portal);
 
-  useEffect(()=>{
-   if(portalData && !portalInformation.MetaTags?.length){
-     dispatch(setReduxPortal({
-         MetaTags: portalData.MetaTags,
-         Phrases: portalData.Phrases
-     }));
-   }
-  },[portalData]);
+  useEffect(() => {
+    if (portalData && !portalInformation.MetaTags?.length) {
+      dispatch(setReduxPortal({
+        MetaTags: portalData.MetaTags,
+        Phrases: portalData.Phrases
+      }));
+    }
+  }, [portalData]);
 
 
   const { t } = useTranslation('common');
@@ -178,34 +179,45 @@ const HotelDetail: NextPage<Props> = props => {
         </div>
 
 
+        <br />
+        <FAQ faqs={accommodationData.faqs} />
+
+
       </div>
 
     </>
   )
 }
 
-
-export const getServerSideProps: GetServerSideProps = async ({ locale, query, req }) => {
+export const getServerSideProps: GetServerSideProps = async ({ locale, query }) => {
 
   const url = encodeURI(`/${locale}/hotel/${query.hotelDetail![0]}`);
 
-  const [pageDetails, hotelData, portalData] = await Promise.all<any>([
-    getpageByUrl(url, "fa-IR"),
-    getDomesticHotelDetailByUrl(url, "fa-IR"),
+  const fetchPageDetailsAndScore = async (url: string, acceptLanguage: string) => {
+    const pageInfo: any = await getpageByUrl(url, acceptLanguage);
+    const scoreInfo = await getScore(pageInfo.data.Id, acceptLanguage);
+    return { pageInfo, scoreInfo };
+  }
+
+  const fetchHotelDetailsAndAccomodation = async (url: string, acceptLanguage: string) => {
+    const hotelInfo: any = await getDomesticHotelDetailByUrl(url, acceptLanguage);
+    const accomodationInfo = await getAccommodationById(hotelInfo.data.HotelId, acceptLanguage);
+    return { hotelInfo, accomodationInfo };
+  }
+
+  const [{ pageInfo, scoreInfo }, { hotelInfo, accomodationInfo }, portalData] = await Promise.all<any>([
+    fetchPageDetailsAndScore(url, "fa-IR"),
+    fetchHotelDetailsAndAccomodation(url, "fa-IR"),
     getPortal("fa-IR")
-  ]);
-  const [hotelScoreData, accommodationData] = await Promise.all<any>([
-    getScore(pageDetails.data.Id, "fa-IR"),
-    getAccommodationById(hotelData.data.HotelId, "fa-IR")
   ]);
 
   return ({
     props: {
       ...await (serverSideTranslations(locale as string, ['common'])),
-      pageData: pageDetails.data,
-      hotelData: hotelData.data,
-      hotelScoreData: hotelScoreData.data,
-      accommodationData: accommodationData.data.result,
+      pageData: pageInfo.data,
+      hotelData: hotelInfo.data,
+      hotelScoreData: scoreInfo.data,
+      accommodationData: accomodationInfo.data.result,
       portalData: portalData.data
     },
   })
