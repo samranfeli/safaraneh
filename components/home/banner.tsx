@@ -21,7 +21,7 @@ const Banner :React.FC = () => {
         {
           key: '1',
           label: (<div className='text-center'> <Apartment className='w-6 h-6 fill-current block mx-auto mb-1' /> {t('domestic-hotel')} </div>),
-          children: <SearchForm defaultDates={domesticHotelDefaultDates} />,
+          children: <div className='py-5'><SearchForm defaultDates={domesticHotelDefaultDates} /></div>,
         },
         {
           key: '2',
