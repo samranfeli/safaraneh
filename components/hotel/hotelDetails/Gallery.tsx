@@ -42,7 +42,7 @@ const Gallery: React.FC<Props> = props => {
     }
 
     return (
-        <div>
+        <>
             <div className='grid grid-cols-1 md:grid-cols-4 gap-1 bg-white relative'>
                 {slides.slice(0, 5).map((slide, index) => (
                     <Image
@@ -74,7 +74,7 @@ const Gallery: React.FC<Props> = props => {
                 thumbnails={{width:80,height:50}}
             />
 
-        </div>
+        </>
     )
 }
 

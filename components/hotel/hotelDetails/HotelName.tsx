@@ -45,16 +45,16 @@ const HotelName: React.FC<Props> = props => {
                     className="text-md lg:text-xl font-semibold"
                 />
             </div>
-            <div className="lg:col-span-1">
-                {(hotelData.Latitude && hotelData.Longitude) ? (
-                    <LeafletNoSsr
-                        className='h-48 rounded-xl'
-                        location={[hotelData.Latitude, hotelData.Longitude]}
-                    />
-                ) : (
-                    <div />
-                )}
-            </div>
+
+            {(hotelData.Latitude && hotelData.Longitude) ? (
+                <LeafletNoSsr
+                    className='lg:col-span-1 h-48 rounded-xl'
+                    location={[hotelData.Latitude, hotelData.Longitude]}
+                />
+            ) : (
+                <div className="lg:col-span-1" />
+            )}
+
             <div className='hidden lg:block lg:col-span-2'>
                 <h3 className='font-semibold text-md lg:text-lg mb-3'>امکانات محبوب هتل</h3>
                 <div className='grid grid-cols-2 lg:grid-cols-3 gap-2'>
