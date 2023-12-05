@@ -25,6 +25,15 @@ const Home:NextPage = ({blogs,portalData}:{blogs?:BlogItemType[],portalData?:Por
      const dispatch = useAppDispatch();
      const portalInformation = useAppSelector(state => state.portal);
 
+
+useEffect(()=>{
+  const fetchBlogPosts =async () => {
+    const posts = await getBlogs(4);
+  }
+
+  fetchBlogPosts();
+},[]);
+
      useEffect(()=>{
       if(portalData && !portalInformation.MetaTags?.length){
         dispatch(setReduxPortal({
@@ -42,7 +51,7 @@ const Home:NextPage = ({blogs,portalData}:{blogs?:BlogItemType[],portalData?:Por
       <PopularCities />
       <BeachHotels />
       <Unknowns />
-      <RecentBlogs blogs={blogs} />
+      {blogs && <RecentBlogs blogs={blogs} />}
       <Services />
       <AboutSummary />
       <HomeFAQ />
@@ -53,7 +62,7 @@ const Home:NextPage = ({blogs,portalData}:{blogs?:BlogItemType[],portalData?:Por
 
 export const getStaticProps = async (context:any) => {
   
-  const [recentBlogPost, portalData] = await Promise.all<any>([
+  const [recentBlogPost, portalData] = await Promise.all<[any,any]>([
     getBlogs(4),
     getPortal("fa-IR")
   ]);
@@ -63,8 +72,8 @@ export const getStaticProps = async (context:any) => {
     props: {
       ...await serverSideTranslations(context.locale, ['common','home']),
       context:context,
-      blogs: recentBlogPost?.data,
-      portalData: portalData.data
+      blogs: recentBlogPost?.data || null,
+      portalData: portalData?.data || null
     }
   })
 };

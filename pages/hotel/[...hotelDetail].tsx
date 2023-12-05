@@ -3,6 +3,7 @@ import { getAccommodationById, getDomesticHotelDetailByUrl, getScore } from '@/a
 import type { GetServerSideProps, NextPage } from 'next';
 import { i18n, useTranslation } from 'next-i18next';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
+import { InView } from 'react-intersection-observer';
 import Head from 'next/head';
 import { useEffect } from 'react';
 import { PageDataType, PortalDataType } from '@/types/common';
@@ -21,6 +22,7 @@ import Attractions from '@/components/hotel/hotelDetails/Attractions';
 import { useAppDispatch, useAppSelector } from '@/hooks/use-store';
 import { setReduxPortal } from '@/store/portalSlice';
 import FAQ from '@/components/hotel/hotelDetails/FAQ';
+import SimilarHotels from '@/components/hotel/hotelDetails/SimilarHotels';
 
 type Props = {
   pageData: PageDataType;
@@ -178,6 +180,14 @@ const HotelDetail: NextPage<Props> = props => {
           <Attractions attractions={hotelData.DistancePoints} />
         </div>
 
+        <InView triggerOnce={true}>
+          {({ inView, ref }) =>
+            <div ref={ref}>
+              {inView && <SimilarHotels similarHotels={hotelData.Similars} />}
+            </div>}
+        </InView>
+
+
 
         <br />
         <FAQ faqs={accommodationData.faqs} />
@@ -195,13 +205,13 @@ export const getServerSideProps: GetServerSideProps = async ({ locale, query }) 
 
   const fetchPageDetailsAndScore = async (url: string, acceptLanguage: string) => {
     const pageInfo: any = await getpageByUrl(url, acceptLanguage);
-    const scoreInfo = await getScore(pageInfo.data.Id, acceptLanguage);
+    const scoreInfo = await getScore(pageInfo.data?.Id, acceptLanguage);
     return { pageInfo, scoreInfo };
   }
 
   const fetchHotelDetailsAndAccomodation = async (url: string, acceptLanguage: string) => {
     const hotelInfo: any = await getDomesticHotelDetailByUrl(url, acceptLanguage);
-    const accomodationInfo = await getAccommodationById(hotelInfo.data.HotelId, acceptLanguage);
+    const accomodationInfo = await getAccommodationById(hotelInfo.data?.HotelId, acceptLanguage);
     return { hotelInfo, accomodationInfo };
   }
 
@@ -214,11 +224,11 @@ export const getServerSideProps: GetServerSideProps = async ({ locale, query }) 
   return ({
     props: {
       ...await (serverSideTranslations(locale as string, ['common'])),
-      pageData: pageInfo.data,
-      hotelData: hotelInfo.data,
-      hotelScoreData: scoreInfo.data,
-      accommodationData: accomodationInfo.data.result,
-      portalData: portalData.data
+      pageData: pageInfo.data || null,
+      hotelData: hotelInfo.data || null,
+      hotelScoreData: scoreInfo.data || null,
+      accommodationData: accomodationInfo.data.result || null,
+      portalData: portalData.data || null
     },
   })
 }

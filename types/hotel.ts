@@ -19,7 +19,7 @@ export interface DomesticHotelFacilitieType {
     IsSpecial?: boolean;
 }
 
-interface DomesticHotelMainType {
+export interface DomesticHotelMainType {
     HotelId?: number;
     HotelName?: string;
     CityName?: string;
@@ -201,3 +201,9 @@ export interface DomesticAccomodationType {
     }[]
     id: number;
 }
+
+export interface AvailabilityByIdItem   {
+    id: number,
+    boardPrice: number,
+    salePrice: number,
+  }
