@@ -65,7 +65,7 @@ const HotelName: React.FC<Props> = props => {
                 </div>
             </div>
             <div className='hidden lg:block lg:col-span-1'>
-                <Attractions isSmall attractions={hotelData.DistancePoints} />
+                {!!hotelData.DistancePoints?.length && <Attractions isSmall attractions={hotelData.DistancePoints} />}
             </div>
 
         </div>

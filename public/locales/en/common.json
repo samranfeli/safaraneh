@@ -882,5 +882,6 @@
     "gregorianCalendar":"Gregorian calendar",
     "goToToday":"go to today",
     "seeHotelsIn":"See Hotels in {{city}}",
-    "walking":"Walking"
+    "walking":"Walking",
+    "close":"close"
 }

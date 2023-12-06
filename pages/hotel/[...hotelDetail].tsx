@@ -152,7 +152,7 @@ const HotelDetail: NextPage<Props> = props => {
           <BackToList checkin={checkin} checkout={checkout} cityId={hotelData.CityId} cityName={hotelData.CityName} />
         </div>
 
-        <Gallery images={hotelData.Gallery} />
+        {!!hotelData.Gallery?.length && <Gallery images={hotelData.Gallery} />}
 
         <HotelName hotelData={hotelData} scoreData={hotelScoreData} />
 
@@ -163,22 +163,30 @@ const HotelDetail: NextPage<Props> = props => {
           defaultDates={defaultDates}
         />
 
+        <InView triggerOnce={true}>
+          {({ inView, ref }) =>
+            <div ref={ref}>
+              {inView && !!hotelData.Facilities?.length && <HotelFacilities facilities={hotelData.Facilities} />}
+            </div>}
+        </InView>
 
-        <HotelFacilities facilities={hotelData.Facilities} />
-
-        <HotelTerms
+        {!!(hotelData.Policies?.length || accommodationData.instruction?.length || accommodationData.mendatoryFee?.length) && <HotelTerms
           instruction={accommodationData.instruction}
           mendatoryFee={accommodationData.mendatoryFee}
           policies={hotelData.Policies}
-        />
+        />}
 
         {!!portalName && <HotelAbout portalName={portalName} portalAddress={portalURL!} description={accommodationData.description} />}
 
 
-        <h4 className='text-lg lg:text-3xl font-semibold mt-5 mb-3 md:mt-10 md:mb-7'>{t('attraction')}</h4>
-        <div className='p-5 lg:p-7 bg-white rounded-xl'>
-          <Attractions attractions={hotelData.DistancePoints} />
-        </div>
+        {!!hotelData.DistancePoints?.length && (
+          <>
+              <h4 className='text-lg lg:text-3xl font-semibold mt-5 mb-3 md:mt-10 md:mb-7'>{t('attraction')}</h4>
+              <div className='p-5 lg:p-7 bg-white rounded-xl'>
+                <Attractions attractions={hotelData.DistancePoints} />
+              </div>
+          </>
+        )}
 
         <InView triggerOnce={true}>
           {({ inView, ref }) =>
@@ -187,10 +195,7 @@ const HotelDetail: NextPage<Props> = props => {
             </div>}
         </InView>
 
-
-
-        <br />
-        <FAQ faqs={accommodationData.faqs} />
+        {!!accommodationData.faqs?.length && <FAQ faqs={accommodationData.faqs} />}
 
 
       </div>

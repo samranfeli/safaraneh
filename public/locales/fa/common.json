@@ -963,6 +963,7 @@
       "gregorianCalendar":"تقویم میلادی",
       "goToToday":"برو به امروز",
       "seeHotelsIn":"مشاهده هتل های  {{city}}",
-      "walking":"پیاده"
+      "walking":"پیاده",
+      "close":"بستن"
   
   }
