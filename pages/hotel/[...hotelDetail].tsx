@@ -1,7 +1,7 @@
 import { getpageByUrl } from '@/actions';
 import { getAccommodationById, getDomesticHotelDetailByUrl, getScore } from '@/actions/hotelActions';
 import type { GetServerSideProps, NextPage } from 'next';
-import { i18n, useTranslation } from 'next-i18next';
+import { useTranslation } from 'next-i18next';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 import { InView } from 'react-intersection-observer';
 import Head from 'next/head';
@@ -23,6 +23,8 @@ import { useAppDispatch, useAppSelector } from '@/hooks/use-store';
 import { setReduxPortal } from '@/store/portalSlice';
 import FAQ from '@/components/hotel/hotelDetails/FAQ';
 import SimilarHotels from '@/components/hotel/hotelDetails/SimilarHotels';
+import moment from 'moment-jalaali';
+import Comments from '@/components/hotel/hotelDetails/comments';
 
 type Props = {
   pageData: PageDataType;
@@ -76,7 +78,7 @@ const HotelDetail: NextPage<Props> = props => {
     }
   }
 
-  let defaultDates: [string, string] | undefined = undefined;
+  let defaultDates : [string, string] = [moment().format("YYYY-MM-DD") , moment().add(1,'days').format("YYYY-MM-DD") ];
 
   if (checkin && checkout) {
     defaultDates = [checkin, checkout];
@@ -133,12 +135,6 @@ const HotelDetail: NextPage<Props> = props => {
           </>
         )}
 
-        <link
-          rel="stylesheet"
-          type="text/css"
-          href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.3.1/leaflet.css"
-        />
-
       </Head>
 
 
@@ -187,6 +183,8 @@ const HotelDetail: NextPage<Props> = props => {
               </div>
           </>
         )}
+
+        <Comments hotelScoreData={hotelScoreData} />
 
         <InView triggerOnce={true}>
           {({ inView, ref }) =>

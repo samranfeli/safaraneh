@@ -42,7 +42,7 @@ const HotelName: React.FC<Props> = props => {
                 <HotelScore
                     reviews={props.scoreData?.CommentCount}
                     score={props.scoreData?.Satisfaction}
-                    className="text-md lg:text-xl font-semibold"
+                    className="text-md lg:text-lg font-semibold"
                 />
             </div>
 

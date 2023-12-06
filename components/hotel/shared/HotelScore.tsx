@@ -38,7 +38,7 @@ const HotelScore: React.FC<Props> = props => {
 
     return (
         <div className={` ${props.className || ""}`}>
-            {score} از 100 {pointTitle} ({props.reviews} {t("guest-reviews")}) 
+            <span className="text-3xl font-bold"> {score} از 100  </span> {pointTitle} ({props.reviews} {t("guest-reviews")}) 
         </div>
     )
 };
