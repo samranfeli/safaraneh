@@ -36,9 +36,7 @@ function MyApp({ Component, pageProps }: AppProps) {
       <Head>
         <title>رزرو هتل | بیشترین %تخفیف% جدیدترین اطلاعات و تصاویر - سفرانه</title>
       </Head>
-      <Layout>
-        <Component {...pageProps} />
-      </Layout>
+      <Component {...pageProps} />
     </Provider>
   )
 }

@@ -1,14 +1,20 @@
-import Logo from '../shared/Logo';
+import Image from 'next/image';
 import Link from 'next/link';
 
-const AboutSummary: React.FC = () => {
+type Props = {
+    logo:string;
+    siteName:string;
+}
+
+const AboutSummary: React.FC<Props> = props => {
 
     return (
         <div className="max-w-container mx-auto p-5 md:py-10">
 
             <div className="bg-white p-5 lg:p-7 rounded-lg text-sm text-justify">
 
-                <Logo className="mb-2" />
+                <Image src={props.logo} alt={props.siteName} width={115} height={48} classNamemb-2 />
+
                 <p className='mb-4'>
                     مدت زمان زیادی نیست که رزرو خدمات گردشگری نیز مانند صدها خدمات
                     دیگر به دنیای دیجیتال قدم گذاشته و خیلی سریع روش‌های سنتی سفر کردن

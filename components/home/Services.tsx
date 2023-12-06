@@ -1,14 +1,14 @@
 import { useTranslation } from 'next-i18next';
 
 import { Headset, PersentBadge, Discount, ImmediateVoucher } from '../shared/ui/icons';
-import { useAppSelector } from '@/hooks/use-store';
 
-const Services: React.FC = () => {
+type Props = {
+    siteName:string;
+}
+
+const Services: React.FC<Props> = props => {
 
     const { t } = useTranslation('common');
-
-    const portalPhrases = useAppSelector(state => state.portal.Phrases);
-    const projectName = portalPhrases.find(item => item.Keyword === "Name")?.Value;
 
     const iconsClassName = "block mx-auto w-14 h-14 mb-8 mt-4";
 
@@ -20,22 +20,22 @@ const Services: React.FC = () => {
             {
                 icon: <Headset className={iconsClassName} />,
                 title: t('service1'),
-                description: t('service1-desc', { portalName: projectName })
+                description: t('service1-desc', { portalName: props.siteName })
             },
             {
                 icon: <PersentBadge className={iconsClassName} />,
                 title: t('service2'),
-                description: t('service2-desc', { portalName: projectName })
+                description: t('service2-desc', { portalName: props.siteName })
             },
             {
                 icon: <Discount className={iconsClassName} />,
                 title: t('service3'),
-                description: t('service3-desc', { portalName: projectName })
+                description: t('service3-desc', { portalName: props.siteName })
             },
             {
                 icon: <ImmediateVoucher className={iconsClassName} />,
                 title: t('service4'),
-                description: t('service4-desc', { portalName: projectName })
+                description: t('service4-desc', { portalName: props.siteName })
             },
         ]
 

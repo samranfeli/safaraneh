@@ -3,11 +3,18 @@ import { useTranslation } from "next-i18next";
 import { useState, useEffect, useRef } from "react";
 
 import { Menu, DownCaret, Home, Close, User, UserAdd, Ticket, Wallet, Bed, Blog, Suitcase, Travel } from "../ui/icons";
-import Logo from "../Logo";
+import Image from "next/image";
 
-export default function TravelServices() {
+type Props = {
+    logo:string;
+    siteName:string;
+}
+
+const TravelServices:React.FC<Props> = props => {
 
     const { t } = useTranslation('common');
+
+    const {logo, siteName} = props;
 
     const [openMenu, setOpenMenu] = useState(false);
 
@@ -53,7 +60,7 @@ export default function TravelServices() {
                 <div className={menuWrapperClassNames}  >
                     <div className="md:hidden border-b border-neutral-200 p-5 flex justify-between items-center">
                         <Link href="/" className="block">
-                            <Logo />
+                            <Image src={logo} alt={siteName} width={115} height={48} />
                         </Link>
                         <button aria-label={t('close-menu')} type="button" onClick={() => { setOpenMenu(false) }}>
                             <Close className="w-6 h-6 fill-neutral-400" />
@@ -123,3 +130,5 @@ export default function TravelServices() {
         </div>
     )
 }
+
+export default TravelServices;

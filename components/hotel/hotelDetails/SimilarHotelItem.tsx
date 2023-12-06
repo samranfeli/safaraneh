@@ -6,6 +6,8 @@ import { DomesticHotelMainType } from '@/types/hotel';
 import { LeftCaret, Location } from '@/components/shared/ui/icons';
 import Rating from '@/components/shared/ui/Rating';
 import { numberWithCommas } from '@/helpers';
+import Tooltip from '@/components/shared/ui/Tooltip';
+
 
 interface Hotel extends DomesticHotelMainType {
     salePriceFrom: number;
@@ -14,9 +16,9 @@ interface Hotel extends DomesticHotelMainType {
 
 type Props = {
     hotel?: Hotel;
-    loadingPrice?:boolean;
-    nights:number;
-    searchInfo:string;
+    loadingPrice?: boolean;
+    nights: number;
+    searchInfo: string;
 }
 
 const SimilarHotelItem: React.FC<Props> = props => {
@@ -25,13 +27,13 @@ const SimilarHotelItem: React.FC<Props> = props => {
 
     const { t } = useTranslation('common');
 
-    if(!hotel){
+    if (!hotel) {
         return null;
     }
 
     let boardPrice = null;
-    
-    if (hotel.boardPriceFrom && hotel.boardPriceFrom > hotel.salePriceFrom){
+
+    if (hotel.boardPriceFrom && hotel.boardPriceFrom > hotel.salePriceFrom) {
         boardPrice = (<span className='text-neutral-400 text-xs line-through'>
             {numberWithCommas(hotel.boardPriceFrom)} {t('rial')}
         </span>);
@@ -39,26 +41,27 @@ const SimilarHotelItem: React.FC<Props> = props => {
 
     let salePrice = <span className='text-xs font-semibold text-red-500'>قیمت نیازمند استعلام است </span>;
     let buttonText = "درخواست رزرو";
-    
-    if(hotel.salePriceFrom > 10000){
-        
+
+    if (hotel.salePriceFrom > 10000) {
+
         const salePriceTootlipText = (
-            <>
-                <div>
-                    {numberWithCommas(Math.floor(hotel.salePriceFrom/props.nights))} {t('rial')} 
-                </div>
+            <div className='w-40 leading-6'>
+                {numberWithCommas(Math.floor(hotel.salePriceFrom / props.nights))} {t('rial')}
+                <br />
                 <small>
                     {t("Avg-per-night")}
                 </small>
-            </>
+            </div>
         );
 
-        salePrice = (<div title={numberWithCommas(Math.floor(hotel.salePriceFrom/props.nights)) + " "+ t('rial')}  >
-            <div className='text-sm font-semibold rtl:text-left ltr:text-right leading-5'>{numberWithCommas(hotel.salePriceFrom)} {t('rial')}</div>
+        salePrice = (<>
+            <Tooltip title={salePriceTootlipText} position='end' >
+                <div className='text-sm font-semibold rtl:text-left ltr:text-right leading-5'>{numberWithCommas(hotel.salePriceFrom)} {t('rial')}</div>
+            </Tooltip>
             <p className='text-2xs'>{t('price-start-from')} {props.nights} {t('night')}</p>
-        </div>);
+        </>);
 
-        
+
         buttonText = t('see-rooms');
     };
 
@@ -66,18 +69,18 @@ const SimilarHotelItem: React.FC<Props> = props => {
     return (
         <div className='bg-white border-2 border-white rounded-xl flex flex-col justify-between'>
             <div>
-                <Link href={hotel.Url!+props.searchInfo} target='_blank'>
-                    <Image 
+                <Link href={hotel.Url! + props.searchInfo} target='_blank'>
+                    <Image
                         src={hotel.ImageUrl!}
-                        alt={hotel.ImageAlt || hotel.ImageTitle || ""} 
-                        title={hotel.ImageTitle} 
-                        width={369} 
-                        height={224}  
+                        alt={hotel.ImageAlt || hotel.ImageTitle || ""}
+                        title={hotel.ImageTitle}
+                        width={369}
+                        height={224}
                         className='w-full h-56 object-cover rounded-t-xl'
                     />
                 </Link>
                 <div className='p-3'>
-                    <Link href={hotel.Url!+props.searchInfo} target='_blank' className='block mb-2'>
+                    <Link href={hotel.Url! + props.searchInfo} target='_blank' className='block mb-2'>
                         <h3 className='font-semibold text-base'>
                             {hotel.HotelTypeName} {hotel.HotelName} {hotel.CityName}
                         </h3>
@@ -94,20 +97,20 @@ const SimilarHotelItem: React.FC<Props> = props => {
             <footer className='p-3 flex flex-col items-end justify-end'>
 
                 {props.loadingPrice ? (
-                    <span className="animate-spin block border-2 border-blue-200 rounded-full border-r-transparent border-t-transparent w-7 h-7 mb-4" /> 
+                    <span className="animate-spin block border-2 border-blue-200 rounded-full border-r-transparent border-t-transparent w-7 h-7 mb-4" />
                 ) : (
                     <>
-                    {boardPrice}
-                    {salePrice}
+                        {boardPrice}
+                        {salePrice}
                     </>
                 )}
 
-                <Link href={hotel.Url!+props.searchInfo} className='bg-primary-800 hover:bg-primary-700 text-sm text-white font-semibold px-5 h-10 rounded-md inline-flex gap-1 items-center'>
+                <Link href={hotel.Url! + props.searchInfo} className='bg-primary-800 hover:bg-primary-700 text-sm text-white font-semibold px-5 h-10 rounded-md inline-flex gap-1 items-center'>
                     {buttonText}
                     <LeftCaret className='w-4 h-4 fill-current ltr:rotate-180' />
                 </Link>
             </footer>
-            
+
         </div>
     )
 }

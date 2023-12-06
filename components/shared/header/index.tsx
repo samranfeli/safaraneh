@@ -3,11 +3,18 @@ import { useTranslation } from "next-i18next";
 
 import TravelServices from "./travelServices";
 import Language from "./Language";
-import Logo from "../Logo";
+import Image from "next/image";
 
-export default function Header() {
+type Props = {
+    logo: string;
+    siteName: string;
+}
+
+const Header:React.FC<Props> = props => {
 
     const { t } = useTranslation('common');
+
+    const {logo, siteName} = props;
 
     return (
         <header className="bg-white z-30 relative">
@@ -15,9 +22,9 @@ export default function Header() {
             <div className="max-w-container mx-auto px-3 py-3 flex justify-center md:justify-between">
                 <div className="flex gap-8 items-center">
                     <Link href="/" className="block">
-                        <Logo />
+                        <Image src={logo} alt={siteName} width={115} height={48} className="" />
                     </Link>
-                    <TravelServices />
+                    <TravelServices logo={logo} siteName={siteName} />
                 </div>
 
                 <div className="gap-4 items-center hidden md:flex">
@@ -37,3 +44,5 @@ export default function Header() {
         </header>
     )
 }
+
+export default Header;
