@@ -264,7 +264,7 @@ export const getServerSideProps: GetServerSideProps = async ({ locale, query }) 
 
   return ({
     props: {
-      ...await (serverSideTranslations(locale as string, ['common'])),
+      //...await (serverSideTranslations(locale as string, ['common'])),
       pageData: pageInfo.data || null,
       hotelData: hotelInfo.data || null,
       hotelScoreData: scoreInfo.data || null,
