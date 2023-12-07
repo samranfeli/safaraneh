@@ -45,7 +45,7 @@ const SimilarHotelItem: React.FC<Props> = props => {
     if (hotel.salePriceFrom > 10000) {
 
         const salePriceTootlipText = (
-            <div className='w-40 leading-6'>
+            <div className='max-w-40 whitespace-nowrap leading-6'>
                 {numberWithCommas(Math.floor(hotel.salePriceFrom / props.nights))} {t('rial')}
                 <br />
                 <small>

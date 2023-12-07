@@ -2,9 +2,9 @@
 import { useTranslation } from "next-i18next";
 import Router from "next/router";
 
-// import { Error as ErrorIcon } from "../../dist/icons";
 import { useAppDispatch, useAppSelector } from "../../hooks/use-store";
 import { setReduxError } from '../../store/errorSlice';
+import { ErrorIcon } from "./ui/icons";
 
 const Error: React.FC = () => {
 
@@ -24,40 +24,41 @@ const Error: React.FC = () => {
         }));
     }
 
-    const backTo = (target:string) => {
+    const backTo = (target: string) => {
         Router.push(target);
         closeHandler();
     }
 
     if (storedError.isVisible) {
+
         return (
-            // <Modal
-            //     title={storedError.title || t('error')}
-            //     open={storedError.isVisible}
-            //     onCancel={storedError.closeErrorLink ? undefined : closeHandler}
-            //     maskClosable={!storedError.closeErrorLink}
-            //     width={400}
-            //     footer={<div className="text-center pt-4 pb-10">
+            <div className="fixed top-0 left-0 right-0 bottom-0 h-screen w-screen bg-black/50 backdrop-blur-sm z-50 flex justify-center items-center">
 
-            //         {storedError.closeErrorLink ? (
-            //             <button type="button" className="btn-yellow w-32" onClick={()=>{backTo(storedError.closeErrorLink!)}}>
-            //                 {storedError.closeButtonText || t('home')}
-            //             </button>
-            //         ) : (
-            //             <button type="button" className="btn-yellow w-32" onClick={closeHandler}>
-            //                 {t('close')}
-            //             </button>
-            //         )}
+                <div className="bg-white rounded-xl px-5 pt-10 pb-12 w-full max-w-md text-center">
+                    <ErrorIcon className="w-20 mx-auto fill-red-500 mb-3 md:mb-4" />
 
-            //     </div>}
-            //     className="text-center error-modal"
-            // >
-            //     <ErrorIcon className="w-24 mx-auto" />
-            //     <div className="text-red-600 mt-4 md:mt-6 font-semibold leading-7">
-            //         {storedError.message}
-            //     </div>
-            // </Modal>
-            'error'
+                    <h5 className="text-red-500 text-lg sm:text-2xl font-bold mb-1">
+                        {storedError.title || t('error')}
+                    </h5>
+
+                    <div className="text-neutral-500 mb-4 md:mb-7 leading-7 text-center">
+                        {storedError.message}
+                    </div>
+
+                    {storedError.closeErrorLink ? (
+                        <button type="button" className="max-w-full w-32 cursor-pointer bg-primary-700 hover:bg-primary-600 text-white h-10 px-5 rounded-md" onClick={() => { backTo(storedError.closeErrorLink!) }}>
+                            {storedError.closeButtonText || t('home')}
+                        </button>
+                    ) : (
+                        <button type="button" className="max-w-full w-32 cursor-pointer bg-primary-700 hover:bg-primary-600 text-white h-10 px-5 rounded-md" onClick={closeHandler}>
+                            {t('close')}
+                        </button>
+                    )}
+
+                </div>
+
+            </div>
+
         )
     }
 

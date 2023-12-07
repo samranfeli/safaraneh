@@ -1,13 +1,13 @@
 import axios from 'axios';
 
-import { Header } from "../enum/url";
+import { Header,ServerAddress, Hotel } from "../enum/url";
 
 export const getPortal = async (acceptLanguage: string = "fa-IR") => {
 
     try {
         const response = await axios({
             method: "get",
-            url: "https://api.safaraneh.com/v2/Portal/GetPortal",
+            url: `${ServerAddress.Type}${ServerAddress.Hotel_Main}${Hotel.GetPortal}`,
             headers: {
                 ...Header,
                 "Accept-Language": acceptLanguage,

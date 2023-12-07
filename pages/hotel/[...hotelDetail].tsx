@@ -105,7 +105,9 @@ const HotelDetail: NextPage<Props> = props => {
     siteURL = portalData.PortalName || "";
   }
 
-
+if (!hotelData){
+  return null;
+}
 
   return (
     <>
@@ -172,11 +174,14 @@ const HotelDetail: NextPage<Props> = props => {
         <div className="max-w-container mx-auto p-3 sm:p-5">
 
           <div className='bg-white p-3'>
+            
             {!!hotelData.IsCovid && <div className='bg-emerald-700 leading-4 p-3 sm:p-4 text-white text-xs sm:text-sm rounded-md flex flex-wrap gap-2 items-center m-1 mb-3'>
               <Phone className='w-5 h-5 sm:w-6 sm:h-6 fill-current block' />
               جهت رزرو با شماره <a href="tel:+982126150051" className='underline text-sm sm:text-base'> 02126150051 </a> تماس بگیرید.
             </div>}
+            
             <BackToList checkin={checkin} checkout={checkout} cityId={hotelData.CityId} cityName={hotelData.CityName} />
+
           </div>
 
           {!!hotelData.Gallery?.length && <Gallery images={hotelData.Gallery} />}
@@ -215,7 +220,7 @@ const HotelDetail: NextPage<Props> = props => {
             </>
           )}
 
-          <Comments hotelScoreData={hotelScoreData} />
+          {pageData.Id && <Comments hotelScoreData={hotelScoreData} pageId={pageData.Id} />}
 
           <InView triggerOnce={true}>
             {({ inView, ref }) =>
@@ -263,7 +268,7 @@ export const getServerSideProps: GetServerSideProps = async ({ locale, query }) 
       pageData: pageInfo.data || null,
       hotelData: hotelInfo.data || null,
       hotelScoreData: scoreInfo.data || null,
-      accommodationData: accomodationInfo.data.result || null,
+      accommodationData: accomodationInfo.data?.result || null,
       portalData: portalData.data || null
     },
   })

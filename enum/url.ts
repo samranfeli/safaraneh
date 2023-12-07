@@ -1,9 +1,9 @@
-export const SSRHeader: HeadersInit = new Headers();
-SSRHeader.set('Content-Type', 'application/json');
-SSRHeader.set("Accept-Language", "en-US");
-SSRHeader.set("currency", "IRR");
-SSRHeader.set("apikey", process.env.PROJECT_SERVER_APIKEY!);
-SSRHeader.set("tenantid", '6');
+// export const SSRHeader: HeadersInit = new Headers();
+// SSRHeader.set('Content-Type', 'application/json');
+// SSRHeader.set("Accept-Language", "en-US");
+// SSRHeader.set("currency", "IRR");
+// SSRHeader.set("apikey", process.env.PROJECT_SERVER_APIKEY!);
+// SSRHeader.set("tenantid", '6');
 
 
 export const Header = {
@@ -18,7 +18,10 @@ export const Header = {
   export const ServerAddress = {
     Type: process.env.PROJECT_SERVER_TYPE,
     // User: process.env.PROJECT_SERVER_USER,
-    Hotel: process.env.PROJECT_SERVER_HOTEL,
+    Hotel_Main: process.env.PROJECT_SERVER_HOTEL_MAIN,
+    Hotel_Data: process.env.PROJECT_SERVER_HOTEL_DATA,
+    Hotel_Availability: process.env.PROJECT_SERVER_HOTEL_AVAILABILITY,
+    Blog: process.env.PROJECT_SERVER_BLOG,
     // Package: process.env.PROJECT_SERVER_PACKAGE,
     // Payment: process.env.PROJECT_SERVER_PAYMENT,
     // localServer: process.env.PROJECT_SERVER_LOCALSERVER,
@@ -48,25 +51,40 @@ export const Header = {
     //ResetPasswordByPhoneNumber:"/api/services/app/Account/ResetPasswordByPhoneNumber"
   };
   export const Flight = {
-    GetLocation: "/api/services/app/BookingFlight/GetAirport",
+    //GetLocation: "/api/services/app/BookingFlight/GetAirport",
     // GetDomesticLocation:"/api/services/app/BookingFlight/GetDomesticAirport",
     // GetAirline: "/api/services/app/BookingFlight/GetAirline",
-    LowFareSearch: "/api/services/app/BookingFlight/LowFareSearch",
-    ValidateFlight: "/api/services/app/BookingFlight/Validate",
+    //LowFareSearch: "/api/services/app/BookingFlight/LowFareSearch",
+    //ValidateFlight: "/api/services/app/BookingFlight/Validate",
     // GetPNR: "/api/services/app/BookingFlight/ReservePNR",
-    GetRules: "/api/services/app/BookingFlight/GetFlightRules",
+    //GetRules: "/api/services/app/BookingFlight/GetFlightRules",
     // GetReserveByID: "/api/services/app/BookingFlight/GetFlightReserveById",
     // GetDirectTicketByID: "/api/services/app/BookingFlight/GetDirectTicketById",
     // BankStatus:"/api/services/app/BookingFlight/BankStatus",
     // GetTime:"/api/services/app/BookingFlight/GetTime",
     // GetDomesticRefundRules:"/api/services/app/DomesticFlightRefundRule/GetDomesticRefundRules",
     // GetDomesticRefundRuleDetail:"/api/services/app/DomesticFlightRefundRule/GetDomesticRefundRuleDetail",
-    GetAlternatives: "/api/services/app/BookingFlight/GetAlternatives"
+    //GetAlternatives: "/api/services/app/BookingFlight/GetAlternatives"
   };
+
+  export const Blog = {
+    getPosts: "//wp-json/wp/v2/posts"
+  }
+
   export const Hotel = {
     GetLocation: "/api/services/app/BookingHotel/GetLocation",
+    GetEntity:"/api/services/app/Entity/Search",
+    GetHotelById: "/v2/Hotel/GetHotelById",
+    GetHotelByUrl: "/v2/Hotel/GetHotelByUrl",
+    GetScore: "/v2/Comment/GetScore",
+    GetAccommodationData :"/api/services/app/Accommodation/Get",
+    GetPageByUrl: "/v2/Page/GetPageByUrl",
+    GetPortal: "/v2/Portal/GetPortal",
+    InsertComment : '/v2/Comment/InsertComment____',
+    AvailabilityByHotelId:"/api/services/app/Booking/AvailabilityByHotelId"
+    
+    
     // GetAccomadtion: "/api/services/app/BookingHotel/GetSearch",
-    // GetAccomadtionDetails: "/api/services/app/BookingHotel/GetHotelById",
     // PreReserve: "/api/services/app/BookingHotel/PreReserve",
     // GetPreReserveID: "/api/services/app/BookingHotel/GetPreReserveByKey",
     // GetReserveByID: "/api/services/app/BookingHotel/GetReserveById",

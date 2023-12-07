@@ -1,5 +1,5 @@
+import { dateDiplayFormat } from '@/helpers';
 import parse from 'html-react-parser';
-import moment from 'moment-jalaali';
 
 type Props = {
     comment: {
@@ -29,11 +29,9 @@ const CommentItem: React.FC<Props> = props => {
 
             <div className='font-semibold'> {comment.FullName} </div>
 
-            {comment.CreateDate && (
-                <div className="text-neutral-400 text-xs">
-                    {moment(comment.CreateDate).format("jDD jMMMM jYYYY")}
-                </div>
-            )}
+            <div className='text-neutral-400 text-xs'>
+                {dateDiplayFormat({date:comment.CreateDate || "", format: "dd mm yyyy", locale:"fa"})}
+            </div>
 
             <div className='text-neutral-400 text-xs'> {comment.CityName} </div>
 

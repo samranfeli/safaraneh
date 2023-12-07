@@ -5,7 +5,7 @@ import { useRouter } from "next/router";
 
 import useHttp from '../../hooks/use-http';
 import { getDomesticHotelDetailById } from "@/actions/hotelActions";
-import { Header } from '../../enum/url';
+import { Header,ServerAddress, Hotel } from "../../enum/url";
 import AutoComplete from "../shared/ui/AutoComplete";
 import { ApartmentOutline, Home2, Location } from "../shared/ui/icons";
 import { EntitySearchResultItemType } from "@/types/hotel";
@@ -59,7 +59,7 @@ const SearchForm: React.FC<Props> = props => {
 
     const { sendRequest } = useHttp();
 
-    const url = 'https://hoteldomesticdata.safaraneh.com/api/services/app/Entity/Search';
+    const url = `${ServerAddress.Type}${ServerAddress.Hotel_Data}${Hotel.GetEntity}`
 
     useEffect(() => {
         sendRequest({
@@ -193,6 +193,7 @@ const SearchForm: React.FC<Props> = props => {
                     rtl
                     locale={localeFa}
                 />
+                {/* انتخاب تاریخ */}
 
             </div>
 

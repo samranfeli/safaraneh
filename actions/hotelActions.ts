@@ -1,12 +1,12 @@
 import axios from 'axios';
 
-import { Header } from "../enum/url";
+import { Header,ServerAddress, Hotel } from "../enum/url";
 
 export const getDomesticHotelDetailById = async (id: number, acceptLanguage: string = 'fa-IR') => {
     try {
         const response = await axios({
             method: "get",
-            url: `https://api.safaraneh.com/v2/Hotel/GetHotelById?hotelId=${id}`,
+            url: `${ServerAddress.Type}${ServerAddress.Hotel_Main}${Hotel.GetHotelById}?hotelId=${id}`,
             headers: {
                 ...Header,
                 "Accept-Language": acceptLanguage
@@ -21,7 +21,7 @@ export const getDomesticHotelDetailById = async (id: number, acceptLanguage: str
 export const getDomesticHotelDetailByUrl = async (url: string, acceptLanguage: string = 'fa-IR') => {
     try {
         let response = await axios.get(
-            `https://api.safaraneh.com/v2/Hotel/GetHotelByUrl?url=${url}`,
+            `${ServerAddress.Type}${ServerAddress.Hotel_Main}${Hotel.GetHotelByUrl}?url=${url}`,
             {
                 headers: {
                     'Content-Type': 'application/json',
@@ -39,7 +39,7 @@ export const getDomesticHotelDetailByUrl = async (url: string, acceptLanguage: s
 export const getScore = async (hotelId: number, acceptLanguage: string = 'fa-IR') => {
     try {
         let response = await axios.get(
-            `https://api.safaraneh.com/v2/Comment/GetScore?pageId=${hotelId}`,
+            `${ServerAddress.Type}${ServerAddress.Hotel_Main}${Hotel.GetScore}?pageId=${hotelId}`,
             {
                 headers: {
                     'Content-Type': 'application/json',
@@ -57,7 +57,7 @@ export const getScore = async (hotelId: number, acceptLanguage: string = 'fa-IR'
 export const getAccommodationById = async (hotelId: number, acceptLanguage: string = 'fa-IR') => {
     try {
         let response = await axios.get(
-            `https://hoteldomesticdata.safaraneh.com/api/services/app/Accommodation/Get?Id=${hotelId}`,
+            `${ServerAddress.Type}${ServerAddress.Hotel_Data}${Hotel.GetAccommodationData}?Id=${hotelId}`,
             {
                 headers: {
                     'Content-Type': 'application/json',

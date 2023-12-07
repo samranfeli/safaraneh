@@ -1,11 +1,11 @@
 import axios from 'axios';
 
-import { Header } from "../enum/url";
+import { Header,ServerAddress, Hotel } from "../enum/url";
 
 export const getpageByUrl = async (url: string, acceptLanguage: string = "fa-IR") => {
     try {
         let response = await axios.get(
-            `https://api.safaraneh.com/v2/Page/GetPageByUrl?url=${url}&isNewVisitor=true`,
+            `${ServerAddress.Type}${ServerAddress.Hotel_Main}${Hotel.GetPageByUrl}?url=${url}&isNewVisitor=true`,
             {
                 headers: {
                     ...Header,

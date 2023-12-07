@@ -2,7 +2,7 @@ import { useTranslation } from 'next-i18next';
 import { useEffect, useCallback, useState } from 'react';
 import { AxiosResponse } from 'axios';
 
-import Header from '@/components/shared/header';
+import { Header,ServerAddress, Hotel } from "../../../enum/url";
 import { AvailabilityByIdItem, DomesticHotelMainType } from '@/types/hotel';
 import SimilarHotelItem from './SimilarHotelItem';
 import useHttp from '@/hooks/use-http';
@@ -44,7 +44,7 @@ const SimilarHotels: React.FC<Props> = props => {
 
     const fetchPrices = useCallback((ids: number[], acceptLanguage?: "fa-IR" | "en-US") => {
         sendRequest({
-            url: "https://hotelv4.safaraneh.com/api/services/app/Booking/AvailabilityByHotelId",
+            url: `${ServerAddress.Type}${ServerAddress.Hotel_Availability}${Hotel.AvailabilityByHotelId}`,
             header: {
                 ...Header,
                 "Accept-Language": acceptLanguage || "en-US",

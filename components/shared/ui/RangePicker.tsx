@@ -1,10 +1,10 @@
 import '@mobiscroll/react/dist/css/mobiscroll.min.css';
-import { Datepicker as MobiscrollDatepicker, setOptions, localeFa, localeEn, Page, CalendarToday, Input, Popup, Select, Button, formatDate, options } from '@mobiscroll/react';
-import { useEffect, useState, useRef } from 'react';
+import { Datepicker as MobiscrollDatepicker, setOptions, localeFa, localeEn } from '@mobiscroll/react';
+import React, { useEffect, useState, useRef } from 'react';
 import { useTranslation } from 'next-i18next';
-import moment from 'moment-jalaali';
 
 import { ArrowLeft, Calendar, CalendarToggle } from './icons';
+import { dateDiplayFormat } from '@/helpers';
 
 type Props = {
     onChange: (args: any, inst: any) => void;
@@ -32,10 +32,6 @@ const RangePicker: React.FC<Props> = props => {
     const [values, setValues] = useState<[string | null, string | null]>(props.value || [null, null]);
 
     const datePickerRef = useRef<any>(null);
-    const endInput = useRef<any>(null);
-
-    // const [start, setStart] = useState<any>(null);
-    // const [end, setEnd] = useState<any>(null);
 
     const [instance, setInstance] = useState<any>(null);
 
@@ -74,27 +70,22 @@ const RangePicker: React.FC<Props> = props => {
     }
 
     let start = "";
-    let end = "";
+    let end= "";
     let startFormated = t('checkin-date');
     let endFormated = t('checkout-date');
 
-    const format = locale === localeFa ? "dddd، jDD jMMMM" : "dddd، DD MMMM";
-    const formatValue = locale === localeFa ? "jYYYY/jMM/jDD" : "YYYY/MM/DD";
 
     if (values && values[0]) {
-        startFormated = moment(values[0]).format(format);
-        start = moment(values[0]).format(formatValue);
+        startFormated = dateDiplayFormat({date:values[0], format: "dd mm yyyy", locale:locale === localeFa ? "fa" : "en"});
+        start = dateDiplayFormat({date:values[0], format: 'yyyy/mm/dd', locale:locale === localeFa ? "fa" : "en"});
     }
 
     if (values && values[1]) {
-        endFormated = moment(values[1]).format(format);
-        end = moment(values[1]).format(formatValue);
+        endFormated = dateDiplayFormat({date:values[1], format: "dd mm yyyy", locale:locale === localeFa ? "fa" : "en"});
+        end = dateDiplayFormat({date:values[1], format: "yyyy/mm/dd", locale:locale === localeFa ? "fa" : "en"});
+
     }
 
-
-    if (locale === localeFa) {
-        moment.loadPersian();
-    }
 
     return (
         <div className={`${locale === localeFa ? 'persian-datepicker-wrapper' : ''} relative`} >

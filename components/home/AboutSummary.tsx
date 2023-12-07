@@ -13,7 +13,7 @@ const AboutSummary: React.FC<Props> = props => {
 
             <div className="bg-white p-5 lg:p-7 rounded-lg text-sm text-justify">
 
-                <Image src={props.logo} alt={props.siteName} width={115} height={48} classNamemb-2 />
+                <Image src={props.logo} alt={props.siteName} width={115} height={48} className="mb-2" />
 
                 <p className='mb-4'>
                     مدت زمان زیادی نیست که رزرو خدمات گردشگری نیز مانند صدها خدمات
