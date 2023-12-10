@@ -56,7 +56,7 @@ const HotelName: React.FC<Props> = props => {
             )}
 
             <div className='hidden lg:block lg:col-span-2'>
-                <h3 className='font-semibold text-md lg:text-lg mb-3'>امکانات محبوب هتل</h3>
+                <strong className='block font-semibold text-md lg:text-lg mb-3'>امکانات محبوب هتل</strong>
                 <div className='grid grid-cols-2 lg:grid-cols-3 gap-2'>
                     {hotelData.Facilities?.slice(0, 6).map(item => <div key={item.Keyword} className='text-sm text-neutral-500'>
                         {item.Image && <Image src={item.Image} alt={item.ImageAlt || item.Title || ""} width={20} height={20} className='h-5 w-5 inline-block rtl:ml-2 ltr:mr-2' />}

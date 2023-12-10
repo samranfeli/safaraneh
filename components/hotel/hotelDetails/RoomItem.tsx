@@ -128,7 +128,7 @@ const RoomItem: React.FC<Props> = props => {
             {prices.roomPrice && (
                 <>
                     {prices.boardPrice && (prices.roomPrice < prices.boardPrice) && (
-                        <div className="line-through font-semibold text-neutral-400">
+                        <div className="line-through font-semibold text-neutral-500">
                             {numberWithCommas(prices.boardPrice * count)} {t("rial")}
                         </div>
                     )}
@@ -217,7 +217,7 @@ const RoomItem: React.FC<Props> = props => {
                             {t('extra-bed')}
                         </div>
                     ) : (
-                        <div className="line-through text-neutral-400"> {t('extra-bed')} </div>
+                        <div className="line-through text-neutral-500"> {t('extra-bed')} </div>
                     )}
 
                     {rate.description && <div className='text-amber-600 flex gap-2'>

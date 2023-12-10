@@ -29,11 +29,11 @@ const CommentItem: React.FC<Props> = props => {
 
             <div className='font-semibold'> {comment.FullName} </div>
 
-            <div className='text-neutral-400 text-xs'>
+            <div className='text-neutral-500 text-xs'>
                 {dateDiplayFormat({date:comment.CreateDate || "", format: "dd mm yyyy", locale:"fa"})}
             </div>
 
-            <div className='text-neutral-400 text-xs'> {comment.CityName} </div>
+            <div className='text-neutral-500 text-xs'> {comment.CityName} </div>
 
             {!!comment.Comment && parse(comment.Comment)}
 

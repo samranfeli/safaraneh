@@ -32,13 +32,13 @@ const Quantity: React.FC<Props> = props => {
 
     return (
         <div className="flex" dir="ltr">
-            <button type='button' className={`outline-none w-8 h-8 flex justify-center items-center rounded-md ${value <= min ? "bg-neutral-100 cursor-not-allowed text-neutral-200" : "bg-neutral-200 cursor-pointer text-neutal-600"}`} onClick={decrease}>
+            <button aria-label="decrease quantity" type='button' className={`outline-none w-8 h-8 flex justify-center items-center rounded-md ${value <= min ? "bg-neutral-100 cursor-not-allowed text-neutral-200" : "bg-neutral-200 cursor-pointer text-neutal-600"}`} onClick={decrease}>
                 <Minus className='w-4 h-4 fill-current block' />
             </button>
 
             <input id={props.inputId || undefined} type="text" readOnly value={value} className='font-semibold w-8 text-center text-lg pointer-events-none' />
 
-            <button type='button' className={`outline-none w-8 h-8 flex justify-center items-center rounded-md ${value >= max ? "bg-neutral-100 cursor-not-allowed text-neutral-200" : "bg-neutral-200 cursor-pointer text-neutal-600"}`} onClick={increase}>
+            <button aria-label="increase quantity" type='button' className={`outline-none w-8 h-8 flex justify-center items-center rounded-md ${value >= max ? "bg-neutral-100 cursor-not-allowed text-neutral-200" : "bg-neutral-200 cursor-pointer text-neutal-600"}`} onClick={increase}>
                 <Plus className='w-4 h-4 fill-current block' />
             </button>
         </div>

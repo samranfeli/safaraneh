@@ -78,7 +78,7 @@ const Rooms: React.FC<Props> = props => {
     return (
 
         <>
-            <h4 className="text-lg lg:text-3xl font-semibold mt-5 mb-3 md:mt-10 md:mb-7"> {t('choose-room')}  </h4>
+            <h2 className="text-lg lg:text-3xl font-semibold mt-5 mb-3 md:mt-10 md:mb-7"> {t('choose-room')}  </h2>
 
             {availabilites?.map(availability => {
                 return availability.rates?.map(rateItem => (

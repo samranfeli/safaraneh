@@ -23,7 +23,7 @@ const FAQ: React.FC<Props> = props => {
 
         <div className='p-3 sm:p-5 lg:p-7 bg-white rounded-xl text-sm leading-7 md:text-base md:leading-7'>
 
-            <h4 className='text-md lg:text-lg font-semibold mb-4'> {t("faq")} </h4>
+            <h2 className='text-md lg:text-lg font-semibold mb-4'> {t("faq")} </h2>
 
             {faqs.map(item => (
                 <Accordion

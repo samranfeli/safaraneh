@@ -190,7 +190,7 @@ if (!hotelData){
           <HotelName hotelData={hotelData} scoreData={hotelScoreData} />
 
 
-          <h4 className='text-lg lg:text-3xl font-semibold mt-5 mb-3 md:mt-10 md:mb-7'>{t('change-search')}</h4>
+          <h2 className='text-lg lg:text-3xl font-semibold mt-5 mb-3 md:mt-10 md:mb-7'>{t('change-search')}</h2>
           <SearchForm
             defaultDestination={defaultDestination}
             defaultDates={defaultDates}
@@ -216,7 +216,7 @@ if (!hotelData){
 
           {!!hotelData.DistancePoints?.length && (
             <>
-              <h4 className='text-lg lg:text-3xl font-semibold mt-5 mb-3 md:mt-10 md:mb-7'>{t('attraction')}</h4>
+              <h2 className='text-lg lg:text-3xl font-semibold mt-5 mb-3 md:mt-10 md:mb-7'>{t('attraction')}</h2>
               <div className='p-5 lg:p-7 bg-white rounded-xl'>
                 <Attractions attractions={hotelData.DistancePoints} />
               </div>
