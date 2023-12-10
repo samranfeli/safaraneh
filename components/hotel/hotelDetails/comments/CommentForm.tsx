@@ -4,6 +4,7 @@ import { useTranslation } from 'next-i18next';
 
 import { ServerAddress, Hotel, Header } from '@/enum/url';
 import useHttp from '@/hooks/use-http';
+import Button from '@/components/shared/ui/Button';
 
 type Props = {
     pageId: number
@@ -220,13 +221,12 @@ const CommentForm: React.FC<Props> = props => {
                                 </div>
 
                                 <div className='sm:col-span-2 lg:col-span-12'>
-                                    <button
-                                        type="submit"
-                                        className='bg-primary-700 h-10 px-5 rounded-md text-white flex gap-3 items-center justify-center max-w-full sm:w-32'
+                                    <Button
+                                        type='submit'
+                                        className='h-10 px-5 rounded-md max-w-full sm:w-32'
                                     >
                                         {t('send')}
-                                        {loading ? <span className="animate-spin block border-2 border-white rounded-full border-r-transparent border-t-transparent w-5 h-5" /> : null}
-                                    </button>
+                                    </Button>
                                 </div>
 
                             </Form>

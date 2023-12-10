@@ -2,7 +2,8 @@ import {PropsWithChildren} from 'react';
 
 type Props = {
     title: React.ReactNode;
-    position?: "start" | "center" | "end"
+    position?: "start" | "center" | "end";
+    className?: string;
 }
 
 
@@ -22,7 +23,7 @@ const Tooltip:React.FC<PropsWithChildren<Props>> = props => {
     }
 
     return(
-        <span className='relative inline-block group'>
+        <span className={`relative inline-block group ${props.className}`}>
             
             {props.children}
 

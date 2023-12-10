@@ -25,6 +25,7 @@ import SimilarHotels from '@/components/hotel/hotelDetails/SimilarHotels';
 import moment from 'moment-jalaali';
 import Comments from '@/components/hotel/hotelDetails/comments';
 import Layout from '@/components/shared/layout';
+import Rooms from '@/components/hotel/hotelDetails/Rooms';
 
 type Props = {
   pageData: PageDataType;
@@ -195,6 +196,8 @@ if (!hotelData){
             defaultDates={defaultDates}
           />
 
+          {!!hotelData.HotelId && <Rooms hotelId={hotelData.HotelId} />}
+
           <InView triggerOnce={true}>
             {({ inView, ref }) =>
               <div ref={ref}>
@@ -240,8 +243,10 @@ if (!hotelData){
   )
 }
 
-export const getServerSideProps: GetServerSideProps = async ({ locale, query }) => {
+export const getServerSideProps: GetServerSideProps = async (context: any) => {
 
+  const { locale, query } = context;
+  
   const url = encodeURI(`/${locale}/hotel/${query.hotelDetail![0]}`);
 
   const fetchPageDetailsAndScore = async (url: string, acceptLanguage: string) => {
@@ -264,7 +269,7 @@ export const getServerSideProps: GetServerSideProps = async ({ locale, query }) 
 
   return ({
     props: {
-      //...await (serverSideTranslations(locale as string, ['common'])),
+      ...await (serverSideTranslations(locale as string, ['common'])),
       pageData: pageInfo.data || null,
       hotelData: hotelInfo.data || null,
       hotelScoreData: scoreInfo.data || null,

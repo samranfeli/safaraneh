@@ -105,17 +105,17 @@ export interface DomesticHotelDetailType {
     Facilities?: DomesticHotelFacilitieType[];
 
     Policies?: {
-        FacilityId:any;
-        Title?:string;
-        Image?:string;
-        ImageUrl?:string;
-        Keyword?:string;
-        ImageAlt?:string;
-        ImageTitle?:string;
-        CssClass?:string;
-        Description?:string;
-        IsSpecial:boolean; 
-      }[];
+        FacilityId: any;
+        Title?: string;
+        Image?: string;
+        ImageUrl?: string;
+        Keyword?: string;
+        ImageAlt?: string;
+        ImageTitle?: string;
+        CssClass?: string;
+        Description?: string;
+        IsSpecial: boolean;
+    }[];
     DistancePoints?: DistancePointType[];
     DistancePointTemporarys?: {
 
@@ -202,8 +202,68 @@ export interface DomesticAccomodationType {
     id: number;
 }
 
-export interface AvailabilityByIdItem   {
+export interface AvailabilityByIdItem {
     id: number,
     boardPrice: number,
     salePrice: number,
-  }
+}
+
+export interface DomesticHotelRoomItem {
+    image?: string;
+    view?: string;
+    description?: string;
+    facilities?: {
+        title?: string;
+        keyword?: string;
+        name?: string;
+    }[];
+    name?: string;
+    capacity: {
+        count: number;
+        extraBed: number;
+    };
+    id: number;
+}
+export interface DomesticHotelRateItem {
+    pricing?: {
+        amount: number;
+        ageCategoryType: "ADL" | "CHD" | "INF";
+        type: "Room" | "RoomBoard" | "ExtraBed" | "HalfCharge" | "RoomNet" | "Markup" | "Commission" | "PromoCode"
+    }[];
+
+    price: number;
+    bookingToken?: string;
+    supplierType: "Safaraneh" | "Snapp" | "ChannelLead" | "HotelYar" | "Eghamat24";
+    available: number;
+    description?: string;
+    cancellationPolicy?: {
+        status: "Refundable" | "NonRefundable" | "Unknown" | "CallSupport";
+        fees: {
+            amount: number;
+            fromDate: string;
+        }[];
+    };
+    board: {
+        name?: string;
+        code: "Undefined" | "BB" | "FB" | "HB" | "RO" | "Hour6" | "Hour10";
+        description?: string;
+        extra?: string;
+    },
+    view?: {
+        name?: string;
+        keyword?: string;
+    };
+    availablityType: "Online" | "Ofline" | "Request" | "Completion";
+    nightly: {
+        totalPrice: number;
+        averagePrice: number;
+        items: unknown;
+    }
+}
+
+export interface DomesticHotelAvailability {
+
+    rooms?: DomesticHotelRoomItem[];
+    rates?: DomesticHotelRateItem[]
+
+}[]

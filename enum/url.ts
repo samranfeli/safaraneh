@@ -80,8 +80,9 @@ export const Header = {
     GetAccommodationData :"/api/services/app/Accommodation/Get",
     GetPageByUrl: "/v2/Page/GetPageByUrl",
     GetPortal: "/v2/Portal/GetPortal",
-    InsertComment : '/v2/Comment/InsertComment____',
-    AvailabilityByHotelId:"/api/services/app/Booking/AvailabilityByHotelId"
+    InsertComment : '/v2/Comment/InsertComment',
+    AvailabilityByHotelId:"/api/services/app/Booking/AvailabilityByHotelId",
+    GetRooms:"/api/services/app/Booking/GetRoom"
     
     
     // GetAccomadtion: "/api/services/app/BookingHotel/GetSearch",

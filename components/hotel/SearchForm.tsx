@@ -5,7 +5,7 @@ import { useRouter } from "next/router";
 
 import useHttp from '../../hooks/use-http';
 import { getDomesticHotelDetailById } from "@/actions/hotelActions";
-import { Header,ServerAddress, Hotel } from "../../enum/url";
+import { Header, ServerAddress, Hotel } from "../../enum/url";
 import AutoComplete from "../shared/ui/AutoComplete";
 import { ApartmentOutline, Home2, Location } from "../shared/ui/icons";
 import { EntitySearchResultItemType } from "@/types/hotel";
@@ -13,6 +13,7 @@ import { useAppDispatch } from "@/hooks/use-store";
 import { setReduxError } from "@/store/errorSlice";
 import DatePicker from "../shared/ui/RangePicker";
 import { localeFa } from "@mobiscroll/react";
+import Button from "../shared/ui/Button";
 
 
 
@@ -198,14 +199,13 @@ const SearchForm: React.FC<Props> = props => {
             </div>
 
             <div className="col-span-1 md:col-span-1 pt-5 md:pt-0">
-                <button
-                    type='button'
-                    className='bg-primary-700 hover:bg-primary-800 transition-all text-white rounded-lg text-center min-w-sm h-12 block w-full flex gap-3 items-center justify-center'
+                <Button
+                    loading={submitLoading}
                     onClick={submitHandler}
+                    className='rounded-lg min-w-sm h-12 block w-full'
                 >
                     جستجو
-                    {submitLoading ? <span className="animate-spin block border-2 border-white rounded-full border-r-transparent border-t-transparent w-5 h-5" /> : null}
-                </button>
+                </Button>
             </div>
         </div>
     )

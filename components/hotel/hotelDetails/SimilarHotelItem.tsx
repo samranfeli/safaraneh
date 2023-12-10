@@ -7,6 +7,7 @@ import { LeftCaret, Location } from '@/components/shared/ui/icons';
 import Rating from '@/components/shared/ui/Rating';
 import { numberWithCommas } from '@/helpers';
 import Tooltip from '@/components/shared/ui/Tooltip';
+import Button from '@/components/shared/ui/Button';
 
 
 interface Hotel extends DomesticHotelMainType {
@@ -105,10 +106,13 @@ const SimilarHotelItem: React.FC<Props> = props => {
                     </>
                 )}
 
-                <Link href={hotel.Url! + props.searchInfo} className='bg-primary-800 hover:bg-primary-700 text-sm text-white font-semibold px-5 h-10 rounded-md inline-flex gap-1 items-center'>
+                <Button
+                    href={hotel.Url! + props.searchInfo}
+                    className='text-sm font-semibold px-5 h-10 rounded-md inline-flex'
+                >
                     {buttonText}
                     <LeftCaret className='w-4 h-4 fill-current ltr:rotate-180' />
-                </Link>
+                </Button>
             </footer>
 
         </div>
