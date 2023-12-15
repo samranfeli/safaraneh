@@ -18,7 +18,6 @@ export const dateDiplayFormat = ({ date, format, locale }: { date: string; forma
     const month2digit = dateObject.toLocaleString(locale, { month: "2-digit" });
     const year = dateObject.toLocaleString(locale, { year: "numeric" });
 
-
     if (format === "ddd dd mm") {
         return (`${weekDay} ${day} ${month}`)
     }
