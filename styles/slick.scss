@@ -1,0 +1,22 @@
+
+.slick-slider {
+    ul.slick-dots li {
+      margin: 0;
+    }
+  
+    .slick-arrow {
+      background: #888;
+      &:hover{
+        background: #aaa;
+      }
+      width: 25px;
+      height: 25px;
+      fill: #fff;
+      border-radius: 50%;
+    }
+    
+    .slick-prev:before, .slick-next:before{
+      font-family: 'sans-serif';
+      font-display: swap;
+    }
+  }

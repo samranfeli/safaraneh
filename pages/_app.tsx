@@ -6,8 +6,11 @@ import type { AppProps } from 'next/app';
 import { Provider } from 'react-redux';
 import Head from 'next/head';
 
+import '../styles/slick.scss';
+import '../styles/mobiscroll.scss';
 import '../styles/globals.scss';
-import Layout from '../components/shared/layout';
+import '../styles/leaflet.css';
+
 import { store } from '../store';
 
 function MyApp({ Component, pageProps }: AppProps) {
