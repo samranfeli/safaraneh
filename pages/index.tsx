@@ -2,24 +2,24 @@ import type { NextPage } from 'next';
 import Head from 'next/head';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 
-import Banner from '@/components/home/banner'
-import ModulesBanner from '@/components/home/modules-banner';
-import SuggestedHotels from '@/components/home/SuggestedHotels';
-import PopularCities from '@/components/home/PopularCities';
-import BeachHotels from '@/components/home/BeachHotels';
-import Unknowns from '@/components/home/Unknowns';
-import { getBlogs } from '@/actions/blogActions';
-import RecentBlogs from '@/components/home/RecentBlogs';
-import { BlogItemType } from '@/types/blog';
-import AboutSummary from '@/components/home/AboutSummary';
-import HomeFAQ from '@/components/home/HomeFAQ';
-import Newsletter from '@/components/home/Newsletter';
-import Services from '@/components/home/Services';
-import { getPortal } from '@/actions/portalActions';
-import { PortalDataType } from '@/types/common';
-import { setReduxPortal } from '@/store/portalSlice';
-import { useAppDispatch, useAppSelector } from '@/hooks/use-store';
-import Layout from '@/components/shared/layout';
+import Banner from '@/modules/home/components/banner'
+import ModulesBanner from '@/modules/home/components/modules-banner';
+import SuggestedHotels from '@/modules/home/components/SuggestedHotels';
+import PopularCities from '@/modules/home/components/PopularCities';
+import BeachHotels from '@/modules/home/components/BeachHotels';
+import Unknowns from '@/modules/home/components/Unknowns';
+import { getBlogs } from '@/modules/blogs/actions';
+import RecentBlogs from '@/modules/home/components/RecentBlogs';
+import { BlogItemType } from '@/modules/blogs/types/blog';
+import AboutSummary from '@/modules/home/components/AboutSummary';
+import HomeFAQ from '@/modules/home/components/HomeFAQ';
+import Newsletter from '@/modules/home/components/Newsletter';
+import Services from '@/modules/home/components/Services';
+import { getPortal } from '@/modules/domesticHotel/components/portalActions';
+import { PortalDataType } from '@/modules/shared/types/common';
+import { setReduxPortal } from '@/modules/shared/store/portalSlice';
+import { useAppDispatch, useAppSelector } from '@/modules/shared/hooks/use-store';
+import Layout from '@/modules/shared/layout';
 
 const Home: NextPage = ({ blogs, portalData }: { blogs?: BlogItemType[], portalData?: PortalDataType }) => {
 
