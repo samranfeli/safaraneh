@@ -11,7 +11,7 @@ import '../styles/mobiscroll.scss';
 import '../styles/globals.scss';
 import '../styles/leaflet.css';
 
-import { store } from '../store';
+import { store } from '../modules/shared/store';
 
 function MyApp({ Component, pageProps }: AppProps) {
   const router = useRouter();
