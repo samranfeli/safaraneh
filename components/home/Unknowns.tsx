@@ -9,7 +9,6 @@ import 'slick-carousel/slick/slick-theme.css';
 import {LeftCaretBold,RightCaretBold} from '../shared/ui/icons';
 
 const Unknowns: React.FC = () => {
-
     const { t } = useTranslation('common');
 
     const items: {
