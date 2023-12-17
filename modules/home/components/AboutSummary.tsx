@@ -10,8 +10,16 @@ const AboutSummary: React.FC<Props> = props => {
 
     return (
         <div className="bg-white p-5 lg:p-7 rounded-lg text-sm text-justify mb-10">
-
-            <Image src={props.logo} alt={props.siteName} width={115} height={48} className="mb-2" />
+            <Link href={"/"}>
+                <Image 
+                    onContextMenu={e => {e.preventDefault()}}
+                    src={props.logo} 
+                    alt={props.siteName} 
+                    width={115} 
+                    height={48} 
+                    className="mb-2" 
+                />
+            </Link>
 
             <p className='mb-4'>
                 مدت زمان زیادی نیست که رزرو خدمات گردشگری نیز مانند صدها خدمات

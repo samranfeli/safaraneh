@@ -28,6 +28,7 @@ const ModulesBanner: React.FC = () => {
           </div>
 
           <Image
+            onContextMenu={e => {e.preventDefault()}}
             src="https://cdn2.safaraneh.com/images/home/shirazhomebanner.jpg"
             alt="حافظیه شیراز"
             title={t('big-banner-h4')}
@@ -48,6 +49,7 @@ const ModulesBanner: React.FC = () => {
           </div>
 
           <Image
+            onContextMenu={e => {e.preventDefault()}}
             src="https://cdn2.safaraneh.com/images/home/cipemamhomebanner.jpg"
             alt="تشریفات فرودگاهی"
             title={t('small-banner1-h4')}
@@ -71,6 +73,7 @@ const ModulesBanner: React.FC = () => {
           </div>
 
           <Image
+            onContextMenu={e => {e.preventDefault()}}
             src="https://cdn2.safaraneh.com/images/home/hotelhomebanner.jpg"
             alt="هتل های تهران"
             title={t('big-banner2-h4')}

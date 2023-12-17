@@ -87,6 +87,7 @@ const Unknowns: React.FC = () => {
                             <a href={item.url} className='block bg-white rounded-lg overflow-hidden' target='_blank' title={item.title}>
                                 <div className='relative'>
                                     <Image
+                                        onContextMenu={e => {e.preventDefault()}}
                                         src={item.imageUrl}
                                         alt={`رزرو ${item.title}`}
                                         width={272}

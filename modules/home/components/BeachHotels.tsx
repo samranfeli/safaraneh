@@ -90,6 +90,7 @@ const BeachHotels: React.FC = () => {
                         <div className='sm:px-2' key={hotel.name}>
                             <a href={hotel.url} className='outline-none block bg-white rounded-lg overflow-hidden' target='_blank' title={hotel.name}>
                                 <Image
+                                    onContextMenu={e => {e.preventDefault()}}
                                     src={hotel.imageUrl}
                                     alt={`رزرو ${hotel.name}`}
                                     width={376}

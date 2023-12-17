@@ -22,7 +22,7 @@ const Header:React.FC<Props> = props => {
             <div className="max-w-container mx-auto px-3 py-3 flex justify-center md:justify-between">
                 <div className="flex gap-8 items-center">
                     <Link href="/" className="block">
-                        <Image src={logo} alt={siteName} width={115} height={48} className="" />
+                        <Image src={logo} alt={siteName} width={115} height={48} className="" onContextMenu={e => {e.preventDefault()}}  />
                     </Link>
                     <TravelServices logo={logo} siteName={siteName} />
                 </div>

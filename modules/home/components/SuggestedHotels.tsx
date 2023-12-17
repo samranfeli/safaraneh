@@ -113,6 +113,7 @@ const SuggestedHotels: React.FC = () => {
                         <div className='sm:px-2' key={hotel.name}>
                             <a href={hotel.url} className='block bg-white rounded-lg overflow-hidden' target='_blank'>
                                 <Image
+                                    onContextMenu={e => {e.preventDefault()}}
                                     src={hotel.imageUrl}
                                     alt={hotel.alt}
                                     width={272}

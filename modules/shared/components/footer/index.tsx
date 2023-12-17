@@ -29,7 +29,7 @@ const Footer: React.FC<Props> = props => {
 
             <div className="max-w-container mx-auto p-3 text-neutral-700 pt-8 pb-14">
 
-                <div className="flex justify-center gap-1 sm:gap-4 mb-10">
+                <div className="flex justify-center gap-1 sm:gap-4 mb-10" onContextMenu={e => {e.preventDefault()}}>
                     <Image src='/images/footer/tandis-01.png' className="h-12 sm:h-18 object-contain" alt='' width={62} height={72} />
                     <Image src='/images/footer/tandis-02.png' className="h-12 sm:h-18 object-contain" alt='' width={62} height={72} />
                     <Image src='/images/footer/tandis-03.png' className="h-12 sm:h-18 object-contain" alt='' width={62} height={72} />
@@ -65,7 +65,7 @@ const Footer: React.FC<Props> = props => {
                 </nav>
 
                 <Link href="/">
-                    <Image src={logo} alt={siteName} width={115} height={48} className="block mx-auto mb-4" />
+                    <Image src={logo} alt={siteName} width={115} height={48} className="block mx-auto mb-4" onContextMenu={e => {e.preventDefault()}} />
                 </Link>
 
                 <div className="flex gap-4 justify-center mb-4">

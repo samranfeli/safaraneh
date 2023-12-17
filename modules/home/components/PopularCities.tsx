@@ -92,6 +92,7 @@ const PopularCities: React.FC = () => {
                         <div key={city.name} className='sm:px-2'>
                             <a href={city.url} className='grid grid-cols-9 bg-white rounded-lg overflow-hidden' target='_blank' title={city.name}>
                                 <Image
+                                    onContextMenu={e => {e.preventDefault()}}
                                     src={city.imageUrl}
                                     alt={city.title}
                                     width={272}
