@@ -1,6 +1,6 @@
 
 import { TabItem } from '@/modules/shared/types/common';
-import { useState } from 'react';
+import React, { Fragment, useState } from 'react';
 
 type Props = {
     items: TabItem[];
@@ -25,12 +25,9 @@ const Tabs: React.FC<Props> = props => {
                 </button>)}
             </div>
 
-            <div>
-                {items.map(item => <div key={item.key} style={{display: activetabKey === item.key ? "block" : "none"}} >
-                    {item.children}
-                </div>)}
-
-            </div>
+            {items.map(item => <Fragment key={item.key}>
+                {activetabKey === item.key ? item.children : null}
+            </Fragment>)}
         </>
     )
 }

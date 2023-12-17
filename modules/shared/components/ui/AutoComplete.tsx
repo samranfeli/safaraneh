@@ -3,7 +3,7 @@ import { AxiosResponse } from 'axios';
 
 import useHttp from '../../hooks/use-http';
 import { Header } from '../../../../enum/url';
-import { Close } from '../ui/icons';
+import { Close, Location } from '../ui/icons';
 import Skeleton from './Skeleton';
 
 type Props<T> = {
@@ -17,7 +17,7 @@ type Props<T> = {
     onChangeHandle: (value: T | undefined) => void;
     inputClassName?: string;
     wrapperClassName?: string;
-    icon?: ReactElement;
+    icon?: "location" | "airplane_";
     value?: T;
     textPropertyName: string;
     noResultMessage?: string;
@@ -26,7 +26,7 @@ type Props<T> = {
 
 function AutoComplete<T>(props: PropsWithChildren<Props<T>>) {
 
-    const { checkTypingLanguage, url, noResultMessage, onChangeHandle, acceptLanguage, min } = props;
+    const { checkTypingLanguage, url, noResultMessage, onChangeHandle, acceptLanguage, min, icon } = props;
 
     const inputRef = useRef<HTMLInputElement>(null);
     const wrapperRef = useRef<HTMLDivElement>(null);
@@ -190,34 +190,34 @@ function AutoComplete<T>(props: PropsWithChildren<Props<T>>) {
 
     if (!direction) {
         inputClassNames.push("rtl:pl-8 ltr:pr-8 rtl:text-right ltr:text-left rtl:font-fa");
-        if (props.icon) {
+        if (icon) {
             inputClassNames.push("rtl:pr-10 ltr:pl-10");
         } else {
             inputClassNames.push("rtl:pr-3 ltr:pl-3");
         }
     } else if (direction === 'rtl') {
         inputClassNames.push("pl-8 text-right font-fa rtl");
-        if (props.icon) {
+        if (icon) {
             inputClassNames.push("pr-10");
         } else {
             inputClassNames.push("pr-3");
         }
     } else if (direction === 'ltr') {
         inputClassNames.push("pr-8 text-left font-en ltr");
-        if (props.icon) {
+        if (icon) {
             inputClassNames.push("pl-10");
         } else {
             inputClassNames.push("pl-3");
         }
     }
+    const iconClassName = `h-5 w-5 fill-current absolute z-20 top-1/2 -translate-y-1/2 ${!direction ? "rtl:right-3 ltr:left-3" : direction === 'rtl' ? "right-3" : "left-3"}`;
 
-    let icon = null;
-    if (props.icon) {
-        icon = <span className={`absolute z-20 top-1/2 -translate-y-1/2 ${!direction ? "rtl:right-3 ltr:left-3" : direction === 'rtl' ? "right-3" : "left-3"}`}>
-            {props.icon}
-        </span>
+    let iconElement = null;
+
+    if (icon && icon === "location"){
+        iconElement = <Location className={iconClassName} />;
     }
-
+    
     let content = null;
     if (listElement) {
         content = listElement;
@@ -242,7 +242,9 @@ function AutoComplete<T>(props: PropsWithChildren<Props<T>>) {
                     ref={inputRef}
                     placeholder={props.placeholder || ""}
                 />
-                {icon}
+                
+                {iconElement}
+
                 {loading && <span className={`animate-spin block border-2 border-neutral-400 rounded-full border-r-transparent border-t-transparent  w-6 h-6 absolute top-1/2 -mt-3.5 ${!direction ? "ltr:right-3 rtl:left-3" : direction === 'rtl' ? "left-3" : "right-3"}`} />}
                 {!!selectedItem && <span onClick={resetInput} className={`absolute bg-white top-2/4 -mt-3.5 cursor-pointer ${!direction ? "ltr:right-3 rtl:left-3" : direction === 'rtl' ? "left-3" : "right-3"}`}>
                     <Close className="w-7" />

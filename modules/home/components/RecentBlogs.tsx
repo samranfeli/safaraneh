@@ -10,11 +10,11 @@ type Props = {
 const RecentBlogs: React.FC<Props> = props => {
 
     return (
-        <div className="max-w-container mx-auto p-5 md:py-10">
+        <>
 
             <h2 className='text-xl font-semibold mb-4'> آخرین مطالب وبلاگ </h2>
 
-            <div className='grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4'>
+            <div className='grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 pb-10'>
 
                 {props.blogs?.map(blog => (
 
@@ -36,7 +36,7 @@ const RecentBlogs: React.FC<Props> = props => {
 
             </div>
 
-        </div>
+        </>
     )
 }
 

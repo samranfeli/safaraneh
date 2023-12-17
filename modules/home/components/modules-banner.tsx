@@ -1,6 +1,7 @@
 import { useTranslation } from 'next-i18next';
 import Link from 'next/link';
 import Image from 'next/image';
+import {Fragment} from 'react';
 
 const ModulesBanner: React.FC = () => {
 
@@ -9,11 +10,11 @@ const ModulesBanner: React.FC = () => {
   const linkClassName = "rounded-lg overflow-hidden block relative before:block before:absolute before:top-0 before:left-0 before:right-0 before:h-40 before:bg-gradient-to-b before:from-black/75 before:to-transparent";
 
   return (
-      <div className="max-w-container mx-auto p-5 md:py-10">
+      <Fragment>
 
         <h2 className='text-xl font-semibold mb-4'>ویژه‌های سفر</h2>
 
-        <div className='grid grid-cols-1 md:grid-cols-2 gap-3'>
+        <div className='grid grid-cols-1 md:grid-cols-2 gap-3 pb-8 md:pb-12'>
 
           <Link
             href='/hotels/هتل-های-شیراز'
@@ -83,8 +84,7 @@ const ModulesBanner: React.FC = () => {
 
         </div>
 
-
-      </div>
+      </Fragment>
   )
 }
 

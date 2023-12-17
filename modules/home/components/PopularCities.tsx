@@ -3,6 +3,7 @@ import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import Slider from "react-slick";
 import Image from 'next/image';
+import {Fragment} from 'react';
 
 import {LeftCaretBold,RightCaretBold} from '../../shared/components/ui/icons';
 
@@ -98,13 +99,13 @@ const PopularCities: React.FC = () => {
     };
 
     return (
-        <div className="max-w-container mx-auto p-5 md:py-6">
+        <Fragment>
 
             <h2 className='text-xl font-semibold mb-4'>
                 شهرهای محبوب
             </h2>
 
-            <div className='lg:mx-2 xl:-mx-2'>
+            <div className='lg:mx-2 xl:-mx-2 pb-10'>
                 <Slider {...settings}>
 
                     {cities.map(city => (
@@ -132,7 +133,7 @@ const PopularCities: React.FC = () => {
                 </Slider>
             </div>
 
-        </div>
+        </Fragment>
 
     )
 }

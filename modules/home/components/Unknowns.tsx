@@ -1,5 +1,6 @@
 
 import { useTranslation } from 'next-i18next';
+import {Fragment} from 'react';
 import Image from 'next/image';
 
 import Slider from "react-slick";
@@ -92,11 +93,11 @@ const Unknowns: React.FC = () => {
     };
 
     return (
-        <div className="max-w-container mx-auto p-5 md:py-6">
+        <Fragment>
             <h2 className='text-xl font-semibold mb-4'>
                 ناشناخته ها
             </h2>
-            <div className='lg:mx-2 xl:-mx-2'>
+            <div className='lg:mx-2 xl:-mx-2 pb-10'>
                 <Slider {...settings}>
 
                     {items.map(item => (
@@ -128,7 +129,7 @@ const Unknowns: React.FC = () => {
                 </Slider>
             </div>
 
-        </div>
+        </Fragment>
 
     )
 }

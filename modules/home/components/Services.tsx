@@ -40,20 +40,16 @@ const Services: React.FC<Props> = props => {
         ]
 
     return (
-        <div className="max-w-container mx-auto p-5 md:py-10">
+        <div className='grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-10'>
 
-            <div className='grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4'>
+            {services?.map(service => (
 
-                {services?.map(service => (
-
-                    <div key={service.title} className='bg-white p-5 rounded-lg border border-neutral-200'>
-                        {service.icon}
-                        <h2 className='font-semibold text-neytral-600 mb-6 text-center'>{service.title}</h2>
-                        <p className='text-xs leading-5 text-justify'> {service.description}</p>
-                    </div>
-                ))}
-
-            </div>
+                <div key={service.title} className='bg-white p-5 rounded-lg border border-neutral-200'>
+                    {service.icon}
+                    <h2 className='font-semibold text-neytral-600 mb-6 text-center'>{service.title}</h2>
+                    <p className='text-xs leading-5 text-justify'> {service.description}</p>
+                </div>
+            ))}
 
         </div>
     )

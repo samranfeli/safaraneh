@@ -20,6 +20,7 @@ import Button from "../../../shared/components/ui/Button";
 type Props = {
     defaultDestination?: EntitySearchResultItemType;
     defaultDates?: [string, string];
+    wrapperClassName?:string;
 }
 
 const SearchForm: React.FC<Props> = props => {
@@ -155,7 +156,7 @@ const SearchForm: React.FC<Props> = props => {
 
 
     return (
-        <div className="domestic-hotel-search-form grid grid-cols-1 md:grid-cols-7 gap-2">
+        <div className={`domestic-hotel-search-form grid grid-cols-1 md:grid-cols-7 gap-2 ${props.wrapperClassName||""}`}>
             <div className="relative col-span-1 md:col-span-3">
                 <label htmlFor="destination" className="absolute top-1 rtl:right-10 ltr:left-10 text-4xs z-10 leading-5">
                     {t('searchHotelDestination')}
@@ -176,7 +177,7 @@ const SearchForm: React.FC<Props> = props => {
                             </div>
                         </div>
                     ), [])}
-                    icon={<Location className="h-5 w-5 fill-current" />}
+                    icon="location"
                     inputClassName={`w-full outline-none border rounded-lg border-neutral-400 pt-4 h-12 text-sm text-neutral-500 placeholder:text-neutral-500 focus:border-neutral-900`}
                     placeholder={t('search-hotel-or-city')}
                     min={2}

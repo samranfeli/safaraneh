@@ -173,29 +173,25 @@ const HomeFAQ: React.FC = () => {
         ]
 
     return (
-        <div className="max-w-container mx-auto p-5 md:py-10">
+        <div className="bg-white p-5 lg:p-7 rounded-lg leading-10 text-justify mb-10">
+            {faqs.map((faq,index) => <Accordion
 
-            <div className="bg-white p-5 lg:p-7 rounded-lg leading-10 text-justify">
-                {faqs.map((faq,index) => <Accordion
+                key={faq.title}
 
-                    key={faq.title}
+                title={(<div>
+                    <QuestionCircle className='w-5 h-5 mt-.5 rtl:ml-2 ltr:mr-2 fill-current inline-block' />
+                    {faq.title}
+                </div>)}
 
-                    title={(<div>
-                        <QuestionCircle className='w-5 h-5 mt-.5 rtl:ml-2 ltr:mr-2 fill-current inline-block' />
-                        {faq.title}
-                    </div>)}
+                content={(
+                    <div className='leading-7 text-sm'>
+                        {faq.content}
+                    </div>
+                )}
+                
+                WrapperClassName={`${index === faqs.length-1 ? "mb-0" : "mb-3 sm:mb-4"}`}
 
-                    content={(
-                        <div className='leading-7 text-sm'>
-                            {faq.content}
-                        </div>
-                    )}
-                    
-                    WrapperClassName={`${index === faqs.length-1 ? "mb-0" : "mb-3 sm:mb-4"}`}
-
-                /> )}
-            </div>
-
+            /> )}
         </div>
     )
 }

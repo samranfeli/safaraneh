@@ -1,4 +1,5 @@
 import { useTranslation } from 'next-i18next';
+import {Fragment} from 'react';
 import Image from 'next/image';
 import Rating from '../../shared/components/ui/Rating';
 
@@ -94,11 +95,11 @@ const BeachHotels: React.FC = () => {
         };
 
     return (
-        <div className="max-w-container mx-auto p-5 md:py-6">
+        <Fragment>
             <h2 className='text-xl font-semibold mb-4'>
                 هتل‌‌های ساحلی
             </h2>
-            <div className='lg:mx-2 xl:-mx-2'>
+            <div className='lg:mx-2 xl:-mx-2 pb-10'>
 
                 <Slider {...settings}>
 
@@ -126,7 +127,7 @@ const BeachHotels: React.FC = () => {
                 </Slider>
             </div>
 
-        </div>
+        </Fragment>
 
     )
 }

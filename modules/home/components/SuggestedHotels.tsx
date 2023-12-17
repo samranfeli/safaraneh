@@ -3,6 +3,7 @@ import Image from 'next/image';
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import Slider from "react-slick";
+import {Fragment} from 'react';
 
 import Rating from '../../shared/components/ui/Rating';
 import {LeftCaretBold,RightCaretBold} from '../../shared/components/ui/icons';
@@ -114,13 +115,13 @@ const SuggestedHotels: React.FC = () => {
     };
 
     return (
-        <div className="max-w-container mx-auto p-5 md:py-6">
+        <Fragment>
 
             <h2 className='text-xl font-semibold mb-4'>
                 {t('suggested-hotels')}
             </h2>
 
-            <div className='lg:mx-2 xl:-mx-2'>
+            <div className='lg:mx-2 xl:-mx-2 pb-10'>
                 <Slider {...settings}>
 
                     {hotels.map(hotel => (
@@ -147,7 +148,7 @@ const SuggestedHotels: React.FC = () => {
                 </Slider>
             </div>
 
-        </div>
+        </Fragment>
 
     )
 }

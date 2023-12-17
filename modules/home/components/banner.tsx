@@ -21,7 +21,7 @@ const Banner :React.FC = () => {
         {
           key: '1',
           label: (<div className='text-center'> <Apartment className='w-6 h-6 fill-current block mx-auto mb-1' /> {t('domestic-hotel')} </div>),
-          children: <div className='py-5'><SearchForm defaultDates={domesticHotelDefaultDates} /></div>,
+          children: <SearchForm wrapperClassName='py-5' defaultDates={domesticHotelDefaultDates} />,
         },
         {
           key: '2',
@@ -35,7 +35,7 @@ const Banner :React.FC = () => {
             <Image 
               src='/images/home/banner.jpg'
               alt="blue sky"
-              width={1900}
+              width={1400}
               height={414}
               priority
               className='absolute top-0 left-0 w-full h-full object-cover object-center z-10'
