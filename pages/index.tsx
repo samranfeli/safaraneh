@@ -54,10 +54,19 @@ const Home: NextPage = ({ blogs, portalData }: { blogs?: BlogItemType[], portalD
     twitter = portalData.Phrases.find(item => item.Keyword === "Twitter")?.Value || "";
   }
 
+  const portalTitle = portalData?.MetaTags?.find(item => item.Name === "title")?.Content || "";
+  const portalKeywords = portalData?.MetaTags?.find(item => item.Name === "keywords")?.Content || "";
+  const portalDescription = portalData?.MetaTags?.find(item => item.Name === "description")?.Content || "";
+
   return (
     <>
       <Head>
         <link rel="icon" type="image/x-icon" href={favIconLink} />
+        
+        {!!portalTitle && <title>{portalTitle}</title>}
+        {!!portalKeywords && <meta name="keywords" content={portalKeywords} />  }
+        {!!portalDescription && <meta name="description" content={portalDescription} />  }
+
       </Head>
 
       <Layout
