@@ -1,11 +1,7 @@
 import { useTranslation } from 'next-i18next';
-import "slick-carousel/slick/slick.css";
-import "slick-carousel/slick/slick-theme.css";
-import Slider from "react-slick";
 import Image from 'next/image';
-import {Fragment} from 'react';
-
-import {LeftCaretBold,RightCaretBold} from '../../shared/components/ui/icons';
+import Carousel from 'react-multi-carousel';
+import 'react-multi-carousel/lib/styles.css';
 
 const PopularCities: React.FC = () => {
 
@@ -56,60 +52,44 @@ const PopularCities: React.FC = () => {
 
         ];
 
-    const settings = {
-        infinite: true,
-        speed: 500,
-        slidesToShow: 5,
-        slidesToScroll: 1,
-        dots: false,
-        rtl: true,
-        nextArrow: <LeftCaretBold className='w-5 h-5 bg-neutral-400 rounded-full fill-white p-1 text-center' />,
-        prevArrow: <RightCaretBold className='w-5 h-5 bg-neutral-400 rounded-full fill-white p-1 text-center' />,
-        responsive: [{
-            breakpoint: 1200,
-            settings: {
-                slidesToShow: 4,
-                dots: false,
-                arrows: true
-            }
-        },{
-            breakpoint: 1023,
-            settings: {
-                slidesToShow: 3,
-                dots: true,
-                arrows: false
-            }
+    const responsive = {
+        largeDesktop: {
+            breakpoint: { max: 5000, min: 1200 },
+            items: 5
         },
-        {
-            breakpoint: 700,
-            settings: {
-                slidesToShow: 2,
-                dots: true,
-                arrows: false
-            }
+        desktop: {
+            breakpoint: { max: 1200, min: 992 },
+            items: 4
         },
-        {
-            breakpoint: 480,
-            settings: {
-                slidesToShow: 1,
-                dots: true,
-                arrows: false
-            }
-        }]
+        tablet: {
+            breakpoint: { max: 992, min: 460 },
+            items: 3
+        },
+        mobile: {
+            breakpoint: { max: 640, min: 0 },
+            items: 1
+        }
     };
 
-    return (
-        <Fragment>
 
-            <h2 className='text-xl font-semibold mb-4'>
+    return (
+        <>
+
+            <h2 className='text-xl font-semibold my-4 md:mt-10'>
                 شهرهای محبوب
             </h2>
 
-            <div className='lg:mx-2 xl:-mx-2 pb-10'>
-                <Slider {...settings}>
+            <div className='sm:-mx-2'>
+                <Carousel
+                    className='home-carousel'
+                    rtl
+                    responsive={responsive}
+                    renderDotsOutside
+                    showDots
+                >
 
                     {cities.map(city => (
-                        <div key={city.name} className='px-2'>
+                        <div key={city.name} className='sm:px-2'>
                             <a href={city.url} className='grid grid-cols-9 bg-white rounded-lg overflow-hidden' target='_blank' title={city.name}>
                                 <Image
                                     src={city.imageUrl}
@@ -130,10 +110,10 @@ const PopularCities: React.FC = () => {
 
                     ))}
 
-                </Slider>
+                </Carousel>
             </div>
 
-        </Fragment>
+        </>
 
     )
 }

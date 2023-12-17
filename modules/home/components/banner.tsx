@@ -35,8 +35,8 @@ const Banner :React.FC = () => {
             <Image 
               src='/images/home/banner.jpg'
               alt="blue sky"
-              width={1400}
-              height={414}
+              width={1350}
+              height={433}
               priority
               className='absolute top-0 left-0 w-full h-full object-cover object-center z-10'
             />

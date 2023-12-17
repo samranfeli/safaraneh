@@ -83,12 +83,15 @@ const Home: NextPage = ({ blogs, portalData }: { blogs?: BlogItemType[], portalD
 
         <Banner />
 
-        <div className='max-w-container mx-auto px-5 pt-5 md:pt-10'>
+        <div className='max-w-container mx-auto px-5'>
           <ModulesBanner />
           <SuggestedHotels />
           <PopularCities />
           <BeachHotels />
           <Unknowns />
+        </div>
+
+        <div className='max-w-container mx-auto px-5'>
           {blogs && <RecentBlogs blogs={blogs} />}
           <Services siteName={siteName} />
           <AboutSummary

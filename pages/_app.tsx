@@ -6,7 +6,7 @@ import type { AppProps } from 'next/app';
 import { Provider } from 'react-redux';
 import Head from 'next/head';
 
-import '../styles/slick.scss';
+import '../styles/carousel.scss';
 import '../styles/mobiscroll.scss';
 import '../styles/globals.scss';
 import '../styles/leaflet.css';

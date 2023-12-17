@@ -1,0 +1,22 @@
+.home-carousel{
+    .rtl.react-multiple-carousel__arrow--left{
+        right: 20px;
+    }
+
+    .rtl.react-multiple-carousel__arrow--right{
+        left: 20px;
+    }
+
+    @media screen and (max-width:991px){
+        .react-multiple-carousel__arrow{
+            display: none;
+        }
+    }
+    
+    &+.react-multi-carousel-dot-list {
+        position: static;
+        @media screen and (min-width:992px) {
+            display: none;
+        }
+    }
+}

@@ -1,13 +1,9 @@
 
 import { useTranslation } from 'next-i18next';
-import {Fragment} from 'react';
+import { Fragment } from 'react';
 import Image from 'next/image';
-
-import Slider from "react-slick";
-import 'slick-carousel/slick/slick.css';
-import 'slick-carousel/slick/slick-theme.css';
-
-import {LeftCaretBold,RightCaretBold} from '../../shared/components/ui/icons';
+import Carousel from 'react-multi-carousel';
+import 'react-multi-carousel/lib/styles.css';
 
 const Unknowns: React.FC = () => {
     const { t } = useTranslation('common');
@@ -55,53 +51,39 @@ const Unknowns: React.FC = () => {
                 location: t('یزد')
             }
 
-        ]
-    const settings = {
-        infinite: true,
-        speed: 500,
-        slidesToShow: 3,
-        slidesToScroll: 1,
-        dots: false,
-        rtl: true,
-        nextArrow: <LeftCaretBold className='w-5 h-5 bg-neutral-400 rounded-full fill-white p-1 text-center' />,
-        prevArrow: <RightCaretBold className='w-5 h-5 bg-neutral-400 rounded-full fill-white p-1 text-center' />,
-        responsive: [{
-            breakpoint: 1023,
-            settings: {
-                slidesToShow: 3,
-                dots: true,
-                arrows: false
+        ];
 
-            }
+    const responsive = {
+        desktop: {
+            breakpoint: { max: 5000, min: 992 },
+            items: 3
         },
-        {
-            breakpoint: 700,
-            settings: {
-                slidesToShow: 2,
-                dots: true,
-                arrows: false
-            }
+        tablet: {
+            breakpoint: { max: 992, min: 460 },
+            items: 2
         },
-        {
-            breakpoint: 480,
-            settings: {
-                slidesToShow: 1,
-                dots: true,
-                arrows: false
-            }
-        }]
+        mobile: {
+            breakpoint: { max: 640, min: 0 },
+            items: 1
+        }
     };
 
     return (
         <Fragment>
-            <h2 className='text-xl font-semibold mb-4'>
+            <h2 className='text-xl font-semibold my-4 md:mt-10'>
                 ناشناخته ها
             </h2>
-            <div className='lg:mx-2 xl:-mx-2 pb-10'>
-                <Slider {...settings}>
+            <div className='sm:-mx-2'>
+                <Carousel
+                    className='home-carousel'
+                    rtl
+                    responsive={responsive}
+                    renderDotsOutside
+                    showDots
+                >
 
                     {items.map(item => (
-                        <div className='px-2' key={item.title}>
+                        <div className='sm:px-2' key={item.title}>
                             <a href={item.url} className='block bg-white rounded-lg overflow-hidden' target='_blank' title={item.title}>
                                 <div className='relative'>
                                     <Image
@@ -126,7 +108,7 @@ const Unknowns: React.FC = () => {
                         </div>
                     ))}
 
-                </Slider>
+                </Carousel>
             </div>
 
         </Fragment>
