@@ -33,14 +33,26 @@ type Props = {
   hotelScoreData: HotelScoreDataType;
   accommodationData: DomesticAccomodationType;
   portalData: PortalDataType;
+  locale: any;
+  query: any;
 }
 
 const HotelDetail: NextPage<Props> = props => {
 
-  const { accommodationData, hotelData, hotelScoreData, pageData, portalData } = props;
+  const { accommodationData, hotelData, hotelScoreData, pageData, portalData,locale, query } = props;
 
 
   const { t } = useTranslation('common');
+  debugger;
+  console.log("t");
+  console.log(t);
+
+  console.log("locale");
+  console.log(locale);
+
+  
+  console.log("query");
+  console.log(query);
 
   const router = useRouter();
   const searchInfo = router.asPath;
@@ -274,7 +286,10 @@ export const getServerSideProps: GetServerSideProps = async (context: any) => {
       hotelData: hotelInfo.data || null,
       hotelScoreData: scoreInfo.data || null,
       accommodationData: accomodationInfo.data?.result || null,
-      portalData: portalData.data || null
+      portalData: portalData.data || null,
+      locale: locale || "nullLOCALE",
+      query:query || "nullQUERY"
+
     },
   })
 }
