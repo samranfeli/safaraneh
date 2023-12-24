@@ -22,10 +22,10 @@ import { useAppDispatch, useAppSelector } from '@/modules/shared/hooks/use-store
 import { setReduxPortal } from '@/modules/shared/store/portalSlice';
 import FAQ from '@/modules/domesticHotel/components/hotelDetails/FAQ';
 import SimilarHotels from '@/modules/domesticHotel/components/hotelDetails/SimilarHotels';
-import moment from 'moment-jalaali';
 import Comments from '@/modules/domesticHotel/components/hotelDetails/comments';
 import Layout from '@/modules/shared/layout';
 import Rooms from '@/modules/domesticHotel/components/hotelDetails/Rooms';
+import { addSomeDays, dateFormat } from '@/modules/shared/helpers';
 
 type Props = {
   pageData: PageDataType;
@@ -78,7 +78,9 @@ const HotelDetail: NextPage<Props> = props => {
     }
   }
 
-  let defaultDates: [string, string] = [moment().format("YYYY-MM-DD"), moment().add(1, 'days').format("YYYY-MM-DD")];
+  const today =  dateFormat(new Date());
+  const tomorrow = dateFormat(addSomeDays(new Date()));
+  let defaultDates: [string, string] = [today, tomorrow];
 
   if (checkin && checkout) {
     defaultDates = [checkin, checkout];

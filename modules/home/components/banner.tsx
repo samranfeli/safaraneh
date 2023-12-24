@@ -5,7 +5,7 @@ import {Apartment,Travel} from '../../shared/components/ui/icons';
 import Tabs from '../../shared/components/ui/tabs';
 import { TabItem } from '@/modules/shared/types/common';
 import Image from 'next/image';
-import moment from 'moment-jalaali';
+import { addSomeDays, dateFormat } from '@/modules/shared/helpers';
 
 
 const Banner :React.FC = () => {
@@ -14,7 +14,10 @@ const Banner :React.FC = () => {
   const {t} = useTranslation('common');
   const {t:tHome} = useTranslation('home');
 
-  const domesticHotelDefaultDates: [string, string] = [moment().format("YYYY-MM-DD") , moment().add(1,'days').format("YYYY-MM-DD") ];
+  const today =  dateFormat(new Date());
+  const tomorrow = dateFormat(addSomeDays(new Date()));
+  
+  const domesticHotelDefaultDates: [string, string] = [today , tomorrow];
 
 
     const items: TabItem[] = [

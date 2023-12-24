@@ -6,8 +6,8 @@ import { Header, ServerAddress, Hotel } from "../../../../enum/url";
 import { DomesticHotelAvailability } from '@/modules/domesticHotel/types/hotel';
 import useHttp from '@/modules/shared/hooks/use-http';
 import { useRouter } from 'next/router';
-import moment from 'moment-jalaali';
 import RoomItem from './RoomItem';
+import { addSomeDays, dateFormat } from '@/modules/shared/helpers';
 
 type Props = {
     hotelId: number;
@@ -26,8 +26,10 @@ const Rooms: React.FC<Props> = props => {
 
     const [selectedRoomToken, setSelectedRoomToken] = useState<string>();
 
-    let checkin = moment().format("YYYY-MM-DD");
-    let checkout = moment().add(1, "days").format("YYYY-MM-DD");
+    const today =  dateFormat(new Date());
+    const tomorrow = dateFormat(addSomeDays(new Date()));
+    let checkin = today;
+    let checkout =tomorrow;
 
     if (asPath.includes("checkin") && asPath.includes("checkout")) {
         checkin = asPath.split('checkin-')[1].split("/")[0];

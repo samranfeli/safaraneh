@@ -7,8 +7,8 @@ import { AvailabilityByIdItem, DomesticHotelMainType } from '@/modules/domesticH
 import SimilarHotelItem from './SimilarHotelItem';
 import useHttp from '@/modules/shared/hooks/use-http';
 import { useRouter } from 'next/router';
-import moment from 'moment-jalaali';
 import { InfoCircle } from '@/modules/shared/components/ui/icons';
+import { addSomeDays, dateFormat, getDatesDiff } from '@/modules/shared/helpers';
 
 type Props = {
     similarHotels?: DomesticHotelMainType[];
@@ -27,8 +27,10 @@ const SimilarHotels: React.FC<Props> = props => {
 
     const [showAll, setShowAll] = useState<boolean>(false);
 
-    let checkin = moment().format("YYYY-MM-DD");
-    let checkout = moment().add(1, "days").format("YYYY-MM-DD");
+    const today =  dateFormat(new Date());
+    const tomorrow = dateFormat(addSomeDays(new Date()));
+    let checkin = today;
+    let checkout = tomorrow;
     let searchInfo = '';
 
     if (asPath.includes("checkin") && asPath.includes("checkout")) {
@@ -37,7 +39,7 @@ const SimilarHotels: React.FC<Props> = props => {
         searchInfo = `/checkin-${checkin}/checkout-${checkout}`;
     }
 
-    const nights = moment(checkout).diff(checkin, 'days');
+    const nights = getDatesDiff(new Date(checkin), new Date(checkout));
 
     const { sendRequest, loading } = useHttp();
 

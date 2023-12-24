@@ -15,7 +15,6 @@
     "formik": "^2.4.5",
     "html-react-parser": "^5.0.7",
     "leaflet": "^1.9.4",
-    "moment-jalaali": "^0.10.0",
     "next": "14.0.3",
     "next-i18next": "^15.0.0",
     "react": "^18",
@@ -29,7 +28,6 @@
   },
   "devDependencies": {
     "@types/leaflet": "^1.9.8",
-    "@types/moment-jalaali": "^0.7.9",
     "@types/node": "^20",
     "@types/react": "^18",
     "@types/react-dom": "^18",
