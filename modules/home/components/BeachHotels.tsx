@@ -8,7 +8,7 @@ import Rating from '../../shared/components/ui/Rating';
 
 const BeachHotels: React.FC = () => {
 
-    const { t } = useTranslation('common');
+    const { t:tHome } = useTranslation('home');
 
     const hotels: {
         imageUrl: string;
@@ -17,39 +17,39 @@ const BeachHotels: React.FC = () => {
         rating: number;
     }[] = [
             {
-                url: t("noor-hotel-beach-link"),
+                url: tHome("noor-hotel-beach-link"),
                 imageUrl: "https://cdn2.safaraneh.com/images/home/hotel-beach-noor-thumb.jpg",
-                name: t('noor-hotel-beach-name'),
+                name: tHome('noor-hotel-beach-name'),
                 rating: 4
             },
             {
-                url: t("toranj-hotel-beach-link"),
+                url: tHome("toranj-hotel-beach-link"),
                 imageUrl: "https://cdn2.safaraneh.com/images/home/hotel-beach-toranj-thumb.jpg",
-                name: t('toranj-hotel-beach-name'),
+                name: tHome('toranj-hotel-beach-name'),
                 rating: 5
             },
             {
-                url: t("parsian-chalos-hotel-beach-link"),
+                url: tHome("parsian-chalos-hotel-beach-link"),
                 imageUrl: "https://cdn2.safaraneh.com/images/home/hotel-beach-azadi-khazar-thumb.jpg",
-                name: t('parsian-chalos-hotel-beach-name'),
+                name: tHome('parsian-chalos-hotel-beach-name'),
                 rating: 5
             },
             {
-                url: t("homa-hotel-beach-link"),
+                url: tHome("homa-hotel-beach-link"),
                 imageUrl: "https://cdn2.safaraneh.com/images/home/hotel-beach-homa-bandarabbas-thumb.jpg",
-                name: t('homa-hotel-beach-name'),
+                name: tHome('homa-hotel-beach-name'),
                 rating: 5
             },
             {
-                url: t("lipar-hotel-beach-link"),
+                url: tHome("lipar-hotel-beach-link"),
                 imageUrl: "https://cdn2.safaraneh.com/images/home/hotel-beach-lipar-thumb.jpg",
-                name: t('lipar-hotel-beach-name'),
+                name: tHome('lipar-hotel-beach-name'),
                 rating: 5
             },
             {
-                url: t("marina-hotel-beach-link"),
+                url: tHome("marina-hotel-beach-link"),
                 imageUrl: "https://cdn2.safaraneh.com/images/home/hotel-beach-marina-thumb.jpg",
-                name: t('marina-hotel-beach-name'),
+                name: tHome('marina-hotel-beach-name'),
                 rating: 5
             }
 

@@ -12,7 +12,7 @@ const HotelAbout: React.FC<Props> = props => {
 
     const { siteName, description, siteUrl } = props;
 
-    const { t } = useTranslation('common');
+    const { t:tHotel } = useTranslation('hotelDetail');
 
     if (!description) {
         return "loading..."
@@ -20,7 +20,7 @@ const HotelAbout: React.FC<Props> = props => {
 
     return (
         <>
-            <h2 className='text-lg lg:text-3xl font-semibold mt-5 mb-3 md:mt-10 md:mb-7'> {t("about-hotel")} </h2>
+            <h2 className='text-lg lg:text-3xl font-semibold mt-5 mb-3 md:mt-10 md:mb-7'> {tHotel("about-hotel")} </h2>
 
             <div className='p-3 sm:p-5 lg:p-7 bg-white rounded-xl text-justify inserted-content text-sm leading-7 md:text-base md:leading-7'>
                 {parse(`${description.replace(/سفرانه/g, siteName)

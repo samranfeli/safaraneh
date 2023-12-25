@@ -15,6 +15,7 @@ const UsersComments: React.FC<Props> = props => {
     const { hotelScoreData: data } = props;
 
     const { t } = useTranslation('common');
+    const { t : tHotel } = useTranslation('hotelDetail');
 
     const [showAll, setShowAll] = useState<boolean>(false);
 
@@ -30,7 +31,7 @@ const UsersComments: React.FC<Props> = props => {
         <div className='p-3 sm:p-5 lg:p-7 bg-white rounded-xl grid grid-cols-1 md:grid-cols-3 gap-10 md:gap-6 mb-8'>
 
             <div>
-                <h5 className='text-sm md:text-base font-semibold mb-5'>{t("hotel-score")}</h5>
+                <h5 className='text-sm md:text-base font-semibold mb-5'>{tHotel("hotel-score")}</h5>
                 <HotelScore
                     reviews={data.CommentCount}
                     score={data.Satisfaction}
@@ -38,25 +39,25 @@ const UsersComments: React.FC<Props> = props => {
                 />
 
                 <div className="mb-1 mt-5 text-sm">
-                    {t('satisfaction-from-100', { satisfaction: data.Satisfaction })}
+                    {tHotel('satisfaction-from-100', { satisfaction: data.Satisfaction })}
                 </div>
                 <ProgressBar percentage={data.Satisfaction || 0} />
 
 
                 <div className="mb-1 mt-5 text-sm">
-                    {t("room-status-from-10", { roomservice: data.RoomService })}
+                    {tHotel("room-status-from-10", { roomservice: data.RoomService })}
                 </div>
                 <ProgressBar percentage={(data.RoomService || 0) * 10} />
 
 
                 <div className="mb-1 mt-5 text-sm">
-                    {t('restaurant-quality-from-10', { resturantquality: data.ResturantQuality })}
+                    {tHotel('restaurant-quality-from-10', { resturantquality: data.ResturantQuality })}
                 </div>
                 <ProgressBar percentage={(data.ResturantQuality || 0) * 10} />
 
 
                 <div className="mb-1 mt-5 text-sm">
-                    {t("employees-treatment-from-10", { dealwithpassanger: data.DealWithPassanger })}
+                    {tHotel("employees-treatment-from-10", { dealwithpassanger: data.DealWithPassanger })}
                 </div>
                 <ProgressBar percentage={(data.DealWithPassanger || 0) * 10} />
 
@@ -64,7 +65,7 @@ const UsersComments: React.FC<Props> = props => {
 
             <div className='md:col-span-2 text-justify leading-7 text-sm md:text-base md:leading-7'>
 
-                <h5 className='text-sm md:text-base font-semibold mb-5'>{t("user-suggestions")}</h5>
+                <h5 className='text-sm md:text-base font-semibold mb-5'>{tHotel("user-suggestions")}</h5>
 
                 {data.Comments?.slice(0, 3).map((item, index) => <CommentItem key={index} comment={item} />)}
                 {showAll && data.Comments?.slice(3).map((item, index) => <CommentItem key={index} comment={item} />)}
@@ -74,7 +75,7 @@ const UsersComments: React.FC<Props> = props => {
                     onClick={toggleShowAll}
                     className='h-10 px-5 text-sm border rounded-lg text-primary-700 border-primary-700 hover:bg-primary-100 transition-all'
                 >
-                    {t("view-suggestions")}{showAll ? t('less') : t('more')}
+                    {tHotel("view-suggestions")}{showAll ? t('less') : t('more')}
                 </button>
             </div>
 

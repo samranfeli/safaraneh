@@ -20,6 +20,7 @@ const RoomItem: React.FC<Props> = props => {
     const { rate, room, selectedRoomToken } = props;
 
     const { t } = useTranslation('common');
+    const { t : tHotel } = useTranslation('hotelDetail');
 
     const [count, setCount] = useState(1);
 
@@ -61,14 +62,14 @@ const RoomItem: React.FC<Props> = props => {
         switch (rate.cancellationPolicy.status) {
             case "NonRefundable":
                 cancellation = (
-                    <div className="mb-4 text-red-500">{t("non-refundable")}</div>
+                    <div className="mb-4 text-red-500">{tHotel("non-refundable")}</div>
                 );
                 break;
             case "Refundable":
                 cancellation = (
                     <div className="text-green-600 mb-4 flex items-center gap-1">
                         <Tik className='w-5 h-5 fill-current' />
-                        {t("refundable")}
+                        {tHotel("refundable")}
                     </div>
                 );
                 break;
@@ -123,7 +124,7 @@ const RoomItem: React.FC<Props> = props => {
     } else if (prices?.roomPrice && prices.roomPrice > 1000) {
         price = <>
             {(prices.boardPrice && (prices.boardPrice !== prices.roomPrice)) && <div>
-                <span className="bg-green-700 text-white px-2 py-1 mb-2 leading-4 rounded-xl text-xs inline-block">{calulateDiscount(prices.roomPrice, prices.boardPrice)}% {t('discount')}</span>
+                <span className="bg-green-700 text-white px-2 py-1 mb-2 leading-4 rounded-xl text-xs inline-block">{calulateDiscount(prices.roomPrice, prices.boardPrice)}% {tHotel('discount')}</span>
             </div>}
             {prices.roomPrice && (
                 <>
@@ -140,7 +141,7 @@ const RoomItem: React.FC<Props> = props => {
                             <div>
                                 {numberWithCommas(prices.roomPrice * count)} {t("rial")}
                             </div>
-                            <small> {t("Avg-per-night")} </small>
+                            <small> {tHotel("Avg-per-night")} </small>
                         </>}
                     >
                         <div className="text-lg font-semibold">
@@ -169,8 +170,8 @@ const RoomItem: React.FC<Props> = props => {
                 {prices?.roomPrice && prices.roomPrice < 1000 ?
                     "درخواست رزرو"
                     : rate.availablityType === "Online" ?
-                        t("online-reserve")
-                        : t("room-reserve")}
+                    tHotel("online-reserve")
+                        : tHotel("room-reserve")}
             </Button>
 
         )
@@ -214,10 +215,10 @@ const RoomItem: React.FC<Props> = props => {
                     {room.capacity?.extraBed ? (
                         <div className="flex gap-2 items-center">
                             <Bed className='w-5 h-5 fill-neutral-400' />
-                            {t('extra-bed')}
+                            {tHotel('extra-bed')}
                         </div>
                     ) : (
-                        <div className="line-through text-neutral-500"> {t('extra-bed')} </div>
+                        <div className="line-through text-neutral-500"> {tHotel('extra-bed')} </div>
                     )}
 
                     {rate.description && <div className='text-amber-600 flex gap-2'>

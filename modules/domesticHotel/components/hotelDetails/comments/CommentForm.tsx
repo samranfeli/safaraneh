@@ -13,6 +13,7 @@ type Props = {
 const CommentForm: React.FC<Props> = props => {
 
     const { t } = useTranslation('common');
+    const { t: tHotel } = useTranslation('hotelDetail');
 
     const { sendRequest, loading } = useHttp();
 
@@ -98,7 +99,7 @@ const CommentForm: React.FC<Props> = props => {
     return (
         <div className='p-3 sm:p-5 lg:p-7 bg-white rounded-xl grid grid-cols-1 md:grid-cols-3 md:gap-6 mb-8'>
             <div>
-                <h5 className='text-sm md:text-base font-semibold mb-5'>{t("submit-suggestion")}</h5>
+                <h5 className='text-sm md:text-base font-semibold mb-5'>{tHotel("submit-suggestion")}</h5>
             </div>
 
             <div className='md:col-span-2'>
@@ -122,7 +123,7 @@ const CommentForm: React.FC<Props> = props => {
                             <Form className='leading-6 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-12 gap-3 md:gap-4 text-xs sm:text-sm'>
 
                                 <div className={`sm:col-span-2 lg:col-span-4 ${errors.FullName ? "has-validation-error" : ""}`}>
-                                    <label htmlFor="FullName" className='block mb-1' > <span className='text-red-500'>*</span> {t('name-family')}</label>
+                                    <label htmlFor="FullName" className='block mb-1' > <span className='text-red-500'>*</span> {t('full-name')}</label>
                                     <Field
                                         validate={(value: string) => validateRequied(value, t('please-enter-name'))}
                                         id="FullName"
@@ -134,7 +135,7 @@ const CommentForm: React.FC<Props> = props => {
                                 </div>
 
                                 <div className='lg:col-span-4'>
-                                    <label htmlFor="CityName" className='block mb-1' > {t('from-city')} </label>
+                                    <label htmlFor="CityName" className='block mb-1' > {tHotel('from-city')} </label>
                                     <Field
                                         id="CityName"
                                         name="CityName"
@@ -155,7 +156,7 @@ const CommentForm: React.FC<Props> = props => {
 
                                 <div className='sm:col-span-2 lg:col-span-12'>
 
-                                    <label htmlFor="Comment" className='block mb-1' > {t('suggestion-text')} </label>
+                                    <label htmlFor="Comment" className='block mb-1' > {tHotel('suggestion-text')} </label>
                                     <Field
                                         as="textarea"
                                         id="Comment"
@@ -166,7 +167,7 @@ const CommentForm: React.FC<Props> = props => {
                                 </div>
 
                                 <div className='lg:col-span-3'>
-                                    <label htmlFor="Satisfaction" className='md:text-xs block mb-1' > {t('satisfaction-percentage')} </label>
+                                    <label htmlFor="Satisfaction" className='md:text-xs block mb-1' > {tHotel('satisfaction-percentage')} </label>
                                     <Field
                                         as="select"
                                         id="Satisfaction"
@@ -178,7 +179,7 @@ const CommentForm: React.FC<Props> = props => {
                                 </div>
 
                                 <div className='lg:col-span-3'>
-                                    <label htmlFor="RoomService" className='md:text-xs block mb-1' > {t('room-status')} </label>
+                                    <label htmlFor="RoomService" className='md:text-xs block mb-1' > {tHotel('room-status')} </label>
                                     <Field
                                         as="select"
                                         id="RoomService"
@@ -190,7 +191,7 @@ const CommentForm: React.FC<Props> = props => {
                                 </div>
 
                                 <div className='lg:col-span-3'>
-                                    <label htmlFor="ResturantQuality" className='md:text-xs block mb-1' > {t('restaurant-quality')} </label>
+                                    <label htmlFor="ResturantQuality" className='md:text-xs block mb-1' > {tHotel('restaurant-quality')} </label>
                                     <Field
                                         as="select"
                                         id="ResturantQuality"
@@ -202,7 +203,7 @@ const CommentForm: React.FC<Props> = props => {
                                 </div>
 
                                 <div className='lg:col-span-3'>
-                                    <label htmlFor="DealWithPassanger" className='md:text-xs block mb-1' > {t('employees-treatment')} </label>
+                                    <label htmlFor="DealWithPassanger" className='md:text-xs block mb-1' > {tHotel('employees-treatment')} </label>
                                     <Field
                                         as="select"
                                         id="DealWithPassanger"
@@ -215,7 +216,7 @@ const CommentForm: React.FC<Props> = props => {
 
                                 <div className='sm:col-span-2 lg:col-span-12'>
                                     <label>
-                                        <Field type="checkbox" name="IsRecommended" className="inline-block align-middle" /> {t('suggest-to-other')}
+                                        <Field type="checkbox" name="IsRecommended" className="inline-block align-middle" /> {tHotel('suggest-to-other')}
                                     </label>
 
                                 </div>

@@ -27,6 +27,7 @@ const SimilarHotelItem: React.FC<Props> = props => {
     const { hotel } = props;
 
     const { t } = useTranslation('common');
+    const { t:tHotel } = useTranslation('hotelDetail');
 
     if (!hotel) {
         return null;
@@ -50,7 +51,7 @@ const SimilarHotelItem: React.FC<Props> = props => {
                 {numberWithCommas(Math.floor(hotel.salePriceFrom / props.nights))} {t('rial')}
                 <br />
                 <small>
-                    {t("Avg-per-night")}
+                    {tHotel("Avg-per-night")}
                 </small>
             </div>
         );
@@ -59,11 +60,11 @@ const SimilarHotelItem: React.FC<Props> = props => {
             <Tooltip title={salePriceTootlipText} position='end' >
                 <div className='text-sm font-semibold rtl:text-left ltr:text-right leading-5'>{numberWithCommas(hotel.salePriceFrom)} {t('rial')}</div>
             </Tooltip>
-            <p className='text-2xs'>{t('price-start-from')} {props.nights} {t('night')}</p>
+            <p className='text-2xs'>{tHotel('price-start-from')} {props.nights} {tHotel('night')}</p>
         </>);
 
 
-        buttonText = t('see-rooms');
+        buttonText = tHotel('see-rooms');
     };
 
 

@@ -16,7 +16,7 @@ type Props = {
 
 const Gallery: React.FC<Props> = props => {
 
-    const { t } = useTranslation('common');
+    const { t: tHotel } = useTranslation('hotelDetail');
     const { images } = props;
 
     const [open, setOpen] = useState(false);
@@ -59,7 +59,7 @@ const Gallery: React.FC<Props> = props => {
 
                 <span className='text-xs absolute bottom-3 rtl:left-3 ltr:right-3 bg-black/75 text-white px-5 py-2 rounded-lg pointer-events-none flex gap-2 items-center'>
                     <ImageGallery className='w-6 h-6 fill-current' />
-                    +{slides.length} {t("picture")}
+                    +{slides.length} {tHotel("picture")}
                 </span>
 
             </div>

@@ -205,7 +205,7 @@ const SearchForm: React.FC<Props> = props => {
                     onClick={submitHandler}
                     className='rounded-lg min-w-sm h-12 block w-full'
                 >
-                    جستجو
+                    {t('search')}
                 </Button>
             </div>
         </div>

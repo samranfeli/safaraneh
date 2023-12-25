@@ -7,6 +7,7 @@ import 'react-multi-carousel/lib/styles.css';
 
 const Unknowns: React.FC = () => {
     const { t } = useTranslation('common');
+    const { t:tHome } = useTranslation('home');
 
     const items: {
         imageUrl: string;
@@ -17,38 +18,38 @@ const Unknowns: React.FC = () => {
             {
                 url: "https://www.instagram.com/p/CHVMUhqAFbV/",
                 imageUrl: "https://cdn2.safaraneh.com/images/home/unknown-busher-thumb.jpg",
-                title: t('offer3-desc'),
-                location: t('offer3')
+                title: tHome('offer3-desc'),
+                location: tHome('offer3')
             },
             {
                 url: "https://www.instagram.com/p/CJdreyCASlk/",
                 imageUrl: "https://cdn2.safaraneh.com/images/home/unknown-hormoz-thumb.jpg",
-                title: t('اقامتگاه لب ساحل هرمز'),
-                location: t('جزیره هرمز')
+                title: tHome('offer5-desc'),
+                location: tHome('offer5')
             },
             {
                 url: "https://www.instagram.com/p/CH2sdAqgK8i/",
                 imageUrl: "https://cdn2.safaraneh.com/images/home/unknown-lahijan-thumb.jpg",
-                title: t('offer1-desc'),
-                location: t('لاهیجان')
+                title: tHome('offer1-desc'),
+                location: tHome('offer1')
             },
             {
                 url: "https://www.instagram.com/p/CHksBtmgZbl/",
                 imageUrl: "https://cdn2.safaraneh.com/images/home/unknown-matinabad-thumb.jpg",
-                title: t('offer2-desc'),
-                location: t('متین‌آباد')
+                title: tHome('offer2-desc'),
+                location: tHome('offer2')
             },
             {
                 url: "https://www.instagram.com/p/CHK5VE2gatE/",
                 imageUrl: "https://cdn2.safaraneh.com/images/home/unknown-esfahan-thumb.jpg",
-                title: t('offer4-desc'),
-                location: t('offer4')
+                title: tHome('offer4-desc'),
+                location: tHome('offer4')
             },
             {
                 url: "https://www.instagram.com/p/CKT3qG_gGTF/",
                 imageUrl: "https://cdn2.safaraneh.com/images/home/unknown-yazd-thumb.jpg",
-                title: t('هتل کاروانسرا'),
-                location: t('یزد')
+                title: tHome('offer6-desc'),
+                location: tHome('offer6')
             }
 
         ];

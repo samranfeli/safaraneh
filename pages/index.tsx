@@ -1,7 +1,6 @@
 import type { NextPage } from 'next';
 import Head from 'next/head';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
-import { useTranslation } from 'next-i18next';
 
 import Banner from '@/modules/home/components/banner'
 import ModulesBanner from '@/modules/home/components/modules-banner';
@@ -22,23 +21,7 @@ import { setReduxPortal } from '@/modules/shared/store/portalSlice';
 import { useAppDispatch, useAppSelector } from '@/modules/shared/hooks/use-store';
 import Layout from '@/modules/shared/layout';
 
-
-const Home: NextPage = ({ blogs, portalData, locale, query }: { blogs?: BlogItemType[], portalData?: PortalDataType , locale?:any, query?:any}) => {
-
-
-  const { t } = useTranslation('common');
-  debugger;
-  console.log("t");
-  console.log(t);
-
-  console.log("locale");
-  console.log(locale);
-
-  
-  console.log("query");
-  console.log(query);
-
-
+const Home: NextPage = ({ blogs, portalData }: { blogs?: BlogItemType[], portalData?: PortalDataType}) => {
   
   const dispatch = useAppDispatch();
   const portalInformation = useAppSelector(state => state.portal);
@@ -119,7 +102,6 @@ const Home: NextPage = ({ blogs, portalData, locale, query }: { blogs?: BlogItem
           <Newsletter />
         </div>
         
-
       </Layout>
     </>
   )
@@ -138,9 +120,7 @@ export const getStaticProps = async (context: any) => {
       ...await serverSideTranslations(context.locale, ['common', 'home']),
       context: context,
       blogs: recentBlogPost?.data || null,
-      portalData: portalData?.data || null,
-      locale: context.locale || "nullLOCALE",
-      query:context.query || "nullQUERY"
+      portalData: portalData?.data || null
     }
   })
 };

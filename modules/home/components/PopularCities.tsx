@@ -5,7 +5,7 @@ import 'react-multi-carousel/lib/styles.css';
 
 const PopularCities: React.FC = () => {
 
-    const { t } = useTranslation('common');
+    const { t:tHome } = useTranslation('home');
 
     const cities: {
         imageUrl: string;
@@ -16,36 +16,36 @@ const PopularCities: React.FC = () => {
     }[] = [
             {
                 imageUrl: "https://cdn2.safaraneh.com/images/home/esfahancityhome.jpg",
-                url: t('esfahan-city-link'),
-                title: t('esfahan-city-name'),
+                url: tHome('esfahan-city-link'),
+                title: tHome('esfahan-city-name'),
                 quantity: 115,
                 name: "اصفهان"
             },
             {
                 imageUrl: "https://cdn2.safaraneh.com/images/home/kishcityhome.jpg",
-                url: t('kish-city-link'),
-                title: t('kish-city-name'),
+                url: tHome('kish-city-link'),
+                title: tHome('kish-city-name'),
                 quantity: 50,
                 name: "کیش"
             },
             {
                 imageUrl: "https://cdn2.safaraneh.com/images/home/shirazcityhome.jpg",
-                url: t('shiraz-city-link'),
-                title: t('shiraz-city-name'),
+                url: tHome('shiraz-city-link'),
+                title: tHome('shiraz-city-name'),
                 quantity: 50,
                 name: "شیراز"
             },
             {
                 imageUrl: "https://cdn2.safaraneh.com/images/home/mashhadcityhome.jpg",
-                url: t('mashhad-city-link'),
-                title: t('mashhad-city-name'),
+                url: tHome('mashhad-city-link'),
+                title: tHome('mashhad-city-name'),
                 quantity: 75,
                 name: "مشهد"
             },
             {
                 imageUrl: "https://cdn2.safaraneh.com/images/home/tehrancityhome.jpg",
-                url: t('tehran-city-link'),
-                title: t('tehran-city-name'),
+                url: tHome('tehran-city-link'),
+                title: tHome('tehran-city-name'),
                 quantity: 90,
                 name: "تهران"
             }

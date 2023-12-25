@@ -62,7 +62,7 @@ const TravelServices: React.FC<Props> = props => {
                         <Link href="/" className="block">
                             <Image src={logo} alt={siteName} width={115} height={48} />
                         </Link>
-                        <button aria-label={t('close-menu')} type="button" onClick={() => { setOpenMenu(false) }}>
+                        <button aria-label={t('close')} type="button" onClick={() => { setOpenMenu(false) }}>
                             <Close className="w-6 h-6 fill-neutral-400" />
                         </button>
                     </div>

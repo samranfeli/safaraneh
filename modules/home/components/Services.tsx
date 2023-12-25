@@ -8,7 +8,7 @@ type Props = {
 
 const Services: React.FC<Props> = props => {
 
-    const { t } = useTranslation('common');
+    const { t:tHome } = useTranslation('home');
 
     const iconsClassName = "block mx-auto w-14 h-14 mb-8 mt-4";
 
@@ -19,23 +19,23 @@ const Services: React.FC<Props> = props => {
     }[] = [
             {
                 icon: <Headset className={iconsClassName} />,
-                title: t('service1'),
-                description: t('service1-desc', { portalName: props.siteName })
+                title: tHome('service1'),
+                description: tHome('service1-desc', { portalName: props.siteName })
             },
             {
                 icon: <PersentBadge className={iconsClassName} />,
-                title: t('service2'),
-                description: t('service2-desc', { portalName: props.siteName })
+                title: tHome('service2'),
+                description: tHome('service2-desc', { portalName: props.siteName })
             },
             {
                 icon: <Discount className={iconsClassName} />,
-                title: t('service3'),
-                description: t('service3-desc', { portalName: props.siteName })
+                title: tHome('service3'),
+                description: tHome('service3-desc', { portalName: props.siteName })
             },
             {
                 icon: <ImmediateVoucher className={iconsClassName} />,
-                title: t('service4'),
-                description: t('service4-desc', { portalName: props.siteName })
+                title: tHome('service4'),
+                description: tHome('service4-desc', { portalName: props.siteName })
             },
         ]
 

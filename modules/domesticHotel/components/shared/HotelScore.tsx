@@ -7,8 +7,8 @@ type Props = {
 }
 
 const HotelScore: React.FC<Props> = props => {
-
-    const { t } = useTranslation('common');
+    
+    const { t: tHotel } = useTranslation('hotelDetail');
 
     const { score, reviews } = props;
 
@@ -20,25 +20,25 @@ const HotelScore: React.FC<Props> = props => {
     let pointColor: string = "";
 
     if (score >= 90) {
-        pointTitle = t("excellent");
+        pointTitle = tHotel("excellent");
         pointColor = "rgb(20, 148, 15)";
     } else if (score >= 80) {
-        pointTitle = t("very-good");
+        pointTitle = tHotel("very-good");
         pointColor = "rgb(108, 191, 74)";
     } else if (score >= 70) {
-        pointTitle = t("good");
+        pointTitle = tHotel("good");
         pointColor = "rgb(163, 205, 77)";
     } else if (score >= 50) {
-        pointTitle = t("fair");
+        pointTitle = tHotel("fair");
         pointColor = "rgb(243, 163, 36)";
     } else {
-        pointTitle = t("bad");
+        pointTitle = tHotel("bad");
         pointColor = "#FF5722";
     }
 
     return (
         <div className={` ${props.className || ""}`}>
-            <span className="text-3xl font-bold"> {score} از 100  </span> {pointTitle} ({props.reviews} {t("guest-reviews")}) 
+            <span className="text-3xl font-bold"> {score} از 100  </span> {pointTitle} ({props.reviews} {tHotel("guest-reviews")}) 
         </div>
     )
 };

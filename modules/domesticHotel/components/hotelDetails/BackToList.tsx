@@ -14,7 +14,7 @@ const BackToList: React.FC<Props> = props => {
 
     const { checkin, checkout, cityName } = props;
 
-    const { t } = useTranslation('common');
+    const { t : tHotel } = useTranslation('hotelDetail');
 
     let listUrl;
 
@@ -32,7 +32,7 @@ const BackToList: React.FC<Props> = props => {
 
     return (
         <Link href={listUrl} className="text-blue-700 text-sm flex gap-2 items-center">
-            <ArrowRight className="ltr:rotate-180 w-5 h-5 fill-current" /> {t('seeHotelsIn', { city: cityName })}
+            <ArrowRight className="ltr:rotate-180 w-5 h-5 fill-current" /> {tHotel('seeHotelsIn', { city: cityName })}
         </Link>
     )
 }

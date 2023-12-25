@@ -33,26 +33,14 @@ type Props = {
   hotelScoreData: HotelScoreDataType;
   accommodationData: DomesticAccomodationType;
   portalData: PortalDataType;
-  locale: any;
-  query: any;
 }
 
 const HotelDetail: NextPage<Props> = props => {
 
-  const { accommodationData, hotelData, hotelScoreData, pageData, portalData,locale, query } = props;
-
+  const { accommodationData, hotelData, hotelScoreData, pageData, portalData } = props;
 
   const { t } = useTranslation('common');
-  debugger;
-  console.log("t");
-  console.log(t);
-
-  console.log("locale");
-  console.log(locale);
-
-  
-  console.log("query");
-  console.log(query);
+  const { t : tHotel } = useTranslation('hotelDetail');
 
   const router = useRouter();
   const searchInfo = router.asPath;
@@ -205,6 +193,7 @@ if (!hotelData){
 
 
           <h2 className='text-lg lg:text-3xl font-semibold mt-5 mb-3 md:mt-10 md:mb-7'>{t('change-search')}</h2>
+          
           <SearchForm
             defaultDestination={defaultDestination}
             defaultDates={defaultDates}
@@ -230,7 +219,7 @@ if (!hotelData){
 
           {!!hotelData.DistancePoints?.length && (
             <>
-              <h2 className='text-lg lg:text-3xl font-semibold mt-5 mb-3 md:mt-10 md:mb-7'>{t('attraction')}</h2>
+              <h2 className='text-lg lg:text-3xl font-semibold mt-5 mb-3 md:mt-10 md:mb-7'>{tHotel('attraction')}</h2>
               <div className='p-5 lg:p-7 bg-white rounded-xl'>
                 <Attractions attractions={hotelData.DistancePoints} />
               </div>
@@ -283,14 +272,12 @@ export const getServerSideProps: GetServerSideProps = async (context: any) => {
 
   return ({
     props: {
-      ...await (serverSideTranslations(context.locale, ['common', 'home'])),
+      ...await (serverSideTranslations(context.locale, ['common', 'hotelDetail'])),
       pageData: pageInfo.data || null,
       hotelData: hotelInfo.data || null,
       hotelScoreData: scoreInfo.data || null,
       accommodationData: accomodationInfo.data?.result || null,
-      portalData: portalData.data || null,
-      locale: locale || "nullLOCALE",
-      query:query || "nullQUERY"
+      portalData: portalData.data || null
 
     },
   })

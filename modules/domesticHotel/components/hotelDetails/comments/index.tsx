@@ -11,13 +11,11 @@ type Props = {
 
 const Comments: React.FC<Props> = props => {
 
-    const { } = props;
-
-    const { t } = useTranslation('common');
+    const { t:tHotel } = useTranslation('hotelDetail');
 
     return (
         <>
-            <h4 className='text-lg lg:text-3xl font-semibold mt-5 mb-3 md:mt-10 md:mb-7'> {t("suggestion")} </h4>
+            <h4 className='text-lg lg:text-3xl font-semibold mt-5 mb-3 md:mt-10 md:mb-7'> {tHotel("suggestion")} </h4>
 
             {!!props.hotelScoreData && <UsersComments hotelScoreData={props.hotelScoreData} />}
 

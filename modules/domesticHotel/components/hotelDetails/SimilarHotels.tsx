@@ -22,6 +22,7 @@ const SimilarHotels: React.FC<Props> = props => {
     const { asPath } = router;
 
     const { t } = useTranslation('common');
+    const { t:tHotel } = useTranslation('hotelDetail');
 
     const [pricedResponse, setPricedResponse] = useState<AvailabilityByIdItem[] | undefined>();
 
@@ -102,8 +103,8 @@ const SimilarHotels: React.FC<Props> = props => {
     return (
 
         <div className='mb-14'>
-            <h2 className='text-center text-lg lg:text-3xl font-semibold mt-5 mb-3 md:mt-10' > {t('similar-hotels')} </h2>
-            <p className='text-center text-neutral-500 mb-4 md:mb-7' > {t('you-might-be-interested-this-hotels')} </p>
+            <h2 className='text-center text-lg lg:text-3xl font-semibold mt-5 mb-3 md:mt-10' > {tHotel('similar-hotels')} </h2>
+            <p className='text-center text-neutral-500 mb-4 md:mb-7' > {tHotel('you-might-be-interested-this-hotels')} </p>
 
             {(hotels?.length) ? (
                 <>
@@ -117,13 +118,13 @@ const SimilarHotels: React.FC<Props> = props => {
                         onClick={() => { setShowAll(prevState => !prevState) }}
                         className='h-10 px-5 text-sm border rounded-lg text-primary-700 block border-primary-700 mt-8 hover:bg-primary-100 transition-all mx-auto'
                     >
-                        {showAll ? t('close') : t('other-similar-hotels')}
+                        {showAll ? t('close') : tHotel('other-similar-hotels')}
                     </button>
                 </>
             ):(
                 <div className='bg-white p-5 rounded-xl flex gap-2 items-center'>
                     <InfoCircle className='w-5 h-5 fill-current' />
-                    {t('no-similar-hotels')}
+                    {tHotel('no-similar-hotels')}
                 </div>
             )}
         </div>

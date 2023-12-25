@@ -16,7 +16,7 @@ const HotelFacilities: React.FC<Props> = props => {
 
     const [open, setOpen] = useState<boolean>(false);
 
-    const { t } = useTranslation('common');
+    const { t : tHotel } = useTranslation('hotelDetail');
 
     if (!facilities) {
         return "loading..."
@@ -24,7 +24,7 @@ const HotelFacilities: React.FC<Props> = props => {
 
     return (
         <>
-            <h2 className='text-lg lg:text-3xl font-semibold mt-5 mb-3 md:mt-10 md:mb-7'> {t("hotel-facilities")} </h2>
+            <h2 className='text-lg lg:text-3xl font-semibold mt-5 mb-3 md:mt-10 md:mb-7'> {tHotel("hotel-facilities")} </h2>
             <div className='p-5 lg:p-7 bg-white rounded-xl leading-5'>
                 <div className={`grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 overflow-hidden ${open ? "" : "max-h-60"}`}>
                     <div className='columns-2 md:columns-1'>
