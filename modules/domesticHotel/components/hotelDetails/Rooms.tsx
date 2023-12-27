@@ -79,7 +79,7 @@ const Rooms: React.FC<Props> = props => {
 
     return (
 
-        <>
+        <div id="rooms_section" className="max-w-container mx-auto px-3 sm:px-5">
             <h2 className="text-lg lg:text-3xl font-semibold mt-5 mb-3 md:mt-10 md:mb-7"> {tHotel('choose-room')}  </h2>
 
             {availabilites?.map(availability => {
@@ -93,8 +93,7 @@ const Rooms: React.FC<Props> = props => {
                     />
                 ))
             })}
-
-        </>
+        </div>
 
     )
 }

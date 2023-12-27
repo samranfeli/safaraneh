@@ -67,29 +67,28 @@ const TravelServices: React.FC<Props> = props => {
                         </button>
                     </div>
                     <nav className="py-3 max-h-mobile-nav overflow-auto md:max-h-none">
-                        <div>
-                            <Link href="" className={`${linkWithIconClassName} md:hidden`}>
-                                <Home className={iconClassName} />
-                                {t('home')}
-                            </Link>
-                            <Link href="" className={`${linkWithIconClassName} md:hidden`}>
-                                <User className={iconClassName} />
-                                {t('sign-in')}
-                            </Link>
-                            <Link href="" className={`${linkWithIconClassName} md:hidden`}>
-                                <UserAdd className={iconClassName} />
-                                {t('create-account')}
-                            </Link>
-                            <Link href="" className={`${linkWithIconClassName} md:hidden`}>
-                                <Ticket className={iconClassName} />
-                                {t('retrieve-my-booking')}
-                            </Link>
-                            <Link href="" className={`${linkWithIconClassName} md:hidden`}>
-                                <Wallet className={iconClassName} />
-                                0 ریال
-                            </Link>
-                        </div>
-
+                        
+                        <Link href="" className={`${linkWithIconClassName} md:hidden`}>
+                            <Home className={iconClassName} />
+                            {t('home')}
+                        </Link>
+                        <Link href="" className={`${linkWithIconClassName} md:hidden`}>
+                            <User className={iconClassName} />
+                            {t('sign-in')}
+                        </Link>
+                        <Link href="" className={`${linkWithIconClassName} md:hidden`}>
+                            <UserAdd className={iconClassName} />
+                            {t('create-account')}
+                        </Link>
+                        <Link href="" className={`${linkWithIconClassName} md:hidden`}>
+                            <Ticket className={iconClassName} />
+                            {t('retrieve-my-booking')}
+                        </Link>
+                        <Link href="" className={`${linkWithIconClassName} md:hidden`}>
+                            <Wallet className={iconClassName} />
+                            0 ریال
+                        </Link>
+                       
                         <div className="border-b border-neutral-200 m-5 md:hidden" />
 
                         <div>
@@ -126,7 +125,7 @@ const TravelServices: React.FC<Props> = props => {
                             <Link href='/contact' className={linkClassName} > {t('contact-us')} </Link>
                             <Link href='/privacy' className={linkClassName} > {t('privacy')} </Link>
                             <Link href='/faq' className={linkClassName} > {t('faq')} </Link>
-                            <Link href='/terms' className={linkClassName} > {t('rules-regulations')} </Link>
+                            <Link href='/terms' className={linkClassName} > {t('terms')} </Link>
                             <Link href='/about' className={linkClassName} > {t('about-us')} </Link>
                         </div>
                     </nav>

@@ -14,14 +14,14 @@ const Comments: React.FC<Props> = props => {
     const { t:tHotel } = useTranslation('hotelDetail');
 
     return (
-        <>
+        <div id="reviews_section" className="max-w-container mx-auto px-3 sm:px-5">
             <h4 className='text-lg lg:text-3xl font-semibold mt-5 mb-3 md:mt-10 md:mb-7'> {tHotel("suggestion")} </h4>
 
             {!!props.hotelScoreData && <UsersComments hotelScoreData={props.hotelScoreData} />}
 
             <CommentForm pageId={props.pageId} />
 
-        </>
+        </div>
     )
 }
 

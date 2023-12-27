@@ -1,5 +1,4 @@
 import { useEffect, useRef, useState } from "react";
-import { DownCaret } from "./icons";
 
 type Props = {
     content: React.ReactNode;
@@ -25,9 +24,8 @@ const Accordion: React.FC<Props> = props => {
 
     return (
         <div className={`border border-neutral-200 rounded-lg text-sm sm:text-base text-neutral-700 ${props.WrapperClassName || ""}`}>
-            <div onClick={toggle} className="select-none flex gap-3 leading-5 justify-between cursor-pointer p-3 sm:p-5">
+            <div onClick={toggle} className={`relative select-none cursor-pointer p-3 sm:p-5 after:block after:w-2 after:h-2 after:border-b-2 after:border-l-2 after:top-1/2 after:-mt-1 after:border-neutral-400 after:self-center after:transition-all after:absolute after:rtl:left-5 after:ltr:right-5 rtl:pl-12 ltr:pr-12 ${open?"after:rotate-135":"after:-rotate-45"}`}>
                 {props.title}
-                <DownCaret className={`w-6 h-6 fill-curent transition-all shrink-0 duration-300 ${open ? "rtl:rotate-180 ltr:-rotate-180" : "rotate-0"}`} />
             </div>
             <div
                 ref={contentRef}

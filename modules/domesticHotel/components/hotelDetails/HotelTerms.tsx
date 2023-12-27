@@ -17,15 +17,15 @@ const HotelTerms: React.FC<Props> = props => {
     const { instruction, mendatoryFee, policies } = props;
 
     const { t } = useTranslation('common');
-    const { t : tHotel } = useTranslation('hotelDetail');
-    
+    const { t: tHotel } = useTranslation('hotelDetail');
+
 
     if (!policies) {
         return null;
     }
 
     return (
-        <>
+        <div id="terms_section" className="max-w-container mx-auto px-3 sm:px-5">
             <h2 className='text-lg lg:text-3xl font-semibold mt-5 mb-3 md:mt-10 md:mb-7'> {t("terms")} </h2>
 
             <div className='p-3 sm:p-5 lg:p-7 bg-white rounded-xl'>
@@ -58,7 +58,7 @@ const HotelTerms: React.FC<Props> = props => {
 
             </div>
 
-        </>
+        </div>
     )
 }
 

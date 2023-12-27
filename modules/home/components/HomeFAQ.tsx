@@ -178,10 +178,10 @@ const HomeFAQ: React.FC = () => {
 
                 key={faq.title}
 
-                title={(<div>
+                title={(<>
                     <QuestionCircle className='w-5 h-5 mt-.5 rtl:ml-2 ltr:mr-2 fill-current inline-block' />
                     {faq.title}
-                </div>)}
+                </>)}
 
                 content={(
                     <div className='leading-7 text-sm'>

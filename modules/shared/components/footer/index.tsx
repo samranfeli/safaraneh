@@ -50,8 +50,8 @@ const Footer: React.FC<Props> = props => {
                     <Link title={t('faq')} href="/faq" className={linkClassNames} >
                         {t('faq')}
                     </Link>
-                    <Link title={t('rules-regulations')} href="/terms" className={linkClassNames} >
-                        {t('rules-regulations')}
+                    <Link title={t('terms')} href="/terms" className={linkClassNames} >
+                        {t('terms')}
                     </Link>
                     <Link title={t('privacy')} href="/privacy" className={linkClassNames} >
                         {t('privacy')}

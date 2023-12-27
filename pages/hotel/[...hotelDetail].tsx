@@ -26,6 +26,7 @@ import Comments from '@/modules/domesticHotel/components/hotelDetails/comments';
 import Layout from '@/modules/shared/layout';
 import Rooms from '@/modules/domesticHotel/components/hotelDetails/Rooms';
 import { addSomeDays, dateFormat } from '@/modules/shared/helpers';
+import AnchorTabs from '@/modules/domesticHotel/components/hotelDetails/AnchorTabs';
 
 type Props = {
   pageData: PageDataType;
@@ -40,7 +41,7 @@ const HotelDetail: NextPage<Props> = props => {
   const { accommodationData, hotelData, hotelScoreData, pageData, portalData } = props;
 
   const { t } = useTranslation('common');
-  const { t : tHotel } = useTranslation('hotelDetail');
+  const { t: tHotel } = useTranslation('hotelDetail');
 
   const router = useRouter();
   const searchInfo = router.asPath;
@@ -66,7 +67,7 @@ const HotelDetail: NextPage<Props> = props => {
     }
   }
 
-  const today =  dateFormat(new Date());
+  const today = dateFormat(new Date());
   const tomorrow = dateFormat(addSomeDays(new Date()));
   let defaultDates: [string, string] = [today, tomorrow];
 
@@ -93,7 +94,7 @@ const HotelDetail: NextPage<Props> = props => {
   let facebook = "";
   let linkedin = "";
   let twitter = "";
-  let siteURL ="";
+  let siteURL = "";
 
   if (portalData) {
     logo = portalData.Phrases.find(item => item.Keyword === "Logo")?.ImageUrl || "";
@@ -108,9 +109,9 @@ const HotelDetail: NextPage<Props> = props => {
     siteURL = portalData.PortalName || "";
   }
 
-if (!hotelData){
-  return null;
-}
+  if (!hotelData) {
+    return null;
+  }
 
   return (
     <>
@@ -174,71 +175,66 @@ if (!hotelData){
         }}
       >
 
-        <div className="max-w-container mx-auto p-3 sm:p-5">
-
+        <div className="max-w-container mx-auto px-3 sm:px-5 pt-5">
           <div className='bg-white p-3'>
-            
             {!!hotelData.IsCovid && <div className='bg-emerald-700 leading-4 p-3 sm:p-4 text-white text-xs sm:text-sm rounded-md flex flex-wrap gap-2 items-center m-1 mb-3'>
               <Phone className='w-5 h-5 sm:w-6 sm:h-6 fill-current block' />
               جهت رزرو با شماره <a href="tel:+982126150051" className='underline text-sm sm:text-base'> 02126150051 </a> تماس بگیرید.
             </div>}
-            
-            <BackToList checkin={checkin} checkout={checkout} cityId={hotelData.CityId} cityName={hotelData.CityName} />
 
+            <BackToList checkin={checkin} checkout={checkout} cityId={hotelData.CityId} cityName={hotelData.CityName} />
           </div>
 
           {!!hotelData.Gallery?.length && <Gallery images={hotelData.Gallery} />}
+        </div>
+
+
+        <AnchorTabs />
+
+        <div className="max-w-container mx-auto px-3 sm:px-5" id="intro_section">
 
           <HotelName hotelData={hotelData} scoreData={hotelScoreData} />
 
-
           <h2 className='text-lg lg:text-3xl font-semibold mt-5 mb-3 md:mt-10 md:mb-7'>{t('change-search')}</h2>
-          
+
           <SearchForm
             defaultDestination={defaultDestination}
             defaultDates={defaultDates}
           />
 
-          {!!hotelData.HotelId && <Rooms hotelId={hotelData.HotelId} />}
-
-          <InView triggerOnce={true}>
-            {({ inView, ref }) =>
-              <div ref={ref}>
-                {inView && !!hotelData.Facilities?.length && <HotelFacilities facilities={hotelData.Facilities} />}
-              </div>}
-          </InView>
-
-          {!!(hotelData.Policies?.length || accommodationData.instruction?.length || accommodationData.mendatoryFee?.length) && <HotelTerms
-            instruction={accommodationData.instruction}
-            mendatoryFee={accommodationData.mendatoryFee}
-            policies={hotelData.Policies}
-          />}
-
-          {!!siteName && <HotelAbout siteName={siteName} siteUrl={siteURL} description={accommodationData.description} />}
-
-
-          {!!hotelData.DistancePoints?.length && (
-            <>
-              <h2 className='text-lg lg:text-3xl font-semibold mt-5 mb-3 md:mt-10 md:mb-7'>{tHotel('attraction')}</h2>
-              <div className='p-5 lg:p-7 bg-white rounded-xl'>
-                <Attractions attractions={hotelData.DistancePoints} />
-              </div>
-            </>
-          )}
-
-          {pageData.Id && <Comments hotelScoreData={hotelScoreData} pageId={pageData.Id} />}
-
-          <InView triggerOnce={true}>
-            {({ inView, ref }) =>
-              <div ref={ref}>
-                {inView && <SimilarHotels similarHotels={hotelData.Similars} />}
-              </div>}
-          </InView>
-
-          {!!accommodationData.faqs?.length && <FAQ faqs={accommodationData.faqs} />}
-
-
         </div>
+
+        {!!hotelData.HotelId && <Rooms hotelId={hotelData.HotelId} />}
+
+        {!!hotelData.Facilities?.length && <HotelFacilities facilities={hotelData.Facilities} />}
+
+        {!!(hotelData.Policies?.length || accommodationData.instruction?.length || accommodationData.mendatoryFee?.length) && <HotelTerms
+          instruction={accommodationData.instruction}
+          mendatoryFee={accommodationData.mendatoryFee}
+          policies={hotelData.Policies}
+        />}
+
+        {!!siteName && <HotelAbout siteName={siteName} siteUrl={siteURL} description={accommodationData.description} />}
+
+        {!!hotelData.DistancePoints?.length && (
+          <div id="attractions_section" className="max-w-container mx-auto px-3 sm:px-5">
+            <h2 className='text-lg lg:text-3xl font-semibold mt-5 mb-3 md:mt-10 md:mb-7'>{tHotel('attraction')}</h2>
+            <div className='p-5 lg:p-7 bg-white rounded-xl'>
+              <Attractions attractions={hotelData.DistancePoints} />
+            </div>
+          </div>
+        )}
+
+        {pageData.Id && <Comments hotelScoreData={hotelScoreData} pageId={pageData.Id} />}
+
+        <InView triggerOnce={true}>
+          {({ inView, ref }) =>
+            <div ref={ref} id='similarhotels_section' className="max-w-container mx-auto px-3 sm:px-5">
+              {inView && <SimilarHotels similarHotels={hotelData.Similars} />}
+            </div>}
+        </InView>
+
+        {!!accommodationData.faqs?.length && <FAQ faqs={accommodationData.faqs} />}
 
       </Layout>
 
@@ -249,7 +245,7 @@ if (!hotelData){
 export const getServerSideProps: GetServerSideProps = async (context: any) => {
 
   const { locale, query } = context;
-  
+
   const url = encodeURI(`/${locale}/hotel/${query.hotelDetail![0]}`);
 
   const fetchPageDetailsAndScore = async (url: string, acceptLanguage: string) => {

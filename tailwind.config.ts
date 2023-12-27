@@ -79,6 +79,9 @@ const config: Config = {
       },
       gridTemplateColumns: {
         '14': 'repeat(14, minmax(0, 1fr))',
+      },
+      rotate: {
+        '135': '135deg',
       }
     },
   },

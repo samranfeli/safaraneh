@@ -28,7 +28,6 @@
     "privacy": "privacy",
     "retrieve-my-booking": "booking tracking",
     "rial": "IRR",
-    "rules-regulations": "rules and regulations",
     "search": "Search",
     "search-hotel-or-city": "Search for a hotel or city",
     "searchHotelDestination": "Hotel search / destination",
@@ -36,5 +35,7 @@
     "sign-in": "Sign in",
     "sign-in-up": "Sign in or Sign up",
     "support": "Support",
-    "terms": "Terms and Conditions"
+    "terms": "Terms and Conditions",
+    "checkin-date":"checkin date",
+    "checkout-date":"checkout date"
 }

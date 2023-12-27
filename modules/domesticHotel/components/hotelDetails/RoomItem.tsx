@@ -1,5 +1,6 @@
 import { useTranslation } from 'next-i18next';
 import { useState } from 'react';
+import Image from 'next/image';
 
 import {DomesticHotelRateItem, DomesticHotelRoomItem } from '@/modules/domesticHotel/types/hotel';
 import { Bed, DefaultRoom, InfoCircle, Restaurant, Tik, User } from '@/modules/shared/components/ui/icons';
@@ -32,7 +33,7 @@ const RoomItem: React.FC<Props> = props => {
     let image = <div className='md:w-1/4 shrink-0 flex items-center justify-center bg-neutral-100 p-5 rtl:rounded-r-xl'><DefaultRoom className='fill-neutral-300 w-20 h-20' /></div>
 
     if (room.image) {
-        image = <div className='w-full md:w-1/4 shrink-0 h-40 md:h-auto bg-center bg-cover rounded-t-xl md:rounded-t-none md:rtl:rounded-r-xl md:ltr:rounded-l-xl' style={{ backgroundImage: `url("${room.image}")` }} />
+        image = <Image className='w-full md:w-1/4 object-cover object-center' src={room.image} alt={room.name || "room name"} width="300" height="200" />
     }
 
 

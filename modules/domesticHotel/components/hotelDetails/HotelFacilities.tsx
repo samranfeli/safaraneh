@@ -3,7 +3,7 @@ import { useState } from 'react';
 import Image from 'next/image';
 
 import { DomesticHotelFacilitieType } from "@/modules/domesticHotel/types/hotel";
-import { DownCaret, Tik } from "@/modules/shared/components/ui/icons";
+import { DownCaret } from "@/modules/shared/components/ui/icons";
 
 
 type Props = {
@@ -16,14 +16,14 @@ const HotelFacilities: React.FC<Props> = props => {
 
     const [open, setOpen] = useState<boolean>(false);
 
-    const { t : tHotel } = useTranslation('hotelDetail');
+    const { t: tHotel } = useTranslation('hotelDetail');
 
     if (!facilities) {
         return "loading..."
     }
 
     return (
-        <>
+        <div id='amenities_section' className="max-w-container mx-auto px-3 sm:px-5" >
             <h2 className='text-lg lg:text-3xl font-semibold mt-5 mb-3 md:mt-10 md:mb-7'> {tHotel("hotel-facilities")} </h2>
             <div className='p-5 lg:p-7 bg-white rounded-xl leading-5'>
                 <div className={`grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 overflow-hidden ${open ? "" : "max-h-60"}`}>
@@ -43,10 +43,9 @@ const HotelFacilities: React.FC<Props> = props => {
                                     {item.Title}
                                 </div>
 
-                                {item.Description?.split(",").map(innerItem => (
+                                {item.Description?.split(",").filter(i => i.trim()).map(innerItem => (
                                     <div key={innerItem} className='text-xs text-neutral-500 rtl:pr-3 ltr:pl-3 mb-2'>
-                                        <Tik className='inline-block align-middle rtl:ml-1 ltr:mr-1 w-4 h-4 fill-current' />
-                                        {innerItem}
+                                        &#10004; {innerItem}
                                     </div>
                                 ))}
 
@@ -61,8 +60,7 @@ const HotelFacilities: React.FC<Props> = props => {
                 </div>
 
             </div>
-
-        </>
+        </div>
     )
 }
 

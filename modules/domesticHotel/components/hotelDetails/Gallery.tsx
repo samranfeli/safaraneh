@@ -33,7 +33,7 @@ const Gallery: React.FC<Props> = props => {
         alt: item.Title || "",
         width: 1000,
         height: 700,
-        description:item.Alt
+        description: item.Alt
     }));
 
     const openLightBox = (index?: number) => {
@@ -43,15 +43,15 @@ const Gallery: React.FC<Props> = props => {
 
     return (
         <>
-            <div className='grid grid-cols-1 md:grid-cols-4 gap-1 bg-white relative'>
+            <div id="pictures_section" className='grid grid-cols-1 md:grid-cols-4 gap-1 bg-white relative'>
                 {slides.slice(0, 5).map((slide, index) => (
                     <Image
                         key={slide.src}
                         priority={!index}
                         src={slide.src}
                         alt={slide.alt}
-                        width={index ? 287 : 578}
-                        height={index ? 191 : 386}
+                        width={index ? 287 : 430}
+                        height={index ? 191 : 270}
                         onClick={() => { openLightBox(index); }}
                         className={`cursor-pointer w-full h-full object-cover ${index ? "hidden md:block md:col-span-1 md:row-span-1" : "md:col-span-2 md:row-span-2"}`}
                     />
@@ -69,9 +69,9 @@ const Gallery: React.FC<Props> = props => {
                 open={open}
                 close={() => setOpen(false)}
                 slides={slides}
-                plugins={[Thumbnails,Captions]}
-                captions={{descriptionTextAlign:'center'}}
-                thumbnails={{width:80,height:50}}
+                plugins={[Thumbnails, Captions]}
+                captions={{ descriptionTextAlign: 'center' }}
+                thumbnails={{ width: 80, height: 50 }}
             />
 
         </>
