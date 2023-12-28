@@ -260,9 +260,10 @@ export const getServerSideProps: GetServerSideProps = async (context: any) => {
     return { hotelInfo, accomodationInfo };
   }
 
-  const [{ pageInfo, scoreInfo }, { hotelInfo, accomodationInfo }] = await Promise.all<any>([
+  const [{ pageInfo, scoreInfo }, { hotelInfo, accomodationInfo }, portalData] = await Promise.all<any>([
     fetchPageDetailsAndScore(url, locale === "en__" ? "en-US" : "fa-IR"),
-    fetchHotelDetailsAndAccomodation(url, locale === "en__" ? "en-US" : "fa-IR")
+    fetchHotelDetailsAndAccomodation(url, locale === "en__" ? "en-US" : "fa-IR"),
+    getPortal(locale === "en__" ? "en-US" : "fa-IR")
   ]);
 
   return ({
@@ -271,7 +272,8 @@ export const getServerSideProps: GetServerSideProps = async (context: any) => {
       pageData: pageInfo.data || null,
       hotelData: hotelInfo.data || null,
       hotelScoreData: scoreInfo.data || null,
-      accommodationData: accomodationInfo.data?.result || null
+      accommodationData: accomodationInfo.data?.result || null,
+      portalData: portalData.data || null
 
     },
   })
