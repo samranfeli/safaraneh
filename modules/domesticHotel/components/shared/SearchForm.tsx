@@ -64,20 +64,24 @@ const SearchForm: React.FC<Props> = props => {
     const url = `${ServerAddress.Type}${ServerAddress.Hotel_Data}${Hotel.GetEntity}`
 
     useEffect(() => {
+        
+        const acceptLanguage = i18n && i18n.language === "fa" ? "fa-IR":"en-US";
+
         sendRequest({
             url: url,
             header: {
                 ...Header,
-                "Accept-Language": 'fa-IR',
+                "Accept-Language": acceptLanguage,
             },
             method: 'post'
         }, (response: AxiosResponse) => {
+
             if (response.data.result) {
                 setDefaultDestinations(response.data.result);
             }
         });
 
-    }, [sendRequest]);
+    }, [sendRequest, i18n?.language]);
 
 
     const submitHandler = async () => {
