@@ -111,7 +111,7 @@ export const getStaticProps = async (context: any) => {
 
   const [recentBlogPost, portalData] = await Promise.all<[any, any]>([
     getBlogs(4),
-    getPortal("fa-IR")
+    getPortal(context?.locale === "en" ? "en-US" : "fa-IR")
   ]);
 
 

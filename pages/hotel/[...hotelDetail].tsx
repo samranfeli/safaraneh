@@ -261,9 +261,9 @@ export const getServerSideProps: GetServerSideProps = async (context: any) => {
   }
 
   const [{ pageInfo, scoreInfo }, { hotelInfo, accomodationInfo }, portalData] = await Promise.all<any>([
-    fetchPageDetailsAndScore(url, "fa-IR"),
-    fetchHotelDetailsAndAccomodation(url, "fa-IR"),
-    getPortal("fa-IR")
+    fetchPageDetailsAndScore(url, locale === "en" ? "en-US" : "fa-IR"),
+    fetchHotelDetailsAndAccomodation(url, locale === "en" ? "en-US" : "fa-IR"),
+    getPortal(locale === "en" ? "en-US" : "fa-IR")
   ]);
 
   return ({
