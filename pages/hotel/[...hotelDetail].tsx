@@ -189,10 +189,11 @@ const HotelDetail: NextPage<Props> = props => {
         </div>
 
 
-        <AnchorTabs />
 
         <div className="max-w-container mx-auto px-3 sm:px-5" id="intro_section">
 
+          <AnchorTabs />
+          
           <HotelName hotelData={hotelData} scoreData={hotelScoreData} />
 
           <h2 className='text-lg lg:text-3xl font-semibold mt-5 mb-3 md:mt-10 md:mb-7'>{t('change-search')}</h2>

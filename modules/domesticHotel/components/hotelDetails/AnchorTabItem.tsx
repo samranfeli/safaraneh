@@ -1,7 +1,7 @@
 import { useRef, useEffect, useState } from "react";
 
 type Props = {
-    target: "pictures_section" | "rooms_section" | "amenities_section" | "terms_section" | "about_section" | "attractions_section" | "reviews_section" | "similarhotels_section";
+    target: string;
     title: string;
 }
 

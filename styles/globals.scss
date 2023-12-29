@@ -2,7 +2,11 @@
 @tailwind components;
 @tailwind utilities;
 
-
+@layer utilities {
+  .clearfix {
+    @apply after:clear-both after:content-[''] after:table before:clear-both before:content-[''] before:table;
+  }
+}
 
 
 
