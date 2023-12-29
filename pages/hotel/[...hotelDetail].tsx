@@ -189,10 +189,9 @@ const HotelDetail: NextPage<Props> = props => {
         </div>
 
 
+        <AnchorTabs />
 
-        <div className="max-w-container mx-auto px-3 sm:px-5" id="intro_section">
-
-          <AnchorTabs />
+        <div className="max-w-container mx-auto px-3 sm:px-5" id="hotel_intro">          
           
           <HotelName hotelData={hotelData} scoreData={hotelScoreData} />
 
@@ -218,8 +217,8 @@ const HotelDetail: NextPage<Props> = props => {
         {!!siteName && <HotelAbout siteName={siteName} siteUrl={siteURL} description={accommodationData.description} />}
 
         {!!hotelData.DistancePoints?.length && (
-          <div id="attractions_section" className="max-w-container mx-auto px-3 sm:px-5">
-            <h2 className='text-lg lg:text-3xl font-semibold mt-5 mb-3 md:mt-10 md:mb-7'>{tHotel('attraction')}</h2>
+          <div id="attractions_section" className="max-w-container mx-auto px-3 sm:px-5 pt-7 md:pt-10">
+            <h2 className='text-lg lg:text-3xl font-semibold mb-3 md:mb-7'>{tHotel('attraction')}</h2>
             <div className='p-5 lg:p-7 bg-white rounded-xl'>
               <Attractions attractions={hotelData.DistancePoints} />
             </div>
@@ -230,7 +229,7 @@ const HotelDetail: NextPage<Props> = props => {
 
         <InView triggerOnce={true}>
           {({ inView, ref }) =>
-            <div ref={ref} id='similarhotels_section' className="max-w-container mx-auto px-3 sm:px-5">
+            <div ref={ref} id='similarhotels_section' className="max-w-container mx-auto px-3 sm:px-5 py-7 md:py-10">
               {inView && <SimilarHotels similarHotels={hotelData.Similars} />}
             </div>}
         </InView>

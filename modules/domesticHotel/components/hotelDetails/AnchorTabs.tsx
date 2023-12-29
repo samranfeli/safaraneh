@@ -47,9 +47,11 @@ const AnchorTabs: React.FC = () => {
 
     return (<div ref={wrapperRef} className='relative hidden lg:block' style={{ height: wrapperHeight + "px" }}>
         <div className={`transition-all ${sticky ? "fixed z-[1001] left-0 right-0 top-0 bg-white shadow" : ""}`}>
-            <nav className='bg-white flex'>
-                {items.map(item => <AnchorTabItem key={item.id} title={item.title} target={item.id} />)}
-            </nav>
+            <div className='max-w-container mx-auto px-3 sm:px-5'>
+                <nav className='bg-white flex'>
+                    {items.map(item => <AnchorTabItem key={item.id} title={item.title} target={item.id} />)}
+                </nav>
+            </div>
         </div>
     </div>)
 }

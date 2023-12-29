@@ -102,9 +102,9 @@ const SimilarHotels: React.FC<Props> = props => {
 
     return (
 
-        <div className='mb-14'>
-            <h2 className='text-center text-lg lg:text-3xl font-semibold mt-5 mb-3 md:mt-10' > {tHotel('similar-hotels')} </h2>
-            <p className='text-center text-neutral-500 mb-4 md:mb-7' > {tHotel('you-might-be-interested-this-hotels')} </p>
+        <>
+            <h2 className='text-center text-lg lg:text-3xl font-semibold mb-3' > {tHotel('similar-hotels')} </h2>
+            <p className='text-center text-neutral-500 mb-3 md:mb-7' > {tHotel('you-might-be-interested-this-hotels')} </p>
 
             {(hotels?.length) ? (
                 <>
@@ -127,7 +127,7 @@ const SimilarHotels: React.FC<Props> = props => {
                     {tHotel('no-similar-hotels')}
                 </div>
             )}
-        </div>
+        </>
 
     )
 }

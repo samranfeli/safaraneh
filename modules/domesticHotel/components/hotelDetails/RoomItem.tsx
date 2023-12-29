@@ -182,7 +182,7 @@ const RoomItem: React.FC<Props> = props => {
 
 
     return (
-        <div className='bg-white border border-neutral-300 rounded-xl mb-4 md:flex'>
+        <div className='bg-white border border-neutral-300 rounded-xl mt-4 md:flex'>
             {image}
             <div className='p-4 grid grid-cols-1 sm:grid-cols-2 leading-5 text-sm grow gap-5'>
                 <h3 className='sm:col-span-2 text-lg md:text-xl font-semibold'> {room.name}</h3>

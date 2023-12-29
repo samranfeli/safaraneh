@@ -97,7 +97,7 @@ const CommentForm: React.FC<Props> = props => {
     }
 
     return (
-        <div className='p-3 sm:p-5 lg:p-7 bg-white rounded-xl grid grid-cols-1 md:grid-cols-3 md:gap-6 mb-8'>
+        <div className='p-3 sm:p-5 lg:p-7 bg-white rounded-xl grid grid-cols-1 md:grid-cols-3 md:gap-6'>
             <div>
                 <h5 className='text-sm md:text-base font-semibold mb-5'>{tHotel("submit-suggestion")}</h5>
             </div>

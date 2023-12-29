@@ -19,8 +19,8 @@ const HotelAbout: React.FC<Props> = props => {
     }
 
     return (
-        <div id="about_section" className="max-w-container mx-auto px-3 sm:px-5">
-            <h2 className='text-lg lg:text-3xl font-semibold mt-5 mb-3 md:mt-10 md:mb-7'> {tHotel("about-hotel")} </h2>
+        <div id="about_section" className="max-w-container mx-auto px-3 sm:px-5 pt-7 md:pt-10">
+            <h2 className='text-lg lg:text-3xl font-semibold mb-3 md:mb-7'> {tHotel("about-hotel")} </h2>
 
             <div className='p-3 sm:p-5 lg:p-7 bg-white rounded-xl text-justify inserted-content text-sm leading-7 md:text-base md:leading-7'>
                 {parse(`${description.replace(/سفرانه/g, siteName)

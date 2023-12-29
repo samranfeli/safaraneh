@@ -19,11 +19,11 @@ const AnchorTabItem: React.FC<Props> = props => {
 
         const targetTop = target.getBoundingClientRect().top;
 
-        if (targetTop < 68) {
+        if (targetTop < 62) {
 
             const targetHeight = target.offsetHeight;
 
-            if (Math.abs(targetTop) < targetHeight) {
+            if (Math.abs(targetTop) < (targetHeight - 62)) {
                 setActive(true);
             } else {
                 setActive(false);
@@ -44,6 +44,7 @@ const AnchorTabItem: React.FC<Props> = props => {
         });
     }, []);
 
+
     const scrollToTarget = (e: any) => {
 
         e.preventDefault();
@@ -51,7 +52,14 @@ const AnchorTabItem: React.FC<Props> = props => {
         const target = document.getElementById(props.target);
 
         if (target) {
-            target.scrollIntoView({ behavior: "smooth" });
+
+            const targetOffsetTop = target.offsetTop + 15;
+
+            window.scrollTo({
+                top: targetOffsetTop,
+                behavior: "smooth"
+           });
+
         }
 
     }
@@ -61,7 +69,7 @@ const AnchorTabItem: React.FC<Props> = props => {
             ref={anchorRef}
             onClick={scrollToTarget}
             href={"#" + props.target}
-            className={`font-semibold p-5 text-sm block ${active ? "text-blue-600" : ""}`}
+            className={`font-semibold p-4 text-sm block border-b-2 ${active ? "text-blue-500 border-blue-500" : "border-transparent"}`}
         > {props.title} </a>
     )
 }
