@@ -1,5 +1,4 @@
-import { MapContainer, TileLayer, useMap,Marker , Popup } from 'react-leaflet';
-import { useTranslation } from "next-i18next";
+import { MapContainer, TileLayer, Marker } from 'react-leaflet';
 import {useEffect, useState} from 'react';
 
 type Props = {
@@ -9,10 +8,6 @@ type Props = {
 }
 
 const LeafletMap: React.FC<Props> = props => {
-
-    const { t } = useTranslation('common');
-
-    const {} = props;
 
     const [isMounted,setMounted] = useState(false);
 
