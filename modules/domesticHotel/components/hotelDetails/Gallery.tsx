@@ -50,6 +50,7 @@ const Gallery: React.FC<Props> = props => {
                         priority={!index}
                         src={slide.src}
                         alt={slide.alt}
+                        sizes={index?"(max-width: 768px) 350px, 578px" : "287px"}
                         width={index ? 287 : 430}
                         height={index ? 191 : 270}
                         onClick={() => { openLightBox(index); }}
