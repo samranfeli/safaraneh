@@ -49,8 +49,8 @@ const SimilarHotels: React.FC<Props> = props => {
     const wrapperRef = useRef<HTMLDivElement>(null);
 
     const checkIsInView = () => {
-        const targetTop = wrapperRef.current!.getBoundingClientRect().top;
-        if (targetTop < 62) {
+        const targetTop = wrapperRef.current?.getBoundingClientRect().top;
+        if (targetTop && targetTop < 62) {
             
             setIsInView(true);
 
