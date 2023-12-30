@@ -3,7 +3,6 @@ import { getAccommodationById, getDomesticHotelDetailByUrl, getScore } from '@/m
 import type { GetServerSideProps, NextPage } from 'next';
 import { useTranslation } from 'next-i18next';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
-import { InView } from 'react-intersection-observer';
 import Head from 'next/head';
 import { PageDataType, PortalDataType } from '@/modules/shared/types/common';
 import { DomesticAccomodationType, DomesticHotelDetailType, EntitySearchResultItemType, HotelScoreDataType } from '@/modules/domesticHotel/types/hotel';
@@ -127,7 +126,7 @@ const HotelDetail: NextPage<Props> = props => {
 
         {hotelData && (
           <>
-            <meta property="og:site_name" content="سفرانه" key="site_name" />
+            <meta property="og:site_name" content={siteName} key="site_name" />
             <meta
               property="og:title"
               content={hotelData.PageTitle}
@@ -152,7 +151,7 @@ const HotelDetail: NextPage<Props> = props => {
             ></meta>
             <meta name="og:locale" content="fa-IR" />
             <meta name="twitter:card" content="summary" />
-            <meta name="twitter:site" content="@safaraneh" />
+            <meta name="twitter:site" content={twitter} />
             <meta name="twitter:title" content={hotelData.PageTitle} />
             <meta
               name="twitter:description"
@@ -227,12 +226,7 @@ const HotelDetail: NextPage<Props> = props => {
 
         {pageData.Id && <Comments hotelScoreData={hotelScoreData} pageId={pageData.Id} />}
 
-        <InView triggerOnce={true}>
-          {({ inView, ref }) =>
-            <div ref={ref} id='similarhotels_section' className="max-w-container mx-auto px-3 sm:px-5 py-7 md:py-10">
-              {inView && <SimilarHotels similarHotels={hotelData.Similars} />}
-            </div>}
-        </InView>
+        {!!hotelData.Similars && <SimilarHotels similarHotels={hotelData.Similars} />}
 
         {!!accommodationData.faqs?.length && <FAQ faqs={accommodationData.faqs} />}
 
