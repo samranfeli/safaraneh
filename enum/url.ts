@@ -18,6 +18,7 @@ export const Header = {
   export const ServerAddress = {
     Type: process.env.PROJECT_SERVER_TYPE,
     // User: process.env.PROJECT_SERVER_USER,
+    Hotel_WP: process.env.PROJECT_SERVER_HOTEL_WP,
     Hotel_Main: process.env.PROJECT_SERVER_HOTEL_MAIN,
     Hotel_Data: process.env.PROJECT_SERVER_HOTEL_DATA,
     Hotel_Availability: process.env.PROJECT_SERVER_HOTEL_AVAILABILITY,
@@ -82,7 +83,8 @@ export const Header = {
     GetPortal: "/v2/Portal/GetPortal",
     InsertComment : '/v2/Comment/InsertComment',
     AvailabilityByHotelId:"/api/services/app/Booking/AvailabilityByHotelId",
-    GetRooms:"/api/services/app/Booking/GetRoom"
+    GetRooms:"/api/services/app/Booking/GetRoom",
+    GetDomesticHotelDetails:"/api/services/app/Accommodation/Get"
     
     
     // GetAccomadtion: "/api/services/app/BookingHotel/GetSearch",

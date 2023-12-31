@@ -1,5 +1,4 @@
-import { getpageByUrl } from '@/modules/domesticHotel/components';
-import { getAccommodationById, getDomesticHotelDetailByUrl, getScore } from '@/modules/domesticHotel/actions';
+import { getDomesticHotelDetailsByUrl } from '@/modules/domesticHotel/actions';
 import type { GetServerSideProps, NextPage } from 'next';
 import { useTranslation } from 'next-i18next';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
@@ -28,16 +27,22 @@ import { addSomeDays, dateFormat } from '@/modules/shared/helpers';
 import AnchorTabs from '@/modules/domesticHotel/components/hotelDetails/AnchorTabs';
 
 type Props = {
-  pageData: PageDataType;
-  hotelData: DomesticHotelDetailType;
-  hotelScoreData: HotelScoreDataType;
-  accommodationData: DomesticAccomodationType;
+  allData: {
+    accommodation: {result: DomesticAccomodationType};
+    score: HotelScoreDataType;
+    page: PageDataType;
+    hotel: DomesticHotelDetailType;
+  };
   portalData: PortalDataType;
 }
 
 const HotelDetail: NextPage<Props> = props => {
 
-  const { accommodationData, hotelData, hotelScoreData, pageData, portalData } = props;
+  const { portalData, allData } = props;
+
+  const {accommodation, hotel: hotelData , page: pageData, score: hotelScoreData} = allData;
+
+  const accommodationData = accommodation.result;
 
   const { t } = useTranslation('common');
   const { t: tHotel } = useTranslation('hotelDetail');
@@ -190,8 +195,8 @@ const HotelDetail: NextPage<Props> = props => {
 
         <AnchorTabs />
 
-        <div className="max-w-container mx-auto px-3 sm:px-5" id="hotel_intro">          
-          
+        <div className="max-w-container mx-auto px-3 sm:px-5" id="hotel_intro">
+
           <HotelName hotelData={hotelData} scoreData={hotelScoreData} />
 
           <h2 className='text-lg lg:text-3xl font-semibold mt-5 mb-3 md:mt-10 md:mb-7'>{t('change-search')}</h2>
@@ -242,32 +247,18 @@ export const getServerSideProps: GetServerSideProps = async (context: any) => {
 
   const url = encodeURI(`/${locale}/hotel/${query.hotelDetail![0]}`);
 
-  const fetchPageDetailsAndScore = async (url: string, acceptLanguage: string) => {
-    const pageInfo: any = await getpageByUrl(url, acceptLanguage);
-    const scoreInfo = await getScore(pageInfo.data?.Id, acceptLanguage);
-    return { pageInfo, scoreInfo };
-  }
-
-  const fetchHotelDetailsAndAccomodation = async (url: string, acceptLanguage: string) => {
-    const hotelInfo: any = await getDomesticHotelDetailByUrl(url, acceptLanguage);
-    const accomodationInfo = await getAccommodationById(hotelInfo.data?.HotelId, acceptLanguage);
-    return { hotelInfo, accomodationInfo };
-  }
-
-  const [{ pageInfo, scoreInfo }, { hotelInfo, accomodationInfo }, portalData] = await Promise.all<any>([
-    fetchPageDetailsAndScore(url, locale === "en__" ? "en-US" : "fa-IR"),
-    fetchHotelDetailsAndAccomodation(url, locale === "en__" ? "en-US" : "fa-IR"),
-    getPortal(locale === "en__" ? "en-US" : "fa-IR")
+  const [portalData, allData] = await Promise.all<any>([
+    getPortal(locale === "en__" ? "en-US" : "fa-IR"),
+    getDomesticHotelDetailsByUrl(url, locale === "en__" ? "en-US" : "fa-IR")
   ]);
+
+
 
   return ({
     props: {
       ...await (serverSideTranslations(context.locale, ['common', 'hotelDetail'])),
-      pageData: pageInfo.data || null,
-      hotelData: hotelInfo.data || null,
-      hotelScoreData: scoreInfo.data || null,
-      accommodationData: accomodationInfo.data?.result || null,
-      portalData: portalData.data || null
+      portalData: portalData.data || null,
+      allData: allData.data?.result || null
 
     },
   })

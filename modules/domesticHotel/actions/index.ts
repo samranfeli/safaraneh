@@ -71,3 +71,21 @@ export const getAccommodationById = async (hotelId: number, acceptLanguage: stri
         return error
     }
 }
+
+export const getDomesticHotelDetailsByUrl = async (url: string, acceptLanguage: string = 'fa-IR') => {
+    try {
+        let response = await axios.get(
+            `${ServerAddress.Type}${ServerAddress.Hotel_WP}${Hotel.GetDomesticHotelDetails}?url=${url}`,
+            {
+                headers: {
+                    'Content-Type': 'application/json',
+                    apikey: process.env.PROJECT_SERVER_APIKEY,
+                    'Accept-Language': acceptLanguage,
+                },
+            },
+        )
+        return response
+    } catch (error) {
+        return error
+    }
+}
