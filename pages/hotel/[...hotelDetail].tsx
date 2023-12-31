@@ -6,14 +6,14 @@ import Head from 'next/head';
 import { PageDataType, PortalDataType } from '@/modules/shared/types/common';
 import { DomesticAccomodationType, DomesticHotelDetailType, EntitySearchResultItemType, HotelScoreDataType } from '@/modules/domesticHotel/types/hotel';
 import { useRouter } from 'next/router';
-import BackToList from '@/modules/domesticHotel/components/hotelDetails/BackToList';
-import { Phone } from '@/modules/shared/components/ui/icons';
-import Gallery from '@/modules/domesticHotel/components/hotelDetails/Gallery';
-import HotelName from '@/modules/domesticHotel/components/hotelDetails/HotelName';
-import SearchForm from '@/modules/domesticHotel/components/shared/SearchForm';
-import HotelFacilities from '@/modules/domesticHotel/components/hotelDetails/HotelFacilities';
-import HotelTerms from '@/modules/domesticHotel/components/hotelDetails/HotelTerms';
-//import HotelAbout from '@/modules/domesticHotel/components/hotelDetails/HotelAbout';
+//import BackToList from '@/modules/domesticHotel/components/hotelDetails/BackToList';
+//import { Phone } from '@/modules/shared/components/ui/icons';
+//import Gallery from '@/modules/domesticHotel/components/hotelDetails/Gallery';
+//import HotelName from '@/modules/domesticHotel/components/hotelDetails/HotelName';
+//import SearchForm from '@/modules/domesticHotel/components/shared/SearchForm';
+//import HotelFacilities from '@/modules/domesticHotel/components/hotelDetails/HotelFacilities';
+//import HotelTerms from '@/modules/domesticHotel/components/hotelDetails/HotelTerms';
+import HotelAbout from '@/modules/domesticHotel/components/hotelDetails/HotelAbout';
 import { getPortal } from '@/modules/domesticHotel/components/portalActions';
 import Attractions from '@/modules/domesticHotel/components/hotelDetails/Attractions';
 import { useAppDispatch, useAppSelector } from '@/modules/shared/hooks/use-store';
@@ -22,9 +22,9 @@ import FAQ from '@/modules/domesticHotel/components/hotelDetails/FAQ';
 import SimilarHotels from '@/modules/domesticHotel/components/hotelDetails/SimilarHotels';
 import Comments from '@/modules/domesticHotel/components/hotelDetails/comments';
 import Layout from '@/modules/shared/layout';
-import Rooms from '@/modules/domesticHotel/components/hotelDetails/Rooms';
+//import Rooms from '@/modules/domesticHotel/components/hotelDetails/Rooms';
 import { addSomeDays, dateFormat } from '@/modules/shared/helpers';
-import AnchorTabs from '@/modules/domesticHotel/components/hotelDetails/AnchorTabs';
+//import AnchorTabs from '@/modules/domesticHotel/components/hotelDetails/AnchorTabs';
 
 type Props = {
   allData: {
@@ -179,7 +179,7 @@ const HotelDetail: NextPage<Props> = props => {
         }}
       >
 
-        <div className="max-w-container mx-auto px-3 sm:px-5 pt-5">
+        {/* <div className="max-w-container mx-auto px-3 sm:px-5 pt-5">
           <div className='bg-white p-3'>
             {!!hotelData.IsCovid && <div className='bg-emerald-700 leading-4 p-3 sm:p-4 text-white text-xs sm:text-sm rounded-md flex flex-wrap gap-2 items-center m-1 mb-3'>
               <Phone className='w-5 h-5 sm:w-6 sm:h-6 fill-current block' />
@@ -216,9 +216,9 @@ const HotelDetail: NextPage<Props> = props => {
           instruction={accommodationData.instruction}
           mendatoryFee={accommodationData.mendatoryFee}
           policies={hotelData.Policies}
-        />}
+        />} */}
 
-        {/* {!!siteName && <HotelAbout siteName={siteName} siteUrl={siteURL} description={accommodationData.description} />} */}
+        {!!siteName && <HotelAbout siteName={siteName} siteUrl={siteURL} description={accommodationData.description} />}
 
         {!!hotelData.DistancePoints?.length && (
           <div id="attractions_section" className="max-w-container mx-auto px-3 sm:px-5 pt-7 md:pt-10">
