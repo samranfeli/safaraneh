@@ -9,7 +9,7 @@ import Head from 'next/head';
 import '../styles/carousel.scss';
 import '../styles/mobiscroll.scss';
 import '../styles/globals.scss';
-//import '../styles/leaflet.css';
+import '../styles/leaflet.css';
 
 import { store } from '../modules/shared/store';
 

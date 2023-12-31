@@ -13,14 +13,14 @@ import HotelName from '@/modules/domesticHotel/components/hotelDetails/HotelName
 import SearchForm from '@/modules/domesticHotel/components/shared/SearchForm';
 import HotelFacilities from '@/modules/domesticHotel/components/hotelDetails/HotelFacilities';
 import HotelTerms from '@/modules/domesticHotel/components/hotelDetails/HotelTerms';
-import HotelAbout from '@/modules/domesticHotel/components/hotelDetails/HotelAbout';
+//import HotelAbout from '@/modules/domesticHotel/components/hotelDetails/HotelAbout';
 import { getPortal } from '@/modules/domesticHotel/components/portalActions';
-import Attractions from '@/modules/domesticHotel/components/hotelDetails/Attractions';
+//import Attractions from '@/modules/domesticHotel/components/hotelDetails/Attractions';
 import { useAppDispatch, useAppSelector } from '@/modules/shared/hooks/use-store';
 import { setReduxPortal } from '@/modules/shared/store/portalSlice';
-import FAQ from '@/modules/domesticHotel/components/hotelDetails/FAQ';
-import SimilarHotels from '@/modules/domesticHotel/components/hotelDetails/SimilarHotels';
-import Comments from '@/modules/domesticHotel/components/hotelDetails/comments';
+// import FAQ from '@/modules/domesticHotel/components/hotelDetails/FAQ';
+// import SimilarHotels from '@/modules/domesticHotel/components/hotelDetails/SimilarHotels';
+// import Comments from '@/modules/domesticHotel/components/hotelDetails/comments';
 import Layout from '@/modules/shared/layout';
 import Rooms from '@/modules/domesticHotel/components/hotelDetails/Rooms';
 import { addSomeDays, dateFormat } from '@/modules/shared/helpers';
@@ -218,7 +218,7 @@ const HotelDetail: NextPage<Props> = props => {
           policies={hotelData.Policies}
         />}
 
-        {!!siteName && <HotelAbout siteName={siteName} siteUrl={siteURL} description={accommodationData.description} />}
+        {/* {!!siteName && <HotelAbout siteName={siteName} siteUrl={siteURL} description={accommodationData.description} />}
 
         {!!hotelData.DistancePoints?.length && (
           <div id="attractions_section" className="max-w-container mx-auto px-3 sm:px-5 pt-7 md:pt-10">
@@ -233,7 +233,7 @@ const HotelDetail: NextPage<Props> = props => {
 
         {!!hotelData.Similars && <SimilarHotels similarHotels={hotelData.Similars} />}
 
-        {!!accommodationData.faqs?.length && <FAQ faqs={accommodationData.faqs} />}
+        {!!accommodationData.faqs?.length && <FAQ faqs={accommodationData.faqs} />} */}
 
       </Layout>
 

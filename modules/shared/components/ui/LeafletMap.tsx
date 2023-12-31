@@ -1,4 +1,4 @@
-// import { MapContainer, TileLayer, Marker } from 'react-leaflet';
+import { MapContainer, TileLayer, Marker } from 'react-leaflet';
 import {useEffect, useState} from 'react';
 
 type Props = {
@@ -21,14 +21,13 @@ const LeafletMap: React.FC<Props> = props => {
     }
 
     return (
-        ""
-        // <MapContainer className={props.className} center={props.location} zoom={props.zoom || 14} scrollWheelZoom={false}>
-        // <TileLayer
-        //     attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-        //     url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-        // />
-        //     <Marker position={props.location} />
-        // </MapContainer>
+        <MapContainer className={props.className} center={props.location} zoom={props.zoom || 14} scrollWheelZoom={false}>
+        <TileLayer
+            attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+            url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+        />
+            <Marker position={props.location} />
+        </MapContainer>
     )
 };
 
