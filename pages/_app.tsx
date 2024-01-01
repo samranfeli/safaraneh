@@ -3,6 +3,7 @@ import { useEffect } from 'react';
 import { useRouter } from 'next/router';
 import { appWithTranslation } from 'next-i18next'; 
 import type { AppProps } from 'next/app';
+import App from 'next/app';
 import { Provider } from 'react-redux';
 import Head from 'next/head';
 
@@ -12,8 +13,15 @@ import '../styles/globals.scss';
 import '../styles/leaflet.css';
 
 import { store } from '../modules/shared/store';
+import { PortalDataType } from '@/modules/shared/types/common';
+import { getPortal } from '@/modules/domesticHotel/components/portalActions';
+import Layout from '@/modules/shared/layout';
 
-function MyApp({ Component, pageProps }: AppProps) {
+type TProps = Pick<AppProps, "Component" | "pageProps"> & {
+  portalData?: PortalDataType;
+};
+
+function MyApp({ Component, pageProps, portalData }: TProps) {
   const router = useRouter();
   
   const { locale } = router;
@@ -34,14 +42,62 @@ function MyApp({ Component, pageProps }: AppProps) {
     }
   },[]);
 
+  
+  const tel = portalData?.Phrases?.find(item => item.Keyword === "PhoneNumber")?.Value || "";
+  const instagram = portalData?.Phrases?.find(item => item.Keyword === "Instagram")?.Value || "";
+  const facebook = portalData?.Phrases?.find(item => item.Keyword === "Facebook")?.Value || "";
+  const linkedin = portalData?.Phrases?.find(item => item.Keyword === "Linkedin")?.Value || "";
+  const twitter = portalData?.Phrases?.find(item => item.Keyword === "Twitter")?.Value || "";
+
+  const logo = portalData?.Phrases?.find(item => item.Keyword === "Logo")?.ImageUrl || "";
+  const siteName = portalData?.Phrases?.find(item => item.Keyword === "Name")?.Value || "";
+  const favIconLink = portalData?.Phrases?.find(item => item.Keyword === "Favicon")?.Value || "";
+
+  const portalTitle = portalData?.MetaTags?.find(item => item.Name === "title")?.Content || "";
+  const portalKeywords = portalData?.MetaTags?.find(item => item.Name === "keywords")?.Content || "";
+  const portalDescription = portalData?.MetaTags?.find(item => item.Name === "description")?.Content || "";
+
   return (
     <Provider store={store}>
+      
       <Head>
-        <title>رزرو هتل | بیشترین %تخفیف% جدیدترین اطلاعات و تصاویر - سفرانه</title>
+        
+        <link rel="icon" type="image/x-icon" href={favIconLink} />
+        
+        {!!portalTitle && <title>{portalTitle}</title>}
+        {!!portalKeywords && <meta name="keywords" content={portalKeywords} />  }
+        {!!portalDescription && <meta name="description" content={portalDescription} />  }
+
       </Head>
-      <Component {...pageProps} />
+      
+      <Layout
+          contactInfo={
+          {tel: tel,
+          instagram: instagram,
+          linkedin: linkedin,
+          twitter: twitter,
+          facebook: facebook}
+        }
+        logo={logo}
+        siteName={siteName}
+      >
+
+        <Component {...pageProps} portalData={portalData} />
+      
+      </Layout>
+    
     </Provider>
   )
 }
+
+MyApp.getInitialProps = async (
+  context: any
+): Promise<any> => {
+  const ctx = await App.getInitialProps(context);
+
+  const portalData = await  getPortal(context?.locale === "en" ? "en-US" : "fa-IR")
+
+  return { ...ctx, portalData: portalData?.data || null };
+};
 
 export default appWithTranslation(MyApp);
