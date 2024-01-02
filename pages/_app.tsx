@@ -42,7 +42,7 @@ function MyApp({ Component, pageProps, portalData }: TProps) {
     }
   },[]);
 
-  
+
   const tel = portalData?.Phrases?.find(item => item.Keyword === "PhoneNumber")?.Value || "";
   const instagram = portalData?.Phrases?.find(item => item.Keyword === "Instagram")?.Value || "";
   const facebook = portalData?.Phrases?.find(item => item.Keyword === "Facebook")?.Value || "";
