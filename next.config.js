@@ -1,5 +1,10 @@
 /** @type {import('next').NextConfig} */
 const { i18n } = require('./next-i18next.config');
+
+const withBundleAnalyzer = require('@next/bundle-analyzer')({
+  enabled: process.env.ANALYZE === 'true',
+})
+
 const nextConfig = {
   images: {
     remotePatterns: [
@@ -34,6 +39,7 @@ const nextConfig = {
     PROJECT_SERVER_PAYMENT: "",
     PROJECT_SERVER_LOCALSERVER: "",
     PROJECT_SERVER_APIKEY: "b4fa99cc-3dfd-40a5-8bcf-53acdc2dbd84",
+    PROJECT_SERVER_HOTEL_WP:"wp.safaraneh.com",
     PROJECT_SERVER_HOTEL_MAIN: "api.safaraneh.com",
     PROJECT_SERVER_HOTEL_DATA: "hoteldomesticdata.safaraneh.com",
     PROJECT_SERVER_HOTEL_AVAILABILITY: "hotelv4.safaraneh.com",
@@ -50,4 +56,4 @@ const nextConfig = {
   }
 }
 
-module.exports = nextConfig
+module.exports = withBundleAnalyzer(nextConfig);

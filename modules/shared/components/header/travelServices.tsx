@@ -8,6 +8,7 @@ import Image from "next/image";
 type Props = {
     logo: string;
     siteName: string;
+    className?: string;
 }
 
 const TravelServices: React.FC<Props> = props => {
@@ -46,10 +47,10 @@ const TravelServices: React.FC<Props> = props => {
     const iconClassName = 'w-5 h-5 fill-current opacity-90';
 
     return (
-        <div className="absolute rtl:right-0 ltr:left-0 top-0 h-full flex flex-col justify-center md:relative md:top-auto md:right-auto md:left-auto md:h-auto">
+        <div className={`absolute rtl:right-0 ltr:left-0 top-0 h-full flex flex-col justify-center md:relative md:top-auto md:right-auto md:left-auto md:h-auto ${props.className || ""}`}>
             <div className={`bg-black/50 backdrop-blur fixed left-0 right-0 top-0 bottom-0 block md:hidden transition-all duration-200 ${openMenu ? "opacity-100 visible" : "opacity-0 invisible"}`}></div>
             <div ref={wrapperRef}>
-                <button type="button" aria-label='Button to open navigation' className="text-sm p-3 md:px-0 md:py-2 text-blue-700 hover:text-blue-500 flex gap-1 items-center" onClick={toggleMenu}>
+                <button type="button" aria-label='Button to open navigation' className="text-sm p-3 md:px-0 md:py-2 text-blue-700 hover:text-blue-500 flex gap-1 items-center h-12" onClick={toggleMenu}>
                     <Menu className="w-8 h-8 fill-neutral-600 md:hidden" />
                     <span className="hidden md:block">
                         {t('TravelFacilities')}
@@ -84,41 +85,35 @@ const TravelServices: React.FC<Props> = props => {
                             <Ticket className={iconClassName} />
                             {t('retrieve-my-booking')}
                         </Link>
-                        <Link href="" className={`${linkWithIconClassName} md:hidden`}>
+                        <Link href="" className={`${linkWithIconClassName} md:hidden border-b border-neutral-200 md:border-none mb-5 md:mb-0 pb-5 md:pb-0`}>
                             <Wallet className={iconClassName} />
                             0 ریال
+                        </Link>                       
+
+                        <Link href='/hotels-home' className={linkWithIconClassName} >
+                            <Bed className={iconClassName} />
+                            {t('domestic-hotel')}
                         </Link>
-                       
-                        <div className="border-b border-neutral-200 m-5 md:hidden" />
-
-                        <div>
-                            <Link href='/hotels-home' className={linkWithIconClassName} >
-                                <Bed className={iconClassName} />
-                                {t('domestic-hotel')}
-                            </Link>
-                            <Link href='/flights-home' className={linkWithIconClassName} >
-                                <Travel className={iconClassName} />
-                                {t('domestic-flight')}
-                            </Link>
-                            <Link href='/hotels-foreign-home' className={linkWithIconClassName} >
-                                <Bed className={iconClassName} />
-                                {t('foreign-hotel')}
-                            </Link>
-                            <Link href='/flight-foreign-home' className={linkWithIconClassName} >
-                                <Travel className={iconClassName} />
-                                {t('foreign-flight')}
-                            </Link>
-                            <Link href='/cip' className={linkWithIconClassName} >
-                                <Suitcase className={iconClassName} />
-                                {t('cip')}
-                            </Link>
-                            <Link href='/blog' className={linkWithIconClassName}>
-                                <Blog className={iconClassName} />
-                                {t('blog')}
-                            </Link>
-                        </div>
-
-                        <div className="border-b border-neutral-200 m-5 md:hidden" />
+                        <Link href='/flights-home' className={linkWithIconClassName} >
+                            <Travel className={iconClassName} />
+                            {t('domestic-flight')}
+                        </Link>
+                        <Link href='/hotels-foreign-home' className={linkWithIconClassName} >
+                            <Bed className={iconClassName} />
+                            {t('foreign-hotel')}
+                        </Link>
+                        <Link href='/flight-foreign-home' className={linkWithIconClassName} >
+                            <Travel className={iconClassName} />
+                            {t('foreign-flight')}
+                        </Link>
+                        <Link href='/cip' className={linkWithIconClassName} >
+                            <Suitcase className={iconClassName} />
+                            {t('cip')}
+                        </Link>
+                        <Link href='/blog' className={`border-b border-neutral-200 md:border-none mb-5 md:mb-0 pb-5 md:pb-0 ${linkWithIconClassName}`}>
+                            <Blog className={iconClassName} />
+                            {t('blog')}
+                        </Link>
                         
                         <div>
                             <Link href='/organizational-reservation' className={linkClassName} > {t('organizational-reservation')} </Link>

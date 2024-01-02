@@ -1,12 +1,14 @@
 import dynamic from 'next/dynamic';
 import { useTranslation } from 'next-i18next';
+import { useState } from 'react';
 
 import { DomesticHotelDetailType } from "@/modules/domesticHotel/types/hotel";
-import { Location } from "@/modules/shared/components/ui/icons";
+import { Close, Location } from "@/modules/shared/components/ui/icons";
 import HotelScore from "../shared/HotelScore";
 import Rating from "@/modules/shared/components/ui/Rating";
 import Image from 'next/image';
 import Attractions from './Attractions';
+import ModalPortal from '@/modules/shared/components/ui/ModalPortal';
 
 const LeafletNoSsr = dynamic(() => import('../../../shared/components/ui/LeafletMap'), {
     ssr: false
@@ -25,13 +27,18 @@ const HotelName: React.FC<Props> = props => {
 
     const { hotelData } = props;
 
-    const { t } = useTranslation('common');
+    const { t: tHotel } = useTranslation('hotelDetail');
+
+    const [showMap, setShowMap] = useState<boolean>(false);
 
     if (!hotelData) {
         return "loading..."
     }
 
+    const closeMapModal =() => { setShowMap(false) };
+
     return (
+
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-5 p-3 sm:p-5 lg:p-7 bg-white rounded-b-xl">
             <div className="lg:col-span-2 pt-3">
                 <h1 className="font-semibold text-2xl lg:text-4xl mb-3 sm:mb-4 lg:mb-5">
@@ -47,10 +54,12 @@ const HotelName: React.FC<Props> = props => {
             </div>
 
             {(hotelData.Latitude && hotelData.Longitude) ? (
-                <LeafletNoSsr
-                    className='lg:col-span-1 h-48 rounded-xl'
-                    location={[hotelData.Latitude, hotelData.Longitude]}
-                />
+                <button type='button' className='lg:col-span-1 relative' onClick={() => { setShowMap(true) }}>
+                    <Image src="/images/map-cover.jpg" alt="showMap" className='block w-full h-full object-cover' width={354} height={173} />
+                    <span className='absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-white px-5 py-1 border-2 border-blue-600 rounded font-semibold select-none leading-5 text-sm'>
+                        {tHotel('viewOnMap')}
+                    </span>
+                </button>
             ) : (
                 <div className="lg:col-span-1" />
             )}
@@ -68,6 +77,23 @@ const HotelName: React.FC<Props> = props => {
                 {!!hotelData.DistancePoints?.length && <Attractions isSmall attractions={hotelData.DistancePoints} />}
             </div>
 
+            {hotelData.Latitude && hotelData.Longitude && <ModalPortal
+                show={showMap}
+                selector='modal_portal'
+            >
+                <div className='fixed bg-black/75 top-0 left-0 w-full h-full flex items-center justify-center' onClick={closeMapModal}>
+                    <button type='button' onClick={closeMapModal} className='absolute top-2 left-2'>
+                        <Close className='w-10 h-10 fill-neutral-400'/>
+                    </button>
+                    <div className='bg-white p-5 rounded-lg h-5/6 w-5/6'>
+                        <LeafletNoSsr
+                            className='h-full w-full rounded-xl'
+                            location={[hotelData.Latitude, hotelData.Longitude]}
+                            zoom={15}
+                        />
+                    </div>
+                </div>
+            </ModalPortal>}
         </div>
     )
 }

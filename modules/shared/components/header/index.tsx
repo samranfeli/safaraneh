@@ -19,26 +19,28 @@ const Header:React.FC<Props> = props => {
     return (
         <header className="bg-white z-30 relative">
 
-            <div className="max-w-container mx-auto px-3 py-3 flex justify-center md:justify-between">
-                <div className="flex gap-8 items-center">
-                    <Link href="/" className="block">
-                        <Image src={logo} alt={siteName} width={115} height={48} className="" onContextMenu={e => {e.preventDefault()}}  />
-                    </Link>
-                    <TravelServices logo={logo} siteName={siteName} />
+            <div className="max-w-container mx-auto px-3 md:px-5 py-3 clearfix">
+
+                <Link href="/" className="block md:rtl:float-right md:ltr:float-left md:rtl:ml-5 md:ltr:mr-5">
+                    <Image src={logo} alt={siteName} width={115} height={48} onContextMenu={e => {e.preventDefault()}} className="h-12 mx-auto"  />
+                </Link>
+                <TravelServices logo={logo} siteName={siteName} className="rtl:float-right ltr:float-left"  />
+
+                {/* <div className="flex gap-8 items-center">
                 </div>
 
                 <div className="gap-4 items-center hidden md:flex">
-                    <Language />
+                </div> */}
+                
+                <button type="button" aria-label={t('sign-in-up')} className="h-12 text-sm text-blue-700 hover:text-blue-500 ltr:float-right rtl:float-left hidden md:block" >
+                    {t('sign-in-up')}
+                </button>
 
-                    <button type="button" aria-label={t('retrieve-my-booking')} className="text-sm text-blue-700 hover:text-blue-500" >
-                        {t('retrieve-my-booking')}
-                    </button>
+                <button type="button" aria-label={t('retrieve-my-booking')} className="h-12 text-sm text-blue-700 hover:text-blue-500 ltr:float-right rtl:float-left rtl:ml-5 ltr:mr-5 hidden md:block" >
+                    {t('retrieve-my-booking')}
+                </button>
 
-                    <button type="button" aria-label={t('sign-in-up')} className="text-sm text-blue-700 hover:text-blue-500" >
-                        {t('sign-in-up')}
-                    </button>
-                </div>
-
+                <Language className="ltr:float-right rtl:float-left rtl:ml-5 ltr:mr-5 hidden md:block" buttonClassName="h-12"  />
             </div>
 
         </header>

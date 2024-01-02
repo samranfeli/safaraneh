@@ -1,5 +1,4 @@
 import type { NextPage } from 'next';
-import Head from 'next/head';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 
 import Banner from '@/modules/home/components/banner'
@@ -15,11 +14,9 @@ import AboutSummary from '@/modules/home/components/AboutSummary';
 import HomeFAQ from '@/modules/home/components/HomeFAQ';
 import Newsletter from '@/modules/home/components/Newsletter';
 import Services from '@/modules/home/components/Services';
-import { getPortal } from '@/modules/domesticHotel/components/portalActions';
 import { PortalDataType } from '@/modules/shared/types/common';
 import { setReduxPortal } from '@/modules/shared/store/portalSlice';
 import { useAppDispatch, useAppSelector } from '@/modules/shared/hooks/use-store';
-import Layout from '@/modules/shared/layout';
 
 const Home: NextPage = ({ blogs, portalData }: { blogs?: BlogItemType[], portalData?: PortalDataType}) => {
   
@@ -32,95 +29,46 @@ const Home: NextPage = ({ blogs, portalData }: { blogs?: BlogItemType[], portalD
       Phrases: portalData.Phrases
     }));
   }
-
-  let logo = "";
-  let siteName = "";
-  let favIconLink = "favicon.ico";
-  let tel = "";
-  let instagram = "";
-  let facebook = "";
-  let linkedin = "";
-  let twitter = "";
-
-  if (portalData) {
-    logo = portalData.Phrases.find(item => item.Keyword === "Logo")?.ImageUrl || "";
-    siteName = portalData.Phrases.find(item => item.Keyword === "Name")?.Value || "";
-    favIconLink = portalData.Phrases.find(item => item.Keyword === "Favicon")?.Value || "";
-
-    tel = portalData.Phrases.find(item => item.Keyword === "PhoneNumber")?.Value || "";
-    instagram = portalData.Phrases.find(item => item.Keyword === "Instagram")?.Value || "";
-    facebook = portalData.Phrases.find(item => item.Keyword === "Facebook")?.Value || "";
-    linkedin = portalData.Phrases.find(item => item.Keyword === "Linkedin")?.Value || "";
-    twitter = portalData.Phrases.find(item => item.Keyword === "Twitter")?.Value || "";
-  }
-
-  const portalTitle = portalData?.MetaTags?.find(item => item.Name === "title")?.Content || "";
-  const portalKeywords = portalData?.MetaTags?.find(item => item.Name === "keywords")?.Content || "";
-  const portalDescription = portalData?.MetaTags?.find(item => item.Name === "description")?.Content || "";
+  
+  const logo = portalData?.Phrases?.find(item => item.Keyword === "Logo")?.ImageUrl || "";
+  const siteName = portalData?.Phrases?.find(item => item.Keyword === "Name")?.Value || "";
 
   return (
     <>
-      <Head>
-        <link rel="icon" type="image/x-icon" href={favIconLink} />
+      <Banner />
+
+      <div className='max-w-container mx-auto px-5'>
+        <ModulesBanner />
+        <SuggestedHotels />
+        <PopularCities />
+        <BeachHotels />
+        <Unknowns />
+      </div>
+
+      <div className='max-w-container mx-auto px-5'>
+        {blogs && <RecentBlogs blogs={blogs} />}
+        <Services siteName={siteName} />
+        <AboutSummary
+          logo={logo}
+          siteName={siteName}
+        />
+        <HomeFAQ />
+        <Newsletter />
+      </div>
         
-        {!!portalTitle && <title>{portalTitle}</title>}
-        {!!portalKeywords && <meta name="keywords" content={portalKeywords} />  }
-        {!!portalDescription && <meta name="description" content={portalDescription} />  }
-
-      </Head>
-
-      <Layout
-        logo={logo}
-        siteName={siteName}
-        contactInfo={{
-          instagram:instagram,
-          facebook: facebook,
-          linkedin: linkedin,
-          twitter: twitter,
-          tel: tel
-        }}
-      >
-
-        <Banner />
-
-        <div className='max-w-container mx-auto px-5'>
-          <ModulesBanner />
-          <SuggestedHotels />
-          <PopularCities />
-          <BeachHotels />
-          <Unknowns />
-        </div>
-
-        <div className='max-w-container mx-auto px-5'>
-          {blogs && <RecentBlogs blogs={blogs} />}
-          <Services siteName={siteName} />
-          <AboutSummary
-            logo={logo}
-            siteName={siteName}
-          />
-          <HomeFAQ />
-          <Newsletter />
-        </div>
-        
-      </Layout>
     </>
   )
 }
 
 export const getStaticProps = async (context: any) => {
 
-  const [recentBlogPost, portalData] = await Promise.all<[any, any]>([
-    getBlogs(4),
-    getPortal(context?.locale === "en" ? "en-US" : "fa-IR")
-  ]);
-
+  const recentBlogPost : any = await getBlogs(4);
 
   return ({
     props: {
       ...await serverSideTranslations(context.locale, ['common', 'home']),
       context: context,
-      blogs: recentBlogPost?.data || null,
-      portalData: portalData?.data || null
+      blogs: recentBlogPost?.data || null
     }
   })
 };

@@ -139,10 +139,8 @@ const RoomItem: React.FC<Props> = props => {
                         className='whitespace-nowrap'
                         position='end'
                         title={<>
-                            <div>
-                                {numberWithCommas(prices.roomPrice * count)} {t("rial")}
-                            </div>
-                            <small> {tHotel("Avg-per-night")} </small>
+                            {numberWithCommas(prices.roomPrice * count)} {t("rial")}
+                            <small className='block'> {tHotel("Avg-per-night")} </small>
                         </>}
                     >
                         <div className="text-lg font-semibold">
@@ -182,7 +180,7 @@ const RoomItem: React.FC<Props> = props => {
 
 
     return (
-        <div className='bg-white border border-neutral-300 rounded-xl mb-4 md:flex'>
+        <div className='bg-white border border-neutral-300 rounded-xl mt-4 md:flex'>
             {image}
             <div className='p-4 grid grid-cols-1 sm:grid-cols-2 leading-5 text-sm grow gap-5'>
                 <h3 className='sm:col-span-2 text-lg md:text-xl font-semibold'> {room.name}</h3>
@@ -230,8 +228,8 @@ const RoomItem: React.FC<Props> = props => {
                 </div>
                 <footer className='self-stretch md:self-end flex justify-between sm:justify-end items-end gap-5 xl:gap-10'>
 
-                    {rate.availablityType === "Completion" || <div>
-                        <label className="mb-1 block" htmlFor={`counter-${rate.bookingToken}`} > تعداد </label>
+                    {rate.availablityType === "Completion" || <div dir='ltr'>
+                        <label className="mb-1 block" dir="rtl" htmlFor={`counter-${rate.bookingToken}`} > تعداد </label>
                         <Quantity disabled={!!selectedRoomToken} inputId={`counter-${rate.bookingToken}`} min={1} max={rate.available} onChange={setCount} />
                     </div>}
 

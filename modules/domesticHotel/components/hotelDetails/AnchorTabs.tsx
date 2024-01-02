@@ -2,8 +2,6 @@ import { useTranslation } from 'next-i18next';
 import AnchorTabItem from './AnchorTabItem';
 import { useEffect, useRef, useState } from 'react';
 
-type ItemId = "pictures_section" | "rooms_section" | "amenities_section" | "terms_section" | "about_section" | "attractions_section" | "reviews_section" | "similarhotels_section";
-
 const AnchorTabs: React.FC = () => {
 
     const { t } = useTranslation('common');
@@ -15,8 +13,9 @@ const AnchorTabs: React.FC = () => {
 
     const wrapperHeight = wrapperRef.current?.offsetHeight;
 
-    const items: { id: ItemId, title: string }[] = [
+    const items: { id: string, title: string }[] = [
         { id: "pictures_section", title: tHotel('pictures') },
+        { id: "hotel_intro", title: tHotel('hotel-intro') },
         { id: "rooms_section", title: tHotel('choose-room') },
         { id: "amenities_section", title: tHotel('hotel-facilities') },
         { id: "terms_section", title: t('terms') },

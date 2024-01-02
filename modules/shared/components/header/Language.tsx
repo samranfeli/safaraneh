@@ -3,7 +3,12 @@ import { useRouter } from 'next/router';
 import { useState, useEffect, useRef, useCallback } from 'react';
 import { DownCaret } from '../ui/icons';
 
-const Language: React.FC = () => {
+type Props = {
+    className?:string;
+    buttonClassName?:string;
+}
+
+const Language: React.FC<Props> = props => {
 
     const router = useRouter();
 
@@ -42,8 +47,8 @@ const Language: React.FC = () => {
 
 
     return (
-        <div className='relative' ref={wrapperRef}>
-            <button type='button' aria-label={`Language: ${i18n?.language === "en"?"English (US)":"فارسی (Fa)"}`} className='p-1 flex items-center gap-1' onClick={() => { setOpen(prevState => !prevState) }} >
+        <div className={`relative ${props.className || ""}`} ref={wrapperRef}>
+            <button type='button' aria-label={`Language: ${i18n?.language === "en"?"English (US)":"فارسی (Fa)"}`} className={`p-1 flex items-center gap-1 ${props.buttonClassName}`} onClick={() => { setOpen(prevState => !prevState) }} >
                 {currentLang} <DownCaret className='w-5 h-5 fill-current' />
             </button>
             <div className={`absolute rounded overflow-hidden top-full left-0 right-0 shadow-normal bg-white ${open ? "transition-all visible opacity-100 mt-0" : "invisible opacity-0 -mt-3"}`} >

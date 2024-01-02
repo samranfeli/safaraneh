@@ -8,6 +8,7 @@ export default function Document() {
       </Head>
       <body className="bg-body-background text-neutral-700" >
         <Main />
+        <div id="modal_portal" className='relative z-50'></div>
         <NextScript />
       </body>
     </Html>
