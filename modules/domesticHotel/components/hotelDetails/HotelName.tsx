@@ -1,19 +1,13 @@
-import dynamic from 'next/dynamic';
 import { useTranslation } from 'next-i18next';
 import { useState } from 'react';
 
 import { DomesticHotelDetailType } from "@/modules/domesticHotel/types/hotel";
-import { Close, Location } from "@/modules/shared/components/ui/icons";
+import { Location } from "@/modules/shared/components/ui/icons";
 import HotelScore from "../shared/HotelScore";
 import Rating from "@/modules/shared/components/ui/Rating";
 import Image from 'next/image';
 import Attractions from './Attractions';
-import ModalPortal from '@/modules/shared/components/ui/ModalPortal';
-
-const LeafletNoSsr = dynamic(() => import('../../../shared/components/ui/LeafletMap'), {
-    ssr: false
-});
-
+import HotelMap from './HotelMap';
 
 type Props = {
     hotelData?: DomesticHotelDetailType;
@@ -35,7 +29,7 @@ const HotelName: React.FC<Props> = props => {
         return "loading..."
     }
 
-    const closeMapModal =() => { setShowMap(false) };
+    const closeMapModal = () => { setShowMap(false) };
 
     return (
 
@@ -77,23 +71,11 @@ const HotelName: React.FC<Props> = props => {
                 {!!hotelData.DistancePoints?.length && <Attractions isSmall attractions={hotelData.DistancePoints} />}
             </div>
 
-            {hotelData.Latitude && hotelData.Longitude && <ModalPortal
-                show={showMap}
-                selector='modal_portal'
-            >
-                <div className='fixed bg-black/75 top-0 left-0 w-full h-full flex items-center justify-center' onClick={closeMapModal}>
-                    <button type='button' onClick={closeMapModal} className='absolute top-2 left-2'>
-                        <Close className='w-10 h-10 fill-neutral-400'/>
-                    </button>
-                    <div className='bg-white p-5 rounded-lg h-5/6 w-5/6'>
-                        <LeafletNoSsr
-                            className='h-full w-full rounded-xl'
-                            location={[hotelData.Latitude, hotelData.Longitude]}
-                            zoom={15}
-                        />
-                    </div>
-                </div>
-            </ModalPortal>}
+            {!!(showMap && hotelData.Latitude && hotelData.Longitude) && <HotelMap
+                closeMapModal={closeMapModal}
+                latLong={[hotelData.Latitude, hotelData.Longitude]}
+            />}
+
         </div>
     )
 }
