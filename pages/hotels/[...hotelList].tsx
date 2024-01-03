@@ -4,6 +4,7 @@ import type { GetServerSideProps, NextPage } from 'next';
 import { useTranslation } from 'next-i18next';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 import { SearchHotelsItem } from '@/modules/domesticHotel/types/hotel';
+import SearchForm from '@/modules/domesticHotel/components/shared/SearchForm';
 
 type Props = {
   searchHotelsData?: {
@@ -24,7 +25,6 @@ const HotelList:NextPage<Props> = props => {
 
     const fetchData =async () => {
       const ggg = await SearchHotels(props.url);
-      debugger;
     }
 
     fetchData();
@@ -35,14 +35,22 @@ const HotelList:NextPage<Props> = props => {
 
   return (
 
-    <div>
-      <h1 className='text-4xl flex h-60 items-center justify-center'>
-          در حال توسعه ...
-      </h1>
-      <p className='text-center text-red-500 text-3xl font-bold'>
-      {t('change-search')}
-      </p>
+    <>
+    <div className='max-w-container mx-auto px-5 py-5'>
+      <SearchForm wrapperClassName='pb-5' />
+      
+      <div className='grid lg:grid-cols-4 gap-5'>
+        <div className='col-span-1 bg-red-200'>
+            filter
+        </div>
+        <div className='lg:col-span-3 bg-blue-200'>
+          list
+        </div>
+      </div> 
+
     </div>
+
+    </>
 
   )
 }
