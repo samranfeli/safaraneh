@@ -84,7 +84,9 @@ export const Header = {
     InsertComment : '/v2/Comment/InsertComment',
     AvailabilityByHotelId:"/api/services/app/Booking/AvailabilityByHotelId",
     GetRooms:"/api/services/app/Booking/GetRoom",
-    GetDomesticHotelDetails:"/api/services/app/Accommodation/Get"
+    GetDomesticHotelDetails:"/api/services/app/Accommodation/Get",
+
+    SearchHotels:"/v2/Hotel/SearchHotels"
     
     
     // GetAccomadtion: "/api/services/app/BookingHotel/GetSearch",

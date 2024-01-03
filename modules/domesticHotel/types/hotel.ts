@@ -267,3 +267,40 @@ export interface DomesticHotelAvailability {
     rates?: DomesticHotelRateItem[]
 
 }[]
+
+
+export type SearchHotelsItem = {
+    HotelId?: number;
+    HotelName?: string;
+    HotelTypeName?: string;
+    HotelTypeId?: number;
+    CityName?: string;
+    CityId?: number;
+    HotelRating?: number;
+    Address?: string;
+    Latitude?: number;
+    Longitude?: number;
+    Zoom?: number;
+    Priority?: number;
+    Url?: string;
+    IsPromotion?: true;
+    IsCovid?: true;
+    ImageAlt?: string;
+    ImageTitle?: string;
+    ImageUrl?: string;
+    HotelCategoryName?: string;
+    HotelEntityName?: string;
+    CityEntityName?: string;
+    Facilities?:{
+        FacilityId?: number;
+        Title?: string;
+        Image?: string;
+        ImageUrl?: string;
+        Keyword?: string;
+        ImageAlt?: string;
+        ImageTitle?: string;
+        CssClass?: string;
+        Description?: string;
+        IsSpecial?: boolean;
+    }[];
+}
