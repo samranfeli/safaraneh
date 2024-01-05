@@ -14,7 +14,7 @@ const BackToList: React.FC<Props> = props => {
 
     const { checkin, checkout, cityName } = props;
 
-    const { t : tHotel } = useTranslation('hotelDetail');
+    const { t : tHotel } = useTranslation('hotel');
 
     let listUrl;
 

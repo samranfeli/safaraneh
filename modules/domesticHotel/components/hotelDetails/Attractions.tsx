@@ -12,7 +12,7 @@ const Attractions: React.FC<Props> = props => {
 
     const { attractions } = props;
 
-    const { t: tHotel } = useTranslation('hotelDetail');
+    const { t: tHotel } = useTranslation('hotel');
 
     const distanceDurationByMode = (mode?: string) => {
         switch (mode) {

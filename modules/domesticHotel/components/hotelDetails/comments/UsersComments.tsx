@@ -15,7 +15,7 @@ const UsersComments: React.FC<Props> = props => {
     const { hotelScoreData: data } = props;
 
     const { t } = useTranslation('common');
-    const { t : tHotel } = useTranslation('hotelDetail');
+    const { t : tHotel } = useTranslation('hotel');
 
     const [showAll, setShowAll] = useState<boolean>(false);
 

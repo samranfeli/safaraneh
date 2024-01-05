@@ -90,6 +90,7 @@ function AutoComplete<T>(props: PropsWithChildren<Props<T>>) {
             onChangeHandle(undefined);
             setSelectedItem("");
         }
+        
         if (errorText) {
             setErrorText("");
         }

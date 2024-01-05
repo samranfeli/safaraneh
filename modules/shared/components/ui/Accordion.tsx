@@ -31,7 +31,7 @@ const Accordion: React.FC<Props> = props => {
                 ref={contentRef}
                 className="overflow-hidden transition-all duration-300"
             >
-                <div className="bg-neutral-100 p-3 m-3 sm:p-5 sm:m-5 mt-0 sm:mt-0">
+                <div className="bg-neutral-100 p-3 m-3 sm:p-5 sm:m-5 mt-0 sm:mt-0 text-justify">
                     {props.content}
                 </div>
             </div>

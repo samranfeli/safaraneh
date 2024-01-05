@@ -8,7 +8,7 @@ type Props = {
 
 const HotelScore: React.FC<Props> = props => {
     
-    const { t: tHotel } = useTranslation('hotelDetail');
+    const { t: tHotel } = useTranslation('hotel');
 
     const { score, reviews } = props;
 

@@ -22,7 +22,7 @@ const SimilarHotels: React.FC<Props> = props => {
     const { asPath } = router;
 
     const { t } = useTranslation('common');
-    const { t: tHotel } = useTranslation('hotelDetail');
+    const { t: tHotel } = useTranslation('hotel');
 
     const [pricedResponse, setPricedResponse] = useState<AvailabilityByIdItem[] | undefined>();
 

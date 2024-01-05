@@ -50,6 +50,8 @@ const useHttp : () => HookReturn = () => {
       }catch (error:any){
         let details = "";
         if (error.response) {
+          debugger;
+          
           details = error.response.statusText || error.response.data.error?.message || t('oopsSomethingWentWrong3');
         } else if (error.request) {
           // The request was made but no response was received
