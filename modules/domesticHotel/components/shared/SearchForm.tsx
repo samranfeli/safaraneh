@@ -132,11 +132,11 @@ const SearchForm: React.FC<Props> = props => {
                 } else {
                     let message = "";
                     if (hotelDetailsResponse.response) {
-                        message = hotelDetailsResponse.response.statusText || hotelDetailsResponse.response.data.error?.message || t('oopsSomethingWentWrong');
+                        message = hotelDetailsResponse.response.statusText || hotelDetailsResponse.response.data.error?.message || t('oopsSomethingWentWrong1');
                     } else if (!hotelDetailsResponse.request) {
                         message = hotelDetailsResponse.message;
                     } else {
-                        message = t('oopsSomethingWentWrong')
+                        message = t('oopsSomethingWentWrong2')
                     }
                     dispatch(setReduxError({
                         title: t('error'),

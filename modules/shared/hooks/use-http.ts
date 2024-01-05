@@ -50,7 +50,7 @@ const useHttp : () => HookReturn = () => {
       }catch (error:any){
         let details = "";
         if (error.response) {
-          details = error.response.statusText || error.response.data.error?.message || t('oopsSomethingWentWrong');
+          details = error.response.statusText || error.response.data.error?.message || t('oopsSomethingWentWrong3');
         } else if (error.request) {
           // The request was made but no response was received
           // `error.request` is an instance of XMLHttpRequest in the browser and an instance of
@@ -59,10 +59,10 @@ const useHttp : () => HookReturn = () => {
           // Something happened in setting up the request that triggered an Error
           console.log('Error', error.message);
         }
-        setErrorMessage(details || t('oopsSomethingWentWrong'));
+        setErrorMessage(details || t('oopsSomethingWentWrong4'));
         dispatch(setReduxError({
           title: t('error'),
-          message: details || t('oopsSomethingWentWrong'),
+          message: details || t('oopsSomethingWentWrong5'),
           isVisible : true,
           closeErrorLink: requestConfig.closeErrorLink,
           closeButtonText: requestConfig.closeButtonText

@@ -89,3 +89,30 @@ export const getDomesticHotelDetailsByUrl = async (url: string, acceptLanguage: 
         return error
     }
 }
+
+export const SearchHotels = async (url :string, acceptLanguage: string = 'fa-IR') => {
+    try {
+        const params = {
+            IsInstant: null,
+            MaxPrice: 20000000,
+            PageNumber: 1,
+            PageSize: 500,
+            SortColumn: 'Priority',
+            SortDirection: 'Desc',
+            filterUrl: url
+          };
+
+        const response = await axios({
+            method: "post",
+            data: params,
+            url: `${ServerAddress.Type}${ServerAddress.Hotel_Main}${Hotel.SearchHotels}`,
+            headers: {
+                ...Header,
+                "Accept-Language": acceptLanguage
+            }
+        });
+        return (response)
+    } catch (error: any) {
+        return error
+    }
+}
