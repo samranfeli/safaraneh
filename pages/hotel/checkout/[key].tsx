@@ -13,7 +13,7 @@ const Checkout:NextPage = () => {
 
 export const getServerSideProps: GetServerSideProps = async ({ locale }) => ({
   props: {
-    ...await serverSideTranslations(locale as string, ['common', 'header']),
+    ...await serverSideTranslations(locale as string, ['common']),
   },
 })
 

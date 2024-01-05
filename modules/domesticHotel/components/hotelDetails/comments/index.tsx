@@ -11,7 +11,7 @@ type Props = {
 
 const Comments: React.FC<Props> = props => {
 
-    const { t:tHotel } = useTranslation('hotelDetail');
+    const { t:tHotel } = useTranslation('hotel');
 
     return (
         <div id="reviews_section" className="max-w-container mx-auto px-3 sm:px-5 pt-7 md:pt-10">

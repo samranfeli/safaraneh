@@ -20,7 +20,7 @@ const Rooms: React.FC<Props> = props => {
     const router = useRouter();
     const { asPath } = router;
 
-    const { t: tHotel} = useTranslation('hotelDetail');
+    const { t: tHotel} = useTranslation('hotel');
 
     const [availabilites, setAvailabilities] = useState<DomesticHotelAvailability[] | undefined>();
 

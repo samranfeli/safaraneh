@@ -21,7 +21,7 @@ const HotelName: React.FC<Props> = props => {
 
     const { hotelData } = props;
 
-    const { t: tHotel } = useTranslation('hotelDetail');
+    const { t: tHotel } = useTranslation('hotel');
 
     const [showMap, setShowMap] = useState<boolean>(false);
 

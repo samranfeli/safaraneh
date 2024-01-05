@@ -17,7 +17,7 @@ const HotelTerms: React.FC<Props> = props => {
     const { instruction, mendatoryFee, policies } = props;
 
     const { t } = useTranslation('common');
-    const { t: tHotel } = useTranslation('hotelDetail');
+    const { t: tHotel } = useTranslation('hotel');
 
 
     if (!policies) {

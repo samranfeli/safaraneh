@@ -16,7 +16,7 @@ const HotelFacilities: React.FC<Props> = props => {
 
     const [open, setOpen] = useState<boolean>(false);
 
-    const { t: tHotel } = useTranslation('hotelDetail');
+    const { t: tHotel } = useTranslation('hotel');
 
     if (!facilities) {
         return "loading..."

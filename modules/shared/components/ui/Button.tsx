@@ -10,6 +10,7 @@ type Props = {
     href?:string;
     target?: "_blank";
     color?:"red" | "blue";
+    hasArrow?: boolean;
 }
 
 
@@ -17,7 +18,7 @@ const Button: React.FC<PropsWithChildren<Props>> = props => {
     
     const {color} = props;
 
-    let className = `transition-all rounded-lg flex gap-3 items-center justify-center cursor-pointer select-none ${props.className}`;
+    let className = `transition-all rounded-lg flex gap-3 items-center justify-center cursor-pointer select-none relative ${props.className}`;
 
     if(props.disabled){
         className += " text-white bg-neutral-200";
@@ -28,17 +29,26 @@ const Button: React.FC<PropsWithChildren<Props>> = props => {
     }else{
         className += " text-white bg-red-600 hover:bg-red-700"
     }
+
+    const arrow = props.hasArrow ? (
+        <span 
+            className='w-2.5 h-2.5 background-red-400 inline-block rotate-45 absolute rtl:border-b-2 rtl:border-l-2 rtl:left-3 ltr:right-3 ltr:border-t-2 ltr:border-r-2 top-1/2 -translate-y-1/2' 
+        />
+    ) : null;
+
     if (props.href){
         return <Link href={props.href} target={props.target} className={className}>
             {props.children}
+            {arrow}
         </Link>
     }
 
     return(
-        <div typeof={props.type || "button"} className={className} onClick={props.onClick}>
+        <button typeof={props.type || "button"} className={className} onClick={props.onClick}>
             {props.children}
             {props.loading ? <span className="animate-spin block border-2 border-white rounded-full border-r-transparent border-t-transparent w-5 h-5" /> : null}
-        </div>
+            {arrow}
+        </button>
     )
 
 };

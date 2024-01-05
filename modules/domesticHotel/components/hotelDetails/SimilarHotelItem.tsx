@@ -27,7 +27,7 @@ const SimilarHotelItem: React.FC<Props> = props => {
     const { hotel } = props;
 
     const { t } = useTranslation('common');
-    const { t:tHotel } = useTranslation('hotelDetail');
+    const { t:tHotel } = useTranslation('hotel');
 
     if (!hotel) {
         return null;

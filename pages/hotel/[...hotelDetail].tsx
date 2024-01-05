@@ -41,7 +41,7 @@ const HotelDetail: NextPage<Props> = props => {
   const accommodationData = accommodation.result;
 
   const { t } = useTranslation('common');
-  const { t: tHotel } = useTranslation('hotelDetail');
+  const { t: tHotel } = useTranslation('hotel');
 
   const router = useRouter();
   const searchInfo = router.asPath;
@@ -210,7 +210,7 @@ export const getServerSideProps: GetServerSideProps = async (context: any) => {
 
   return ({
     props: {
-      ...await (serverSideTranslations(context.locale, ['common', 'hotelDetail'])),
+      ...await (serverSideTranslations(context.locale, ['common', 'hotel'])),
       allData: allData.data?.result || null
 
     },
