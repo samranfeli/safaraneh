@@ -13,7 +13,7 @@ const HotelAbout: React.FC<Props> = props => {
 
     const { siteName, description, siteUrl } = props;
 
-    const { t: tHotel } = useTranslation('hotelDetail');
+    const { t: tHotel } = useTranslation('hotel');
 
     const [showAll, setShowAll] = useState<boolean>(false);
 

@@ -21,7 +21,7 @@ const RoomItem: React.FC<Props> = props => {
     const { rate, room, selectedRoomToken } = props;
 
     const { t } = useTranslation('common');
-    const { t : tHotel } = useTranslation('hotelDetail');
+    const { t : tHotel } = useTranslation('hotel');
 
     const [count, setCount] = useState(1);
 

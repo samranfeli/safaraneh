@@ -208,7 +208,7 @@ const SearchForm: React.FC<Props> = props => {
                 <Button
                     loading={submitLoading}
                     onClick={submitHandler}
-                    className='rounded-lg min-w-sm h-12 block w-full'
+                    className='rounded-lg h-12 block w-full'
                 >
                     {t('search')}
                 </Button>

@@ -13,7 +13,7 @@ type Props = {
 const CommentForm: React.FC<Props> = props => {
 
     const { t } = useTranslation('common');
-    const { t: tHotel } = useTranslation('hotelDetail');
+    const { t: tHotel } = useTranslation('hotel');
 
     const { sendRequest, loading } = useHttp();
 

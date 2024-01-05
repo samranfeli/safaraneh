@@ -16,7 +16,7 @@ type Props = {
 
 const Gallery: React.FC<Props> = props => {
 
-    const { t: tHotel } = useTranslation('hotelDetail');
+    const { t: tHotel } = useTranslation('hotel');
     const { images } = props;
 
     const [open, setOpen] = useState(false);

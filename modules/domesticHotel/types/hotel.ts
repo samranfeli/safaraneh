@@ -291,7 +291,7 @@ export type SearchHotelsItem = {
     HotelCategoryName?: string;
     HotelEntityName?: string;
     CityEntityName?: string;
-    Facilities?:{
+    Facilities?: {
         FacilityId?: number;
         Title?: string;
         Image?: string;

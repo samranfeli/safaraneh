@@ -5,7 +5,7 @@ import { useEffect, useRef, useState } from 'react';
 const AnchorTabs: React.FC = () => {
 
     const { t } = useTranslation('common');
-    const { t: tHotel } = useTranslation('hotelDetail');
+    const { t: tHotel } = useTranslation('hotel');
 
     const [sticky, setSticky] = useState<boolean>(false);
 
