@@ -1,3 +1,4 @@
+import Pagination from "@/modules/shared/components/ui/Pagination";
 import { PricedHotelItem } from "../../types/hotel";
 import HotelListItem from "./HotelListItem";
 
@@ -11,13 +12,21 @@ const HotelsList : React.FC<Props> = props => {
 
     return(
         <>
-        <div>
-            pagination
-        </div>
+        
+        <Pagination
+            onChange={() => {debugger}}
+            onChangePerPage={() => {debugger}}
+            totalItems={hotels?.length || 0}
+        />
+
           {hotels.slice(0,20).map(hotel => <HotelListItem key={hotel.HotelId} hotel={hotel} />)}            
-        <div>
-            pagination
-        </div>
+        
+        <Pagination
+            onChange={() => {debugger}}
+            onChangePerPage={() => {debugger}}
+            totalItems={hotels?.length || 0}
+        />
+
         </>
     )
 }
