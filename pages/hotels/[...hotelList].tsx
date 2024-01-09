@@ -8,6 +8,7 @@ import HotelsList from '@/modules/domesticHotel/components/hotelsList';
 import { addSomeDays, dateFormat } from '@/modules/shared/helpers';
 import ProgressBarWithLabel from '@/modules/shared/components/ui/ProgressBarWithLabel';
 import { useTranslation } from 'next-i18next';
+import Select from '@/modules/shared/components/ui/Select';
 
 type Props = {
   searchHotelsData?: {
@@ -16,6 +17,8 @@ type Props = {
   };
   url: string;
 }
+
+type SortTypes = "priority" | "price" | "starRate" | "name" | "gueatRate";
 
 const HotelList: NextPage<Props> = props => {
 
@@ -42,6 +45,8 @@ const HotelList: NextPage<Props> = props => {
 
   const [pricesData, setPricesData] = useState<PricesResponseItem[] | undefined>();
   const [pricesLoading, setPricesLoading] = useState<boolean>(false);
+
+  const [sortFactor, setSortFactor] = useState<SortTypes>("priority");
 
   let hotelIds: (undefined | number)[] = [];
   if (props.searchHotelsData) {
@@ -80,7 +85,6 @@ const HotelList: NextPage<Props> = props => {
     }
 
     fetchPrices();
-
 
   }, []);
 
@@ -129,20 +133,77 @@ const HotelList: NextPage<Props> = props => {
   }, [ratesData, pricesData]);
 
   let progressBarLabel = "";
-  
-  if(!pricesData){
+
+  if (!pricesData) {
     progressBarLabel = tHotel('getting-the-best-prices-and-availability');
   }
-  
-  if (!ratesData){
+
+  if (!ratesData) {
     progressBarLabel = tHotel('getting-guest-ratings');
   }
-  
-  if (ratesData && pricesData){
+
+  if (ratesData && pricesData) {
     progressBarLabel = tHotel('looking-for-cheaper-rates');
   }
 
+  if (hotels.length > 1) {
+    hotels.sort((b: PricedHotelItem, a: PricedHotelItem) => {
 
+      switch (sortFactor) {
+
+        case "priority":
+
+          if (!a.Priority || !b.Priority) return 1;
+          return (b.Priority - a.Priority);
+
+        case "name":
+
+          if (!a.HotelName || !b.HotelName) return 1;
+
+          const farsiAlphabet = ["آ", "ا", "ب", "پ", "ت", "ث", "ج", "چ", "ح", "خ", "د", "ذ", "ر", "ز", "س", "ش", "ص", "ض", "ط", "ظ", "ع", "غ", "ف", "ق", "ک", "گ", "ل", "م", "ن", "و", "ه", "ی",
+            "a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z"];
+
+          const x = a.HotelName.toLowerCase().trim();
+          const y = b.HotelName.toLowerCase().trim();
+
+          for (let i = 0; i < y.length; i++) {
+            if (farsiAlphabet.indexOf(y[i]) < farsiAlphabet.indexOf(x[i])) {
+              return -1;
+            }
+            if (farsiAlphabet.indexOf(y[i]) > farsiAlphabet.indexOf(x[i])) {
+              return 1;
+            }
+          }
+
+        case "starRate":
+
+          if (!a.HotelRating || !b.HotelRating) return 1;
+          return (a.HotelRating - b.HotelRating);
+
+        case "price":
+
+          if (b.priceInfo !== 'loading' && b.priceInfo !== 'need-to-inquire' && b.priceInfo !== 'notPriced' && a.priceInfo !== 'loading' && a.priceInfo !== 'need-to-inquire' && a.priceInfo !== 'notPriced') {
+            return b.priceInfo.salePrice - a.priceInfo.salePrice
+          } else if (b.priceInfo !== 'loading' && b.priceInfo !== 'need-to-inquire' && b.priceInfo !== 'notPriced') {
+            return -1
+          }
+          return 1
+
+        case "gueatRate":
+
+          if (a.ratesInfo === "loading" || b.ratesInfo === 'loading') return 1;
+          if (a.ratesInfo && b.ratesInfo) {
+            return a.ratesInfo.Satisfaction - b.ratesInfo.Satisfaction
+          } else if (b.ratesInfo?.Satisfaction) {
+            return -1
+          }
+          return 1;
+
+        default:
+          return 1
+      }
+    });
+  }
 
   return (
 
@@ -155,6 +216,22 @@ const HotelList: NextPage<Props> = props => {
           label={progressBarLabel}
           percentage={fetchPercentage}
         />}
+
+        <div className='flex justify-end'>
+          <Select
+            items={[
+              { value: "priority", label: tHotel("priority") },
+              { value: "price", label: tHotel("lowest-price") },
+              { value: "starRate", label: tHotel("highest-star-rating") },
+              { value: "name", label: tHotel("hotel-name") },
+              { value: "gueatRate", label: tHotel("highest-guest-rating") }
+            ]}
+            value={sortFactor}
+            onChange={type => { setSortFactor(type as SortTypes) }}
+            label={t('sortBy')}
+            className='w-52'
+          />
+        </div>
 
         <div className='grid lg:grid-cols-4 gap-4'>
           <div className='col-span-1 bg-red-200'>
@@ -191,6 +268,5 @@ export const getServerSideProps: GetServerSideProps = async (context: any) => {
     },
   })
 }
-
 
 export default HotelList;
