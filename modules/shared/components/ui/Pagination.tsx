@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { LeftCaret } from "./icons";
+import { useTranslation } from "next-i18next";
 
 type Props = {
     totalItems: number;
@@ -10,6 +11,8 @@ type Props = {
 }
 
 const Pagination: React.FC<Props> = props => {
+
+    const {t} = useTranslation("common");
 
     const [activePage, setActivePage] = useState<number>(1);
 
@@ -59,7 +62,8 @@ const Pagination: React.FC<Props> = props => {
                 onClick={previousPage}
                 disabled={activePage === 1}
                 type="button"
-                className={`outline-none border rounded h-9 w-9 text-center select-none ${activePage === 1 ? "bg-neutral-100 text-neutral-400 cursor-not-allowed" : "cursor-pointer  bg-white text-neutral-700 hover:text-blue-500 hover:border-blue-500"}`}
+                aria-label={t('previousPage')}
+                className={`outline-none border rounded h-9 w-9 text-center select-none ${activePage === 1 ? "bg-neutral-100 text-neutral-500 cursor-not-allowed" : "cursor-pointer  bg-white text-neutral-700 hover:text-blue-500 hover:border-blue-500"}`}
             >
                 <LeftCaret className="w-6 h-6 inline-block fill-current rtl:rotate-180 leading-4" />
             </button>
@@ -79,7 +83,8 @@ const Pagination: React.FC<Props> = props => {
                 onClick={nextPage}
                 disabled={activePage === totalPages}
                 type="button"
-                className={`outline-none border rounded h-9 w-9 text-center select-none ${activePage === totalPages ? "bg-neutral-100 text-neutral-400 cursor-not-allowed" : "cursor-pointer bg-white text-neutral-700 hover:text-blue-500 hover:border-blue-500"}`}
+                aria-label={t('nextPage')}
+                className={`outline-none border rounded h-9 w-9 text-center select-none ${activePage === totalPages ? "bg-neutral-100 text-neutral-500 cursor-not-allowed" : "cursor-pointer bg-white text-neutral-700 hover:text-blue-500 hover:border-blue-500"}`}
             >
                 <LeftCaret className="w-6 h-6 inline-block fill-current ltr:rotate-180 leading-4" />
             </button>

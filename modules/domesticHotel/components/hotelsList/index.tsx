@@ -13,8 +13,8 @@ const HotelsList: React.FC<Props> = props => {
 
     const [currentPage, setCurrentPage] = useState<number>(1);
 
-    const firstItemIndex = (currentPage - 1) * 20;
-    const lastItem = currentPage * 20;
+    const firstItemIndex = (currentPage - 1) * 15;
+    const lastItem = currentPage * 15;
 
     const filteredHotels = [...hotels];
 
@@ -38,17 +38,19 @@ const HotelsList: React.FC<Props> = props => {
 
             <Pagination
                 onChange={(page: number) => { setCurrentPage(page) }}
-                itemsPerPage={20}
+                itemsPerPage={15}
                 totalItems={filteredHotels?.length || 0}
                 currentPage={currentPage}
                 wrapperClassName="mb-4"
             />
-
-            {filteredHotels.slice(firstItemIndex, lastItem).map(hotel => <HotelListItem key={hotel.HotelId} hotel={hotel} />)}
+            
+            <div>
+                {filteredHotels.slice(firstItemIndex, lastItem).map((hotel, index) => <HotelListItem index={index} key={hotel.HotelId} hotel={hotel} />)}
+            </div>
 
             <Pagination
                 onChange={(page: number) => { setCurrentPage(page) }}
-                itemsPerPage={20}
+                itemsPerPage={15}
                 totalItems={filteredHotels?.length || 0}
                 currentPage={currentPage}
             />
