@@ -12,7 +12,8 @@ import Tooltip from "@/modules/shared/components/ui/Tooltip";
 import Skeleton from "@/modules/shared/components/ui/Skeleton";
 
 type Props = {
-    hotel: PricedHotelItem
+    hotel: PricedHotelItem;
+    index: number;
 }
 
 const HotelListItem: React.FC<Props> = props => {
@@ -82,7 +83,7 @@ const HotelListItem: React.FC<Props> = props => {
                 {!!discount && <span className="bg-green-700 text-white rounded-xl leading-7 text-2xs px-2 select-none"> {discount}% {t('discount')} </span>}
 
                 <div className="flex gap-3 text-sm justify-end">
-                    {(boardPrice > salePrice) && <span className="text-xs text-neutral-400 line-through whitespace-nowrap">
+                    {(boardPrice > salePrice) && <span className="text-xs text-neutral-500 line-through whitespace-nowrap">
                         {numberWithCommas(boardPrice)} {t('rial')}
                     </span>}
 
@@ -108,7 +109,7 @@ const HotelListItem: React.FC<Props> = props => {
                     </Tooltip>
 
                 </div>
-                <div className="text-xs text-neutral-400 leading-4">
+                <div className="text-xs text-neutral-500 leading-4">
                     {tHotel("price-for-nights", { nights: nights })}
                 </div>
             </>
@@ -153,6 +154,7 @@ const HotelListItem: React.FC<Props> = props => {
                         alt={hotel.ImageAlt || hotel.HotelName!}
                         width={288}
                         height={200}
+                        priority={!props.index}
                         className="md:col-span-1 h-48 object-cover w-full rtl:rounded-r-lg ltr:rounded-l-lg"
                     />
                 ) : (
