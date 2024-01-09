@@ -6,6 +6,8 @@ import { PricedHotelItem, SearchHotelItem } from '@/modules/domesticHotel/types/
 import SearchForm from '@/modules/domesticHotel/components/shared/SearchForm';
 import HotelsList from '@/modules/domesticHotel/components/hotelsList';
 import { addSomeDays, dateFormat } from '@/modules/shared/helpers';
+import ProgressBarWithLabel from '@/modules/shared/components/ui/ProgressBarWithLabel';
+import { useTranslation } from 'next-i18next';
 
 type Props = {
   searchHotelsData?: {
@@ -30,6 +32,11 @@ const HotelList: NextPage<Props> = props => {
     boardPrice: number;
   }
 
+  const { t } = useTranslation('common');
+  const { t: tHotel } = useTranslation('hotel');
+
+  const [fetchPercentage, setFetchPercentage] = useState<number>(0);
+
   const [ratesData, setRatesData] = useState<RatesResponseItem[] | undefined>();
   const [ratesLoading, setRatesLoading] = useState<boolean>(false);
 
@@ -49,7 +56,11 @@ const HotelList: NextPage<Props> = props => {
   useEffect(() => {
 
     const fetchRates = async () => {
+
+      setFetchPercentage(10);
+
       setRatesLoading(true);
+
       const ratesResponse = await getRates(hotelIds as number[], "fa-IR");
       if (ratesResponse?.data) {
         setRatesData(ratesResponse.data);
@@ -74,32 +85,63 @@ const HotelList: NextPage<Props> = props => {
   }, []);
 
 
-  const hotels : PricedHotelItem[] = props.searchHotelsData?.Hotels?.map( hotel => {
+  const hotels: PricedHotelItem[] = props.searchHotelsData?.Hotels?.map(hotel => {
 
     const HotelRateData = ratesData?.find(item => item.HotelId === hotel.HotelId);
-    const ratesInfo = HotelRateData ? {Satisfaction: HotelRateData.Satisfaction, TotalRowCount: HotelRateData.TotalRowCount } :(ratesLoading || !ratesData)? "loading" :  undefined;
+    const ratesInfo = HotelRateData ? { Satisfaction: HotelRateData.Satisfaction, TotalRowCount: HotelRateData.TotalRowCount } : (ratesLoading || !ratesData) ? "loading" : undefined;
 
 
     const hotelPriceData = pricesData?.find(item => item.id === hotel.HotelId);
-    
-    let priceInfo:"loading" | "notPriced" | "need-to-inquire" | {boardPrice:number ,salePrice: number };
-    
-    if (!pricesData || pricesLoading){
+
+    let priceInfo: "loading" | "notPriced" | "need-to-inquire" | { boardPrice: number, salePrice: number };
+
+    if (!pricesData || pricesLoading) {
       priceInfo = "loading";
-    } else if (!hotelPriceData){
+    } else if (!hotelPriceData) {
       priceInfo = "notPriced";
-    } else if (hotelPriceData.salePrice < 10000){
+    } else if (hotelPriceData.salePrice < 10000) {
       priceInfo = "need-to-inquire";
     } else {
-      priceInfo = {boardPrice : hotelPriceData.boardPrice, salePrice : hotelPriceData.salePrice}
+      priceInfo = { boardPrice: hotelPriceData.boardPrice, salePrice: hotelPriceData.salePrice }
     }
 
-    return({
+    return ({
       ...hotel,
       ratesInfo: ratesInfo,
       priceInfo: priceInfo
     })
   }) || [];
+
+  useEffect(() => {
+
+    if (ratesData && pricesData) {
+
+      setFetchPercentage(99.99);
+
+      setTimeout(() => { setFetchPercentage(100) }, 1000);
+
+    } else if (ratesData || pricesData) {
+
+      setTimeout(() => { setFetchPercentage(60) }, 1000);
+
+    }
+
+  }, [ratesData, pricesData]);
+
+  let progressBarLabel;
+  
+  if(!pricesData){
+    progressBarLabel = tHotel('getting-the-best-prices-and-availability');
+  }
+  
+  if (!ratesData){
+    progressBarLabel = tHotel('getting-guest-ratings');
+  }
+  
+  if (ratesData && pricesData){
+    progressBarLabel = tHotel('looking-for-cheaper-rates');
+  }
+
 
 
   return (
@@ -107,6 +149,12 @@ const HotelList: NextPage<Props> = props => {
     <>
       <div className='max-w-container mx-auto px-5 py-4'>
         <SearchForm wrapperClassName='pb-4' />
+
+        {(fetchPercentage === 100) || <ProgressBarWithLabel
+          className='mb-4'
+          label={progressBarLabel}
+          percentage={fetchPercentage}
+        />}
 
         <div className='grid lg:grid-cols-4 gap-4'>
           <div className='col-span-1 bg-red-200'>
