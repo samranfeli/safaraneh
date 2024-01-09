@@ -35,6 +35,7 @@
     "organizational-reservation": "Organizational reservations",
     "please-enter-name": "Please enter your full name!",
     "previousPage": "Previous page",
+    "price": "Price",
     "privacy": "privacy",
     "retrieve-my-booking": "booking tracking",
     "rial": "IRR",
@@ -44,6 +45,7 @@
     "send": "Send",
     "sign-in": "Sign in",
     "sign-in-up": "Sign in or Sign up",
+    "sortBy": "Sort by",
     "support": "Support",
     "terms": "Terms and Conditions"
 }
