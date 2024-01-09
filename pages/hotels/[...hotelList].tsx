@@ -128,7 +128,7 @@ const HotelList: NextPage<Props> = props => {
 
   }, [ratesData, pricesData]);
 
-  let progressBarLabel;
+  let progressBarLabel = "";
   
   if(!pricesData){
     progressBarLabel = tHotel('getting-the-best-prices-and-availability');
