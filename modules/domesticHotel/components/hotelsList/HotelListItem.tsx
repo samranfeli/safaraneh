@@ -54,9 +54,16 @@ const HotelListItem: React.FC<Props> = props => {
 
     let priceBlock: React.ReactNode = null;
 
-    if (!hotel.priceInfo || hotel.priceInfo === 'loading') {
+    if (hotel.priceInfo === "notPriced" || hotel.priceInfo === 'loading') {
+
         priceBlock = null;
+
+    } else if (hotel.priceInfo === "need-to-inquire") {
+
+        priceBlock = <div className="whitespace-nowrap text-red-500 text-xs"> قیمت نیازمند استعلام است </div>
+
     } else {
+
         const { boardPrice, salePrice } = hotel.priceInfo;
 
         let discount: number = 0;
@@ -83,41 +90,34 @@ const HotelListItem: React.FC<Props> = props => {
                         position="end"
                         title={
                             <div className="whitespace-nowrap">
-                                {boardPrice >= 10000 || salePrice >= 10000 ? <>
-                                    <div>
-                                        {numberWithCommas(+(salePrice / nights).toFixed(0))} {t('rial')}
-                                    </div>
-                                    <small>
-                                        {tHotel("Avg-per-night")}
-                                    </small>
-                                </> : <span>قیمت نیازمند استعلام است</span>}
+
+                                {numberWithCommas(+(salePrice / nights).toFixed(0))} {t('rial')}
+
+                                <br />
+
+                                <small> {tHotel("Avg-per-night")} </small>
+
                             </div>
                         }
                     >
 
-                        {boardPrice >= 10000 || salePrice >= 10000 ?
-                            <div className="font-semibold whitespace-nowrap">
-                                {numberWithCommas(salePrice)} {t('rial')}
-                            </div> :
-                            <div className="whitespace-nowrap text-red-600 text-xs">
-                                قیمت نیازمند استعلام است
-                            </div>}
+                        <div className="font-semibold whitespace-nowrap">
+                            {numberWithCommas(salePrice)} {t('rial')}
+                        </div>
 
                     </Tooltip>
 
                 </div>
-                {boardPrice >= 10000 || salePrice >= 10000 ? (
-                    <div className="text-xs text-neutral-400 leading-4">
-                        {tHotel("price-for-nights", { nights: nights })}
-                    </div>
-                ) : null}
+                <div className="text-xs text-neutral-400 leading-4">
+                    {tHotel("price-for-nights", { nights: nights })}
+                </div>
             </>
         )
     }
 
     let button: React.ReactNode = null;
 
-    if (!hotel.priceInfo) {
+    if (hotel.priceInfo === "notPriced") {
         button = null;
     } else if (hotel.priceInfo === 'loading') {
         button = (
@@ -129,9 +129,6 @@ const HotelListItem: React.FC<Props> = props => {
             </div>
         )
     } else {
-
-        const { boardPrice, salePrice } = hotel.priceInfo;
-
         button = (
             <Button
                 hasArrow
@@ -139,7 +136,7 @@ const HotelListItem: React.FC<Props> = props => {
                 target="_blank"
                 className="rounded-lg h-10 px-5 text-sm w-full md:w-48"
             >
-                {boardPrice >= 10000 || salePrice >= 10000 ? tHotel("see-rooms") : "درخواست رزرو"}
+                {hotel.priceInfo === "need-to-inquire" ? "درخواست رزرو" : tHotel("see-rooms")}
             </Button>
         )
     }
@@ -189,7 +186,7 @@ const HotelListItem: React.FC<Props> = props => {
                         <span className="bg-blue-50 rounded-xl leading-6 text-2xs px-2 select-none">اطلاعات ایمنی کووید-۱۹</span>
                     )}
 
-                    {!hotel.priceInfo && <div className="bg-red-100 px-4 py-1 my-1">
+                    {hotel.priceInfo === "notPriced" && <div className="bg-red-100 px-4 py-1 my-1">
                         <h5 className="text-red-600 text-sm font-semibold"> <InfoCircle className="w-4 h-4 fill-current inline-block" /> {tHotel("you-missed-this-deal")}</h5>
                         <p className="text-xs">{tHotel("we-dont-have-any-available-rooms-for-these-dates")}</p>
                     </div>}

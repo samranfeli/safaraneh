@@ -79,8 +79,20 @@ const HotelList: NextPage<Props> = props => {
     const HotelRateData = ratesData?.find(item => item.HotelId === hotel.HotelId);
     const ratesInfo = HotelRateData ? {Satisfaction: HotelRateData.Satisfaction, TotalRowCount: HotelRateData.TotalRowCount } :(ratesLoading || !ratesData)? "loading" :  undefined;
 
+
     const hotelPriceData = pricesData?.find(item => item.id === hotel.HotelId);
-    const priceInfo = hotelPriceData ? {boardPrice : hotelPriceData.boardPrice, salePrice : hotelPriceData.salePrice} : (pricesLoading || !pricesData)? "loading" : undefined;
+    
+    let priceInfo:"loading" | "notPriced" | "need-to-inquire" | {boardPrice:number ,salePrice: number };
+    
+    if (!pricesData || pricesLoading){
+      priceInfo = "loading";
+    } else if (!hotelPriceData){
+      priceInfo = "notPriced";
+    } else if (hotelPriceData.salePrice < 10000){
+      priceInfo = "need-to-inquire";
+    } else {
+      priceInfo = {boardPrice : hotelPriceData.boardPrice, salePrice : hotelPriceData.salePrice}
+    }
 
     return({
       ...hotel,
