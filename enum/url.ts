@@ -87,7 +87,8 @@ export const Header = {
     GetDomesticHotelDetails:"/api/services/app/Accommodation/Get",
 
     SearchHotels:"/v2/Hotel/SearchHotels",
-    getRates:"/v2/Comment/Rates"
+    getRates:"/v2/Comment/Rates",
+    getCityFaqById:"/api/services/app/Faq/GetAll"
     
     
     // GetAccomadtion: "/api/services/app/BookingHotel/GetSearch",

@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { AvailabilityByHotelId, SearchHotels, getRates } from '@/modules/domesticHotel/actions';
+import { AvailabilityByHotelId, GetCityFaqById, SearchHotels, getRates } from '@/modules/domesticHotel/actions';
 import type { GetServerSideProps, NextPage } from 'next';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 import { PricedHotelItem, SearchHotelItem } from '@/modules/domesticHotel/types/hotel';
@@ -10,18 +10,35 @@ import ProgressBarWithLabel from '@/modules/shared/components/ui/ProgressBarWith
 import { useTranslation } from 'next-i18next';
 import Select from '@/modules/shared/components/ui/Select';
 import Skeleton from '@/modules/shared/components/ui/Skeleton';
+import parse from 'html-react-parser';
+import Accordion from '@/modules/shared/components/ui/Accordion';
+import { QuestionCircle } from '@/modules/shared/components/ui/icons';
 
 type Props = {
   searchHotelsData?: {
     Hotels: SearchHotelItem[];
     Content?: string;
   };
-  url: string;
+  faq?: {
+    items: {
+      title: string;
+      isActive: boolean;
+      priority: number;
+      question: string;
+      answer: string;
+      id: number;
+    }[];
+    totalCount: number;
+  }
 }
 
 type SortTypes = "priority" | "price" | "starRate" | "name" | "gueatRate";
 
 const HotelList: NextPage<Props> = props => {
+
+  if (props.faq) {
+    debugger;
+  }
 
   type RatesResponseItem = {
     HotelId: number;
@@ -227,15 +244,15 @@ const HotelList: NextPage<Props> = props => {
           <div className='lg:col-span-3'>
 
             <div className='flex justify-between'>
-              
+
               {hotels.length > 0 && pricesData && cityName ? (
                 <div className='text-sm'>
                   <b> {hotels.length} </b> هتل در <b> {cityName} </b> پیدا کردیم
                 </div>
-              ):(
+              ) : (
                 <Skeleton className='w-52' />
               )}
-              
+
               <Select
                 items={[
                   { value: "priority", label: tHotel("priority") },
@@ -254,6 +271,29 @@ const HotelList: NextPage<Props> = props => {
             {!!props.searchHotelsData?.Hotels && <HotelsList
               hotels={hotels}
             />}
+
+            {!!props.searchHotelsData?.Content && (
+              <div className='text-sm text-justify mt-6 inserted-content'>
+                {parse(props.searchHotelsData.Content)}
+              </div>
+            )}
+
+            {props.faq && props.faq?.items?.length > 0 && (
+              <div className='bg-white p-5 rounded-lg mt-10'>
+                <h5 className='font-semibold text-lg'>{t('faq')}</h5>
+                {props.faq.items.map(faq => (
+                  <Accordion
+                    key={faq.id}
+                    title={(<>
+                      <QuestionCircle className='w-5 h-5 mt-.5 rtl:ml-2 ltr:mr-2 fill-current inline-block' />
+                      {faq.question}
+                    </>)}
+                    content={parse(faq.answer)}
+                    WrapperClassName='mt-5'
+                  />
+                ))}
+              </div>
+            )}
           </div>
         </div>
 
@@ -271,13 +311,24 @@ export const getServerSideProps: GetServerSideProps = async (context: any) => {
 
   const url = `/${locale}/hotels/${query.hotelList![0]}`;
 
-  const searchHotelsResponse = await SearchHotels(url, locale);
+  const searchHotelsResponse: {
+    data?: {
+      Hotels: SearchHotelItem[];
+      Content?: string;
+    };
+  } = await SearchHotels(url, locale);
+
+  let faqResponse: any;
+  if (searchHotelsResponse?.data?.Hotels[0].CityId) {
+    faqResponse = await GetCityFaqById(searchHotelsResponse?.data?.Hotels[0].CityId);
+
+  }
 
   return ({
     props: {
       ...await (serverSideTranslations(context.locale, ['common', 'hotel'])),
       searchHotelsData: searchHotelsResponse?.data || null,
-      url: url
+      faq: faqResponse?.data?.result || null
     },
   })
 }
