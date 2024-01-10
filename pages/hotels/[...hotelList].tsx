@@ -9,6 +9,7 @@ import { addSomeDays, dateFormat } from '@/modules/shared/helpers';
 import ProgressBarWithLabel from '@/modules/shared/components/ui/ProgressBarWithLabel';
 import { useTranslation } from 'next-i18next';
 import Select from '@/modules/shared/components/ui/Select';
+import Skeleton from '@/modules/shared/components/ui/Skeleton';
 
 type Props = {
   searchHotelsData?: {
@@ -205,6 +206,8 @@ const HotelList: NextPage<Props> = props => {
     });
   }
 
+  const cityName = hotels && hotels[0]?.CityName || "";
+
   return (
 
     <>
@@ -217,27 +220,37 @@ const HotelList: NextPage<Props> = props => {
           percentage={fetchPercentage}
         />}
 
-        <div className='flex justify-end'>
-          <Select
-            items={[
-              { value: "priority", label: tHotel("priority") },
-              { value: "price", label: tHotel("lowest-price") },
-              { value: "starRate", label: tHotel("highest-star-rating") },
-              { value: "name", label: tHotel("hotel-name") },
-              { value: "gueatRate", label: tHotel("highest-guest-rating") }
-            ]}
-            value={sortFactor}
-            onChange={type => { setSortFactor(type as SortTypes) }}
-            label={t('sortBy')}
-            className='w-52'
-          />
-        </div>
-
         <div className='grid lg:grid-cols-4 gap-4'>
           <div className='col-span-1 bg-red-200'>
             filter
           </div>
           <div className='lg:col-span-3'>
+
+            <div className='flex justify-between'>
+              
+              {hotels.length > 0 && pricesData && cityName ? (
+                <div className='text-sm'>
+                  <b> {hotels.length} </b> هتل در <b> {cityName} </b> پیدا کردیم
+                </div>
+              ):(
+                <Skeleton className='w-52' />
+              )}
+              
+              <Select
+                items={[
+                  { value: "priority", label: tHotel("priority") },
+                  { value: "price", label: tHotel("lowest-price") },
+                  { value: "starRate", label: tHotel("highest-star-rating") },
+                  { value: "name", label: tHotel("hotel-name") },
+                  { value: "gueatRate", label: tHotel("highest-guest-rating") }
+                ]}
+                value={sortFactor}
+                onChange={type => { setSortFactor(type as SortTypes) }}
+                label={t('sortBy')}
+                className='w-52'
+              />
+            </div>
+
             {!!props.searchHotelsData?.Hotels && <HotelsList
               hotels={hotels}
             />}
