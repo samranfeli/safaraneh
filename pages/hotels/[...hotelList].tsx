@@ -13,6 +13,9 @@ import Skeleton from '@/modules/shared/components/ui/Skeleton';
 import parse from 'html-react-parser';
 import Accordion from '@/modules/shared/components/ui/Accordion';
 import { QuestionCircle } from '@/modules/shared/components/ui/icons';
+import DomesticHotelListSideBar from '@/modules/domesticHotel/components/hotelsList/sidebar';
+import { setFacilityFilterOptions, setGuestPointFilterOptions, setTypeFilterOptions, setPriceFilterRange } from '@/modules/domesticHotel/store/domesticHotelSlice';
+import { useAppDispatch } from '@/modules/shared/hooks/use-store';
 
 type Props = {
   searchHotelsData?: {
@@ -36,10 +39,6 @@ type SortTypes = "priority" | "price" | "starRate" | "name" | "gueatRate";
 
 const HotelList: NextPage<Props> = props => {
 
-  if (props.faq) {
-    debugger;
-  }
-
   type RatesResponseItem = {
     HotelId: number;
     Satisfaction: number;
@@ -52,6 +51,8 @@ const HotelList: NextPage<Props> = props => {
     salePrice: number;
     boardPrice: number;
   }
+
+  const dispatch = useAppDispatch();
 
   const { t } = useTranslation('common');
   const { t: tHotel } = useTranslation('hotel');
@@ -76,6 +77,123 @@ const HotelList: NextPage<Props> = props => {
   let checkin = today;
   let checkout = tomorrow;
 
+  const savePriceRange = (pricedItems:PricesResponseItem[]) => {
+    
+    let min = 0;
+    let max = 0;
+    
+    for(let i =0 ; i < pricedItems.length ; i++){
+      const itemPrice = pricedItems[i].salePrice;
+      if (!min || min > itemPrice){
+        min = itemPrice;
+      }
+      if(!max || max < itemPrice){
+        max = itemPrice;
+      }
+    }
+
+    dispatch(setPriceFilterRange({min:min, max:max}));
+  }
+
+  const saveGuestPointFilterOptions = (rates: RatesResponseItem[]) => {
+
+    const filterOptions = {
+      excellent: { label: tHotel('excellent'), count: 0, value: [90, 100] },
+      veryGood: { label: tHotel('very-good'), count: 0, value: [80, 89] },
+      good: { label: tHotel('good'), count: 0, value: [70, 79] },
+      fair: { label: tHotel('fair'), count: 0, value: [50, 69] },
+      bad: { label: tHotel('bad'), count: 0, value: [0, 49] },
+    }
+
+    for (let i = 0; i < rates.length; i++) {
+      const itemSatisfaction = rates[i].Satisfaction;
+
+      if (itemSatisfaction >= 90) {
+        filterOptions.excellent.count = filterOptions.excellent.count + 1;
+      } else if (itemSatisfaction >= 80) {
+        filterOptions.veryGood.count = filterOptions.veryGood.count + 1;
+      } else if (itemSatisfaction >= 70) {
+        filterOptions.good.count = filterOptions.good.count + 1;
+      } else if (itemSatisfaction >= 50) {
+        filterOptions.fair.count = filterOptions.fair.count + 1;
+      } else {
+        filterOptions.bad.count = filterOptions.bad.count + 1;
+      }
+    }
+
+    const optionsArray = Object.values(filterOptions)
+
+    dispatch(setGuestPointFilterOptions(optionsArray));
+
+  }
+
+
+  const saveFacilityOptions = (hotelItems:SearchHotelItem[]) => {
+    
+    const options:{keyword:string, label: string, count:number}[] = [];
+
+    for (let i = 0; i < hotelItems.length ; i++ ){
+      const hotelItemFacilities =   hotelItems[i].Facilities;
+      
+      if (!hotelItemFacilities?.length) continue;
+
+      for (let j=0 ; j< hotelItemFacilities.length ; j++){
+        const facilityItem = hotelItemFacilities[j];
+
+        const updatingOptionItem = options.find(item => item.keyword === facilityItem.Keyword );
+
+        if(!facilityItem.Keyword) continue;
+
+        if (updatingOptionItem){
+          updatingOptionItem.count = updatingOptionItem.count+1;
+        }else{
+          options.push({ keyword : facilityItem.Keyword, label : facilityItem.Title || "" , count:1})
+        }
+
+      }
+    }
+
+    dispatch(setFacilityFilterOptions(options));
+
+  }
+
+  const saveHotelType = (hotelItems:SearchHotelItem[]) => {
+    
+    const options:{id:number, label: string, count:number}[] = [];
+
+    for (let i = 0; i < hotelItems.length ; i++ ){
+      
+      const hotelItem =   hotelItems[i];
+
+      if (!hotelItem.HotelTypeId){
+        continue;
+      }
+
+      const updatingOptionItem = options.find(item => item.id === hotelItem.HotelTypeId );
+
+      if (updatingOptionItem){
+        updatingOptionItem.count = updatingOptionItem.count+1
+      }else{
+        options.push({ id : hotelItem.HotelTypeId, label : hotelItem.HotelTypeName || "" , count:1})
+      }
+    }
+
+    dispatch(setTypeFilterOptions(options));
+
+  }
+
+  useEffect(()=>{
+    if(props.searchHotelsData?.Hotels){
+
+      saveHotelType(props.searchHotelsData.Hotels);
+
+      saveFacilityOptions(props.searchHotelsData.Hotels);
+
+    }
+  },[props.searchHotelsData?.Hotels]);
+
+
+
   useEffect(() => {
 
     const fetchRates = async () => {
@@ -84,10 +202,16 @@ const HotelList: NextPage<Props> = props => {
 
       setRatesLoading(true);
 
-      const ratesResponse = await getRates(hotelIds as number[], "fa-IR");
+      const ratesResponse: { data?: RatesResponseItem[] } = await getRates(hotelIds as number[], "fa-IR");
+
       if (ratesResponse?.data) {
+
         setRatesData(ratesResponse.data);
+
+        saveGuestPointFilterOptions(ratesResponse.data);
+
       }
+
       setRatesLoading(false);
     }
 
@@ -97,7 +221,10 @@ const HotelList: NextPage<Props> = props => {
       setPricesLoading(true);
       const pricesResponse = await AvailabilityByHotelId({ checkin: checkin, checkout: checkout, ids: hotelIds as number[] }, 'fa-IR');
       if (pricesResponse.data?.result?.hotels) {
-        setPricesData(pricesResponse.data.result.hotels)
+        setPricesData(pricesResponse.data.result.hotels);
+
+        savePriceRange(pricesResponse.data.result.hotels);
+
       }
       setPricesLoading(false);
     }
@@ -238,19 +365,29 @@ const HotelList: NextPage<Props> = props => {
         />}
 
         <div className='grid lg:grid-cols-4 gap-4'>
-          <div className='col-span-1 bg-red-200'>
-            filter
+
+          <div className='col-span-1'>
+
+            <div className='bg-red-200 p-5 mb-5'>Map</div>
+
+            <div className='bg-white'>
+
+              <DomesticHotelListSideBar />
+
+            </div>
+
           </div>
+
           <div className='lg:col-span-3'>
 
-            <div className='flex justify-between'>
+            <div className='flex justify-between mb-4 items-center'>
 
               {hotels.length > 0 && pricesData && cityName ? (
-                <div className='text-sm'>
+                <div className='text-sm max-sm:hidden'>
                   <b> {hotels.length} </b> هتل در <b> {cityName} </b> پیدا کردیم
                 </div>
               ) : (
-                <Skeleton className='w-52' />
+                <Skeleton className='w-52 max-sm:hidden' />
               )}
 
               <Select
@@ -264,7 +401,8 @@ const HotelList: NextPage<Props> = props => {
                 value={sortFactor}
                 onChange={type => { setSortFactor(type as SortTypes) }}
                 label={t('sortBy')}
-                className='w-52'
+                wrapperClassName='max-sm:grow sm:w-52'
+
               />
             </div>
 

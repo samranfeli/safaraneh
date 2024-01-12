@@ -6,6 +6,7 @@ type Props = {
     value: string;
     label?: string;
     className?: string;
+    wrapperClassName?: string;
 }
 
 const Select: React.FC<Props> = props => {
@@ -36,7 +37,7 @@ const Select: React.FC<Props> = props => {
     }, [value]);
 
     return (
-        <div className="relative" ref={wrapperRef}>
+        <div className={`relative ${props.wrapperClassName || ""}`} ref={wrapperRef}>
 
             <div
                 className={`
