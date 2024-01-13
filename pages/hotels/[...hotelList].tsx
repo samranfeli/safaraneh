@@ -68,18 +68,18 @@ const HotelList: NextPage<Props> = props => {
 
   const [sortFactor, setSortFactor] = useState<SortTypes>("priority");
 
-  const [entity, setEntity]= useState<{EntityName:string; EntityTypeId: number}>();
+  const [entity, setEntity] = useState<{ EntityName: string; EntityTypeId: number }>();
 
   let hotelIds: (undefined | number)[] = [];
   if (props.searchHotelsData) {
     hotelIds = props.searchHotelsData.Hotels?.map(hotel => hotel.HotelId) || [];
   }
 
-  let cityId : number;
-  if(props.searchHotelsData?.Hotels[0].CityId){
+  let cityId: number;
+  if (props.searchHotelsData?.Hotels[0].CityId) {
     cityId = props.searchHotelsData.Hotels[0].CityId;
   }
-  
+
 
   const today = dateFormat(new Date());
   const tomorrow = dateFormat(addSomeDays(new Date()));
@@ -89,36 +89,36 @@ const HotelList: NextPage<Props> = props => {
   const router = useRouter();
   const pathSegments = router.asPath?.split("/");
 
-  const locationSegment = pathSegments.find(item => item.includes("location")); 
+  const locationSegment = pathSegments.find(item => item.includes("location"));
   const checkinSegment = pathSegments.find(item => item.includes("checkin"));
   const checkoutSegment = pathSegments.find(item => item.includes("checkout"));
 
   let locationId: number;
-  if (locationSegment){
+  if (locationSegment) {
     locationId = +locationSegment.split("location-")[1];
   }
-  
-  if(checkinSegment){
+
+  if (checkinSegment) {
     checkin = checkinSegment.split("checkin-")[1];
     checkout = checkoutSegment ? checkoutSegment.split("checkout-")[1] : dateFormat(addSomeDays(new Date(checkin)));
   }
 
-  const savePriceRange = (pricedItems:PricesResponseItem[]) => {
-    
+  const savePriceRange = (pricedItems: PricesResponseItem[]) => {
+
     let min = 0;
     let max = 0;
-    
-    for(let i =0 ; i < pricedItems.length ; i++){
+
+    for (let i = 0; i < pricedItems.length; i++) {
       const itemPrice = pricedItems[i].salePrice;
-      if (!min || min > itemPrice){
+      if (!min || min > itemPrice) {
         min = itemPrice;
       }
-      if(!max || max < itemPrice){
+      if (!max || max < itemPrice) {
         max = itemPrice;
       }
     }
 
-    dispatch(setPriceFilterRange({min:min, max:max}));
+    dispatch(setPriceFilterRange({ min: min, max: max }));
   }
 
   const saveGuestPointFilterOptions = (rates: RatesResponseItem[]) => {
@@ -154,26 +154,26 @@ const HotelList: NextPage<Props> = props => {
   }
 
 
-  const saveFacilityOptions = (hotelItems:SearchHotelItem[]) => {
-    
-    const options:{keyword:string, label: string, count:number}[] = [];
+  const saveFacilityOptions = (hotelItems: SearchHotelItem[]) => {
 
-    for (let i = 0; i < hotelItems.length ; i++ ){
-      const hotelItemFacilities =   hotelItems[i].Facilities;
-      
+    const options: { keyword: string, label: string, count: number }[] = [];
+
+    for (let i = 0; i < hotelItems.length; i++) {
+      const hotelItemFacilities = hotelItems[i].Facilities;
+
       if (!hotelItemFacilities?.length) continue;
 
-      for (let j=0 ; j< hotelItemFacilities.length ; j++){
+      for (let j = 0; j < hotelItemFacilities.length; j++) {
         const facilityItem = hotelItemFacilities[j];
 
-        const updatingOptionItem = options.find(item => item.keyword === facilityItem.Keyword );
+        const updatingOptionItem = options.find(item => item.keyword === facilityItem.Keyword);
 
-        if(!facilityItem.Keyword) continue;
+        if (!facilityItem.Keyword) continue;
 
-        if (updatingOptionItem){
-          updatingOptionItem.count = updatingOptionItem.count+1;
-        }else{
-          options.push({ keyword : facilityItem.Keyword, label : facilityItem.Title || "" , count:1})
+        if (updatingOptionItem) {
+          updatingOptionItem.count = updatingOptionItem.count + 1;
+        } else {
+          options.push({ keyword: facilityItem.Keyword, label: facilityItem.Title || "", count: 1 })
         }
 
       }
@@ -183,24 +183,24 @@ const HotelList: NextPage<Props> = props => {
 
   }
 
-  const saveHotelType = (hotelItems:SearchHotelItem[]) => {
-    
-    const options:{id:number, label: string, count:number}[] = [];
+  const saveHotelType = (hotelItems: SearchHotelItem[]) => {
 
-    for (let i = 0; i < hotelItems.length ; i++ ){
-      
-      const hotelItem =   hotelItems[i];
+    const options: { id: number, label: string, count: number }[] = [];
 
-      if (!hotelItem.HotelTypeId){
+    for (let i = 0; i < hotelItems.length; i++) {
+
+      const hotelItem = hotelItems[i];
+
+      if (!hotelItem.HotelTypeId) {
         continue;
       }
 
-      const updatingOptionItem = options.find(item => item.id === hotelItem.HotelTypeId );
+      const updatingOptionItem = options.find(item => item.id === hotelItem.HotelTypeId);
 
-      if (updatingOptionItem){
-        updatingOptionItem.count = updatingOptionItem.count+1
-      }else{
-        options.push({ id : hotelItem.HotelTypeId, label : hotelItem.HotelTypeName || "" , count:1})
+      if (updatingOptionItem) {
+        updatingOptionItem.count = updatingOptionItem.count + 1
+      } else {
+        options.push({ id: hotelItem.HotelTypeId, label: hotelItem.HotelTypeName || "", count: 1 })
       }
     }
 
@@ -208,15 +208,15 @@ const HotelList: NextPage<Props> = props => {
 
   }
 
-  useEffect(()=>{
-    if(props.searchHotelsData?.Hotels){
+  useEffect(() => {
+    if (props.searchHotelsData?.Hotels) {
 
       saveHotelType(props.searchHotelsData.Hotels);
 
       saveFacilityOptions(props.searchHotelsData.Hotels);
 
     }
-  },[props.searchHotelsData?.Hotels]);
+  }, [props.searchHotelsData?.Hotels]);
 
 
 
@@ -258,9 +258,9 @@ const HotelList: NextPage<Props> = props => {
     fetchPrices();
 
 
-    const fetchEntityDetail =async (id:number) => {
+    const fetchEntityDetail = async (id: number) => {
       const entityResponse: any = await getEntityNameByLocation(id, 'fa-IR');
-      if(entityResponse?.data){
+      if (entityResponse?.data) {
         setEntity(entityResponse.data);
       }
     }
@@ -389,10 +389,10 @@ const HotelList: NextPage<Props> = props => {
   const cityName = hotels && hotels[0]?.CityName || "";
 
 
-  
-  const domesticHotelDefaultDates: [string, string] = [checkin , checkout];
-  
-  const defaultDestination : EntitySearchResultItemType = {
+
+  const domesticHotelDefaultDates: [string, string] = [checkin, checkout];
+
+  const defaultDestination: EntitySearchResultItemType = {
     name: entity?.EntityName,
     displayName: entity?.EntityName,
     type: entity?.EntityTypeId === 3 ? 'City' : 'Province'
@@ -407,43 +407,60 @@ const HotelList: NextPage<Props> = props => {
   const filteredGuestPoints = urlSegments.find(item => item.includes('guestrate'))?.split("guestrate-")[1].split(",") || [];
   const filteredHotelType = urlSegments.find(item => item.includes('type'))?.split("type-")[1].split(",") || [];
   const filteredFacility = urlSegments.find(item => item.includes('amenities'))?.split("amenities-")[1].split(",") || [];
+  const filteredPrice = urlSegments.find(item => item.includes('price'))?.split("price-")[1].split(",") || [];
 
-  const filteredHotels = hotels.filter(hotelItem =>{
+  const filteredHotels = hotels.filter(hotelItem => {
 
-      if(filteredAvailability && hotelItem.priceInfo === "notPriced"){
-          return false;
-      }
+    if (filteredAvailability && hotelItem.priceInfo === "notPriced") {
+      return false;
+    }
 
-      if (filteredName && (!hotelItem.HotelName || !hotelItem.HotelName.includes(decodeURI(filteredName)))){
-          return false;
-      }
+    if (filteredName && (!hotelItem.HotelName || !hotelItem.HotelName.includes(decodeURI(filteredName)))) {
+      return false;
+    }
 
-      if (filteredRating.length  && !filteredRating.some(item => +item === hotelItem.HotelRating)){
-          return false;
-      }
+    if (filteredRating.length && !filteredRating.some(item => +item === hotelItem.HotelRating)) {
+      return false;
+    }
 
-      if (filteredHotelType.length && !filteredHotelType.some(item => +item === hotelItem.HotelTypeId)){
-          return false;
-      }
+    if (filteredHotelType.length && !filteredHotelType.some(item => +item === hotelItem.HotelTypeId)) {
+      return false;
+    }
 
-      if(filteredGuestPoints.length && ( !hotelItem.priceInfo || !filteredGuestPoints.some(item => {
-          const min = Number(item.split("-")[0]);
-          const max = Number(item.split("-")[1]);
-          const hotelSatisfaction = hotelItem.ratesInfo && hotelItem.ratesInfo !== "loading" ? Number(hotelItem.ratesInfo!.Satisfaction) : 0;
-          return (hotelSatisfaction >= min && hotelSatisfaction <= max)
-      }))){
-          return false;
-      }
+    if (filteredGuestPoints.length && (!hotelItem.priceInfo || !filteredGuestPoints.some(item => {
+      const min = Number(item.split("-")[0]);
+      const max = Number(item.split("-")[1]);
+      const hotelSatisfaction = hotelItem.ratesInfo && hotelItem.ratesInfo !== "loading" ? Number(hotelItem.ratesInfo!.Satisfaction) : 0;
+      return (hotelSatisfaction >= min && hotelSatisfaction <= max)
+    }))) {
+      return false;
+    }
 
-      if (filteredFacility.length && !filteredFacility.some(item => {
-          const hotelsFacilities = hotelItem.Facilities?.map(facilityItem => facilityItem.Keyword);
-          const decodedItem = decodeURI(item);
-          return(hotelsFacilities?.includes(decodedItem));
-      })){
-          return false;
-      }
+    if (filteredFacility.length && !filteredFacility.some(item => {
+      const hotelsFacilities = hotelItem.Facilities?.map(facilityItem => facilityItem.Keyword);
+      const decodedItem = decodeURI(item);
+      return (hotelsFacilities?.includes(decodedItem));
+    })) {
+      return false;
+    }
 
-      return true
+    if (
+      filteredPrice.length &&
+      hotelItem.priceInfo !== 'loading' &&
+      (
+        hotelItem.priceInfo === 'notPriced'
+        ||
+        hotelItem.priceInfo === 'need-to-inquire'
+        ||
+        hotelItem.priceInfo.salePrice < +filteredPrice[0]
+        ||
+        hotelItem.priceInfo.salePrice > +filteredPrice[1]
+      )
+    ) {
+      return false;
+    }
+
+    return true
 
   })
 
@@ -469,7 +486,12 @@ const HotelList: NextPage<Props> = props => {
 
             <div className='bg-white'>
 
-              <DomesticHotelListSideBar allHotels={hotels.length} filteredHotels={filteredHotels.length} />
+              <DomesticHotelListSideBar
+                allHotels={hotels.length}
+                filteredHotels={filteredHotels.length}
+                priceIsFetched={!!pricesData}
+                scoreIsFetched={!!ratesData}
+              />
 
             </div>
 

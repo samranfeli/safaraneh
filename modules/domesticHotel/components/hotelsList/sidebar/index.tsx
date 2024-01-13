@@ -10,6 +10,8 @@ import HotelGuestPointFilter from "./HotelGuestPointFilter";
 type Props = {
     allHotels:number;
     filteredHotels: number;
+    priceIsFetched?: boolean;
+    scoreIsFetched?: boolean;
 }
 const DomesticHotelListSideBar: React.FC<Props> = props => {
 
@@ -30,9 +32,9 @@ const DomesticHotelListSideBar: React.FC<Props> = props => {
                     {tHotel("hotels-filtered-from-total", { total: props.allHotels, filtered: props.filteredHotels })}
                 </p>}
 
-                <HotelAvailabilityFilter />
+                {!!props.priceIsFetched && <HotelAvailabilityFilter />}
 
-                {/* <HotelPriceFilter /> */}
+                {!!props.priceIsFetched && <HotelPriceFilter />}
 
                 <HotelRatingFilter />
                 
@@ -43,7 +45,7 @@ const DomesticHotelListSideBar: React.FC<Props> = props => {
 
                 <HotelFacilityFilter />
 
-                <HotelGuestPointFilter />
+                {!!props.scoreIsFetched && <HotelGuestPointFilter />}
 
                 <HotelTypeFilter />
 

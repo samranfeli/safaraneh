@@ -7,6 +7,7 @@ type Props = {
     label?: string;
     className?: string;
     wrapperClassName?: string;
+    placeholder?:string;
 }
 
 const Select: React.FC<Props> = props => {
@@ -36,6 +37,10 @@ const Select: React.FC<Props> = props => {
         setOpen(false);
     }, [value]);
 
+    useEffect(()=>{
+        setValue(props.value);
+    },[props.value]);
+
     return (
         <div className={`relative ${props.wrapperClassName || ""}`} ref={wrapperRef}>
 
@@ -51,7 +56,7 @@ const Select: React.FC<Props> = props => {
                         {props.label}
                     </label>
                 ) : null}
-                {props.items.find(item => item.value === value)?.label}
+                {props.items.find(item => item.value === value)?.label || props.placeholder || null}
             </div>
 
             <div className={`absolute z-10 top-full rtl:right-0 ltr:left-0 bg-white min-w-full shadow transition-all ${open ? "visible opacity-100 mt-0" : "invisible opacity-0 mt-1"}`}>
