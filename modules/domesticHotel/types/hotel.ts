@@ -3,7 +3,7 @@ export interface EntitySearchResultItemType {
     displayName?: string;
     language?: string;
     type: 'Province' | 'City' | 'Hotel';
-    id: number;
+    id?: number;
 }
 
 export interface DomesticHotelFacilitieType {

@@ -63,13 +63,14 @@ const HotelFacilityFilter: React.FC = () => {
                     {t('reset-filter')}
                 </button>}
             </div>
-
-            <CheckboxGroup
-                items={options}
-                name="facilityFilter"
-                onChange={v => { setValues(v) }}
-                values={values}
-            />
+            <div>
+                <CheckboxGroup
+                    items={options}
+                    name="facilityFilter"
+                    onChange={v => { setValues(v) }}
+                    values={values}
+                />
+            </div>
 
         </>
     )

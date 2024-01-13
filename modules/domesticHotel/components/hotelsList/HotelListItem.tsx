@@ -80,14 +80,14 @@ const HotelListItem: React.FC<Props> = props => {
         priceBlock = (
             <>
 
-                {!!discount && <span className="bg-green-700 text-white rounded-xl leading-7 text-2xs px-2 select-none"> {discount}% {t('discount')} </span>}
+                {!!discount && <div><span className="bg-green-700 text-white rounded-xl leading-7 text-2xs px-2 select-none"> {discount}% {t('discount')} </span></div>}
 
-                <div className="flex gap-3 text-sm justify-end">
-                    {(boardPrice > salePrice) && <span className="text-xs text-neutral-500 line-through whitespace-nowrap">
+                    {(boardPrice > salePrice) && <span className="text-xs inline-block text-neutral-500 line-through whitespace-nowrap">
                         {numberWithCommas(boardPrice)} {t('rial')}
                     </span>}
 
                     <Tooltip
+                        className="inline-block text-sm rtl:mr-2 ltr:ml-2"
                         position="end"
                         title={
                             <div className="whitespace-nowrap">
@@ -108,7 +108,6 @@ const HotelListItem: React.FC<Props> = props => {
 
                     </Tooltip>
 
-                </div>
                 <div className="text-xs text-neutral-500 leading-4">
                     {tHotel("price-for-nights", { nights: nights })}
                 </div>
@@ -122,7 +121,7 @@ const HotelListItem: React.FC<Props> = props => {
         button = null;
     } else if (hotel.priceInfo === 'loading') {
         button = (
-            <div className=" rtl:text-left ltr:text-right">
+            <div className=" rtl:text-left ltr:text-right mt-3">
                 <Loading className="w-10 h-10 fill-blue-400 inline-block animate-spin" />
                 <p className="text-sm">
                     {tHotel('updating-prices')}
@@ -135,7 +134,7 @@ const HotelListItem: React.FC<Props> = props => {
                 hasArrow
                 href={hotel.Url}
                 target="_blank"
-                className="rounded-lg h-10 px-5 text-sm w-full md:w-48"
+                className="rounded-lg h-10 px-5 text-sm w-full md:w-48 max-w-full mt-3"
             >
                 {hotel.priceInfo === "need-to-inquire" ? "درخواست رزرو" : tHotel("see-rooms")}
             </Button>
@@ -145,9 +144,9 @@ const HotelListItem: React.FC<Props> = props => {
     return (
         <div
             key={hotel.CityId}
-            className="grid md:grid-cols-3 mb-4 border border-neutral-200 bg-white rounded-lg relative"
+            className="grid md:grid-cols-12 mb-4 border border-neutral-200 bg-white rounded-lg relative"
         >
-            <Link href={hotel.Url!} >
+            <Link href={hotel.Url!} className="md:col-span-12 lg:col-span-4">
                 {hotel.ImageUrl ? (
                     <Image
                         src={hotel.ImageUrl}
@@ -155,11 +154,11 @@ const HotelListItem: React.FC<Props> = props => {
                         width={288}
                         height={200}
                         priority={!props.index}
-                        className="md:col-span-1 h-48 object-cover w-full rtl:rounded-r-lg ltr:rounded-l-lg"
+                        className="h-48 object-cover w-full rtl:rounded-r-lg ltr:rounded-l-lg"
                     />
                 ) : (
                     <div
-                        className="md:col-span-1 bg-neutral-100 flex items-center justify-center h-full rtl:rounded-r-lg ltr:rounded-l-lg"
+                        className="bg-neutral-100 flex items-center justify-center h-full rtl:rounded-r-lg ltr:rounded-l-lg"
                     >
                         <DefaultRoom className="fill-neutral-300 w-32 h-32" />
                     </div>
@@ -168,44 +167,44 @@ const HotelListItem: React.FC<Props> = props => {
 
             {!!hotel.IsPromotion && <span className="absolute bg-green-600 text-white right-3 top-3 rounded-xl leading-4 text-2xs py-1 px-2 select-none pointer-events-none"> پیشنهاد ویژه </span>}
 
-            <div className="md:col-span-2 p-4 flex flex-col gap-4 sm:flex-row justify-between">
-                <div>
-                    <Link href={hotel.Url!} className="font-bold text-neutral-700 rtl:ml-2 ltr:mr-2" >
-                        {hotel.HotelCategoryName} {hotel.HotelName} {hotel.CityName}
-                    </Link>
 
-                    {hotel.HotelRating && <Rating number={hotel.HotelRating} inline className="align-middle rtl:ml-2 ltr:mr-2" />}
+            <div className="md:col-span-7 lg:col-span-5 p-3">
+                <Link href={hotel.Url!} className="font-bold text-neutral-700 rtl:ml-2 ltr:mr-2" >
+                    {hotel.HotelCategoryName} {hotel.HotelName} {hotel.CityName}
+                </Link>
 
-                    <span className="bg-blue-50 rounded-xl leading-6 text-2xs px-2 select-none">
-                        {hotel.HotelTypeName}
-                    </span>
+                {hotel.HotelRating && <Rating number={hotel.HotelRating} inline className="align-middle rtl:ml-2 ltr:mr-2" />}
 
-                    {!!hotel.Address && <p className="text-xs leading-4 my-2 text-neutral-400"><Location className="w-4 h-4 fill-neutral-400 inline-block" /> {hotel.Address} </p>}
+                <span className="bg-blue-50 rounded-xl leading-6 text-2xs px-2 select-none">
+                    {hotel.HotelTypeName}
+                </span>
 
-                    {rate}
+                {!!hotel.Address && <p className="text-xs leading-4 my-2 text-neutral-400"><Location className="w-4 h-4 fill-neutral-400 inline-block" /> {hotel.Address} </p>}
 
-                    {!!hotel.IsCovid && (
-                        <span className="bg-blue-50 rounded-xl leading-6 text-2xs px-2 select-none">اطلاعات ایمنی کووید-۱۹</span>
-                    )}
+                {rate}
 
-                    {hotel.priceInfo === "notPriced" && <div className="bg-red-100 px-4 py-1 my-1">
-                        <h5 className="text-red-600 text-sm font-semibold"> <InfoCircle className="w-4 h-4 fill-current inline-block" /> {tHotel("you-missed-this-deal")}</h5>
-                        <p className="text-xs">{tHotel("we-dont-have-any-available-rooms-for-these-dates")}</p>
-                    </div>}
+                {!!hotel.IsCovid && (
+                    <span className="bg-blue-50 rounded-xl leading-6 text-2xs px-2 select-none">اطلاعات ایمنی کووید-۱۹</span>
+                )}
 
-                </div>
-
-                <div className="flex flex-col justify-between sm:items-end">
-
-                    <div className="rtl:text-left ltr:text-right">
-                        {priceBlock}
-                    </div>
-
-                    {button}
-
-                </div>
+                {hotel.priceInfo === "notPriced" && <div className="bg-red-100 px-4 py-1 my-1">
+                    <h5 className="text-red-600 text-sm font-semibold"> <InfoCircle className="w-4 h-4 fill-current inline-block" /> {tHotel("you-missed-this-deal")}</h5>
+                    <p className="text-xs">{tHotel("we-dont-have-any-available-rooms-for-these-dates")}</p>
+                </div>}
 
             </div>
+
+            <div className="md:col-span-5 lg:col-span-3 p-3 flex flex-col justify-between sm:items-end">
+
+                <div className="rtl:text-left ltr:text-right">
+                    {priceBlock}
+                </div>
+
+                {button}
+
+            </div>
+
+
 
         </div>
     )

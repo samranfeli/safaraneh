@@ -139,7 +139,7 @@ const SearchForm: React.FC<Props> = props => {
                 break;
 
             case "Hotel":
-                const hotelDetailsResponse = await getDomesticHotelDetailById(selectedDestination.id, i18n?.language);
+                const hotelDetailsResponse = await getDomesticHotelDetailById(selectedDestination.id!, i18n?.language);
 
                 if (hotelDetailsResponse.status === 200) {
                     url = hotelDetailsResponse.data.Url;
@@ -166,7 +166,12 @@ const SearchForm: React.FC<Props> = props => {
                 url = "";
         }
 
-        url += `/location-${selectedDestination.id}/checkin-${dates[0]}/checkout-${dates[1]}`;
+        let urlSegment = "";
+        if (selectedDestination.id){
+            urlSegment = `/location-${selectedDestination.id}`;
+        }
+
+        url += `${urlSegment}/checkin-${dates[0]}/checkout-${dates[1]}`;
 
         router.push(url);
 
