@@ -56,7 +56,7 @@ const Pagination: React.FC<Props> = props => {
     }
 
     return (
-        <div className={`flex gap-2 ${props.wrapperClassName}`}>
+        <div className={`flex flex-wrap gap-2 ${props.wrapperClassName}`}>
 
             <button
                 onClick={previousPage}

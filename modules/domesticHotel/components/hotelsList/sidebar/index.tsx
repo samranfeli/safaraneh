@@ -9,34 +9,41 @@ import HotelGuestPointFilter from "./HotelGuestPointFilter";
 
 const DomesticHotelListSideBar: React.FC = () => {
 
-    const {t} = useTranslation("common");
-    const {t : tHotel} = useTranslation("hotel");
+    const { t } = useTranslation("common");
+    const { t: tHotel } = useTranslation("hotel");
 
     return (
-        <div className="p-3">
+        <>
+            <div className="p-3 pb-0">
 
-            <HotelNameFilter />
+                <HotelNameFilter />
 
-            <h5 className="mt-4 font-bold text-lg mb-2 border-t border-neutral-300 pt-5"> {t('filter')} </h5>
+                <h5 className="mt-4 font-bold text-lg mb-2 border-t border-neutral-300 pt-5"> {t('filter')} </h5>
 
-            {/* TODO render conditionally */}
-            <p className="text-xs mb-3 font-semibold">
-                {tHotel("hotels-filtered-from-total", { total: 56 ,filtered:70})}
-            </p>
+                {/* TODO render conditionally */}
+                <p className="text-xs mb-3 font-semibold">
+                    {tHotel("hotels-filtered-from-total", { total: 56, filtered: 70 })}
+                </p>
 
-            <HotelAvailabilityFilter />
+                <HotelAvailabilityFilter />
 
-            {/* <HotelPriceFilter /> */}
+                {/* <HotelPriceFilter /> */}
 
-            <HotelRatingFilter />
+                <HotelRatingFilter />
+                
+            </div>
 
-            <HotelFacilityFilter />
+            <div className="p-3 pt-0">
 
-            <HotelGuestPointFilter />
 
-            <HotelTypeFilter />
-            
-        </div>
+                <HotelFacilityFilter />
+
+                <HotelGuestPointFilter />
+
+                <HotelTypeFilter />
+
+            </div>
+        </>
     )
 }
 

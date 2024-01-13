@@ -33,18 +33,64 @@ const CheckboxGroup: React.FC<Props> = props => {
 
     useEffect(() => {
         setValues(props.values)
-    }, [props.values.length])
+    }, [props.values.length]);
+
+    if (props.items.length > 10) {
+        return (
+            <>
+                <div>
+                    {props.items.slice(0, 10).map(item => (
+                        <Checkbox
+                            block
+                            id={item.value}
+                            label={item.label}
+                            onChange={(checked: boolean) => { onChange(checked, item.value) }}
+                            value={item.value}
+                            key={item.value}
+                            checked={values.includes(item.value)}
+                        />
+                    ))}
+                </div>
+                <div>
+                {props.items.slice(10, 20).map(item => (
+                        <Checkbox
+                            block
+                            id={item.value}
+                            label={item.label}
+                            onChange={(checked: boolean) => { onChange(checked, item.value) }}
+                            value={item.value}
+                            key={item.value}
+                            checked={values.includes(item.value)}
+                        />
+                    ))}
+                </div>
+                {props.items.length > 20 && <div>
+                    {props.items.slice(20).map(item => (
+                        <Checkbox
+                            block
+                            id={item.value}
+                            label={item.label}
+                            onChange={(checked: boolean) => { onChange(checked, item.value) }}
+                            value={item.value}
+                            key={item.value}
+                            checked={values.includes(item.value)}
+                        />
+                    ))}
+                </div>}
+            </>
+        )
+    }
 
     return (
         <>
-            {props.items.map((item, index) =>
+            {props.items.map(item =>
                 <Checkbox
                     block
-                    id={props.name + "_" + index}
+                    id={item.value}
                     label={item.label}
                     onChange={(checked: boolean) => { onChange(checked, item.value) }}
                     value={item.value}
-                    key={props.name + "_" + index}
+                    key={item.value}
                     checked={values.includes(item.value)}
                 />
             )}

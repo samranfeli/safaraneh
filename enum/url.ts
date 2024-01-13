@@ -88,7 +88,8 @@ export const Header = {
 
     SearchHotels:"/v2/Hotel/SearchHotels",
     getRates:"/v2/Comment/Rates",
-    getCityFaqById:"/api/services/app/Faq/GetAll"
+    getCityFaqById:"/api/services/app/Faq/GetAll",
+    GetEntityNameByLocation: "/v2/Entity/GetEntityNameByLocation"
     
     
     // GetAccomadtion: "/api/services/app/BookingHotel/GetSearch",

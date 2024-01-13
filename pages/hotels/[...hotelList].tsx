@@ -1,8 +1,8 @@
 import { useEffect, useState } from 'react';
-import { AvailabilityByHotelId, GetCityFaqById, SearchHotels, getRates } from '@/modules/domesticHotel/actions';
+import { AvailabilityByHotelId, GetCityFaqById, SearchHotels, getEntityNameByLocation, getRates } from '@/modules/domesticHotel/actions';
 import type { GetServerSideProps, NextPage } from 'next';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
-import { PricedHotelItem, SearchHotelItem } from '@/modules/domesticHotel/types/hotel';
+import { EntitySearchResultItemType, PricedHotelItem, SearchHotelItem } from '@/modules/domesticHotel/types/hotel';
 import SearchForm from '@/modules/domesticHotel/components/shared/SearchForm';
 import HotelsList from '@/modules/domesticHotel/components/hotelsList';
 import { addSomeDays, dateFormat } from '@/modules/shared/helpers';
@@ -16,6 +16,7 @@ import { QuestionCircle } from '@/modules/shared/components/ui/icons';
 import DomesticHotelListSideBar from '@/modules/domesticHotel/components/hotelsList/sidebar';
 import { setFacilityFilterOptions, setGuestPointFilterOptions, setTypeFilterOptions, setPriceFilterRange } from '@/modules/domesticHotel/store/domesticHotelSlice';
 import { useAppDispatch } from '@/modules/shared/hooks/use-store';
+import { useRouter } from 'next/router';
 
 type Props = {
   searchHotelsData?: {
@@ -67,15 +68,40 @@ const HotelList: NextPage<Props> = props => {
 
   const [sortFactor, setSortFactor] = useState<SortTypes>("priority");
 
+  const [entity, setEntity]= useState<{EntityName:string; EntityTypeId: number}>();
+
   let hotelIds: (undefined | number)[] = [];
   if (props.searchHotelsData) {
     hotelIds = props.searchHotelsData.Hotels?.map(hotel => hotel.HotelId) || [];
   }
 
+  let cityId : number;
+  if(props.searchHotelsData?.Hotels[0].CityId){
+    cityId = props.searchHotelsData.Hotels[0].CityId;
+  }
+  
+
   const today = dateFormat(new Date());
   const tomorrow = dateFormat(addSomeDays(new Date()));
   let checkin = today;
   let checkout = tomorrow;
+
+  const router = useRouter();
+  const pathSegments = router.asPath?.split("/");
+
+  const locationSegment = pathSegments.find(item => item.includes("location")); 
+  const checkinSegment = pathSegments.find(item => item.includes("checkin"));
+  const checkoutSegment = pathSegments.find(item => item.includes("checkout"));
+
+  let locationId: number;
+  if (locationSegment){
+    locationId = +locationSegment.split("location-")[1];
+  }
+  
+  if(checkinSegment){
+    checkin = checkinSegment.split("checkin-")[1];
+    checkout = checkoutSegment ? checkoutSegment.split("checkout-")[1] : dateFormat(addSomeDays(new Date(checkin)));
+  }
 
   const savePriceRange = (pricedItems:PricesResponseItem[]) => {
     
@@ -231,6 +257,16 @@ const HotelList: NextPage<Props> = props => {
 
     fetchPrices();
 
+
+    const fetchEntityDetail =async (id:number) => {
+      const entityResponse: any = await getEntityNameByLocation(id, 'fa-IR');
+      if(entityResponse?.data){
+        setEntity(entityResponse.data);
+      }
+    }
+
+    fetchEntityDetail(locationId || cityId);
+
   }, []);
 
 
@@ -352,11 +388,22 @@ const HotelList: NextPage<Props> = props => {
 
   const cityName = hotels && hotels[0]?.CityName || "";
 
+
+  
+  const domesticHotelDefaultDates: [string, string] = [checkin , checkout];
+  
+  const defaultDestination : EntitySearchResultItemType = {
+    name: entity?.EntityName,
+    displayName: entity?.EntityName,
+    type: entity?.EntityTypeId === 3 ? 'City' : 'Province'
+  }
+
   return (
 
     <>
       <div className='max-w-container mx-auto px-5 py-4'>
-        <SearchForm wrapperClassName='pb-4' />
+
+        <SearchForm wrapperClassName='pb-4' defaultDates={domesticHotelDefaultDates} defaultDestination={defaultDestination} />
 
         {(fetchPercentage === 100) || <ProgressBarWithLabel
           className='mb-4'
@@ -466,7 +513,8 @@ export const getServerSideProps: GetServerSideProps = async (context: any) => {
     props: {
       ...await (serverSideTranslations(context.locale, ['common', 'hotel'])),
       searchHotelsData: searchHotelsResponse?.data || null,
-      faq: faqResponse?.data?.result || null
+      faq: faqResponse?.data?.result || null,
+      url: url
     },
   })
 }
