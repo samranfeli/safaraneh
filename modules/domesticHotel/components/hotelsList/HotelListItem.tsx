@@ -169,11 +169,9 @@ const HotelListItem: React.FC<Props> = props => {
 
 
             <div className="md:col-span-7 lg:col-span-5 p-3">
-                <Link href={hotel.Url!} className="font-bold text-neutral-700 rtl:ml-2 ltr:mr-2" >
-                    {hotel.HotelCategoryName} {hotel.HotelName} {hotel.CityName}
-                </Link>
+                <Link href={hotel.Url!} className="font-bold text-neutral-700 rtl:ml-2 ltr:mr-2" > {hotel.HotelCategoryName} {hotel.HotelName} {hotel.CityName} </Link>
 
-                {hotel.HotelRating && <Rating number={hotel.HotelRating} inline className="align-middle rtl:ml-2 ltr:mr-2" />}
+                {!!hotel.HotelRating && <Rating number={hotel.HotelRating} inline className="align-middle rtl:ml-2 ltr:mr-2" />}
 
                 <span className="bg-blue-50 rounded-xl leading-6 text-2xs px-2 select-none">
                     {hotel.HotelTypeName}
