@@ -16,9 +16,9 @@ const HotelsList: React.FC<Props> = props => {
     const firstItemIndex = (currentPage - 1) * 10;
     const lastItem = currentPage * 10;
 
-    const filteredHotels = [...hotels];
 
-    filteredHotels?.sort((b: PricedHotelItem, a: PricedHotelItem) => {
+
+    hotels?.sort((b: PricedHotelItem, a: PricedHotelItem) => {
 
         if (a.priceInfo === "loading" || b.priceInfo === 'loading') {
             return 1;  // or -1?
@@ -39,19 +39,19 @@ const HotelsList: React.FC<Props> = props => {
             <Pagination
                 onChange={(page: number) => { setCurrentPage(page) }}
                 itemsPerPage={10}
-                totalItems={filteredHotels?.length || 0}
+                totalItems={hotels?.length || 0}
                 currentPage={currentPage}
                 wrapperClassName="mb-4"
             />
             
             <div>
-                {filteredHotels.slice(firstItemIndex, lastItem).map((hotel, index) => <HotelListItem index={index} key={hotel.HotelId} hotel={hotel} />)}
+                {hotels.slice(firstItemIndex, lastItem).map((hotel, index) => <HotelListItem index={index} key={hotel.HotelId} hotel={hotel} />)}
             </div>
 
             <Pagination
                 onChange={(page: number) => { setCurrentPage(page) }}
                 itemsPerPage={10}
-                totalItems={filteredHotels?.length || 0}
+                totalItems={hotels?.length || 0}
                 currentPage={currentPage}
             />
 

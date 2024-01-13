@@ -398,6 +398,56 @@ const HotelList: NextPage<Props> = props => {
     type: entity?.EntityTypeId === 3 ? 'City' : 'Province'
   }
 
+
+  const urlSegments = router.asPath.split("/");
+
+  const filteredAvailability = urlSegments.find(item => item.includes('available'));
+  const filteredName = urlSegments.find(item => item.includes('name-'))?.split("name-")[1];
+  const filteredRating = urlSegments.find(item => item.includes('rating'))?.split("rating-")[1].split(",") || [];
+  const filteredGuestPoints = urlSegments.find(item => item.includes('guestrate'))?.split("guestrate-")[1].split(",") || [];
+  const filteredHotelType = urlSegments.find(item => item.includes('type'))?.split("type-")[1].split(",") || [];
+  const filteredFacility = urlSegments.find(item => item.includes('amenities'))?.split("amenities-")[1].split(",") || [];
+
+  const filteredHotels = hotels.filter(hotelItem =>{
+
+      if(filteredAvailability && hotelItem.priceInfo === "notPriced"){
+          return false;
+      }
+
+      if (filteredName && (!hotelItem.HotelName || !hotelItem.HotelName.includes(decodeURI(filteredName)))){
+          return false;
+      }
+
+      if (filteredRating.length  && !filteredRating.some(item => +item === hotelItem.HotelRating)){
+          return false;
+      }
+
+      if (filteredHotelType.length && !filteredHotelType.some(item => +item === hotelItem.HotelTypeId)){
+          return false;
+      }
+
+      if(filteredGuestPoints.length && ( !hotelItem.priceInfo || !filteredGuestPoints.some(item => {
+          const min = Number(item.split("-")[0]);
+          const max = Number(item.split("-")[1]);
+          const hotelSatisfaction = hotelItem.ratesInfo && hotelItem.ratesInfo !== "loading" ? Number(hotelItem.ratesInfo!.Satisfaction) : 0;
+          return (hotelSatisfaction >= min && hotelSatisfaction <= max)
+      }))){
+          return false;
+      }
+
+      if (filteredFacility.length && !filteredFacility.some(item => {
+          const hotelsFacilities = hotelItem.Facilities?.map(facilityItem => facilityItem.Keyword);
+          const decodedItem = decodeURI(item);
+          return(hotelsFacilities?.includes(decodedItem));
+      })){
+          return false;
+      }
+
+      return true
+
+  })
+
+
   return (
 
     <>
@@ -419,7 +469,7 @@ const HotelList: NextPage<Props> = props => {
 
             <div className='bg-white'>
 
-              <DomesticHotelListSideBar />
+              <DomesticHotelListSideBar allHotels={hotels.length} filteredHotels={filteredHotels.length} />
 
             </div>
 
@@ -454,7 +504,7 @@ const HotelList: NextPage<Props> = props => {
             </div>
 
             {!!props.searchHotelsData?.Hotels && <HotelsList
-              hotels={hotels}
+              hotels={filteredHotels}
             />}
 
             {!!props.searchHotelsData?.Content && (

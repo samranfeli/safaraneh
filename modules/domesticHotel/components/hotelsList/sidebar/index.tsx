@@ -7,10 +7,16 @@ import HotelFacilityFilter from "./HotelFacilityFilter";
 import HotelTypeFilter from "./HotelTypeFilter";
 import HotelGuestPointFilter from "./HotelGuestPointFilter";
 
-const DomesticHotelListSideBar: React.FC = () => {
+type Props = {
+    allHotels:number;
+    filteredHotels: number;
+}
+const DomesticHotelListSideBar: React.FC<Props> = props => {
 
     const { t } = useTranslation("common");
     const { t: tHotel } = useTranslation("hotel");
+
+    const { allHotels, filteredHotels} = props;
 
     return (
         <>
@@ -20,10 +26,9 @@ const DomesticHotelListSideBar: React.FC = () => {
 
                 <h5 className="mt-4 font-bold text-lg mb-2 border-t border-neutral-300 pt-5"> {t('filter')} </h5>
 
-                {/* TODO render conditionally */}
-                <p className="text-xs mb-3 font-semibold">
-                    {tHotel("hotels-filtered-from-total", { total: 56, filtered: 70 })}
-                </p>
+                {(filteredHotels && allHotels && allHotels > filteredHotels) && <p className="text-xs mb-3 font-semibold">
+                    {tHotel("hotels-filtered-from-total", { total: props.allHotels, filtered: props.filteredHotels })}
+                </p>}
 
                 <HotelAvailabilityFilter />
 

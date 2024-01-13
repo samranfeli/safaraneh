@@ -101,7 +101,7 @@ const BeachHotels: React.FC = () => {
                                     <h2 className='mb-1 text-sm font-semibold'>
                                         {hotel.name}
                                     </h2>
-                                    <Rating number={hotel.rating} />
+                                    {!!hotel.rating && <Rating number={hotel.rating} />}
                                 </div>
 
                             </a>
