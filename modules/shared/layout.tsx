@@ -3,6 +3,7 @@ import Footer from "./components/footer";
 import Error from './Error';
 import { PropsWithChildren } from "react";
 import { useRouter } from "next/router";
+import { useAppSelector } from "./hooks/use-store";
 
 type Props = {
     logo:string;
@@ -21,12 +22,15 @@ const Layout: React.FC<PropsWithChildren<Props>> = props => {
 
     const { locale } = router;
 
+    const isHeaderUnderMain = useAppSelector(state => state.styles.headerUnderMain);
+    const isBodyScrollable = useAppSelector(state => state?.styles?.bodyScrollable);
+
     return (
 
-        <div className={`wrapper rtl:font-samim leading-7 ${process.env.THEME || ""} lang-${locale} ${locale === "fa" ? "rtl" : ""}`} >
+        <div className={`wrapper rtl:font-samim leading-7 ${process.env.THEME || ""} lang-${locale} ${locale === "fa" ? "rtl" : ""} ${isBodyScrollable?"":"overflow-hidden h-screen lg:h-auto"}`} >
             <Error />
             <Header logo={props.logo} siteName={props.siteName} />
-            <main id="main" className='min-h-desktop-main relative z-10'>
+            <main id="main" className={`min-h-desktop-main relative ${isHeaderUnderMain?"z-50":"z-10"}`}>
                 {props.children}
             </main>
             <Footer logo={props.logo} siteName={props.siteName} contactInfo={props.contactInfo} />

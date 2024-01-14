@@ -46,7 +46,7 @@ const Select: React.FC<Props> = props => {
 
             <div
                 className={`
-                bg-white rounded border border-neutral-400 px-3 h-12 justify-center flex flex-col leading-5 text-sm select-none cursor-pointer ${props.className || ""}
+                bg-white rounded border px-3 h-12 justify-center flex flex-col leading-5 text-sm select-none cursor-pointer ${props.className || "border-neutral-400"}
                 before:w-2.5 before:h-2.5 before:inline-block ${open ? "before:-rotate-135" : "before:rotate-45"} before:absolute before:border-b-2 before:border-r-2 before:carret-down before:absolute before:border-neutral-500 rtl:before:left-3 ltr:before:right-3 before:top-1/2 before:-mt-1.5
                 `}
                 onClick={() => { setOpen(true) }}
