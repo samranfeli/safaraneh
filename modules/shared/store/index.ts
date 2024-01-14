@@ -2,12 +2,14 @@ import { configureStore } from "@reduxjs/toolkit";
 import errorSlice from "./errorSlice";
 import portalSlice from "./portalSlice";
 import domesticHotelSlice from "@/modules/domesticHotel/store/domesticHotelSlice";
+import stylesSlice from "./stylesSlice";
 
 export const store = configureStore({
     reducer: {
         error: errorSlice,
         portal: portalSlice,
-        domesticHotelFilter: domesticHotelSlice
+        domesticHotelFilter: domesticHotelSlice,
+        styles: stylesSlice
     }
 })
 

@@ -7,26 +7,17 @@ const withBundleAnalyzer = require('@next/bundle-analyzer')({
 
 const nextConfig = {
   images: {
-    remotePatterns: [
-      {
-        protocol: 'https',
-        hostname: 'cdn.safaraneh.com',
-        port: '',
-        pathname: '**',
-      },
-      {
-        protocol: 'https',
-        hostname: 'cdn2.safaraneh.com',
-        port: '',
-        pathname: '**',
-      },
-      {
-        protocol: 'https',
-        hostname: 'panel.safaraneh.com',
-        port: '',
-        pathname: '**',
-      },
-    ]
+    domains: [
+      'cdn.safaraneh.com',
+      'cdn2.safaraneh.com',
+      'panel.safaraneh.com',
+      'blog.iranhotel.ir',
+      'trustseal.enamad.ir',
+      'logo.samandehi.ir',
+      'www.facebook.com',
+      'cdn.mehrbooking.net'
+    ],
+    formats: ['image/avif', 'image/webp'],
   },
   reactStrictMode: false,
   swcMinify: true,

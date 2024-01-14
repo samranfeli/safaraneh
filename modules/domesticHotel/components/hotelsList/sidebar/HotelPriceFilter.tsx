@@ -53,7 +53,7 @@ const HotelPriceFilter: React.FC = () => {
     }, [min, max]);
 
 
-    if (!availablePriceRange) return <Skeleton />
+    if (!availablePriceRange) return null;
 
     const steps = 5;
     const pace = Math.ceil((availablePriceRange.max - availablePriceRange.min) / steps);
@@ -80,7 +80,7 @@ const HotelPriceFilter: React.FC = () => {
                 <label className="font-semibold text-sm">
                     {tHotel('total-price-for-stay')} ({t('rial')})
                 </label>
-                {!!min && <button
+                {(!!min || !!max) && <button
                     onClick={() => { setMin(""); setMax(""); }}
                     type="button"
                     className="bg-red-500 text-white text-xs leading-5 px-2 rounded inline-block"

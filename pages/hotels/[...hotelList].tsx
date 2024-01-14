@@ -110,7 +110,7 @@ const HotelList: NextPage<Props> = props => {
 
     for (let i = 0; i < pricedItems.length; i++) {
       const itemPrice = pricedItems[i].salePrice;
-      if (!min || min > itemPrice) {
+      if ((!min || min > itemPrice) && itemPrice > 10000) {
         min = itemPrice;
       }
       if (!max || max < itemPrice) {
@@ -484,16 +484,12 @@ const HotelList: NextPage<Props> = props => {
 
             <div className='bg-red-200 p-5 mb-5'>Map</div>
 
-            <div className='bg-white'>
-
-              <DomesticHotelListSideBar
-                allHotels={hotels.length}
-                filteredHotels={filteredHotels.length}
-                priceIsFetched={!!pricesData}
-                scoreIsFetched={!!ratesData}
-              />
-
-            </div>
+            <DomesticHotelListSideBar
+              allHotels={hotels.length}
+              filteredHotels={filteredHotels.length}
+              priceIsFetched={!!pricesData}
+              scoreIsFetched={!!ratesData}
+            />
 
           </div>
 
