@@ -309,3 +309,5 @@ export interface PricedHotelItem extends SearchHotelItem {
     ratesInfo?: "loading" | {Satisfaction: number; TotalRowCount: number;};
     priceInfo: "loading" | "notPriced" | "need-to-inquire" | {boardPrice : number; salePrice : number;};
 } 
+
+export type SortTypes = "priority" | "price" | "starRate" | "name" | "gueatRate";

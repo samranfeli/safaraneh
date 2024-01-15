@@ -1,33 +1,208 @@
 import { MapContainer, TileLayer, Marker } from 'react-leaflet';
-import {useEffect, useState} from 'react';
+import { useEffect, useState } from 'react';
+import ReactDOMServer from 'react-dom/server';
+import { numberWithCommas } from '../../helpers';
+import Leaflet from 'leaflet'
+import Rating from './Rating';
+import { useTranslation } from 'next-i18next';
+import Skeleton from './Skeleton';
+import Image from 'next/image';
+import HotelScore from '@/modules/domesticHotel/components/shared/HotelScore';
+import Button from './Button';
 
+type HotelItem = {
+    id?: number;
+    latitude?: number;
+    longitude?: number;
+    name: string;
+    rating?: number;
+    url: string;
+    imageUrl?: string;
+    guestRate?: "loading" | { Satisfaction: number; TotalRowCount: number; };
+    price: "loading" | "notPriced" | "need-to-inquire" | { boardPrice: number; salePrice: number; };
+}
 type Props = {
+    hoveredHotelId?: number;
+    clickedHotelId?: number;
+    onClickHotel?: (hotelId?: number) => void;
+    onHoverHotel?: (hotelId?: number) => void;
     className?: string;
-    location: [number,number];
+    location?: [number, number];
     zoom?: number;
+    hotels?: HotelItem[];
 }
 
 const LeafletMap: React.FC<Props> = props => {
 
-    const [isMounted,setMounted] = useState(false);
+    const { t } = useTranslation('common');
+    const { t: tHotel } = useTranslation('hotel');
 
-    useEffect(()=>{
+    const { hotels } = props;
+
+    const [isMounted, setMounted] = useState(false);
+
+    useEffect(() => {
         setMounted(true);
-    },[]);
+    }, []);
 
 
-    if(!isMounted){
+    let centerPosition = props.location;
+    let zoom = props.zoom || 14;
+
+    if (hotels?.length) {
+        const latitudes: number[] = hotels.filter(hotel => hotel.latitude).map(hotel => hotel.latitude!);
+        const longitudes: number[] = hotels.filter(hotel => hotel.longitude).map(hotel => hotel.longitude!);
+
+        const minLat = Math.min(...latitudes);
+        const maxLat = Math.max(...latitudes);
+        const minLong = Math.min(...longitudes);
+        const maxLong = Math.max(...longitudes);
+
+        centerPosition = [(minLat + maxLat) / 2, (minLong + maxLong) / 2];
+
+
+        const latdif = maxLat - minLat;
+        const longdif = maxLong - minLong;
+        zoom = 14;
+        if ((latdif > .03) || longdif > .08) {
+            zoom = 13;
+        }
+        if ((latdif > .1) || longdif > .1) {
+            zoom = 11;
+        }
+    }
+
+
+    if (!isMounted || !centerPosition) {
         return "";
     }
 
+    const customMarkerElement = (item: HotelItem) => {
+
+
+        let price = null;
+        let colorClass = 'bg-green-800';
+        if (item.price === 'loading') {
+            price = <Skeleton />;
+        } else if (item.price === 'need-to-inquire') {
+            price = 'قیمت نیازمند استعلام است';
+            colorClass = 'bg-amber-500'
+        } else if (item.price === 'notPriced') {
+            colorClass = 'bg-red-600';
+            price = tHotel('There-is-no-price-for-this-hotel') + "!"
+        } else {
+            price = numberWithCommas(item.price.salePrice) + " " + t('rial')
+        }
+
+        let rate = null;
+        if (!item.guestRate || item.guestRate === 'loading') {
+            rate = null;
+        } else {
+            rate = <HotelScore small reviews={item.guestRate.TotalRowCount} score={item.guestRate.Satisfaction} />;
+        }
+
+        const iconHTML = ReactDOMServer.renderToString(<div>
+
+            <div
+                className={`${colorClass} text-white px-2 py-0 rounded border-2 border-white shadow w-auto text-sm rtl:font-samim`}
+                onMouseEnter={() => { props.onHoverHotel ? props.onHoverHotel(item.id!) : undefined }}
+                onMouseLeave={() => { props.onHoverHotel ? props.onHoverHotel(undefined) : undefined }}
+            >
+                <div
+                    className='font-semibold whitespace-nowrap'
+                >
+                    {price}
+
+                </div>
+
+                {item.id === props.hoveredHotelId && (
+                    <div className='absolute bottom-full left-1/2 -translate-x-1/2 w-72 pb-2 before:absolute before:h-2 before:w-3 before:bg-white before:block before:bottom-0 before:left-1/2 before:-ml-1.5 before:clipCarret'>
+                        <div className='shadow-md text-neutral-700 grid grid-cols-3'>
+
+                            {!!item.imageUrl && <Image src={item.imageUrl} alt={item.name} width={96} height={100} className='w-full h-full object-cover bg-neutral-400' />}
+
+                            <div className='bg-white col-span-2 p-2'>
+                                <h5 className='font-semibold'> {item.name} </h5>
+                                {!!item.rating && <Rating number={item.rating} />}
+                                {rate}
+                            </div>
+                        </div>
+
+                    </div>
+                )}
+
+                {item.id === props.clickedHotelId && (
+                    <div className='absolute bottom-full left-1/2 -translate-x-1/2 w-72 pb-2 before:absolute before:h-2 before:w-3 before:bg-white before:block before:bottom-0 before:left-1/2 before:-ml-1.5 before:clipCarret shadow-md text-neutral-700 bg-white'>
+                        {!!item.imageUrl && <Image src={item.imageUrl} alt={item.name} width={288} height={176} className='w-full h-44 object-cover bg-neutral-400' />}
+                        <div className='bg-white p-2'>
+                            <div className='flex gap-2 items-center mb-1'>
+                                <h5 className='font-semibold text-base'> {item.name} </h5>
+                                {!!item.rating && <Rating number={item.rating} />}
+                            </div>
+
+                            {rate}
+
+                            <div className='flex justify-between items-center'>
+                                {price}
+
+                                <Button
+                                    href={item.url}
+                                    target='_blank'
+                                    className='h-8 px-3'
+                                >
+                                    {tHotel('see-rooms')}
+                                </Button>
+
+                            </div>
+                        </div>
+
+                    </div>
+                )}
+
+            </div>
+        </div>)
+        const customMarkerIcon = new Leaflet.DivIcon({
+            html: iconHTML,
+        });
+        return (customMarkerIcon);
+    }
+
+
     return (
-        <MapContainer className={props.className} center={props.location} zoom={props.zoom || 14} scrollWheelZoom={false}>
-        <TileLayer
-            attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-            url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-        />
-            <Marker position={props.location} />
+
+        <MapContainer
+            className={props.className}
+            center={centerPosition}
+            zoom={zoom}
+        >
+            <TileLayer
+                attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+                url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+            />
+
+            {hotels ? hotels.filter(hotel => (hotel.latitude && hotel.longitude)).map(hotel => (
+                <Marker
+                    eventHandlers={{
+                        click: () => {
+                            props.onClickHotel ? props.onClickHotel(hotel.id!) : undefined
+                        },
+                        mouseover: () => {
+                            props.onHoverHotel ? props.onHoverHotel(hotel.id!) : undefined
+                        },
+                        mouseout: () => {
+                            props.onHoverHotel ? props.onHoverHotel() : undefined
+                        }
+                    }}
+                    key={hotel.id}
+                    position={[hotel.latitude!, hotel.longitude!]}
+                    icon={customMarkerElement( hotel)}
+                />
+            )) : (
+                <Marker position={centerPosition} />
+            )}
+
         </MapContainer>
+
     )
 };
 

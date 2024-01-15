@@ -6,6 +6,9 @@
   .clearfix {
     @apply after:clear-both after:content-[''] after:table before:clear-both before:content-[''] before:table;
   }
+  .clipCarret {
+    clip-path: polygon(0 0 , 50% 100% , 100% 0);
+  }
   .gradient-circle-loading{
     background-image: conic-gradient(
       from 0.25turn,
@@ -14,6 +17,9 @@
       rgba(255, 255, 255, 0) 0.16turn,
       #1890ff
     );
+  }
+  .hotels-map-sidebar-height{
+    max-height: calc(100vh - 180px);
   }
 
 }
@@ -117,4 +123,11 @@ body {
   p{
     margin-bottom: 13px;
   }
+}
+
+
+.hotelListMap.leaflet-container .leaflet-marker-icon.leaflet-div-icon {
+  width: auto!important;
+  height: auto!important;
+  border: 0;
 }

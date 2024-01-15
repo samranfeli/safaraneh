@@ -1,6 +1,6 @@
 import { useTranslation } from "next-i18next";
 import { useRouter } from "next/router";
-import { ChangeEvent, KeyboardEvent, useState } from "react";
+import { ChangeEvent, KeyboardEvent, useEffect, useState } from "react";
 
 import { Search } from "@/modules/shared/components/ui/icons";
 
@@ -57,6 +57,11 @@ const HotelNameFilter: React.FC = () => {
             submitHandler()
         }
     }
+
+    useEffect(()=>{
+        setEnteredName(initialFilteredName);
+        setSubmitedName(initialFilteredName);
+    },[initialFilteredName]);
 
     return (
         <>

@@ -4,7 +4,6 @@ type Props = {
     label: React.ReactNode;
     value: string;
     onChange: (values: any) => void;
-    id: string;
     name?: string;
     block?: boolean;
     className?: string;
@@ -28,13 +27,11 @@ const Checkbox: React.FC<Props> = props => {
         <div className={`relative py-1 ${props.className || ""}`}>
             <input
                 type="checkbox"
-                id={props.id || undefined}
                 onChange={e => { setChecked(e.target.checked) }}
-                className="peer absolute opacity-0"
+                className="peer absolute opacity-0 w-full h-full cursor-pointer"
                 checked={checked}
             />
             <label
-                htmlFor={props.id || undefined}
                 className={`text-sm cursor-pointer ${props.block ? "flex" : "inline-flex"} items-center select-none rtl:before:ml-2 ltr:before:mr-2 before:leading-5 before:px-0.5 before:align-middle before:text-white before:inline-block before:w-4.5 before:h-4.5 before:border before:border-neutral-300 before:text-xs before:rounded-sm peer-checked:before:content-['✔'] peer-checked:before:bg-blue-600`}
             >
                 {props.label}
