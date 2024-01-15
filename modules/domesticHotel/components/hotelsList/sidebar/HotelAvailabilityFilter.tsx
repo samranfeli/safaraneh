@@ -33,6 +33,10 @@ const HotelAvailabilityFilter: React.FC = () => {
         }
     }, [checked]);
 
+    useEffect(()=>{
+        setchecked(initialCkecked);
+    },[initialCkecked]);
+
     return (
         <>
             <div className="flex justify-between items-start mb-2 mt-4 border-t border-neutral-300 pt-5">
@@ -50,7 +54,6 @@ const HotelAvailabilityFilter: React.FC = () => {
 
             <Checkbox
                 block
-                id="hotel-availabilty-filter"
                 label={tHotel('just-available-hotel')}
                 onChange={c => { setchecked(c) }}
                 value=""

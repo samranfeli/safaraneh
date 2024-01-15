@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { AvailabilityByHotelId, GetCityFaqById, SearchHotels, getEntityNameByLocation, getRates } from '@/modules/domesticHotel/actions';
 import type { GetServerSideProps, NextPage } from 'next';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
-import { EntitySearchResultItemType, PricedHotelItem, SearchHotelItem } from '@/modules/domesticHotel/types/hotel';
+import { EntitySearchResultItemType, PricedHotelItem, SearchHotelItem, SortTypes } from '@/modules/domesticHotel/types/hotel';
 import SearchForm from '@/modules/domesticHotel/components/shared/SearchForm';
 import HotelsList from '@/modules/domesticHotel/components/hotelsList';
 import { addSomeDays, dateFormat } from '@/modules/shared/helpers';
@@ -17,6 +17,8 @@ import DomesticHotelListSideBar from '@/modules/domesticHotel/components/hotelsL
 import { setFacilityFilterOptions, setGuestPointFilterOptions, setTypeFilterOptions, setPriceFilterRange } from '@/modules/domesticHotel/store/domesticHotelSlice';
 import { useAppDispatch } from '@/modules/shared/hooks/use-store';
 import { useRouter } from 'next/router';
+import HotelsOnMap from '@/modules/domesticHotel/components/hotelsList/HotelsOnMap';
+import Image from 'next/image';
 
 type Props = {
   searchHotelsData?: {
@@ -35,8 +37,6 @@ type Props = {
     totalCount: number;
   }
 }
-
-type SortTypes = "priority" | "price" | "starRate" | "name" | "gueatRate";
 
 const HotelList: NextPage<Props> = props => {
 
@@ -70,6 +70,8 @@ const HotelList: NextPage<Props> = props => {
 
   const [entity, setEntity] = useState<{ EntityName: string; EntityTypeId: number }>();
 
+  const [showMap, setShowMap] = useState<boolean>(false);
+
   let hotelIds: (undefined | number)[] = [];
   if (props.searchHotelsData) {
     hotelIds = props.searchHotelsData.Hotels?.map(hotel => hotel.HotelId) || [];
@@ -98,9 +100,12 @@ const HotelList: NextPage<Props> = props => {
     locationId = +locationSegment.split("location-")[1];
   }
 
+  let searchInfo = "";
   if (checkinSegment) {
     checkin = checkinSegment.split("checkin-")[1];
     checkout = checkoutSegment ? checkoutSegment.split("checkout-")[1] : dateFormat(addSomeDays(new Date(checkin)));
+
+    searchInfo = `/checkin-${checkin}/checkout-${checkout}`;
   }
 
   const savePriceRange = (pricedItems: PricesResponseItem[]) => {
@@ -482,7 +487,13 @@ const HotelList: NextPage<Props> = props => {
 
           <div className='col-span-1'>
 
-            <div className='bg-red-200 p-5 mb-5'>Map</div>
+            <button type='button' className='relative block w-full lg:mb-5' onClick={() => { setShowMap(true) }}>
+              <Image src="/images/map-cover.svg" alt="showMap" className='block border w-full h-24 rounded-xl object-cover' width={354} height={100} />
+               <span className='absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-white px-3 py-1 border-1 border-blue-600 rounded font-semibold select-none leading-5 text-xs whitespace-nowrap'>
+                {tHotel('viewHotelsOnMap', {cityName: entity?.EntityName || hotels[0].CityName})}
+              </span>
+            </button>
+
 
             <DomesticHotelListSideBar
               allHotels={hotels.length}
@@ -552,6 +563,26 @@ const HotelList: NextPage<Props> = props => {
 
       </div>
 
+      {!!showMap && <HotelsOnMap
+        priceIsFetched = {!!pricesData}
+        scoreIsFetched = {!!ratesData}
+        allHotelsLength={hotels.length}
+        setSort={setSortFactor}
+        sortBy={sortFactor}
+        closeMapModal={() => { setShowMap(false) }}
+        hotels={filteredHotels.map(hotel => ({
+          id: hotel.HotelId,
+          latitude: hotel.Latitude,
+          longitude: hotel.Longitude,
+          name: hotel.HotelCategoryName + " " + hotel.HotelName + " " + hotel.CityName,
+          rating: hotel.HotelRating,
+          url: hotel.Url + searchInfo,
+          price: hotel.priceInfo,
+          guestRate: hotel.ratesInfo,
+          imageUrl: hotel.ImageUrl
+        }))}
+      />}
+
     </>
 
   )
@@ -581,8 +612,7 @@ export const getServerSideProps: GetServerSideProps = async (context: any) => {
     props: {
       ...await (serverSideTranslations(context.locale, ['common', 'hotel'])),
       searchHotelsData: searchHotelsResponse?.data || null,
-      faq: faqResponse?.data?.result || null,
-      url: url
+      faq: faqResponse?.data?.result || null
     },
   })
 }

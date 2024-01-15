@@ -49,6 +49,10 @@ const HotelGuestPointFilter: React.FC = () => {
         setValues([]);
     }
 
+    useEffect(()=>{
+        setValues(initialValues);
+    },[initialValues.length]);
+
     return (
         <div className="mb-2 mt-4 border-t border-neutral-300 pt-5">
             <div className="flex justify-between items-start">

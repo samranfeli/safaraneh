@@ -49,7 +49,7 @@ const HotelName: React.FC<Props> = props => {
 
             {(hotelData.Latitude && hotelData.Longitude) ? (
                 <button type='button' className='lg:col-span-1 relative' onClick={() => { setShowMap(true) }}>
-                    <Image src="/images/map-cover.jpg" alt="showMap" className='block w-full h-full object-cover' width={354} height={173} />
+                    <Image src="/images/map-cover.svg" alt="showMap" className='block w-full h-full object-cover' width={354} height={173} />
                     <span className='absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-white px-5 py-1 border-2 border-blue-600 rounded font-semibold select-none leading-5 text-sm'>
                         {tHotel('viewOnMap')}
                     </span>

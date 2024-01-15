@@ -42,7 +42,6 @@ const CheckboxGroup: React.FC<Props> = props => {
                     {props.items.slice(0, 10).map(item => (
                         <Checkbox
                             block
-                            id={item.value}
                             label={item.label}
                             onChange={(checked: boolean) => { onChange(checked, item.value) }}
                             value={item.value}
@@ -55,7 +54,6 @@ const CheckboxGroup: React.FC<Props> = props => {
                 {props.items.slice(10, 20).map(item => (
                         <Checkbox
                             block
-                            id={item.value}
                             label={item.label}
                             onChange={(checked: boolean) => { onChange(checked, item.value) }}
                             value={item.value}
@@ -68,7 +66,6 @@ const CheckboxGroup: React.FC<Props> = props => {
                     {props.items.slice(20).map(item => (
                         <Checkbox
                             block
-                            id={item.value}
                             label={item.label}
                             onChange={(checked: boolean) => { onChange(checked, item.value) }}
                             value={item.value}
@@ -86,7 +83,6 @@ const CheckboxGroup: React.FC<Props> = props => {
             {props.items.map(item =>
                 <Checkbox
                     block
-                    id={item.value}
                     label={item.label}
                     onChange={(checked: boolean) => { onChange(checked, item.value) }}
                     value={item.value}
