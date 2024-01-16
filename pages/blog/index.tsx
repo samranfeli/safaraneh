@@ -34,11 +34,21 @@ export const getServerSideProps: GetServerSideProps = async (context: any) => {
     const { locale, query } = context;
   
   
-    let Blogdata: any = await getBlogs(10)
-    let Cities: any = await GetCities()
-    let Categories: any = await GetBestCategory()
-    let Categories2: any = await GetBestCategory2()
-    let Categories3 : any = await GetCategories()
+    // let Blogdata: any = await getBlogs(10)
+    // let Cities: any = await GetCities()
+    // let Categories: any = await GetBestCategory()
+    // let Categories2: any = await GetBestCategory2()
+    // let Categories3 : any = await GetCategories()
+
+
+    const [Blogdata ,Cities , Categories , Categories2, Categories3] = await Promise.all<any>([
+      getBlogs(10),
+      GetCities(),
+      GetBestCategory(),
+      GetBestCategory2(),
+      GetCategories()
+    ]);
+
   
     return ({
       props: {
