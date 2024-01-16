@@ -16,6 +16,9 @@ export const getBlogs = async (perPage : number) => {
 }
 
 export const GetCities = async () => {
+
+  // some code manipulation 
+  
     try {
       const res = await axios.get(
         `${ServerAddress.Type}${ServerAddress.Blog}${Blog.getCities}`,
