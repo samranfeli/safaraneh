@@ -54,6 +54,9 @@ const Pagination: React.FC<Props> = props => {
             }
         })
     }
+    if (!pagesArray?.length){
+        return null
+    }
 
     return (
         <div className={`flex flex-wrap gap-2 ${props.wrapperClassName}`}>

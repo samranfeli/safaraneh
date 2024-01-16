@@ -154,11 +154,11 @@ const HotelListItem: React.FC<Props> = props => {
                         width={288}
                         height={200}
                         priority={!props.index}
-                        className="h-48 object-cover w-full rtl:rounded-r-lg ltr:rounded-l-lg"
+                        className="h-48 object-cover w-full max-lg:rounded-t-lg lg:rtl:rounded-r-lg lg:ltr:rounded-l-lg"
                     />
                 ) : (
                     <div
-                        className="bg-neutral-100 flex items-center justify-center h-full rtl:rounded-r-lg ltr:rounded-l-lg"
+                        className="bg-neutral-100 flex items-center justify-center h-full max-lg:rounded-t-lg lg:rtl:rounded-r-lg lg:ltr:rounded-l-lg"
                     >
                         <DefaultRoom className="fill-neutral-300 w-32 h-32" />
                     </div>

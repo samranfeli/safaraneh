@@ -469,6 +469,11 @@ const HotelList: NextPage<Props> = props => {
 
   })
 
+  let fallbackLocation : [number, number] | undefined;
+  const firstHotelWithLocation = hotels.find(hotel => (hotel.Latitude && hotel.Longitude));
+  if (firstHotelWithLocation){
+    fallbackLocation = [firstHotelWithLocation.Latitude!, firstHotelWithLocation.Longitude!];
+  }
 
   return (
 
@@ -564,6 +569,7 @@ const HotelList: NextPage<Props> = props => {
       </div>
 
       {!!showMap && <HotelsOnMap
+        fallbackLocation = {fallbackLocation}
         priceIsFetched = {!!pricesData}
         scoreIsFetched = {!!ratesData}
         allHotelsLength={hotels.length}

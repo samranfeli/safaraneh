@@ -32,14 +32,14 @@ const Quantity: React.FC<Props> = props => {
 
     return (
         <>
-            <button aria-label="decrease quantity" type='button' className={`pt-1 text-center text-3xl outline-none w-8 h-8 inline-block rounded-md ${value <= min ? "bg-neutral-100 cursor-not-allowed text-neutral-200" : "bg-neutral-200 cursor-pointer text-neutal-600"}`} onClick={decrease}>
-                &#45;
+            <button aria-label="decrease quantity" type='button' className={`pt-1 leading-4 overflow-hidden select-none text-center text-3xl outline-none w-8 h-8 inline-block rounded-md ${value <= min ? "bg-neutral-100 cursor-not-allowed text-neutral-200" : "bg-neutral-200 cursor-pointer text-neutal-600"}`} onClick={decrease}>
+                -
             </button>
 
             <input id={props.inputId || undefined} type="text" readOnly value={value} className='inline-block font-semibold w-8 text-center text-lg pointer-events-none' />
 
-            <button aria-label="increase quantity" type='button' className={`pt-1 text-center text-3xl outline-none w-8 h-8 inline-block rounded-md ${value >= max ? "bg-neutral-100 cursor-not-allowed text-neutral-200" : "bg-neutral-200 cursor-pointer text-neutal-600"}`} onClick={increase}>
-                &#43;
+            <button aria-label="increase quantity" type='button' className={`pt-1 leading-4 overflow-hidden select-none text-center text-3xl outline-none w-8 h-8 inline-block rounded-md ${value >= max ? "bg-neutral-100 cursor-not-allowed text-neutral-200" : "bg-neutral-200 cursor-pointer text-neutal-600"}`} onClick={increase}>
+                +
             </button>
         </>
     );
