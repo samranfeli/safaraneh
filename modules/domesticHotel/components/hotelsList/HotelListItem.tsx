@@ -168,7 +168,7 @@ const HotelListItem: React.FC<Props> = props => {
             {!!hotel.IsPromotion && <span className="absolute bg-green-600 text-white right-3 top-3 rounded-xl leading-4 text-2xs py-1 px-2 select-none pointer-events-none"> پیشنهاد ویژه </span>}
 
 
-            <div className="md:col-span-7 lg:col-span-5 p-3">
+            <div className="md:col-span-7 lg:col-span-5 p-3 max-md:pb-0">
                 <Link href={hotel.Url! + searchInfo} className="font-bold text-neutral-700 rtl:ml-2 ltr:mr-2" > {hotel.HotelCategoryName} {hotel.HotelName} {hotel.CityName} </Link>
 
                 {!!hotel.HotelRating && <Rating number={hotel.HotelRating} inline className="align-middle rtl:ml-2 ltr:mr-2" />}
@@ -192,7 +192,7 @@ const HotelListItem: React.FC<Props> = props => {
 
             </div>
 
-            <div className="md:col-span-5 lg:col-span-3 p-3 flex flex-col justify-between sm:items-end">
+            <div className="md:col-span-5 lg:col-span-3 p-3 max-md:pt-0 flex flex-col justify-between sm:items-end">
 
                 <div className="rtl:text-left ltr:text-right">
                     {priceBlock}

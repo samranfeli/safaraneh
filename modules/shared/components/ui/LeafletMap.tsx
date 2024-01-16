@@ -143,7 +143,7 @@ const LeafletMap: React.FC<Props> = props => {
                     <div className='absolute bottom-full left-1/2 -translate-x-1/2 w-72 pb-2 before:absolute before:h-2 before:w-3 before:bg-white before:block before:bottom-0 before:left-1/2 before:-ml-1.5 before:clipCarret'>
                         <div className='shadow-md text-neutral-700 grid grid-cols-3'>
 
-                            {!!item.imageUrl && <Image src={item.imageUrl} alt={item.name} width={96} height={100} className='w-full h-full object-cover bg-neutral-400' />}
+                            {!!item.imageUrl && <Image src={item.imageUrl} alt={item.name} width={96} height={64} className='w-full h-full object-cover bg-neutral-400' />}
 
                             <div className='bg-white col-span-2 p-2'>
                                 <h5 className='font-semibold'> {item.name} </h5>
