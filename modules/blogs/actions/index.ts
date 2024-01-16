@@ -17,9 +17,6 @@ export const getBlogs = async (perPage : number) => {
 
 export const GetCities = async () => {
 
-    //gshsghsghsghsghsghs
-
-
     try {
       const res = await axios.get(
         `${ServerAddress.Type}${ServerAddress.Blog}${Blog.getCities}`,
@@ -32,7 +29,6 @@ export const GetCities = async () => {
     } catch (error : any) {
       console.log("error", error);
         return error.response;
-        console.log("oops");
     }
 };
 
