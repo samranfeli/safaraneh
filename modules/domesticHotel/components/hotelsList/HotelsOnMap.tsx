@@ -72,7 +72,7 @@ const HotelsOnMap: React.FC<Props> = props => {
 
                 <div className='bg-white p-2 pt-14 sm:p-5 sm:rounded-lg w-full h-full sm:h-5/6 sm:w-5/6 lg:w-full lg:h-full lg:rounded-none relative z-20 lg:grid grid-cols-3 xl:grid-cols-4'>
                     
-                    <div className='lg:col-span-2 xl:col-span-3 bg-neutral-300'>
+                    <div className='h-full w-full lg:col-span-2 xl:col-span-3 bg-neutral-300'>
                         {!!props.fallbackLocation && <LeafletNoSsr
                             className='h-full w-full rounded-xl hotelListMap'
                             zoom={15}
@@ -104,7 +104,7 @@ const HotelsOnMap: React.FC<Props> = props => {
                                 value={props.sortBy}
                                 onChange={type => { props.setSort(type as SortTypes) }}
                                 label={t('sortBy')}
-                                wrapperClassName='max-sm:grow sm:w-52'
+                                wrapperClassName='max-sm:grow sm:full'
 
                             />
 
