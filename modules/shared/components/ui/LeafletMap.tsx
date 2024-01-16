@@ -34,15 +34,15 @@ type Props = {
 }
 
 
-function SetView({ coords, zoom }:{coords:[number, number], zoom:number}) {
+function SetView({ coords, zoom }: { coords: [number, number], zoom: number }) {
     const map = useMap();
 
-    useEffect(()=>{
+    useEffect(() => {
         map.setView(coords, zoom);
-    },[coords[0], coords[1], zoom])
-  
+    }, [coords[0], coords[1], zoom])
+
     return null;
-  }
+}
 
 
 const LeafletMap: React.FC<Props> = props => {
@@ -104,11 +104,28 @@ const LeafletMap: React.FC<Props> = props => {
         }
 
         let rate = null;
-        // if (!item.guestRate || item.guestRate === 'loading') {
-        //     rate = null;
-        // } else {
-        //     rate = <HotelScore small reviews={item.guestRate.TotalRowCount} score={item.guestRate.Satisfaction} />;
-        // }
+        if (!item.guestRate || item.guestRate === 'loading') {
+            rate = null;
+        } else {
+            const score = item.guestRate.Satisfaction;
+
+            let title = '';
+
+            if (score >= 90) {
+                title = tHotel("excellent");
+            } else if (score >= 80) {
+                title = tHotel("very-good");
+            } else if (score >= 70) {
+                title = tHotel("good");
+            } else if (score >= 50) {
+                title = tHotel("fair");
+            } else {
+                title = tHotel("bad");
+            }
+
+            rate = (<>
+                <span className="text-base font-semibold"> {score} از 100  </span> {title} ({item.guestRate.TotalRowCount} {tHotel("guest-reviews")})                 </>)
+        }
 
         const iconHTML = ReactDOMServer.renderToString(<div>
 
@@ -174,7 +191,7 @@ const LeafletMap: React.FC<Props> = props => {
         return (customMarkerIcon);
     }
 
-    if (hotels && !hotels.length){
+    if (hotels && !hotels.length) {
         return (
             <div className='flex flex-col items-center justify-center h-full w-full text-red-500 font-semibold'>
                 <ErrorIcon className='block w-14 h-14 mx-auto mb-2 fill-current' />
@@ -186,8 +203,8 @@ const LeafletMap: React.FC<Props> = props => {
 
     return (
 
-         <MapContainer
-            
+        <MapContainer
+
             className={props.className}
             center={centerPosition}
             zoom={zoom}
@@ -215,7 +232,7 @@ const LeafletMap: React.FC<Props> = props => {
                     }}
                     key={hotel.id}
                     position={[hotel.latitude!, hotel.longitude!]}
-                    icon={customMarkerElement( hotel)}
+                    icon={customMarkerElement(hotel)}
                 />
             )) : (
                 <Marker position={centerPosition} />
