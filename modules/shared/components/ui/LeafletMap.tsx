@@ -72,7 +72,6 @@ const LeafletMap: React.FC<Props> = props => {
 
         centerPosition = [(minLat + maxLat) / 2, (minLong + maxLong) / 2];
 
-
         const latdif = maxLat - minLat;
         const longdif = maxLong - minLong;
         zoom = 15;
@@ -84,13 +83,11 @@ const LeafletMap: React.FC<Props> = props => {
         }
     }
 
-
     if (!isMounted || !centerPosition) {
         return "";
     }
 
     const customMarkerElement = (item: HotelItem) => {
-
 
         let price = null;
         let colorClass = 'bg-green-800';
@@ -107,11 +104,11 @@ const LeafletMap: React.FC<Props> = props => {
         }
 
         let rate = null;
-        if (!item.guestRate || item.guestRate === 'loading') {
-            rate = null;
-        } else {
-            rate = <HotelScore small reviews={item.guestRate.TotalRowCount} score={item.guestRate.Satisfaction} />;
-        }
+        // if (!item.guestRate || item.guestRate === 'loading') {
+        //     rate = null;
+        // } else {
+        //     rate = <HotelScore small reviews={item.guestRate.TotalRowCount} score={item.guestRate.Satisfaction} />;
+        // }
 
         const iconHTML = ReactDOMServer.renderToString(<div>
 
@@ -177,7 +174,7 @@ const LeafletMap: React.FC<Props> = props => {
         return (customMarkerIcon);
     }
 
-    if (!hotels?.length){
+    if (hotels && !hotels.length){
         return (
             <div className='flex flex-col items-center justify-center h-full w-full text-red-500 font-semibold'>
                 <ErrorIcon className='block w-14 h-14 mx-auto mb-2 fill-current' />
