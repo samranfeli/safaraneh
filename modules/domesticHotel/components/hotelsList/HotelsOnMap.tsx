@@ -16,6 +16,7 @@ const LeafletNoSsr = dynamic(() => import('../../../shared/components/ui/Leaflet
 type Props = {
     sortBy: SortTypes;
     setSort: (sort: SortTypes) => void;
+    fallbackLocation?: [number, number];
     hotels: {
         id?: number;
         latitude?: number;
@@ -70,16 +71,19 @@ const HotelsOnMap: React.FC<Props> = props => {
                 </button>
 
                 <div className='bg-white p-2 pt-14 sm:p-5 sm:rounded-lg w-full h-full sm:h-5/6 sm:w-5/6 lg:w-full lg:h-full lg:rounded-none relative z-20 lg:grid grid-cols-3 xl:grid-cols-4'>
-
-                    <LeafletNoSsr
-                        className='h-full w-full rounded-xl lg:col-span-2 xl:col-span-3 hotelListMap'
-                        zoom={15}
-                        hotels={hotels}
-                        clickedHotelId={clickedMarkerId}
-                        hoveredHotelId={hoveredMarkerId}
-                        onClickHotel={setClickedMarkerId}
-                        onHoverHotel={setHoveredMarkerId}
-                    />
+                    
+                    <div className='lg:col-span-2 xl:col-span-3 bg-neutral-300'>
+                        {!!props.fallbackLocation && <LeafletNoSsr
+                            className='h-full w-full rounded-xl hotelListMap'
+                            zoom={15}
+                            hotels={hotels}
+                            location={props.fallbackLocation}
+                            clickedHotelId={clickedMarkerId}
+                            hoveredHotelId={hoveredMarkerId}
+                            onClickHotel={setClickedMarkerId}
+                            onHoverHotel={setHoveredMarkerId}
+                        />}
+                    </div>
 
                     <div className='max-lg:hidden'>
                         <div className='mb-5'>

@@ -1,4 +1,4 @@
-import { MapContainer, TileLayer, Marker } from 'react-leaflet';
+import { MapContainer, TileLayer, Marker, useMap } from 'react-leaflet';
 import { useEffect, useState } from 'react';
 import ReactDOMServer from 'react-dom/server';
 import { numberWithCommas } from '../../helpers';
@@ -9,6 +9,7 @@ import Skeleton from './Skeleton';
 import Image from 'next/image';
 import HotelScore from '@/modules/domesticHotel/components/shared/HotelScore';
 import Button from './Button';
+import { ErrorIcon } from './icons';
 
 type HotelItem = {
     id?: number;
@@ -27,10 +28,22 @@ type Props = {
     onClickHotel?: (hotelId?: number) => void;
     onHoverHotel?: (hotelId?: number) => void;
     className?: string;
-    location?: [number, number];
+    location: [number, number];
     zoom?: number;
     hotels?: HotelItem[];
 }
+
+
+function SetView({ coords, zoom }:{coords:[number, number], zoom:number}) {
+    const map = useMap();
+
+    useEffect(()=>{
+        map.setView(coords, zoom);
+    },[coords[0], coords[1], zoom])
+  
+    return null;
+  }
+
 
 const LeafletMap: React.FC<Props> = props => {
 
@@ -44,7 +57,6 @@ const LeafletMap: React.FC<Props> = props => {
     useEffect(() => {
         setMounted(true);
     }, []);
-
 
     let centerPosition = props.location;
     let zoom = props.zoom || 14;
@@ -63,7 +75,7 @@ const LeafletMap: React.FC<Props> = props => {
 
         const latdif = maxLat - minLat;
         const longdif = maxLong - minLong;
-        zoom = 14;
+        zoom = 15;
         if ((latdif > .03) || longdif > .08) {
             zoom = 13;
         }
@@ -105,8 +117,6 @@ const LeafletMap: React.FC<Props> = props => {
 
             <div
                 className={`${colorClass} text-white px-2 py-0 rounded border-2 border-white shadow w-auto text-sm rtl:font-samim`}
-                onMouseEnter={() => { props.onHoverHotel ? props.onHoverHotel(item.id!) : undefined }}
-                onMouseLeave={() => { props.onHoverHotel ? props.onHoverHotel(undefined) : undefined }}
             >
                 <div
                     className='font-semibold whitespace-nowrap'
@@ -167,10 +177,20 @@ const LeafletMap: React.FC<Props> = props => {
         return (customMarkerIcon);
     }
 
+    if (!hotels?.length){
+        return (
+            <div className='flex flex-col items-center justify-center h-full w-full text-red-500 font-semibold'>
+                <ErrorIcon className='block w-14 h-14 mx-auto mb-2 fill-current' />
+                هتلی یافت نشد. لطفا فیلتر ها را تغییر دهید
+            </div>
+        )
+    }
+
 
     return (
 
-        <MapContainer
+         <MapContainer
+            
             className={props.className}
             center={centerPosition}
             zoom={zoom}
@@ -179,6 +199,9 @@ const LeafletMap: React.FC<Props> = props => {
                 attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
                 url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
             />
+
+            <SetView coords={centerPosition} zoom={zoom} />
+
 
             {hotels ? hotels.filter(hotel => (hotel.latitude && hotel.longitude)).map(hotel => (
                 <Marker
