@@ -563,7 +563,7 @@ const HotelList: NextPage<Props> = props => {
 
       </div>
 
-      {/* {!!showMap && <HotelsOnMap
+      {!!showMap && <HotelsOnMap
         priceIsFetched = {!!pricesData}
         scoreIsFetched = {!!ratesData}
         allHotelsLength={hotels.length}
@@ -581,7 +581,7 @@ const HotelList: NextPage<Props> = props => {
           guestRate: hotel.ratesInfo,
           imageUrl: hotel.ImageUrl
         }))}
-      />} */}
+      />}
 
     </>
 

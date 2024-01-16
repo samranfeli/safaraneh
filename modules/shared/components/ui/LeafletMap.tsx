@@ -105,8 +105,6 @@ const LeafletMap: React.FC<Props> = props => {
 
             <div
                 className={`${colorClass} text-white px-2 py-0 rounded border-2 border-white shadow w-auto text-sm rtl:font-samim`}
-                onMouseEnter={() => { props.onHoverHotel ? props.onHoverHotel(item.id!) : undefined }}
-                onMouseLeave={() => { props.onHoverHotel ? props.onHoverHotel(undefined) : undefined }}
             >
                 <div
                     className='font-semibold whitespace-nowrap'
