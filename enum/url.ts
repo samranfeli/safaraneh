@@ -99,6 +99,7 @@ export const Header = {
     AvailabilityByHotelId:"/api/services/app/Booking/AvailabilityByHotelId",
     GetRooms:"/api/services/app/Booking/GetRoom",
     GetDomesticHotelDetails:"/api/services/app/Accommodation/Get",
+    ValidateRoom:"/api/services/app/Booking/Validate",
 
     SearchHotels:"/v2/Hotel/SearchHotels",
     getRates:"/v2/Comment/Rates",

@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-import { Header,ServerAddress, Hotel } from "../../../enum/url";
+import { Header, ServerAddress, Hotel } from "../../../enum/url";
 
 export const getDomesticHotelDetailById = async (id: number, acceptLanguage: string = 'fa-IR') => {
     try {
@@ -90,7 +90,7 @@ export const getDomesticHotelDetailsByUrl = async (url: string, acceptLanguage: 
     }
 }
 
-export const SearchHotels = async (url :string, acceptLanguage: string = 'fa-IR') => {
+export const SearchHotels = async (url: string, acceptLanguage: string = 'fa-IR') => {
     try {
         const params = {
             IsInstant: null,
@@ -100,7 +100,7 @@ export const SearchHotels = async (url :string, acceptLanguage: string = 'fa-IR'
             SortColumn: 'Priority',
             SortDirection: 'Desc',
             filterUrl: url
-          };
+        };
 
         const response = await axios({
             method: "post",
@@ -202,4 +202,37 @@ export const getEntityNameByLocation = async (cityId: number, acceptLanguage: st
         return error
     }
 
+}
+
+export const domesticHotelValidateRoom = async (param: {
+    bookingToken: string;
+    checkin: string;
+    checkout: string;
+    count: number;
+    MetaSearchName?: string | null;
+    MetaSearchKey?: string | null;
+}, acceptLanguage: string = 'fa-IR') => {
+
+    // const token = localStorage.getItem('Token');
+
+    try {
+        let response = await axios.post(
+            `${ServerAddress.Type}${ServerAddress.Hotel_Availability}${Hotel.ValidateRoom}`,
+            param,
+            {
+                headers: {
+                    accept: 'text/plain',
+                    'Content-Type': 'application/json',
+                    TenantId: process.env.ABP_TENANT_ID,
+                    // Authorization: `Bearer ${token}`,
+                    apikey: process.env.PROJECT_SERVER_APIKEY,
+                    'Accept-Language': acceptLanguage,
+                    Currency: 'IRR'
+                },
+            },
+        )
+        return response
+    } catch (error) {
+        return error
+    }
 }
