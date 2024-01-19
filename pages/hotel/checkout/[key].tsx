@@ -14,6 +14,7 @@ import { validateNationalId, validateRequied, validateEmail, validateRequiedPers
 import FormikField from '@/modules/shared/components/ui/FormikField';
 import Head from 'next/head';
 import PhoneInput2 from '@/modules/shared/components/ui/PhoneInput2';
+import PhoneInput from '@/modules/shared/components/ui/PhoneInput';
 
 const Checkout: NextPage = () => {
 
@@ -209,6 +210,19 @@ const Checkout: NextPage = () => {
                       validateFunction={(value: string) => validateRequied(value, t('invalid-phone-number'))}
                       errorText={errors.reserver?.phoneNumber}
                       name={'reserver.phoneNumber'}
+                      isTouched={touched.reserver?.phoneNumber}
+                      label={t("phone-number") + " (بدون صفر)"}
+                      emptyMessage={t('please-enter-phone-number')}
+                    />
+
+
+                    <PhoneInput
+                      onChange = {(v:string) => {
+                        setFieldValue('reserver.phoneNumber', v)
+                      }}
+                      validateFunction={(value: string) => validateRequied(value, t('invalid-phone-number'))}
+                      errorText={errors.reserver?.phoneNumber}
+                      name={'reserver.phoneNumber33'}
                       isTouched={touched.reserver?.phoneNumber}
                       label={t("phone-number") + " (بدون صفر)"}
                       emptyMessage={t('please-enter-phone-number')}
