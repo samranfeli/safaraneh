@@ -1,5 +1,5 @@
 import { getBlogs , GetCategories, } from "@/modules/blogs/actions";
-import NavbarBlog from "@/modules/blogs/components/BlogHome/NavbarBlog";
+import NavbarBlog from "@/modules/blogs/components/template/NavbarBlog";
 import Title from "@/modules/blogs/components/BlogList/Titile";
 import { BlogItemType, CategoriesNameType } from "@/modules/blogs/types/blog";
 import { GetStaticProps, NextPage } from "next";

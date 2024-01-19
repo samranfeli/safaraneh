@@ -175,3 +175,23 @@ export const GetBlogPostDetails = async (slug : any) => {
       return error.response
     }
 };
+
+export const GetFlightDomesticDetails = async (slug :any) => {
+  try {
+    const res = await axios.get(
+      `${ServerAddress.Type}${ServerAddress.Blog}/wp-json/wp/v2/flightdomestic/?slug=${slug}`,
+      {
+        headers: {
+          // "Content-Type": "application/json",
+          // accept: "text/plain",
+          // "Abp.TenantId": process.env.ABP_TENANT_ID,
+          // "Accept-Language": "fa-IR",
+        },
+      }
+    );
+    return res;
+  } catch (error : any) {
+    console.log("error", error);
+    return error.response
+  }
+};

@@ -6,7 +6,6 @@ const RelatedPost: NextPage<any> = ({ Post, AllPost }) => {
     
     
     const RelatedPost = AllPost?.filter((item: any) => item.categories == Post[0].categories[0] && item.id !== Post[0].id) || null
-    console.log(RelatedPost);
     
     return (
         <div className="p-8">

@@ -2,7 +2,7 @@ import { NextPage } from "next";
 import Link from "next/link";
 import Image from "next/image";
 import { BlogItemType } from "../../types/blog";
-import { ArrowLeft } from "@/modules/shared/components/ui/icons";
+import { ArrowLeft, ArrowRight } from "@/modules/shared/components/ui/icons";
 import parse from 'html-react-parser';
 
 
@@ -41,7 +41,9 @@ const NewBlog: NextPage<Props> = (props) => {
                                 <p>{blog.acf.time_read}</p>
                             </div>
                             <Link href={`blog/${blog.slug}`} className="flex ml-4 font-bold text-sm hover:text-blue-700 translation-all duraction-300 max-sm:hidden">        
-                                <p>ادامه مطلب</p><ArrowLeft className="w-7 mr-2 bg-gray-200 rounded-2xl p-1" />
+                                    <p>ادامه مطلب</p>
+                                    <ArrowLeft className="w-7 mr-2 bg-gray-200 rounded-2xl p-1 ltr:hidden" />
+                                    <ArrowRight className="w-7 mr-2 bg-gray-200 rounded-2xl p-1 rtl:hidden"/>    
                             </Link>
                         </div>
                     </div>

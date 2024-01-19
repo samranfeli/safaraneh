@@ -1,19 +1,17 @@
-import { GetBlogPostCategory, GetBlogPostDetails, GetCategories, getBlogs } from "@/modules/blogs/actions";
+import { GetBlogPostCategory, GetBlogPostDetails, GetCategories, GetFlightDomesticDetails, getBlogs } from "@/modules/blogs/actions";
 import { NextPage } from "next";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 import { useRouter } from "next/router";
-import Image from "next/image";
-import parse from 'html-react-parser';
-import NavbarBlog from "@/modules/blogs/components/BlogHome/NavbarBlog";
+import NavbarBlog from "@/modules/blogs/components/template/NavbarBlog";
 import Sidebar from "@/modules/blogs/components/template/Sidebar";
 import ContentPost from "@/modules/blogs/components/BlogPostDetail/ContentPost";
 import TitlePost from "@/modules/blogs/components/BlogPostDetail/TitlePost";
 import RelatedPost from "@/modules/blogs/components/BlogPostDetail/RelatedPost";
+import DetailBlogAcordion from "@/modules/blogs/components/BlogPostDetail/DetailBLogAcordion";
 
 
 const DetailBlog: NextPage<any> = ({ BlogPost , CategoriesName , recentBlogs, AllBlogs }) => {
-    console.log(BlogPost?.[0])
-    
+
     const NavData = useRouter().query.DetailBlog
     return (
         <div className="bg-white">
@@ -29,6 +27,7 @@ const DetailBlog: NextPage<any> = ({ BlogPost , CategoriesName , recentBlogs, Al
                 </div>
             </div>
                 <RelatedPost Post={BlogPost} AllPost={AllBlogs} />
+                <DetailBlogAcordion blog={BlogPost?.[0]} />
             </div>
         </div>
     )
