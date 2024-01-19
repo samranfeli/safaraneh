@@ -236,3 +236,23 @@ export const domesticHotelValidateRoom = async (param: {
         return error
     }
 }
+
+
+export const domesticHotelGetValidate = async (key: string, acceptLanguage: string = 'fa-IR') => {
+
+    try {
+        let response = await axios.get(
+            `${ServerAddress.Type}${ServerAddress.Hotel_Availability}${Hotel.GetValidate}?Id=${key}`,
+            {
+                headers: {
+                    'Content-Type': 'application/json',
+                    apikey: process.env.PROJECT_SERVER_APIKEY,
+                    'Accept-Language': acceptLanguage
+                },
+            },
+        )
+        return response
+    } catch (error) {
+        return error
+    }
+}

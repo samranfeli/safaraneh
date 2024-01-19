@@ -11,7 +11,7 @@ export const Header = {
     "Accept-Language": "en-US",
     "currency": "USD",
     "apikey": process.env.PROJECT_SERVER_APIKEY,
-    "tenantid": process.env.PROJECT_SERVER_TENANTID,
+    // "tenantid": process.env.PROJECT_SERVER_TENANTID,
   };
   //to do: static header parameters!
 
@@ -100,11 +100,14 @@ export const Header = {
     GetRooms:"/api/services/app/Booking/GetRoom",
     GetDomesticHotelDetails:"/api/services/app/Accommodation/Get",
     ValidateRoom:"/api/services/app/Booking/Validate",
-
     SearchHotels:"/v2/Hotel/SearchHotels",
     getRates:"/v2/Comment/Rates",
     getCityFaqById:"/api/services/app/Faq/GetAll",
-    GetEntityNameByLocation: "/v2/Entity/GetEntityNameByLocation"
+    GetEntityNameByLocation: "/v2/Entity/GetEntityNameByLocation",
+
+    GetValidate:"/api/services/app/Booking/GetValidate"
+
+
     
     
     // GetAccomadtion: "/api/services/app/BookingHotel/GetSearch",
