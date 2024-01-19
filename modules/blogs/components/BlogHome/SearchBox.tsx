@@ -8,7 +8,7 @@ const SearchBox: NextPage<any> = () => {
 
     return (
         <div>
-            <form  className="p-16 max-w-screen-xl m-auto flex">
+            <form  className="p-16 max-w-screen-xl m-auto flex max-sm:p-8">
                 <input type="text" placeholder="...جستوجوی مطلب" className="p-2 w-full rounded focus:outline-none focus:ring-1" value={search} onChange={e => setsearch(e.target.value)}
                 style={{ border: 'solid 1px rgba(0,0,0,0.1)' }} />
                 <Link href={search.length ? `/blog/blog-search/${search}` : `${useRouter().asPath}`}><button type="submit" className="bg-blue-400 p-2 rounded-md mr-2">Search</button></Link>

@@ -2,9 +2,10 @@ import { getBlogs , GetCategories, } from "@/modules/blogs/actions";
 import NavbarBlog from "@/modules/blogs/components/BlogHome/NavbarBlog";
 import Title from "@/modules/blogs/components/BlogList/Titile";
 import { BlogItemType, CategoriesNameType } from "@/modules/blogs/types/blog";
-import { NextPage } from "next";
-import Main from "@/modules/blogs/components/BlogList/Main";
+import { GetStaticProps, NextPage } from "next";
 import { createContext } from "react";
+import Content from "@/modules/blogs/components/template/Content";
+import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 
 
 export const AllData = createContext<any | null>(null)
@@ -14,9 +15,9 @@ const BlogList: NextPage<any> = ({ AllBlog, recentBlogs, categories_name }:
     return (
         <div className="bg-white">
             <AllData.Provider value={[ AllBlog, recentBlogs, categories_name ]}>
-                <NavbarBlog />
+                <NavbarBlog data={'جدیدترین مقالات'} />
                 <Title />
-                <Main />
+                <Content Blogs={AllBlog} LastBlogs={recentBlogs} CategoriesName={categories_name}/>
             </AllData.Provider>
         </div>
     )
@@ -25,7 +26,7 @@ const BlogList: NextPage<any> = ({ AllBlog, recentBlogs, categories_name }:
 export default BlogList;
 
 
-export async function getServerSideProps() {
+export const getStaticProps: GetStaticProps = async (context: any) => {
 
     let recentBlogs : any = await getBlogs(3);
     let AllBlog: any = await getBlogs(100)
@@ -33,10 +34,12 @@ export async function getServerSideProps() {
     return (
         {
             props: {
+                ...await (serverSideTranslations(context.locale, ['common'])),
                 AllBlog: AllBlog?.data || null,
                 recentBlogs: recentBlogs?.data || null,
                 categories_name: categories_name?.data || null
-            }
+            },
+            revalidate : 60 * 60 * 24//12 Hours
         }
     )
 }

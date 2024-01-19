@@ -3,6 +3,7 @@ import Carousel from 'react-multi-carousel';
 import Image from "next/image";
 import { CityItemType } from "../../types/blog";
 import Link from "next/link";
+import 'react-multi-carousel/lib/styles.css';
 
 //carousel responsive
 const responsive = {
@@ -32,13 +33,13 @@ const BlogCities: NextPage<Props> = ({data}) => {
         <div className="text-black">
             <div className="text-center pt-24 relative bottom-7 max-sm:bottom-0">
                 <h1 className="font-bold text-4xl p-5">وبلاگ</h1>
-                <p>حرفه ای ترین شبکه معرفی هتل های ایران</p>
+                <p className="max-sm:text-sm max-sm:text-gray-600">حرفه ای ترین شبکه معرفی هتل های ایران</p>
             </div>
 
-            <div className='pl-5 pr-5 max-lg:p-12 max-sm:p-16 m-auto max-w-screen-xl'>
+            <div className='pl-5 pr-5 max-lg:p-12 max-sm:p-2 max-sm:mt-7 m-auto max-w-screen-xl'>
 
             <Carousel
-                className='home-carousel'
+                className='home-carousel '
                 rtl
                 responsive={responsive}
                 renderDotsOutside
@@ -47,7 +48,7 @@ const BlogCities: NextPage<Props> = ({data}) => {
             {
                 data ?
                 data.map(city => 
-                    <div className="p-2" key={city.title.rendered}>
+                    <div className="p-2 max-sm:relative max-sm:top-10" key={city.title.rendered}>
                         <Link href={city.excerpt.rendered.slice(3,city.excerpt.rendered.length - 5)} target="_blank">
                         <Image src={city.images.medium} alt="pic" width={400} height={250} className="object-fit rounded-md"/>
                         <p className="bg-white max-w-20 p-4 text-center rounded-lg relative bottom-18 ml-3 mr-3 m-auto text-xl">{city.title.rendered}</p>

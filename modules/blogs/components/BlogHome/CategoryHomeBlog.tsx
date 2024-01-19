@@ -39,7 +39,7 @@ const CategoryBlog: NextPage<Props> = ({ data, data2, CategoriesData }) => {
                 <section>
                 {
                     data2 && CategoriesData &&
-                    <div className="max-md: rounded-md overflow-hidden">
+                    <div className="max-md:pr-5 max-sm:p-0 rounded-md overflow-hidden">
                     <Link href={`/blog/category/${CategoriesData?.find(item => item.name == data2[0].title.rendered)?.id}`}>
                         <Image src={data2[0].images.large} alt={data2[0].title.rendered} width={600} height={590} />
                         <p className="relative bottom-10 h-0">{data2[0].title.rendered}</p>

@@ -20,7 +20,8 @@ export interface BlogItemType {
     images: {
         medium: string;
         large: string;
-    }
+    };
+
 }
 
 export interface CityItemType {
