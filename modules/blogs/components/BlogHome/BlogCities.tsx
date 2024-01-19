@@ -31,15 +31,15 @@ const BlogCities: NextPage<Props> = ({data}) => {
     
     return (
         <div className="text-black">
-            <div className="text-center pt-24 relative bottom-7 max-sm:bottom-0">
+            <div className="text-center pt-14 p-5 max-md:pt-10">
                 <h1 className="font-bold text-4xl p-5">وبلاگ</h1>
                 <p className="max-sm:text-sm max-sm:text-gray-600">حرفه ای ترین شبکه معرفی هتل های ایران</p>
             </div>
 
-            <div className='pl-5 pr-5 max-lg:p-12 max-sm:p-2 max-sm:mt-7 m-auto max-w-screen-xl'>
+            <div className='pl-5 pr-5 m-auto max-w-screen-xl'>
 
             <Carousel
-                className='home-carousel '
+                className='home-carousel'
                 rtl
                 responsive={responsive}
                 renderDotsOutside
@@ -47,10 +47,10 @@ const BlogCities: NextPage<Props> = ({data}) => {
             >
             {
                 data ?
-                data.map(city => 
-                    <div className="p-2 max-sm:relative max-sm:top-10" key={city.title.rendered}>
+                data.map((city ,index) => 
+                    <div className="p-2 max-sm:relative max-sm:top-6" key={city.title.rendered}>
                         <Link href={city.excerpt.rendered.slice(3,city.excerpt.rendered.length - 5)} target="_blank">
-                        <Image src={city.images.medium} alt="pic" width={400} height={250} className="object-fit rounded-md"/>
+                        <Image src={city.images.medium} alt="pic" width={400} height={250} className="object-fit rounded-md" priority={!index} />
                         <p className="bg-white max-w-20 p-4 text-center rounded-lg relative bottom-18 ml-3 mr-3 m-auto text-xl">{city.title.rendered}</p>
                         </Link>    
                     </div>

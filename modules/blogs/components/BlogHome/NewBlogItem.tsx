@@ -42,8 +42,10 @@ const NewBlog: NextPage<Props> = (props) => {
                             </div>
                             <Link href={`blog/${blog.slug}`} className="flex ml-4 font-bold text-sm hover:text-blue-700 translation-all duraction-300 max-sm:hidden">        
                                     <p>ادامه مطلب</p>
-                                    <ArrowLeft className="w-7 mr-2 bg-gray-200 rounded-2xl p-1 ltr:hidden" />
-                                    <ArrowRight className="w-7 mr-2 bg-gray-200 rounded-2xl p-1 rtl:hidden"/>    
+                                    <ArrowLeft
+                                    className="w-7 mr-2 bg-gray-200 rounded-2xl p-1 ltr:hidden hover:bg-blue-600 translation-all duration-300" />
+                                    <ArrowRight
+                                    className="w-7 mr-2 bg-gray-200 rounded-2xl p-1 rtl:hidden hover:bg-blue-500 translation-all duration-300" />    
                             </Link>
                         </div>
                     </div>

@@ -12,7 +12,6 @@ import BlogCities from "@/modules/blogs/components/BlogHome/BlogCities";
 
 const Blog: NextPage<any> = ({ NewBlogs, Cities, Categories , Categories2 ,Categories3}:
     { NewBlogs?: BlogItemType[], Cities?: CityItemType[], Categories?: HomeCategoryItemType[] , Categories2?: HomeCategoryItemType[] ,Categories3:CategoriesNameType[]}) => {
-    console.log(NewBlogs);
     
     return (
         <div className="bg-white">
