@@ -176,10 +176,11 @@ export const GetBlogPostDetails = async (slug : any) => {
     }
 };
 
-export const GetFlightDomesticDetails = async (slug :any) => {
+export const PostComment = async (param : any) => {
   try {
-    const res = await axios.get(
-      `${ServerAddress.Type}${ServerAddress.Blog}/wp-json/wp/v2/flightdomestic/?slug=${slug}`,
+    const res = await axios.post(
+      `${ServerAddress.Type}${ServerAddress.Blog}/wp-json/wp/v2/comments`,
+      param,
       {
         headers: {
           // "Content-Type": "application/json",

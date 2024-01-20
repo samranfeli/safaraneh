@@ -11,6 +11,7 @@ const ContentPost: NextPage<any> = ({content}) => {
             <div className="flex mt-10">
                 <p>تگ ها:</p>
                 {
+                    content &&
                     content.tags_names.map((tag: any, index: any) => <Link href={`/blog/tag/${content.tags[index]}`}
                     className="mr-8 hover:text-blue-800" key={tag}>#{tag}</Link>)
                 }

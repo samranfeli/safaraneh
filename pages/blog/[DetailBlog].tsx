@@ -1,4 +1,4 @@
-import { GetBlogPostCategory, GetBlogPostDetails, GetCategories, GetFlightDomesticDetails, getBlogs } from "@/modules/blogs/actions";
+import { GetBlogPostCategory, GetBlogPostDetails, GetCategories, getBlogs } from "@/modules/blogs/actions";
 import { NextPage } from "next";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 import { useRouter } from "next/router";

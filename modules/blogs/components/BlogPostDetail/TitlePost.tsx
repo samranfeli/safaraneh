@@ -1,8 +1,10 @@
 import { NextPage } from "next";
 import Image from "next/image";
 import Link from "next/link";
+import { useState } from "react";
 
-const TitlePost: NextPage<any> = ({BlogPost}) => {
+const TitlePost: NextPage<any> = ({ BlogPost }) => {
+    
     return (
         <div className="pl-14 pr-14 max-md:p-4">
         <div className="overflow-hidden rounded-md w-full bg-cover bg-center bg-no-repeat p-52 max-xl:44 max-lg:p-32 max-md:p-20 h-auto "
@@ -11,7 +13,7 @@ const TitlePost: NextPage<any> = ({BlogPost}) => {
                     <Link href={`/blog/category/${BlogPost?.[0].categories[0]}`}
                         className="bg-white text-sm text-red-600 p-3 rounded-2xl hover:text-white hover:bg-red-600 translation-all duration-300">
                     {BlogPost?.[0].categories_names[0]}</Link>
-                <p className="font-bold text-4xl max-md:text-sm text-white mt-8 leading-8 ">{BlogPost?.[0].title.rendered}</p>
+                <p className="font-bold text-4xl max-md:text-sm text-white mt-8 leading-9 ">{BlogPost?.[0].title.rendered}</p>
                 </div>
         </div>
             <div className="w-full flex justify-center text-center">
