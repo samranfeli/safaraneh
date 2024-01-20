@@ -4,16 +4,14 @@ import type { GetServerSideProps, NextPage } from 'next';
 import { useTranslation } from 'next-i18next';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 import { useRouter } from 'next/router';
-import 'react-phone-input-2/lib/style.css';
 
 import { domesticHotelGetValidate, getDomesticHotelDetailById } from '@/modules/domesticHotel/actions';
 import Aside from '@/modules/domesticHotel/components/shared/Aside';
 import { getDatesDiff } from '@/modules/shared/helpers';
 import { AsideHotelInfoType, AsideReserveInfoType, DomesticHotelDetailType, DomesticHotelGetValidateResponse } from '@/modules/domesticHotel/types/hotel';
-import { validateNationalId, validateRequied, validateEmail, validateRequiedPersianAndEnglish } from '@/modules/shared/helpers/validation';
+import { validateNationalId, validateEmail, validateRequiedPersianAndEnglish } from '@/modules/shared/helpers/validation';
 import FormikField from '@/modules/shared/components/ui/FormikField';
 import Head from 'next/head';
-import PhoneInput2 from '@/modules/shared/components/ui/PhoneInput2';
 import PhoneInput from '@/modules/shared/components/ui/PhoneInput';
 
 const Checkout: NextPage = () => {
@@ -150,7 +148,7 @@ const Checkout: NextPage = () => {
           initialValues={initialValues}
           onSubmit={submitHandler}
         >
-          {({ errors, touched, isValid, isSubmitting , setFieldValue }) => {
+          {({ errors, touched, isValid, isSubmitting, setFieldValue }) => {
             if (isSubmitting && !isValid) {
 
               setTimeout(() => {
@@ -163,7 +161,7 @@ const Checkout: NextPage = () => {
             }
             return (
 
-              <Form className='md:grid md:grid-cols-12 lg:grid-cols-3 gap-4'>
+              <Form className='md:grid md:grid-cols-12 lg:grid-cols-3 gap-4' autoComplete='off' >
 
                 <div className='md:col-span-7 lg:col-span-2'>
 
@@ -203,29 +201,23 @@ const Checkout: NextPage = () => {
                       validateFunction={(value: string) => validateRequiedPersianAndEnglish(value, t('please-enter-last-name'), t('just-english-persian-letter-and-space'))}
                     />
 
-                    <PhoneInput2 
-                      onChange = {(v:string) => {
+
+                    <PhoneInput
+                      defaultCountry={
+                        {
+                          countryCode: "ir",
+                          dialCode: "98",
+                          format: "... ... ...."
+                        }
+                      }
+                      onChange={(v: string) => {
                         setFieldValue('reserver.phoneNumber', v)
                       }}
-                      validateFunction={(value: string) => validateRequied(value, t('invalid-phone-number'))}
-                      errorText={errors.reserver?.phoneNumber}
                       name={'reserver.phoneNumber'}
                       isTouched={touched.reserver?.phoneNumber}
                       label={t("phone-number") + " (بدون صفر)"}
-                      emptyMessage={t('please-enter-phone-number')}
-                    />
-
-
-                    <PhoneInput
-                      onChange = {(v:string) => {
-                        setFieldValue('reserver.phoneNumber', v)
-                      }}
-                      validateFunction={(value: string) => validateRequied(value, t('invalid-phone-number'))}
                       errorText={errors.reserver?.phoneNumber}
-                      name={'reserver.phoneNumber33'}
-                      isTouched={touched.reserver?.phoneNumber}
-                      label={t("phone-number") + " (بدون صفر)"}
-                      emptyMessage={t('please-enter-phone-number')}
+                      initialValue='+989374755674'
                     />
 
                     <FormikField
@@ -234,6 +226,7 @@ const Checkout: NextPage = () => {
                       name='reserver.nationalId'
                       isTouched={touched.reserver?.nationalId}
                       label={t('national-code')}
+                      maxLength={10}
                       validateFunction={(value: string) => validateNationalId({ value: value, invalidMessage: t('invalid-national-code'), reqiredMessage: t('please-enter-national-code') })}
                     />
 

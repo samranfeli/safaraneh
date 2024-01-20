@@ -5,6 +5,7 @@ type Props = {
     errorText?: string;
     isTouched?: boolean;
     label?: string;
+    maxLength?:number;
     id?: string;
     name?: string;
     className?: string;
@@ -28,6 +29,7 @@ const FormikField: React.FC<Props> = props => {
                 )}
 
                 <Field
+                    maxLength={props.maxLength || undefined}
                     validate={props.validateFunction}
                     onFocus={() => { setLabelUp(true) }}
                     onBlur={(e: any) => { setLabelUp(e.currentTarget.value.trim()) }}

@@ -232,7 +232,7 @@ const Aside: React.FC<Props> = props => {
 
                         <div className="border-t border-neutral-300 mt-4 pt-4 text-sm">
 
-                            {reserveInformation.boardPrice && (hasDiscount || !!childCount || !!activeExtraBedPrice || !!reserveInformation.promoCodePrice) && (
+                            {!!reserveInformation.boardPrice && (hasDiscount || !!childCount || !!activeExtraBedPrice || !!reserveInformation.promoCodePrice) && (
                                 <div className="flex items-center justify-between">
                                     {t("sum")}
                                     <span>{numberWithCommas(reserveInformation.boardPrice)} {t('rial')} </span>
@@ -253,7 +253,7 @@ const Aside: React.FC<Props> = props => {
                                 </div>
                             )}
 
-                            {hasDiscount && (
+                            {!!hasDiscount && (
                                 <div className="flex items-center justify-between">
                                     {t("site-discount")}
                                     <span>{numberWithCommas(reserveInformation.boardPrice - reserveInformation.salePrice)} {t('rial')}</span>
