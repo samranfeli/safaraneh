@@ -51,7 +51,7 @@ const BlogCities: NextPage<Props> = ({data}) => {
                     <Link href={city.excerpt.rendered.slice(3, city.excerpt.rendered.length - 5)}
                     target="_blank" className="max-sm:relative max-sm:top-9" key={city.title.rendered}>
                         <div className="p-2">
-                            <Image src={city.images.medium} alt="pic" width={200} height={100} className="object-fit rounded-md w-full" priority={!index} />
+                            <Image src={city.images.medium} alt="pic" width={397} height={266} className="object-fit rounded-md w-full" priority={!index} />
                             <p className="bg-white p-4 text-center rounded-lg relative bottom-18 ml-3 mr-3 m-auto text-xl">{city.title.rendered}</p> 
                         </div>
                     </Link>
