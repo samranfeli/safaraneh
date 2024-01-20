@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { Formik, Form, Field } from 'formik';
+import { Formik, Form } from 'formik';
 import type { GetServerSideProps, NextPage } from 'next';
 import { useTranslation } from 'next-i18next';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
@@ -9,10 +9,11 @@ import { domesticHotelGetValidate, getDomesticHotelDetailById } from '@/modules/
 import Aside from '@/modules/domesticHotel/components/shared/Aside';
 import { getDatesDiff } from '@/modules/shared/helpers';
 import { AsideHotelInfoType, AsideReserveInfoType, DomesticHotelDetailType, DomesticHotelGetValidateResponse } from '@/modules/domesticHotel/types/hotel';
-import { validateNationalId, validateEmail, validateRequiedPersianAndEnglish } from '@/modules/shared/helpers/validation';
-import FormikField from '@/modules/shared/components/ui/FormikField';
+
 import Head from 'next/head';
-import PhoneInput from '@/modules/shared/components/ui/PhoneInput';
+
+import SpecialReauests from '@/modules/domesticHotel/components/checkout/SpecialRequests';
+import ReserverInformation from '@/modules/domesticHotel/components/checkout/ReserverInformation';
 
 const Checkout: NextPage = () => {
 
@@ -137,7 +138,7 @@ const Checkout: NextPage = () => {
   return (
     <>
       <Head>
-        <title>{t('completing-informaion')}</title>
+        <title>{t('completing-information')}</title>
       </Head>
 
       <div className='max-w-container mx-auto px-5 py-4'>
@@ -165,82 +166,22 @@ const Checkout: NextPage = () => {
 
                 <div className='md:col-span-7 lg:col-span-2'>
 
-
                   <div className='bg-white border border-neutral-300 p-5 rounded-lg grid md:grid-cols-3 gap-2'>
-                    <h4 className='md:col-span-3 font-semibold mb-2 text-lg'>
-                      {t('reserver-information')}
-                    </h4>
 
-                    <div role="group" aria-labelledby="my-radio-group">
-                      <label className='block leading-4 text-xs' > جنسیت </label>
-                      <label className='inline-flex items-center gap-1 rtl:ml-4 ltr:mr-4'>
-                        <Field type="radio" name="reserver.gender" value="male" className="text-xs" />
-                        مرد
-                      </label>
-                      <label className='inline-flex items-center gap-1'>
-                        <Field type="radio" name="reserver.gender" value="female" className="text-xs" />
-                        زن
-                      </label>
-                    </div>
-
-                    <FormikField
-                      errorText={errors.reserver?.firstName as string}
-                      id='firstName'
-                      name='reserver.firstName'
-                      isTouched={touched.reserver?.firstName}
-                      label={t('first-name')}
-                      validateFunction={(value: string) => validateRequiedPersianAndEnglish(value, t('please-enter-first-name'), t('just-english-persian-letter-and-space'))}
+                    <ReserverInformation 
+                      errors={errors}
+                      setFieldValue={setFieldValue}
+                      touched={touched}
                     />
 
-                    <FormikField
-                      errorText={errors.reserver?.lastName as string}
-                      id='lastName'
-                      name='reserver.lastName'
-                      isTouched={touched.reserver?.lastName}
-                      label={t('last-name')}
-                      validateFunction={(value: string) => validateRequiedPersianAndEnglish(value, t('please-enter-last-name'), t('just-english-persian-letter-and-space'))}
-                    />
-
-
-                    <PhoneInput
-                      defaultCountry={
-                        {
-                          countryCode: "ir",
-                          dialCode: "98",
-                          format: "... ... ...."
-                        }
-                      }
-                      onChange={(v: string) => {
-                        setFieldValue('reserver.phoneNumber', v)
-                      }}
-                      name={'reserver.phoneNumber'}
-                      isTouched={touched.reserver?.phoneNumber}
-                      label={t("phone-number") + " (بدون صفر)"}
-                      errorText={errors.reserver?.phoneNumber}
-                      initialValue='+989374755674'
-                    />
-
-                    <FormikField
-                      errorText={errors.reserver?.nationalId as string}
-                      id='nationalId'
-                      name='reserver.nationalId'
-                      isTouched={touched.reserver?.nationalId}
-                      label={t('national-code')}
-                      maxLength={10}
-                      validateFunction={(value: string) => validateNationalId({ value: value, invalidMessage: t('invalid-national-code'), reqiredMessage: t('please-enter-national-code') })}
-                    />
-
-                    <FormikField
-                      errorText={errors.reserver?.email as string}
-                      id='email'
-                      name='reserver.email'
-                      isTouched={touched.reserver?.email}
-                      label={t('email')}
-                      validateFunction={(value: string) => validateEmail({ value: value, reqiredMessage: t('enter-email-address'), invalidMessage: t('invalid-email') })}
-                    />
-
-
+                    <SpecialReauests />
+                  
                   </div>
+
+                  <h5 className='font-semibold my-6'>
+                    {t('fill-passengers-information')}
+                  </h5>
+                  
 
                 </div>
 
