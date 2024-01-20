@@ -6,7 +6,7 @@ import Link from "next/link";
 const ContentPost: NextPage<any> = ({content}) => {
     return (
         <div>
-            {parse(content?.content.rendered)}
+            {content && parse(content?.content.rendered)}
 
             <div className="flex mt-10">
                 <p>تگ ها:</p>

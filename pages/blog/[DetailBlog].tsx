@@ -8,6 +8,8 @@ import ContentPost from "@/modules/blogs/components/BlogPostDetail/ContentPost";
 import TitlePost from "@/modules/blogs/components/BlogPostDetail/TitlePost";
 import RelatedPost from "@/modules/blogs/components/BlogPostDetail/RelatedPost";
 import DetailBlogAcordion from "@/modules/blogs/components/BlogPostDetail/DetailBLogAcordion";
+import GetComment from "@/modules/blogs/components/BlogPostDetail/GetComment";
+import PostComment from "@/modules/blogs/components/BlogPostDetail/PostComment";
 
 
 const DetailBlog: NextPage<any> = ({ BlogPost , CategoriesName , recentBlogs, AllBlogs }) => {
@@ -25,9 +27,13 @@ const DetailBlog: NextPage<any> = ({ BlogPost , CategoriesName , recentBlogs, Al
                 <div className="col-span-2 max-lg:col-span-6 w-full mt-5 ">
                     <Sidebar recentBlogs={recentBlogs} CategoriesNames={CategoriesName} />
                 </div>
-            </div>
-                <RelatedPost Post={BlogPost} AllPost={AllBlogs} />
-                <DetailBlogAcordion blog={BlogPost?.[0]} />
+                </div>
+                <div className="p-8"> 
+                    <RelatedPost Post={BlogPost} AllPost={AllBlogs} />
+                    <DetailBlogAcordion blog={BlogPost?.[0]} />
+                    <GetComment />
+                    <PostComment />
+                </div>
             </div>
         </div>
     )

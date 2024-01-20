@@ -15,7 +15,7 @@ console.log(blog);
     let [a,seta] = useState()
 
     return (
-        <div className="p-10 space-y-5">
+        <div className="space-y-5 mt-20">
             <h2 className="text-3xl mb-10">سوالات متداول</h2>
             <Accordion title={a?.[1]} content={a?.[2]}/>
             <Accordion title={a?.[3]} content={a?.[4]} />

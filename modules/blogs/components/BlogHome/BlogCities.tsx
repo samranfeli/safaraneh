@@ -36,7 +36,7 @@ const BlogCities: NextPage<Props> = ({data}) => {
                 <p className="max-sm:text-sm max-sm:text-gray-600">حرفه ای ترین شبکه معرفی هتل های ایران</p>
             </div>
 
-            <div className='pl-5 pr-5 m-auto max-w-screen-xl'>
+            <div className='pl-5 pr-5  max-sm:p-1 m-auto max-w-screen-xl'>
 
             <Carousel
                 className='home-carousel'
@@ -48,12 +48,13 @@ const BlogCities: NextPage<Props> = ({data}) => {
             {
                 data ?
                 data.map((city ,index) => 
-                    <div className="p-2 max-sm:relative max-sm:top-6" key={city.title.rendered}>
-                        <Link href={city.excerpt.rendered.slice(3,city.excerpt.rendered.length - 5)} target="_blank">
-                        <Image src={city.images.medium} alt="pic" width={400} height={250} className="object-fit rounded-md" priority={!index} />
-                        <p className="bg-white max-w-20 p-4 text-center rounded-lg relative bottom-18 ml-3 mr-3 m-auto text-xl">{city.title.rendered}</p>
-                        </Link>    
-                    </div>
+                    <Link href={city.excerpt.rendered.slice(3, city.excerpt.rendered.length - 5)}
+                    target="_blank" className="max-sm:relative max-sm:top-9" key={city.title.rendered}>
+                        <div className="p-2">
+                            <Image src={city.images.medium} alt="pic" width={200} height={100} className="object-fit rounded-md w-full" priority={!index} />
+                            <p className="bg-white p-4 text-center rounded-lg relative bottom-18 ml-3 mr-3 m-auto text-xl">{city.title.rendered}</p> 
+                        </div>
+                    </Link>
                 ):<p></p>
 
             }
