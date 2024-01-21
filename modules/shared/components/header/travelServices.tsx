@@ -60,7 +60,7 @@ const TravelServices: React.FC<Props> = props => {
 
                 <div className={menuWrapperClassNames}  >
                     <div className="md:hidden border-b border-neutral-200 p-5 flex justify-between items-center">
-                        <Link href="/" className="block">
+                        <Link onClick={()=>{setOpenMenu(false)}} href="/" className="block">
                             <Image src={logo} alt={siteName} width={115} height={48} />
                         </Link>
                         <button aria-label={t('close')} type="button" onClick={() => { setOpenMenu(false) }}>
@@ -69,59 +69,59 @@ const TravelServices: React.FC<Props> = props => {
                     </div>
                     <nav className="py-3 max-h-mobile-nav overflow-auto md:max-h-none">
                         
-                        <Link href="" className={`${linkWithIconClassName} md:hidden`}>
+                        <Link onClick={()=>{setOpenMenu(false)}} href="" className={`${linkWithIconClassName} md:hidden`}>
                             <Home className={iconClassName} />
                             {t('home')}
                         </Link>
-                        <Link href="" className={`${linkWithIconClassName} md:hidden`}>
+                        <Link onClick={()=>{setOpenMenu(false)}} href="" className={`${linkWithIconClassName} md:hidden`}>
                             <User className={iconClassName} />
                             {t('sign-in')}
                         </Link>
-                        <Link href="" className={`${linkWithIconClassName} md:hidden`}>
+                        <Link onClick={()=>{setOpenMenu(false)}} href="" className={`${linkWithIconClassName} md:hidden`}>
                             <UserAdd className={iconClassName} />
                             {t('create-account')}
                         </Link>
-                        <Link href="" className={`${linkWithIconClassName} md:hidden`}>
+                        <Link onClick={()=>{setOpenMenu(false)}} href="" className={`${linkWithIconClassName} md:hidden`}>
                             <Ticket className={iconClassName} />
                             {t('retrieve-my-booking')}
                         </Link>
-                        <Link href="" className={`${linkWithIconClassName} md:hidden border-b border-neutral-200 md:border-none mb-5 md:mb-0 pb-5 md:pb-0`}>
+                        <Link onClick={()=>{setOpenMenu(false)}} href="" className={`${linkWithIconClassName} md:hidden border-b border-neutral-200 md:border-none mb-5 md:mb-0 pb-5 md:pb-0`}>
                             <Wallet className={iconClassName} />
                             0 ریال
                         </Link>                       
 
-                        <Link href='/hotels-home' className={linkWithIconClassName} >
+                        <Link onClick={()=>{setOpenMenu(false)}} href='/hotels-home' className={linkWithIconClassName} >
                             <Bed className={iconClassName} />
                             {t('domestic-hotel')}
                         </Link>
-                        <Link href='/flights-home' className={linkWithIconClassName} >
+                        <Link onClick={()=>{setOpenMenu(false)}} href='/flights-home' className={linkWithIconClassName} >
                             <Travel className={iconClassName} />
                             {t('domestic-flight')}
                         </Link>
-                        <Link href='/hotels-foreign-home' className={linkWithIconClassName} >
+                        <Link onClick={()=>{setOpenMenu(false)}} href='/hotels-foreign-home' className={linkWithIconClassName} >
                             <Bed className={iconClassName} />
                             {t('foreign-hotel')}
                         </Link>
-                        <Link href='/flight-foreign-home' className={linkWithIconClassName} >
+                        <Link onClick={()=>{setOpenMenu(false)}} href='/flight-foreign-home' className={linkWithIconClassName} >
                             <Travel className={iconClassName} />
                             {t('foreign-flight')}
                         </Link>
-                        <Link href='/cip' className={linkWithIconClassName} >
+                        <Link onClick={()=>{setOpenMenu(false)}} href='/cip' className={linkWithIconClassName} >
                             <Suitcase className={iconClassName} />
                             {t('cip')}
                         </Link>
-                        <Link href='/blog' className={`border-b border-neutral-200 md:border-none mb-5 md:mb-0 pb-5 md:pb-0 ${linkWithIconClassName}`}>
+                        <Link onClick={()=>{setOpenMenu(false)}} shallow href='/blog' className={`border-b border-neutral-200 md:border-none mb-5 md:mb-0 pb-5 md:pb-0 ${linkWithIconClassName}`}>
                             <Blog className={iconClassName} />
                             {t('blog')}
                         </Link>
                         
                         <div>
-                            <Link href='/organizational-reservation' className={linkClassName} > {t('organizational-reservation')} </Link>
-                            <Link href='/contact' className={linkClassName} > {t('contact-us')} </Link>
-                            <Link href='/privacy' className={linkClassName} > {t('privacy')} </Link>
-                            <Link href='/faq' className={linkClassName} > {t('faq')} </Link>
-                            <Link href='/terms' className={linkClassName} > {t('terms')} </Link>
-                            <Link href='/about' className={linkClassName} > {t('about-us')} </Link>
+                            <Link onClick={()=>{setOpenMenu(false)}} href='/organizational-reservation' className={linkClassName} > {t('organizational-reservation')} </Link>
+                            <Link onClick={()=>{setOpenMenu(false)}} href='/contact' className={linkClassName} > {t('contact-us')} </Link>
+                            <Link onClick={()=>{setOpenMenu(false)}} href='/privacy' className={linkClassName} > {t('privacy')} </Link>
+                            <Link onClick={()=>{setOpenMenu(false)}} href='/faq' className={linkClassName} > {t('faq')} </Link>
+                            <Link onClick={()=>{setOpenMenu(false)}} href='/terms' className={linkClassName} > {t('terms')} </Link>
+                            <Link onClick={()=>{setOpenMenu(false)}} href='/about' className={linkClassName} > {t('about-us')} </Link>
                         </div>
                     </nav>
                 </div>
