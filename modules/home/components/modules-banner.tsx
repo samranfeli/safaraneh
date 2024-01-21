@@ -31,6 +31,7 @@ const ModulesBanner: React.FC = () => {
             src="https://cdn2.safaraneh.com/images/home/shirazhomebanner.jpg"
             alt="حافظیه شیراز"
             title={tHome('big-banner-h4')}
+            priority
             width={570}
             height={370}
             className='h-48 md:h-full w-full object-cover object-center rounded-lg'

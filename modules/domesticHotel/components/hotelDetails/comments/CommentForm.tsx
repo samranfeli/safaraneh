@@ -5,6 +5,7 @@ import { useTranslation } from 'next-i18next';
 import { ServerAddress, Hotel, Header } from '@/enum/url';
 import useHttp from '@/modules/shared/hooks/use-http';
 import Button from '@/modules/shared/components/ui/Button';
+import { validateRequied, validateEmail } from '@/modules/shared/helpers/validation';
 
 type Props = {
     pageId: number
@@ -41,25 +42,6 @@ const CommentForm: React.FC<Props> = props => {
     };
 
     const numbersArray = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
-
-    const validateRequied = (value: string, message: string) => {
-        let error;
-        if (!value) {
-            error = message;
-        }
-        return error;
-    }
-    
-    const validateRequiedEmail = (value: string, reqiredMessage: string, invalidMessage: string) => {
-        let error;
-        if (!value) {
-            error = reqiredMessage;
-        } else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(value)) {
-            error = invalidMessage;
-        }
-
-        return error;
-    }
 
     const submitHandle = async (values: FormValues, actions: any) => {
 
@@ -146,7 +128,7 @@ const CommentForm: React.FC<Props> = props => {
                                 <div className={`lg:col-span-4 ${errors.Email ? "has-validation-error" : ""}`}>
                                     <label htmlFor="Email" className='block mb-1' > <span className='text-red-500'>*</span> {t('email')} </label>
                                     <Field
-                                        validate={(value: string) => validateRequiedEmail(value, t('enter-email-address'), t('invalid-email'))}
+                                        validate={(value: string) => validateEmail({value:value,reqiredMessage: t('enter-email-address'),invalidMessage: t('invalid-email')})}
                                         id="Email"
                                         name="Email"
                                         className={`h-10 px-5 border ${errors.Email && touched.Email ? "border-red-500" : "border-neutral-300"} outline-none rounded-md w-full`}
