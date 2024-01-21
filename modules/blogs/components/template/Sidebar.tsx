@@ -3,13 +3,14 @@ import Image from "next/image";
 import RecentBlogSidebar from "./RecentBlogSidebar";
 import SidebarSearchBlog from "./SidebarSearchBlog";
 import Link from "next/link";
+import BestHotels from "./BestHotelsSidebar";
 
 const Sidebar: NextPage<any> = ({ recentBlogs, CategoriesNames , SearchItem }) => {
     console.log(CategoriesNames);
     
     return (
-        <div>
-            <div className=" border-b-4 border-blue-800">
+        <div className="h-dvh">
+            <div className="border-b-4 border-blue-800">
                 <p className="text-white p-2 rounded-md bg-blue-800 inline text-xs">دسته بندی</p>
             </div>
             <div>
@@ -17,12 +18,12 @@ const Sidebar: NextPage<any> = ({ recentBlogs, CategoriesNames , SearchItem }) =
                     {
                         CategoriesNames && 
                         CategoriesNames.map((item : any) => 
-                            <li key={item.name} className="p-2"><Link href={`/blog/category/${item.id}`}>{item.name}</Link></li>
+                            <li key={item.name} className="p-2 text-sm hover:text-blue-800"><Link href={`/blog/category/${item.id}`}>{item.name}</Link></li>
                         )
                     }
                 </ul>
             </div>
-            
+   
             {
                 SearchItem && <SidebarSearchBlog />
             }
@@ -34,7 +35,7 @@ const Sidebar: NextPage<any> = ({ recentBlogs, CategoriesNames , SearchItem }) =
             <div className="divide-y">
                     {
                         recentBlogs &&
-                        recentBlogs.map((blog : any) => <RecentBlogSidebar data={blog} /> )
+                        recentBlogs.map((blog : any) => <RecentBlogSidebar key={blog.id} data={blog} /> )
                     }
             </div>
             </div>
@@ -44,18 +45,9 @@ const Sidebar: NextPage<any> = ({ recentBlogs, CategoriesNames , SearchItem }) =
                 <div className=" border-b-4 border-blue-800">
                     <p className="text-xs bg-blue-800 rounded-md inline text-white p-2">پرطرفدارترین هتل های ایران</p>
                 </div>
-                <div className="mt-6">
-                    <Image src='https://cdn2.safaraneh.com/images/blog/hotel-azadi-thumb.jpg' alt='pic' height={150} width={400} className="rounded" />
-                    <p className="text-xs relative bottom-14 bg-white mr-2 ml-2 rounded text-center opacity-70 hover:opacity-100">هتل پارسیان آزادی تهران</p>
-                </div>
-                <div className="mt-2">
-                    <Image src='https://cdn2.safaraneh.com/images/blog/hotel-esteghlal-thumb.jpg' alt='pic' height={150} width={400} className="rounded" />
-                    <p className="text-xs relative bottom-14 bg-white mr-2 ml-2 rounded text-center opacity-70 hover:opacity-100"> هتل پارسیان استقلال تهران</p>
-                </div>
-                <div className="mt-2">
-                    <Image src='https://cdn2.safaraneh.com/images/blog/hotel-enghelab-thumb.jpg' alt='pic' height={150} width={400} className="rounded" />
-                    <p className="text-xs relative bottom-14 bg-white mr-2 ml-2 rounded text-center opacity-70 hover:opacity-100">هتل پارسیان انقلاب تهران</p>
-                </div>
+                <div className="max-lg:flex mt-7 max-sm:block max-sm:w-full">
+                <BestHotels />
+                </div>    
             </div>
         </div>
     )
