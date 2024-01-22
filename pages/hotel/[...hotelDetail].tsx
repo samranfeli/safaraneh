@@ -144,7 +144,7 @@ const HotelDetail: NextPage<Props> = props => {
         <div className='bg-white p-3'>
           {!!hotelData.IsCovid && <div className='bg-emerald-700 leading-4 p-3 sm:p-4 text-white text-xs sm:text-sm rounded-md flex flex-wrap gap-2 items-center m-1 mb-3'>
             <Phone className='w-5 h-5 sm:w-6 sm:h-6 fill-current block' />
-            جهت رزرو با شماره <a href={`tel:${tel?.replace("021","+9821") || "+982126150051" }`} className='underline text-sm sm:text-base'> {tel || "02126150051"} </a> تماس بگیرید.
+            جهت رزرو با شماره <a dir="ltr" href={`tel:${tel?.replace("021","+9821") || "+982126150051" }`} className='underline text-sm sm:text-base'> {tel || "02126150051"} </a> تماس بگیرید.
           </div>}
 
           <BackToList checkin={checkin} checkout={checkout} cityId={hotelData.CityId} cityName={hotelData.CityName} />

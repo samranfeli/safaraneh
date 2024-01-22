@@ -35,6 +35,7 @@ const nextConfig = {
     PROJECT_SERVER_HOTEL_DATA: "hoteldomesticdata.safaraneh.com",
     PROJECT_SERVER_HOTEL_AVAILABILITY: "hotelv4.safaraneh.com",
     PROJECT_SERVER_BLOG :"panel.safaraneh.com",
+    PROJECT_SERVER_CRM:"crm.safaraneh.com",
     PROJECT_SERVER_FLIGHT: "",
     PROJECT_SERVER_PACKAGE: "",
     PROJECT_SERVER_TENANTID: "1046",

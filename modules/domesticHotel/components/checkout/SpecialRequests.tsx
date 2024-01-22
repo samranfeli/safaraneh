@@ -2,6 +2,7 @@ import {useState} from 'react';
 
 import { DownCaret } from "@/modules/shared/components/ui/icons";
 import { useTranslation } from 'next-i18next';
+import { Field } from 'formik';
 
 type Props ={
 
@@ -31,12 +32,13 @@ const SpecialRequests:React.FC<Props> = () =>{
         </button>
 
         {!!open && (
-            <textarea
+            <Field
+                as="textarea"
                 name='specialRequest'
                 rows={4}
                 className='w-full border border-neutral-300 focus:border-blue-500 rounded-md px-2 py-1 text-sm outline-none'
                 placeholder={t('special-requests-desc')}
-            ></textarea>
+            />
         )}
 
       </div>

@@ -1,20 +1,32 @@
 import { Field } from 'formik';
-import { useState } from 'react';
+import { ChangeEvent, useState, useEffect } from 'react';
 
 type Props = {
     errorText?: string;
     isTouched?: boolean;
     label?: string;
-    maxLength?:number;
+    maxLength?: number;
     id?: string;
     name?: string;
     className?: string;
     validateFunction?: (value: string) => void;
+    setFieldValue:any;
+    onChange?: (value: string) => void;
+    value: string;
 }
 
 const FormikField: React.FC<Props> = props => {
 
     const [labelUp, setLabelUp] = useState<boolean>(false);
+
+
+    useEffect(()=>{
+        if (props.value){
+            setLabelUp(true);
+        }else{
+            setLabelUp(false);
+        }
+    },[props.value]);
 
     return (
         <div className={`${props.errorText ? "has-validation-error" : ""}`}>
@@ -37,6 +49,14 @@ const FormikField: React.FC<Props> = props => {
                     name={props.name}
                     autoComplete="off"
                     className={`h-10 px-3 bg-white border ${props.errorText && props.isTouched ? "border-red-500" : "border-neutral-300 focus:border-blue-500"} outline-none rounded-md w-full`}
+                    onChange={(e:ChangeEvent<HTMLInputElement>) => {
+                        props.setFieldValue(props.name, e.target.value, true);
+                        if(props.onChange){
+                            props.onChange(e.target.value);
+                        }
+                    }}
+                    value={props.value}
+
                 />
 
             </div>
