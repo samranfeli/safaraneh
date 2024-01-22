@@ -4,20 +4,22 @@ import type { GetServerSideProps, NextPage } from 'next';
 import { useTranslation } from 'next-i18next';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 import { useRouter } from 'next/router';
+import Head from 'next/head';
 
 import { domesticHotelGetValidate, getDomesticHotelDetailById } from '@/modules/domesticHotel/actions';
 import Aside from '@/modules/domesticHotel/components/shared/Aside';
 import { getDatesDiff } from '@/modules/shared/helpers';
 import { AsideHotelInfoType, AsideReserveInfoType, DomesticHotelDetailType, DomesticHotelGetValidateResponse } from '@/modules/domesticHotel/types/hotel';
-
-import Head from 'next/head';
-
 import SpecialReauests from '@/modules/domesticHotel/components/checkout/SpecialRequests';
 import ReserverInformation from '@/modules/domesticHotel/components/checkout/ReserverInformation';
+import RoomItemInformation from '@/modules/domesticHotel/components/checkout/RoomItemInformation';
+import DiscountForm from '@/modules/domesticHotel/components/checkout/DiscountForm';
+import { validateDiscountCode } from '@/modules/payment/actions';
 
 const Checkout: NextPage = () => {
 
   const { t } = useTranslation('common');
+  const { t: tHotel } = useTranslation('hotel');
 
   const router = useRouter();
   const pathSegments = router.asPath.split("?")[0].split("#")[0].split("/");
@@ -26,6 +28,12 @@ const Checkout: NextPage = () => {
 
   const [reserveInfo, setReserveInfo] = useState<DomesticHotelGetValidateResponse>();
   const [hotelInfo, setHotelInfo] = useState<DomesticHotelDetailType>();
+  const [reserverIsPassenger, setReserverIsPassenger] = useState<boolean>(true);
+
+  const [roomsExtraBed, setRoomsExtraBed] = useState<number[]>([]);
+
+  const [discountData, setDiscountData] = useState<any>();
+  const [discountLoading, setDiscountLoading] = useState<boolean>(false);
 
   useEffect(() => {
 
@@ -35,6 +43,8 @@ const Checkout: NextPage = () => {
 
       if (response?.data?.result) {
         setReserveInfo(response.data.result);
+
+        setRoomsExtraBed(response.data.result.rooms.map((item: any) => (0)));
 
         const hotelId = response.data.result.accommodationId;
 
@@ -121,18 +131,59 @@ const Checkout: NextPage = () => {
 
 
   const submitHandler = async (params: any) => {
+
+    console.log(params);
+    
     debugger;
+
+    const gggg = {
+      passengers: [
+        {
+          "childrenAge": []
+        }
+      ]
+    }
+  }
+
+  const disableSyncedPassenger = () => {
+    setReserverIsPassenger(false);
   }
 
   const initialValues = {
     reserver: {
-      gender: 'male',
+      gender: true,
       firstName: "",
       lastName: "",
       email: "",
       nationalId: "",
       phoneNumber: ""
+    },
+    passengers: reserveInfo?.rooms.map((_, index) => ({
+      gender: true,
+      firstName: '',
+      lastName: '',
+      roomNumber: index + 1,
+      extraBed: 0
+    })) || [],
+    specialRequest: "",
+    preReserveKey: key
+  }
+
+  const discountSubmitHandler = async (value: string) => {
+
+    setDiscountLoading(true);
+    setDiscountData(undefined);
+
+    const response = await validateDiscountCode({ prereserveKey: key!, type: 'HotelDomestic', discountPromoCode: value });
+
+    setDiscountLoading(false);
+
+    if (response?.data?.result) {
+      setDiscountData(response.data.result)
+    } else if (response?.data?.error) {
+      setDiscountData(response.data?.error);
     }
+
   }
 
   return (
@@ -144,59 +195,109 @@ const Checkout: NextPage = () => {
       <div className='max-w-container mx-auto px-5 py-4'>
 
 
-        <Formik
-          validate={() => { return {} }}
-          initialValues={initialValues}
-          onSubmit={submitHandler}
-        >
-          {({ errors, touched, isValid, isSubmitting, setFieldValue }) => {
-            if (isSubmitting && !isValid) {
+        {!!reserveInfo && (
+          <Formik
+            validate={() => { return {} }}
+            initialValues={initialValues}
+            onSubmit={submitHandler}
+          >
+            {({ errors, touched, isValid, isSubmitting, setFieldValue, values }) => {
+              if (isSubmitting && !isValid) {
+                setTimeout(() => {
+                  const formFirstError = document.querySelector(".has-validation-error");
+                  if (formFirstError) {
+                    formFirstError.scrollIntoView({ behavior: "smooth" });
+                  }
+                }, 100)
+              }
+              return (
 
-              setTimeout(() => {
-                const formFirstError = document.querySelector(".has-validation-error");
-                if (formFirstError) {
-                  formFirstError.scrollIntoView({ behavior: "smooth" });
-                }
-              }, 100)
+                <Form className='md:grid md:grid-cols-12 lg:grid-cols-3 gap-4' autoComplete='off' >
 
-            }
-            return (
+                  <div className='md:col-span-7 lg:col-span-2'>
 
-              <Form className='md:grid md:grid-cols-12 lg:grid-cols-3 gap-4' autoComplete='off' >
+                    <div className='bg-white border border-neutral-300 p-5 rounded-lg grid md:grid-cols-3 gap-2'>
 
-                <div className='md:col-span-7 lg:col-span-2'>
+                      <ReserverInformation
+                        errors={errors}
+                        setFieldValue={setFieldValue}
+                        touched={touched}
+                        values={values}
+                        reserverIsPassenger={reserverIsPassenger}
+                      />
 
-                  <div className='bg-white border border-neutral-300 p-5 rounded-lg grid md:grid-cols-3 gap-2'>
+                      <SpecialReauests />
 
-                    <ReserverInformation 
-                      errors={errors}
-                      setFieldValue={setFieldValue}
-                      touched={touched}
+                    </div>
+
+                    <h5 className='font-semibold my-6'>
+                      {t('fill-passengers-information')}
+                    </h5>
+
+                    {reserveInfo.rooms?.map((roomItem, roomIndex) => (
+                      <RoomItemInformation
+                        values={values}
+                        errors={errors}
+                        touched={touched}
+                        roomIndex={roomIndex}
+                        roomItem={roomItem}
+                        setFieldValue={setFieldValue}
+                        key={roomIndex}
+                        disableSyncedPassenger={roomIndex === 0 ? disableSyncedPassenger : undefined}
+                        onChangeExtraBed={extraBedValue => {
+                          setRoomsExtraBed(prevState => {
+                            const updatedValue = [...prevState];
+                            updatedValue[roomIndex] = extraBedValue
+                            return (updatedValue)
+                          })
+                        }}
+                      />
+                    ))}
+
+                    <DiscountForm
+                      data={discountData}
+                      loading={discountLoading}
+                      onSubmit={discountSubmitHandler}
                     />
 
-                    <SpecialReauests />
-                  
                   </div>
 
-                  <h5 className='font-semibold my-6'>
-                    {t('fill-passengers-information')}
-                  </h5>
-                  
+                  <div className='md:col-span-5 lg:col-span-1'>
+                    <Aside
+                      hotelInformation={hotelInformation}
+                      reserveInformation={reserveInformation}
+                      hasSubmit
+                      submitLoading={false}
+                      roomExtraBed={roomsExtraBed}
+                      discountLoading={discountLoading}
+                      discountResponse={discountData?.isValid ? discountData : undefined}
+                    />
 
-                </div>
+                    <div className='bg-white p-4 border border-neutral-300 rounded-md mb-4 border-t-2 border-t-orange-400'>
+                      <h5 className='font-semibold text-orange-400 mb-2 leading-6'>
+                        {t('price-will-increase')}
+                      </h5>
+                      <p className='text-2xs'>
+                        {t('price-will-increase-desc')}
+                      </p>
+                    </div>
 
-                <Aside
-                  className='md:col-span-5 lg:col-span-1'
-                  hotelInformation={hotelInformation}
-                  reserveInformation={reserveInformation}
-                  hasSubmit
-                  submitLoading={false}
 
-                />
-              </Form>
-            )
-          }}
-        </Formik>
+                    <div className='bg-white p-4 border border-neutral-300 rounded-md mb-4 border-t-2 border-t-blue-500'>
+                      <h5 className='font-semibold text-blue-500 mb-2 leading-6'>
+                        {tHotel('recent-reserve-number')}
+                      </h5>
+                      {!! hotelInfo && <p className='text-2xs'>
+                        {tHotel('theNumberOfRecentReservationsOfThisHotelIs', {number:hotelInfo?.TopSelling})}
+                      </p>}
+                    </div>
+
+                  </div>
+                </Form>
+              )
+            }}
+          </Formik>
+        )}
 
       </div>
     </>

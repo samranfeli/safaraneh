@@ -26,7 +26,8 @@ export const Header = {
     // Package: process.env.PROJECT_SERVER_PACKAGE,
     // Payment: process.env.PROJECT_SERVER_PAYMENT,
     // localServer: process.env.PROJECT_SERVER_LOCALSERVER,
-    Flight: process.env.PROJECT_SERVER_FLIGHT
+    Flight: process.env.PROJECT_SERVER_FLIGHT,
+    Crm:process.env.PROJECT_SERVER_CRM
   };
   export const User = {
     // Register: "/api/services/app/Account/Register", //for register new user
@@ -140,6 +141,10 @@ export const Header = {
     // getReserveFromCoordinator : "/api/services/app/Order/Get"
   };
   export const Payment = {
+    
+    ValidateDiscountCode:"/api/services/app/Discount/Validate",
+    RegisterDiscountCode: "/api/services/app/Discount/Register"
+
     // GetBanksInformation: "/api/services/app/ReserveBankGateway/GetAll",
     // MakeToken: "/api/services/app/ReserveBankGateway/MakeToken",
     // GatewayReport: "/api/services/app/BankGatewayLog/GetAll",

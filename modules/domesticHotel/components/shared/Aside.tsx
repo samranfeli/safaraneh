@@ -11,11 +11,19 @@ import { AsideHotelInfoType, AsideReserveInfoType, DomesticHotelDetailType, Dome
 type Props = {
     reserveInformation?: AsideReserveInfoType;
     hotelInformation?: AsideHotelInfoType;
-    roomChildAndExtraBed?: any;
+    roomExtraBed?: number[];
     hasSubmit?: boolean;
     submitLoading?: boolean;
     className?: string;
-    discountResponse?: any;
+    discountResponse?: {
+        reserveId: number;
+        promoCodeId: number;
+        discountPrice: number;
+        orderSubTotalDiscount: number;
+        orderSubTotal: number;
+        isValid: boolean;
+    };
+    discountLoading?: boolean;
 }
 const Aside: React.FC<Props> = props => {
 
@@ -24,7 +32,7 @@ const Aside: React.FC<Props> = props => {
 
     const portalInfo = useAppSelector(state => state.portal);
 
-    const { hotelInformation, reserveInformation, roomChildAndExtraBed, discountResponse } = props;
+    const { hotelInformation, reserveInformation, roomExtraBed, discountResponse, discountLoading } = props;
 
     const board = (code: string) => {
         switch (code) {
@@ -48,15 +56,14 @@ const Aside: React.FC<Props> = props => {
 
     const hasDiscount = reserveInformation?.salePrice && reserveInformation.boardPrice && reserveInformation.boardPrice > reserveInformation.salePrice;
 
-    let childCount = 0;
-    let childPrice = 0;
     let extraBedCount = 0;
     let extraBedPrice = 0;
-    if (roomChildAndExtraBed?.length) {
-        childCount = roomChildAndExtraBed.reduce((total: number, item: any) => item.selectedChild ? (total + 1) : total, 0);
-        childPrice = roomChildAndExtraBed.reduce((total: number, item: any) => item.selectedChild ? (total + item.childFee) : total, 0);
-        extraBedCount = roomChildAndExtraBed.reduce((total: number, item: any) => total + item.selectedExtraBed, 0);
-        extraBedPrice = roomChildAndExtraBed.reduce((total: number, item: any) => total + (item.selectedExtraBed * item.extraBedFee), 0);
+    if (roomExtraBed?.length) {
+        extraBedCount = roomExtraBed.reduce((total: number, item: number) => total + item, 0);
+        extraBedPrice = reserveInformation?.rooms.reduce((total: number, item: AsideReserveInfoType['rooms'][0], index) => {
+            const itemExtraBEdPrice: number = item.pricing.find(pricingItem => (pricingItem.ageCategoryType === "ADL" && pricingItem.type === 'ExtraBed'))?.amount || 0;
+            return (total + itemExtraBEdPrice * roomExtraBed[index]);
+        }, 0) || 0;
     }
 
     let activeExtraBedPrice;
@@ -93,8 +100,13 @@ const Aside: React.FC<Props> = props => {
         </div>)
     }
 
+    let promoCodePrice : number = reserveInformation.promoCodePrice || 0;
+    if(discountResponse){
+        promoCodePrice = discountResponse.discountPrice;
+    }
+
     return (
-        <div className={`bg-white rounded-lg border border-neutral-300 ${props.className}`} >
+        <div className={`bg-white rounded-lg border border-neutral-300 mb-4 ${props.className}`} >
 
             {hotelInformation && reserveInformation ?
                 <div>
@@ -179,14 +191,11 @@ const Aside: React.FC<Props> = props => {
                             let childPriceBlock = null;
                             let extraBedPriceBlock = null;
 
-                            if (roomChildAndExtraBed?.length) {
-                                const itemInfo = roomChildAndExtraBed[roomIndex];
-                                if (itemInfo?.selectedChild) {
-                                    childPriceBlock = <span> + یک کودک</span>
-                                }
-                                if (itemInfo?.selectedExtraBed) {
+                            if (roomExtraBed?.length) {
+                                const selectedExtraBed = roomExtraBed[roomIndex];
+                                if (selectedExtraBed) {
                                     let count = null;
-                                    switch (itemInfo.selectedExtraBed) {
+                                    switch (selectedExtraBed) {
                                         case 1:
                                             count = "یک";
                                             break;
@@ -197,7 +206,7 @@ const Aside: React.FC<Props> = props => {
                                             count = "سه";
                                             break;
                                         default:
-                                            count = itemInfo.selectedExtraBed;
+                                            count = selectedExtraBed;
 
                                     }
                                     extraBedPriceBlock = <span> + {count} تخت اضافه</span>
@@ -219,7 +228,7 @@ const Aside: React.FC<Props> = props => {
 
                                     <div className="flex gap-2 items-center text-sm">
                                         <User className="w-4.5 h-4.5 fill-current" />
-                                        {roomItem.bed} {tHotel('guest')} {childPriceBlock} {extraBedPriceBlock}
+                                        {roomItem.bed} {tHotel('guest')} {extraBedPriceBlock}
                                     </div>
 
                                     <div className="text-green-600 text-sm">{board(roomItem.board)}</div>
@@ -232,23 +241,16 @@ const Aside: React.FC<Props> = props => {
 
                         <div className="border-t border-neutral-300 mt-4 pt-4 text-sm">
 
-                            {!!reserveInformation.boardPrice && (hasDiscount || !!childCount || !!activeExtraBedPrice || !!reserveInformation.promoCodePrice) && (
+                            {!!reserveInformation.boardPrice && (hasDiscount || !!activeExtraBedPrice || !!reserveInformation.promoCodePrice) && (
                                 <div className="flex items-center justify-between">
                                     {t("sum")}
                                     <span>{numberWithCommas(reserveInformation.boardPrice)} {t('rial')} </span>
                                 </div>
                             )}
 
-                            {!!childCount && (
-                                <div className="flex items-center justify-between">
-                                    {t("child")} (x{childCount})
-                                    <span>{numberWithCommas(childPrice)} {t('rial')} </span>
-                                </div>
-                            )}
-
                             {!!activeExtraBedPrice && (
                                 <div className="flex items-center justify-between">
-                                    {t("extra-bed")} (x{activeExtraBedCount})
+                                    {tHotel("extra-bed")} (x{activeExtraBedCount})
                                     <span>{numberWithCommas(activeExtraBedPrice)} {t('rial')} </span>
                                 </div>
                             )}
@@ -261,10 +263,15 @@ const Aside: React.FC<Props> = props => {
                                 </div>
                             )}
 
-                            {!!discountResponse || !!reserveInformation.promoCodePrice && (
+
+                            {!!discountLoading && (
+                                <Skeleton className="my-1" />
+                            )}
+
+                            {!!promoCodePrice && (
                                 <div className="flex items-center justify-between">
                                     کد تخفیف
-                                    <span>{numberWithCommas(discountResponse?.discountPrice || reserveInformation.promoCodePrice)} {t('rial')}</span>
+                                    <span>{numberWithCommas(promoCodePrice)} {t('rial')}</span>
                                 </div>
                             )}
 
@@ -285,7 +292,7 @@ const Aside: React.FC<Props> = props => {
 
                         {props.hasSubmit && (
                             <div className="mt-2 max-sm:fixed max-sm:bg-white max-sm:border-t max-sm:bottom-0 max-sm:left-0 max-sm:right-0 max-sm:z-50 max-sm:p-4">
-                                <Button type="submit" loading={props.submitLoading} className="h-12 px-2 w-full" >
+                                <Button type="submit" loading={props.submitLoading} className="h-12 px-2 w-full mb-2" >
                                     {t('complete-reserve-and-get-confirmation')}
                                 </Button>
                             </div>
@@ -298,7 +305,7 @@ const Aside: React.FC<Props> = props => {
                 </div>
                 :
                 <div >
-                    <Skeleton />                  
+                    <Skeleton />
                 </div>
             }
 

@@ -66,11 +66,20 @@ const PhoneInput: React.FC<Props> = props => {
             setOpenCodes(false);
         }
     };
+
+    const closeOnTab = (event:any) => {
+        if (event.keyCode === 9) {
+            setOpenCodes(false);
+          }
+    }
+
     useEffect(() => {
         document.addEventListener('mousedown', handleClickOutside);
+        document.addEventListener('keydown', closeOnTab);
 
         return () => {
             document.removeEventListener('mousedown', handleClickOutside);
+            document.removeEventListener('keydown', closeOnTab);
         };
     }, []);
 
@@ -132,7 +141,6 @@ const PhoneInput: React.FC<Props> = props => {
                     </label>
                 )}
 
-
                 {!typedCode && <div className='absolute left-3 top-1/2 -translate-y-1/2 flex gap-2 items-center pointer-events-none'>
                     <Image
                         src={`/images/flags/${country?.countryCode || defaultCountry.countryCode}.svg`}
@@ -143,7 +151,6 @@ const PhoneInput: React.FC<Props> = props => {
                     /> +{country?.dialCode}
                 </div>}
 
-
                 <Field
                     className={`h-10 border ${errorText && isTouched ? "border-red-500" : "border-neutral-300 focus:border-blue-500"} px-22 rounded-l-md col-span-2 px-2 outline-none`}
                     type='text'
@@ -152,7 +159,6 @@ const PhoneInput: React.FC<Props> = props => {
                     value={typedCode || ""}
                     onFocus={() => { setOpenCodes(true); }}
                 />
-
 
                 <input
                     type='text'
@@ -176,8 +182,6 @@ const PhoneInput: React.FC<Props> = props => {
                     name={props.name}
                 />
 
-
-
                 {!!openCodes && <div className='absolute top-full left-0 min-w-full bg-white shadow z-10 max-h-44 overflow-auto'>
                     {filterCodeItems.map(item => {
                         return (
@@ -193,6 +197,7 @@ const PhoneInput: React.FC<Props> = props => {
                         )
                     })}
                 </div>}
+                
             </div>
             {errorText && isTouched && <div className='text-red-500 text-xs'>{errorText}</div>}
         </div>
