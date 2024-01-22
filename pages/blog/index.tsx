@@ -1,6 +1,6 @@
 import { GetStaticProps, NextPage } from "next";
 import { GetBestCategory, GetBestCategory2, GetCategories, GetCities, getBlogs } from "@/modules/blogs/actions";
-import NavbarBlog from "@/modules/blogs/components/template/NavbarBlog";
+import NavbarBlog from "@/modules/blogs/components/template/BreadCrumpt";
 import CategoryBlog from "@/modules/blogs/components/BlogHome/CategoryHomeBlog";
 import SearchBox from "@/modules/blogs/components/BlogHome/SearchBox";
 import NewBlog from "@/modules/blogs/components/BlogHome/NewBlogItem";

@@ -1,5 +1,5 @@
 import { GetCategories, GetSearchBlogPosts, getBlogs } from "@/modules/blogs/actions";
-import NavbarBlog from "@/modules/blogs/components/template/NavbarBlog";
+import NavbarBlog from "@/modules/blogs/components/template/BreadCrumpt";
 import Title from "@/modules/blogs/components/BlogSearch/Title";
 import Content from "@/modules/blogs/components/template/Content";
 import { NextPage } from "next";

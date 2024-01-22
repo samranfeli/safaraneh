@@ -16,7 +16,8 @@ const config: Config = {
         '18': '4.5rem',
         '4.5': '1.125rem',
         '2px': '2px',
-        '5px': '5px'
+        '5px': '5px',
+        '550': '550px'
       },
       keyframes: {
         skeleton: {

@@ -1,4 +1,4 @@
-import NavbarBlog from "@/modules/blogs/components/template/NavbarBlog";
+import NavbarBlog from "@/modules/blogs/components/template/BreadCrumpt";
 import Title from "@/modules/blogs/components/BlogCategory/Title";
 import { NextPage } from "next";
 import { GetBlogPostCategory, GetCategories, getBlogs } from "@/modules/blogs/actions";

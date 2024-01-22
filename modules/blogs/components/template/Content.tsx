@@ -15,7 +15,6 @@ interface Props {
 
 const Content: NextPage<Props> = ({Blogs,LastBlogs,CategoriesName}) => {
 
-console.log(useRouter());
 
     let listPage :any = []
     useEffect(() => {
@@ -53,7 +52,7 @@ console.log(useRouter());
                     </ul>
                 </div>
             </div>
-            <div className="col-span-2 w-11/12 max-lg:w-full">
+            <div className="col-span-2 w-11/12 max-lg:w-full ">
                 <Sidebar recentBlogs={LastBlogs} CategoriesNames={CategoriesName}
                     SearchItem={useRouter().asPath == "/blog/blog-list" || useRouter().query.search ? true : false} />
             </div>

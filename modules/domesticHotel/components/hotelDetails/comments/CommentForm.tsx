@@ -104,7 +104,7 @@ const CommentForm: React.FC<Props> = props => {
 
             <div className='md:col-span-2'>
                 <Formik
-                    validate={() => { return {} }}
+                     validate={() => { return {} }}
                     initialValues={initialValues}
                     onSubmit={submitHandle}
                 >

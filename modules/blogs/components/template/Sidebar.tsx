@@ -6,7 +6,6 @@ import Link from "next/link";
 import BestHotels from "./BestHotelsSidebar";
 
 const Sidebar: NextPage<any> = ({ recentBlogs, CategoriesNames , SearchItem }) => {
-    console.log(CategoriesNames);
     
     return (
         <div className="h-dvh">
@@ -45,7 +44,7 @@ const Sidebar: NextPage<any> = ({ recentBlogs, CategoriesNames , SearchItem }) =
                 <div className=" border-b-4 border-blue-800">
                     <p className="text-xs bg-blue-800 rounded-md inline text-white p-2">پرطرفدارترین هتل های ایران</p>
                 </div>
-                <div className="max-lg:flex mt-7 max-sm:block max-sm:w-full">
+                <div className="flex w-full mt-7">
                 <BestHotels />
                 </div>    
             </div>

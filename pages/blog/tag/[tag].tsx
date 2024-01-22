@@ -1,6 +1,6 @@
 import { GetTags, GetTagName , GetCategories , getBlogs} from "@/modules/blogs/actions";
 import Title from "@/modules/blogs/components/BlogTag/Title";
-import NavbarBlog from "@/modules/blogs/components/template/NavbarBlog";
+import NavbarBlog from "@/modules/blogs/components/template/BreadCrumpt";
 import { NextPage } from "next";
 import { createContext } from "react";
 import Content from "@/modules/blogs/components/template/Content";
