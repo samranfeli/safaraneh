@@ -19,6 +19,9 @@ import { useAppDispatch } from '@/modules/shared/hooks/use-store';
 import { setReduxError } from '@/modules/shared/store/errorSlice';
 import { dateFormat } from '@/modules/shared/helpers';
 import Steps from '@/modules/shared/components/ui/Steps';
+import Link from 'next/link';
+import Skeleton from '@/modules/shared/components/ui/Skeleton';
+import { LeftCaret } from '@/modules/shared/components/ui/icons';
 
 const Checkout: NextPage = () => {
 
@@ -40,6 +43,20 @@ const Checkout: NextPage = () => {
 
   const [discountData, setDiscountData] = useState<any>();
   const [discountLoading, setDiscountLoading] = useState<boolean>(false);
+
+
+  let backUrl: string = "";
+  const checkinDate = reserveInfo?.checkin && new Date(reserveInfo.checkin);
+  const checkoutDate = reserveInfo?.checkout && new Date(reserveInfo.checkout);
+
+  if (hotelInfo && checkinDate && checkoutDate) {
+
+    const checkin = dateFormat(checkinDate);
+    const checkout = dateFormat(checkoutDate);
+
+    backUrl = `${hotelInfo.Url}/location-${hotelInfo.CityId}/checkin-${checkin}/checkout-${checkout}`;
+  }
+
 
   useEffect(() => {
 
@@ -157,18 +174,6 @@ const Checkout: NextPage = () => {
 
     } else {
 
-      let backUrl: string = "";
-      const checkinDate = reserveInfo?.checkin && new Date(reserveInfo.checkin);
-      const checkoutDate = reserveInfo?.checkout && new Date(reserveInfo.checkout);
-
-      if (hotelInfo && checkinDate && checkoutDate) {
-
-        const checkin = dateFormat(checkinDate);
-        const checkout = dateFormat(checkoutDate);
-
-        backUrl = `${hotelInfo.Url}/location-${hotelInfo.CityId}/checkin-${checkin}/checkout-${checkout}`;
-      }
-
       dispatch(setReduxError({
         title: tHotel('error-in-reserve-room'),
         message: tHotel('sorry-room-is-full'),
@@ -176,8 +181,6 @@ const Checkout: NextPage = () => {
         closeErrorLink: backUrl || "/",
         closeButtonText: backUrl ? tHotel('choose-room') : t("home")
       }));
-
-
 
     }
   }
@@ -232,7 +235,7 @@ const Checkout: NextPage = () => {
       <div className='max-w-container mx-auto px-5 py-4'>
 
         <Steps
-          className='py-3 mb-3'
+          className='py-3 mb-2'
           items={[
             { label: t('completing-informaion'), status: 'active' },
             { label: tHotel('checking-capacity'), status: 'up-comming' },
@@ -240,6 +243,12 @@ const Checkout: NextPage = () => {
             { label: t('completing-pay'), status: 'up-comming' }
           ]}
         />
+
+        {backUrl ? (
+          <Link href={backUrl} className='text-sm text-blue-500 mb-4 inline-block'> <LeftCaret className='inline-block align-middle w-5 h-5 fill-current rtl:rotate-180' /> برگشت به انتخاب اتاق </Link>
+        ) : (
+          <Skeleton className='mt-2 mb-3 w-60' />
+        )}
 
         {!!reserveInfo && (
           <Formik
@@ -309,34 +318,87 @@ const Checkout: NextPage = () => {
                   </div>
 
                   <div className='md:col-span-5 lg:col-span-1'>
-                    <Aside
-                      hotelInformation={hotelInformation}
-                      reserveInformation={reserveInformation}
-                      hasSubmit
-                      submitLoading={false}
-                      roomExtraBed={roomsExtraBed}
-                      discountLoading={discountLoading}
-                      discountResponse={discountData?.isValid ? discountData : undefined}
-                    />
+                    {(hotelInfo && reserveInfo) ? (
+                      <Aside
+                        hotelInformation={hotelInformation}
+                        reserveInformation={reserveInformation}
+                        hasSubmit
+                        submitLoading={false}
+                        roomExtraBed={roomsExtraBed}
+                        discountLoading={discountLoading}
+                        discountResponse={discountData?.isValid ? discountData : undefined}
+                      />
+                    ) : (
+                      <div className='border border-neutral-300 bg-white rounded-md mb-4'>
+                        <Skeleton className='mx-4 my-3.5 w-28' />
+                        <div className='border-t border-neutral-300 p-4'>
+                          <div className='grid gap-3 grid-cols-4'>
+                            <Skeleton type='image' />
+                            <div className='col-span-3'>
+                              <Skeleton className='mb-3 w-2/3' />
+                              <Skeleton className='mb-3 w-1/3' />
+                              <Skeleton className='w-full' />
+                            </div>
+                          </div>
+
+                          <div className='border-t border-neutral-300 my-5' />
+
+                          <Skeleton className='mb-3 w-full' />
+                          <Skeleton className='mb-3 w-2/3' />
+                          <Skeleton className='mb-3 w-1/3' />
+                          <Skeleton className='mb-3 w-2/3' />
+
+                          <div className='border-t border-neutral-300 my-5' />
+
+                          <Skeleton className='mb-3 w-full' />
+                          <Skeleton className='mb-3 w-full' />
+                          <Skeleton className='mb-3 w-full' />
+
+                          <Skeleton className='mb-3 w-full mt-6' type='button' />
+
+                        </div>
+                      </div>
+                    )}
 
                     <div className='bg-white p-4 border border-neutral-300 rounded-md mb-4 border-t-2 border-t-orange-400'>
-                      <h5 className='font-semibold text-orange-400 mb-2 leading-6'>
-                        {t('price-will-increase')}
-                      </h5>
-                      <p className='text-2xs'>
-                        {t('price-will-increase-desc')}
-                      </p>
+                      {hotelInfo ? (
+                        <>
+                          <h5 className='font-semibold text-orange-400 mb-2 leading-6'>
+                            {t('price-will-increase')}
+                          </h5>
+                          <p className='text-2xs'>
+                            {t('price-will-increase-desc')}
+                          </p>
+                        </>
+                      ) : (
+                        <>
+                          <Skeleton className='mb-3 w-1/3' />
+                          <Skeleton className='mb- w-2/3' />
+                        </>
+                      )}
+
                     </div>
 
 
                     <div className='bg-white p-4 border border-neutral-300 rounded-md mb-4 border-t-2 border-t-blue-500'>
-                      <h5 className='font-semibold text-blue-500 mb-2 leading-6'>
-                        {tHotel('recent-reserve-number')}
-                      </h5>
-                      {!!hotelInfo && <p className='text-2xs'>
-                        {tHotel('theNumberOfRecentReservationsOfThisHotelIs', { number: hotelInfo?.TopSelling })}
-                      </p>}
+                      {hotelInfo ? (
+                        <>
+                          <h5 className='font-semibold text-blue-500 mb-2 leading-6'>
+                            {tHotel('recent-reserve-number')}
+                          </h5>
+                          <p className='text-2xs'>
+                            {tHotel('theNumberOfRecentReservationsOfThisHotelIs', { number: hotelInfo?.TopSelling })}
+                          </p>
+                        </>
+                      ) : (
+                        <>
+                          <Skeleton className='mb-3 w-1/3' />
+                          <Skeleton className='mb- w-2/3' />
+                        </>
+                      )}
+
                     </div>
+
 
                   </div>
                 </Form>
