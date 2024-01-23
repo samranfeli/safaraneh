@@ -106,13 +106,13 @@ export const Header = {
     getCityFaqById:"/api/services/app/Faq/GetAll",
     GetEntityNameByLocation: "/v2/Entity/GetEntityNameByLocation",
 
-    GetValidate:"/api/services/app/Booking/GetValidate"
+    GetValidate:"/api/services/app/Booking/GetValidate",
+    PreReserve: "/api/services/app/Booking/PreReserve"
 
 
     
     
     // GetAccomadtion: "/api/services/app/BookingHotel/GetSearch",
-    // PreReserve: "/api/services/app/BookingHotel/PreReserve",
     // GetPreReserveID: "/api/services/app/BookingHotel/GetPreReserveByKey",
     // GetReserveByID: "/api/services/app/BookingHotel/GetReserveById",
     // PostReserver: "/api/services/app/BookingHotel/Reserve",

@@ -2,11 +2,11 @@ import Button from "@/modules/shared/components/ui/Button";
 import Rating from "@/modules/shared/components/ui/Rating";
 import Skeleton from "@/modules/shared/components/ui/Skeleton";
 import { ArrowLeft, Tik, Bed, User, Calendar, DefaultRoom } from "@/modules/shared/components/ui/icons";
-import { dateDiplayFormat, dateFormat, getDatesDiff, numberWithCommas } from "@/modules/shared/helpers";
+import { dateDiplayFormat, getDatesDiff, numberWithCommas } from "@/modules/shared/helpers";
 import { useAppSelector } from "@/modules/shared/hooks/use-store";
 import { useTranslation } from "next-i18next";
 import Image from "next/image";
-import { AsideHotelInfoType, AsideReserveInfoType, DomesticHotelDetailType, DomesticHotelGetValidateResponse } from "../../types/hotel";
+import { AsideHotelInfoType, AsideReserveInfoType } from "../../types/hotel";
 
 type Props = {
     reserveInformation?: AsideReserveInfoType;
@@ -21,7 +21,7 @@ type Props = {
         discountPrice: number;
         orderSubTotalDiscount: number;
         orderSubTotal: number;
-        isValid: boolean;
+        isValid: true;
     };
     discountLoading?: boolean;
 }

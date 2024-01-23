@@ -6,7 +6,7 @@ import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 import { useRouter } from 'next/router';
 import Head from 'next/head';
 
-import { domesticHotelGetValidate, getDomesticHotelDetailById } from '@/modules/domesticHotel/actions';
+import { domesticHotelGetValidate, domesticHotelPreReserve, getDomesticHotelDetailById } from '@/modules/domesticHotel/actions';
 import Aside from '@/modules/domesticHotel/components/shared/Aside';
 import { getDatesDiff } from '@/modules/shared/helpers';
 import { AsideHotelInfoType, AsideReserveInfoType, DomesticHotelDetailType, DomesticHotelGetValidateResponse } from '@/modules/domesticHotel/types/hotel';
@@ -14,12 +14,17 @@ import SpecialReauests from '@/modules/domesticHotel/components/checkout/Special
 import ReserverInformation from '@/modules/domesticHotel/components/checkout/ReserverInformation';
 import RoomItemInformation from '@/modules/domesticHotel/components/checkout/RoomItemInformation';
 import DiscountForm from '@/modules/domesticHotel/components/checkout/DiscountForm';
-import { validateDiscountCode } from '@/modules/payment/actions';
+import { registerDiscountCode, validateDiscountCode } from '@/modules/payment/actions';
+import { useAppDispatch } from '@/modules/shared/hooks/use-store';
+import { setReduxError } from '@/modules/shared/store/errorSlice';
+import { dateFormat } from '@/modules/shared/helpers';
 
 const Checkout: NextPage = () => {
 
   const { t } = useTranslation('common');
   const { t: tHotel } = useTranslation('hotel');
+
+  const dispatch = useAppDispatch();
 
   const router = useRouter();
   const pathSegments = router.asPath.split("?")[0].split("#")[0].split("/");
@@ -132,16 +137,47 @@ const Checkout: NextPage = () => {
 
   const submitHandler = async (params: any) => {
 
-    console.log(params);
-    
-    debugger;
 
-    const gggg = {
-      passengers: [
-        {
-          "childrenAge": []
-        }
-      ]
+    const reserveResponse: any = await domesticHotelPreReserve(params);
+
+    if (reserveResponse.data && reserveResponse.data.result) {
+      const id = reserveResponse.data.result.id;
+      const username = reserveResponse.data.result.username;
+
+      if (discountData?.promoCodeId) {
+        await registerDiscountCode({ discountPromoCode: discountData.promoCodeId, reserveId: id, username: username });
+      }
+
+      if (reserveResponse.data.result.rooms.every((x: any) => x.availablityType === "Online")) {
+        router.push(`/payment?username=${username}&reserveId=${id}`);
+      } else {
+        router.push(`/hotel/capacity?reserveId=${id}&username=${username}`);
+      }
+      
+    } else {
+
+      let backUrl: string = "";
+      const checkinDate = reserveInfo?.checkin && new Date(reserveInfo.checkin);
+      const checkoutDate = reserveInfo?.checkout && new Date(reserveInfo.checkout);
+
+      if (hotelInfo && checkinDate && checkoutDate) {
+
+        const checkin = dateFormat(checkinDate);
+        const checkout = dateFormat(checkoutDate);
+
+        backUrl = `${hotelInfo.Url}/location-${hotelInfo.CityId}/checkin-${checkin}/checkout-${checkout}`;
+      }
+
+      dispatch(setReduxError({
+        title: tHotel('error-in-reserve-room'),
+        message: tHotel('sorry-room-is-full'),
+        isVisible: true,
+        closeErrorLink: backUrl || "/",
+        closeButtonText: backUrl ? tHotel('choose-room') : t("home")
+      }));
+
+
+
     }
   }
 
@@ -287,8 +323,8 @@ const Checkout: NextPage = () => {
                       <h5 className='font-semibold text-blue-500 mb-2 leading-6'>
                         {tHotel('recent-reserve-number')}
                       </h5>
-                      {!! hotelInfo && <p className='text-2xs'>
-                        {tHotel('theNumberOfRecentReservationsOfThisHotelIs', {number:hotelInfo?.TopSelling})}
+                      {!!hotelInfo && <p className='text-2xs'>
+                        {tHotel('theNumberOfRecentReservationsOfThisHotelIs', { number: hotelInfo?.TopSelling })}
                       </p>}
                     </div>
 
