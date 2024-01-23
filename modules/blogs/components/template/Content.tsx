@@ -15,7 +15,6 @@ interface Props {
 
 const Content: NextPage<Props> = ({Blogs,LastBlogs,CategoriesName}) => {
 
-
     let listPage :any = []
     useEffect(() => {
         //This is for: how many page we need
@@ -38,6 +37,7 @@ const Content: NextPage<Props> = ({Blogs,LastBlogs,CategoriesName}) => {
         <div className="grid grid-cols-8 gap-1 max-w-screen-xl m-auto pl-5 pr-5 max-sm:p-2 max-lg:grid-cols-1">
             <div className="col-span-6">
                 {
+                    Blogs &&
                     Blogs?.slice(list[0] , list[1]).map((blog : any ) => <BlogItem data={blog} key={blog.id} />)
                 }
                     <ul className="flex justify-center rounded m-5 max-sm:m-4" style={{border:'solid 1px rgba(0,0,0,.2)'}}>

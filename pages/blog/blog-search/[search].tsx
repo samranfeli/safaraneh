@@ -29,7 +29,7 @@ export async function getServerSideProps(context: any) {
     const search = context.query.search;
 
     const [SearchBlog, categories_name, recentBlogs] = await Promise.all<any>([
-        GetBlogPostCategory(search),
+        GetSearchBlogPosts(search),
         GetCategories(),
         getBlogs(3)
     ])
