@@ -18,6 +18,7 @@ import { registerDiscountCode, validateDiscountCode } from '@/modules/payment/ac
 import { useAppDispatch } from '@/modules/shared/hooks/use-store';
 import { setReduxError } from '@/modules/shared/store/errorSlice';
 import { dateFormat } from '@/modules/shared/helpers';
+import Steps from '@/modules/shared/components/ui/Steps';
 
 const Checkout: NextPage = () => {
 
@@ -230,6 +231,15 @@ const Checkout: NextPage = () => {
 
       <div className='max-w-container mx-auto px-5 py-4'>
 
+        <Steps
+          className='py-3 mb-3'
+          items={[
+            { label: t('completing-informaion'), status: 'active' },
+            { label: tHotel('checking-capacity'), status: 'up-comming' },
+            { label: t('confirm-pay'), status: 'up-comming' },
+            { label: t('completing-pay'), status: 'up-comming' }
+          ]}
+        />
 
         {!!reserveInfo && (
           <Formik
