@@ -250,7 +250,7 @@ const Checkout: NextPage = () => {
           <Skeleton className='mt-2 mb-3 w-60' />
         )}
 
-        {!!reserveInfo && (
+        {reserveInfo ? (
           <Formik
             validate={() => { return {} }}
             initialValues={initialValues}
@@ -289,7 +289,7 @@ const Checkout: NextPage = () => {
                       {t('fill-passengers-information')}
                     </h5>
 
-                    {reserveInfo.rooms?.map((roomItem, roomIndex) => (
+                    {reserveInfo?.rooms?.map((roomItem, roomIndex) => (
                       <RoomItemInformation
                         values={values}
                         errors={errors}
@@ -374,7 +374,59 @@ const Checkout: NextPage = () => {
               )
             }}
           </Formik>
+        ) : (
+          <div className='md:grid md:grid-cols-12 lg:grid-cols-3 gap-4'>
+            <div className='md:col-span-7 lg:col-span-2'>
+              <div className='bg-white border border-neutral-300 p-5 rounded-lg mb-6'>
+                <Skeleton className='mb-6 w-40' />
+                <Skeleton className='mb-5' />
+                <Skeleton className='mb-5' />
+                <Skeleton className='mb-5' />
+                <Skeleton className='w-1/3' />
+              </div>
+
+              <h5 className='font-semibold my-6'>
+                <Skeleton className='w-52' />
+              </h5>
+
+              <div className='bg-white border border-neutral-300 p-5 rounded-lg mb-6'>
+                <Skeleton className='mb-6 w-40' />
+                <Skeleton className='mb-5' />
+                <Skeleton className='mb-5' />
+                <Skeleton className='mb-5' />
+                <Skeleton className='w-1/3 mb-5' />
+                <Skeleton />
+              </div>
+
+              <div className='bg-white border border-neutral-300 p-5 rounded-lg'>
+                <Skeleton className='mb-6 w-40' />
+                <Skeleton className='w-1/3' />
+              </div>
+
+            </div>
+
+            <div className='md:col-span-5 lg:col-span-1'>
+
+              <Aside />
+
+              <div className='bg-white p-4 border border-neutral-300 rounded-md mb-4 border-t-2 border-t-orange-400'>
+                <Skeleton className='mb-3 w-1/3' />
+                <Skeleton className='mb- w-2/3' />
+
+              </div>
+
+
+              <div className='bg-white p-4 border border-neutral-300 rounded-md mb-4 border-t-2 border-t-blue-500'>
+                <Skeleton className='mb-3 w-1/3' />
+                <Skeleton className='mb- w-2/3' />
+
+              </div>
+
+
+            </div>
+          </div>
         )}
+
 
       </div>
     </>

@@ -91,7 +91,6 @@ const RoomItemInformation: React.FC<Props> = props => {
 
   const extraBedPrice = roomItem.pricing?.find((item) => item.type === 'ExtraBed' && item.ageCategoryType === 'ADL')?.amount || 0;
 
-
   return (
     <div className='bg-white border border-neutral-300 p-5 rounded-lg grid md:grid-cols-3 gap-2 mb-5' >
       <h5 className='font-semibold text-xl mb-4 md:col-span-3'>
@@ -111,7 +110,7 @@ const RoomItemInformation: React.FC<Props> = props => {
                 props.disableSyncedPassenger();
               }
             }}
-            checked={values.passengers[roomIndex].gender}
+            checked={values.passengers[roomIndex]?.gender}
           />
           مرد
         </label>
@@ -126,7 +125,7 @@ const RoomItemInformation: React.FC<Props> = props => {
                 props.disableSyncedPassenger();
               }
             }}
-            checked={!values.passengers[roomIndex].gender}
+            checked={!values.passengers[roomIndex]?.gender}
           />
           زن
         </label>
@@ -145,7 +144,7 @@ const RoomItemInformation: React.FC<Props> = props => {
         isTouched={(touched.passengers && touched.passengers[roomIndex]) ? touched.passengers[roomIndex].firstName : false}
         label={t('first-name')}
         validateFunction={(value: string) => validateRequiedPersianAndEnglish(value, t('please-enter-first-name'), t('just-english-persian-letter-and-space'))}
-        value={values.passengers[roomIndex].firstName}
+        value={values.passengers[roomIndex]?.firstName}
         onChange={props.disableSyncedPassenger}
       />
 
@@ -162,7 +161,7 @@ const RoomItemInformation: React.FC<Props> = props => {
         isTouched={(touched.passengers && touched.passengers[roomIndex]) ? touched.passengers[roomIndex].lastName : false}
         label={t('last-name')}
         validateFunction={(value: string) => validateRequiedPersianAndEnglish(value, t('please-enter-last-name'), t('just-english-persian-letter-and-space'))}
-        value={values.passengers[roomIndex].lastName}
+        value={values.passengers[roomIndex]?.lastName}
         onChange={props.disableSyncedPassenger}
       />
 

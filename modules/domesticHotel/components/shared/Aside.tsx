@@ -95,26 +95,55 @@ const Aside: React.FC<Props> = props => {
         }
     }
     if (!reserveInformation) {
-        return (<div>
-            loading
-        </div>)
+        return (
+            <div className='border border-neutral-300 bg-white rounded-md mb-4'>
+                <Skeleton className='mx-4 my-3.5 w-28' />
+                <div className='border-t border-neutral-300 p-4'>
+                    <div className='grid gap-3 grid-cols-4'>
+                        <Skeleton type='image' />
+                        <div className='col-span-3'>
+                            <Skeleton className='mb-3 w-2/3' />
+                            <Skeleton className='mb-3 w-1/3' />
+                            <Skeleton className='w-full' />
+                        </div>
+                    </div>
+
+                    <div className='border-t border-neutral-300 my-5' />
+
+                    <Skeleton className='mb-3 w-full' />
+                    <Skeleton className='mb-3 w-2/3' />
+                    <Skeleton className='mb-3 w-1/3' />
+                    <Skeleton className='mb-3 w-2/3' />
+
+                    <div className='border-t border-neutral-300 my-5' />
+
+                    <Skeleton className='mb-3 w-full' />
+                    <Skeleton className='mb-3 w-full' />
+                    <Skeleton className='mb-3 w-full' />
+
+                    <Skeleton className='mb-3 w-full mt-6' type='button' />
+
+                </div>
+            </div>
+        )
     }
 
-    let promoCodePrice : number = reserveInformation.promoCodePrice || 0;
-    if(discountResponse){
+    let promoCodePrice: number = reserveInformation.promoCodePrice || 0;
+    if (discountResponse) {
         promoCodePrice = discountResponse.discountPrice;
     }
 
     return (
         <div className={`bg-white rounded-lg border border-neutral-300 mb-4 ${props.className}`} >
 
-            {hotelInformation && reserveInformation ?
-                <div>
-                    <h4 className="p-3 font-semibold text-sm border-b leading-5 border-neutral-300" >
-                        {t('reserve-details')}
-                    </h4>
 
-                    <div className="p-2.5">
+            <div>
+                <h4 className="p-3 font-semibold text-sm border-b leading-5 border-neutral-300" >
+                    {t('reserve-details')}
+                </h4>
+
+                <div className="p-2.5">
+                    {hotelInformation ? (
                         <div className="grid grid-cols-4 gap-x-3 gap-y-2">
                             {hotelInformation.image.url ? (
                                 <Image
@@ -142,9 +171,19 @@ const Aside: React.FC<Props> = props => {
                                 </p>
                             )}
                         </div>
+                    ) : (
+                        <div className='grid gap-3 grid-cols-4'>
+                            <Skeleton type='image' />
+                            <div className='col-span-3'>
+                                <Skeleton className='mb-3 w-2/3' />
+                                <Skeleton className='mb-3 w-1/3' />
+                                <Skeleton className='w-full' />
+                            </div>
+                        </div>
+                    )}
 
-                        {/* TODO: in case of reserve page check style */}
-                        {/* {!!reserveInformation.reserveId && (
+                    {/* TODO: in case of reserve page check style */}
+                    {/* {!!reserveInformation.reserveId && (
                             <div className='padding-start-10 padding-end-10 margin-top-15'>
                                 <div className='dashed-reserve-id'>
                                     {t('tracking-code')} : {props.reserveInformation.reserveId}
@@ -152,188 +191,158 @@ const Aside: React.FC<Props> = props => {
                             </div>
                         )} */}
 
-                        {reserveInformation && (
-                            <div className="text-xs flex items-center gap-2 pt-4 pb-1">
+                    {reserveInformation && (
+                        <div className="text-xs flex items-center gap-2 pt-4 pb-1">
 
-                                <Calendar className="w-5 h-5 fill-neutral-600" />
+                            <Calendar className="w-5 h-5 fill-neutral-600" />
 
-                                {dateDiplayFormat({ date: reserveInformation.checkin, format: "dd mm yyyy", locale: "fa" })}
+                            {dateDiplayFormat({ date: reserveInformation.checkin, format: "dd mm yyyy", locale: "fa" })}
 
-                                <ArrowLeft className="w-4 h-4 fill-neutral-700" />
+                            <ArrowLeft className="w-4 h-4 fill-neutral-700" />
 
-                                {dateDiplayFormat({ date: reserveInformation.checkout, format: "dd mm yyyy", locale: "fa" })}
+                            {dateDiplayFormat({ date: reserveInformation.checkout, format: "dd mm yyyy", locale: "fa" })}
 
-                                <span>
-                                    {getDatesDiff(new Date(reserveInformation.checkout), new Date(reserveInformation.checkin))} {tHotel('night')}
-                                </span>
-
-                            </div>
-                        )}
-
-                        {reserveInformation.rooms.map((roomItem: any, roomIndex: number) => {
-
-                            //TODO check cancelation
-                            let cancellation = null;
-                            switch (roomItem.cancellationPolicyStatus) {
-                                case "NonRefundable":
-                                    cancellation = <div className="margin-bottom-5 text-red">{t("non-refundable")}</div>;
-                                    break;
-                                case "Refundable":
-                                    cancellation = <div className="text-green margin-bottom-5">
-                                        <Tik className="w-3 h-4 fill-green-600" />
-                                        {t("refundable")}
-                                    </div>;
-                                    break;
-                                default:
-                                    cancellation = <div className="margin-bottom-5">{roomItem.cancellationPolicyStatus}</div>;
-                            }
-
-                            let childPriceBlock = null;
-                            let extraBedPriceBlock = null;
-
-                            if (roomExtraBed?.length) {
-                                const selectedExtraBed = roomExtraBed[roomIndex];
-                                if (selectedExtraBed) {
-                                    let count = null;
-                                    switch (selectedExtraBed) {
-                                        case 1:
-                                            count = "یک";
-                                            break;
-                                        case 2:
-                                            count = "دو";
-                                            break;
-                                        case 3:
-                                            count = "سه";
-                                            break;
-                                        default:
-                                            count = selectedExtraBed;
-
-                                    }
-                                    extraBedPriceBlock = <span> + {count} تخت اضافه</span>
-                                }
-                            }
-
-                            return (
-                                <div key={roomIndex}>
-                                    {reserveInformation.rooms.length > 1 && (
-                                        <div className='flex items-center text-sm gap-2 font-semibold after:block after:border-b after:grow after:border-neutral-300'>
-                                            {tHotel('room')} {roomIndex + 1}
-                                        </div>
-                                    )}
-
-                                    <div className="flex gap-2 items-center text-sm">
-                                        <Bed className="w-4.5 h-4.5 fill-current" />
-                                        {roomItem.name}
-                                    </div>
-
-                                    <div className="flex gap-2 items-center text-sm">
-                                        <User className="w-4.5 h-4.5 fill-current" />
-                                        {roomItem.bed} {tHotel('guest')} {extraBedPriceBlock}
-                                    </div>
-
-                                    <div className="text-green-600 text-sm">{board(roomItem.board)}</div>
-
-                                    {cancellation}
-
-                                </div>
-                            )
-                        })}
-
-                        <div className="border-t border-neutral-300 mt-4 pt-4 text-sm">
-
-                            {!!reserveInformation.boardPrice && (hasDiscount || !!activeExtraBedPrice || !!reserveInformation.promoCodePrice) && (
-                                <div className="flex items-center justify-between">
-                                    {t("sum")}
-                                    <span>{numberWithCommas(reserveInformation.boardPrice)} {t('rial')} </span>
-                                </div>
-                            )}
-
-                            {!!activeExtraBedPrice && (
-                                <div className="flex items-center justify-between">
-                                    {tHotel("extra-bed")} (x{activeExtraBedCount})
-                                    <span>{numberWithCommas(activeExtraBedPrice)} {t('rial')} </span>
-                                </div>
-                            )}
-
-                            {!!hasDiscount && (
-                                <div className="flex items-center justify-between">
-                                    {t("site-discount")}
-                                    <span>{numberWithCommas(reserveInformation.boardPrice - reserveInformation.salePrice)} {t('rial')}</span>
-
-                                </div>
-                            )}
-
-
-                            {!!discountLoading && (
-                                <Skeleton className="my-1" />
-                            )}
-
-                            {!!promoCodePrice && (
-                                <div className="flex items-center justify-between">
-                                    کد تخفیف
-                                    <span>{numberWithCommas(promoCodePrice)} {t('rial')}</span>
-                                </div>
-                            )}
-
-                            {!!reserveInformation.salePrice && (
-                                <div className="flex items-center justify-between">
-                                    {t("price-paid")}
-                                    <strong className="font-bold text-sm">
-                                        {!!discountResponse && discountResponse.orderSubTotalDiscount >= 10000 ?
-                                            numberWithCommas(discountResponse.orderSubTotalDiscount + (activeExtraBedPrice || 0)) + " " + t('rial')
-                                            :
-                                            numberWithCommas(reserveInformation.salePrice + (activeExtraBedPrice || 0) - (reserveInformation.promoCodePrice || 0)) + " " + t('rial')
-                                        }
-                                    </strong>
-                                </div>
-                            )}
+                            <span>
+                                {getDatesDiff(new Date(reserveInformation.checkout), new Date(reserveInformation.checkin))} {tHotel('night')}
+                            </span>
 
                         </div>
+                    )}
 
-                        {props.hasSubmit && (
-                            <div className="mt-2 max-sm:fixed max-sm:bg-white max-sm:border-t max-sm:bottom-0 max-sm:left-0 max-sm:right-0 max-sm:z-50 max-sm:p-4">
-                                <Button type="submit" loading={props.submitLoading} className="h-12 px-2 w-full mb-2" >
-                                    {t('complete-reserve-and-get-confirmation')}
-                                </Button>
+                    {reserveInformation.rooms.map((roomItem: any, roomIndex: number) => {
+
+                        //TODO check cancelation
+                        let cancellation = null;
+                        switch (roomItem.cancellationPolicyStatus) {
+                            case "NonRefundable":
+                                cancellation = <div className="margin-bottom-5 text-red">{t("non-refundable")}</div>;
+                                break;
+                            case "Refundable":
+                                cancellation = <div className="text-green margin-bottom-5">
+                                    <Tik className="w-3 h-4 fill-green-600" />
+                                    {t("refundable")}
+                                </div>;
+                                break;
+                            default:
+                                cancellation = <div className="margin-bottom-5">{roomItem.cancellationPolicyStatus}</div>;
+                        }
+
+                        let childPriceBlock = null;
+                        let extraBedPriceBlock = null;
+
+                        if (roomExtraBed?.length) {
+                            const selectedExtraBed = roomExtraBed[roomIndex];
+                            if (selectedExtraBed) {
+                                let count = null;
+                                switch (selectedExtraBed) {
+                                    case 1:
+                                        count = "یک";
+                                        break;
+                                    case 2:
+                                        count = "دو";
+                                        break;
+                                    case 3:
+                                        count = "سه";
+                                        break;
+                                    default:
+                                        count = selectedExtraBed;
+
+                                }
+                                extraBedPriceBlock = <span> + {count} تخت اضافه</span>
+                            }
+                        }
+
+                        return (
+                            <div key={roomIndex}>
+                                {reserveInformation.rooms.length > 1 && (
+                                    <div className='flex items-center text-sm gap-2 font-semibold after:block after:border-b after:grow after:border-neutral-300'>
+                                        {tHotel('room')} {roomIndex + 1}
+                                    </div>
+                                )}
+
+                                <div className="flex gap-2 items-center text-sm">
+                                    <Bed className="w-4.5 h-4.5 fill-current" />
+                                    {roomItem.name}
+                                </div>
+
+                                <div className="flex gap-2 items-center text-sm">
+                                    <User className="w-4.5 h-4.5 fill-current" />
+                                    {roomItem.bed} {tHotel('guest')} {extraBedPriceBlock}
+                                </div>
+
+                                <div className="text-green-600 text-sm">{board(roomItem.board)}</div>
+
+                                {cancellation}
+
+                            </div>
+                        )
+                    })}
+
+                    <div className="border-t border-neutral-300 mt-4 pt-4 text-sm">
+
+                        {!!reserveInformation.boardPrice && (hasDiscount || !!activeExtraBedPrice || !!reserveInformation.promoCodePrice) && (
+                            <div className="flex items-center justify-between">
+                                {t("sum")}
+                                <span>{numberWithCommas(reserveInformation.boardPrice)} {t('rial')} </span>
+                            </div>
+                        )}
+
+                        {!!activeExtraBedPrice && (
+                            <div className="flex items-center justify-between">
+                                {tHotel("extra-bed")} (x{activeExtraBedCount})
+                                <span>{numberWithCommas(activeExtraBedPrice)} {t('rial')} </span>
+                            </div>
+                        )}
+
+                        {!!hasDiscount && (
+                            <div className="flex items-center justify-between">
+                                {t("site-discount")}
+                                <span>{numberWithCommas(reserveInformation.boardPrice - reserveInformation.salePrice)} {t('rial')}</span>
+
+                            </div>
+                        )}
+
+
+                        {!!discountLoading && (
+                            <Skeleton className="my-1" />
+                        )}
+
+                        {!!promoCodePrice && (
+                            <div className="flex items-center justify-between">
+                                کد تخفیف
+                                <span>{numberWithCommas(promoCodePrice)} {t('rial')}</span>
+                            </div>
+                        )}
+
+                        {!!reserveInformation.salePrice && (
+                            <div className="flex items-center justify-between">
+                                {t("price-paid")}
+                                <strong className="font-bold text-sm">
+                                    {!!discountResponse && discountResponse.orderSubTotalDiscount >= 10000 ?
+                                        numberWithCommas(discountResponse.orderSubTotalDiscount + (activeExtraBedPrice || 0)) + " " + t('rial')
+                                        :
+                                        numberWithCommas(reserveInformation.salePrice + (activeExtraBedPrice || 0) - (reserveInformation.promoCodePrice || 0)) + " " + t('rial')
+                                    }
+                                </strong>
                             </div>
                         )}
 
                     </div>
 
-
-
-                </div>
-                :
-                <div className='border border-neutral-300 bg-white rounded-md mb-4'>
-                <Skeleton className='mx-4 my-3.5 w-28' />
-                <div className='border-t border-neutral-300 p-4'>
-                  <div className='grid gap-3 grid-cols-4'>
-                    <Skeleton type='image' />
-                    <div className='col-span-3'>
-                      <Skeleton className='mb-3 w-2/3' />
-                      <Skeleton className='mb-3 w-1/3' />
-                      <Skeleton className='w-full' />
-                    </div>
-                  </div>
-
-                  <div className='border-t border-neutral-300 my-5' />
-
-                  <Skeleton className='mb-3 w-full' />
-                  <Skeleton className='mb-3 w-2/3' />
-                  <Skeleton className='mb-3 w-1/3' />
-                  <Skeleton className='mb-3 w-2/3' />
-
-                  <div className='border-t border-neutral-300 my-5' />
-
-                  <Skeleton className='mb-3 w-full' />
-                  <Skeleton className='mb-3 w-full' />
-                  <Skeleton className='mb-3 w-full' />
-
-                  <Skeleton className='mb-3 w-full mt-6' type='button' />
+                    {props.hasSubmit && (
+                        <div className="mt-2 max-sm:fixed max-sm:bg-white max-sm:border-t max-sm:bottom-0 max-sm:left-0 max-sm:right-0 max-sm:z-50 max-sm:p-4">
+                            <Button type="submit" loading={props.submitLoading} className="h-12 px-2 w-full mb-2" >
+                                {t('complete-reserve-and-get-confirmation')}
+                            </Button>
+                        </div>
+                    )}
 
                 </div>
-              </div>
-            }
+
+
+
+            </div>
+
 
             {/* {
             hotelInformation ?
