@@ -2,11 +2,11 @@ import Button from "@/modules/shared/components/ui/Button";
 import Rating from "@/modules/shared/components/ui/Rating";
 import Skeleton from "@/modules/shared/components/ui/Skeleton";
 import { ArrowLeft, Tik, Bed, User, Calendar, DefaultRoom } from "@/modules/shared/components/ui/icons";
-import { dateDiplayFormat, dateFormat, getDatesDiff, numberWithCommas } from "@/modules/shared/helpers";
+import { dateDiplayFormat, getDatesDiff, numberWithCommas } from "@/modules/shared/helpers";
 import { useAppSelector } from "@/modules/shared/hooks/use-store";
 import { useTranslation } from "next-i18next";
 import Image from "next/image";
-import { AsideHotelInfoType, AsideReserveInfoType, DomesticHotelDetailType, DomesticHotelGetValidateResponse } from "../../types/hotel";
+import { AsideHotelInfoType, AsideReserveInfoType } from "../../types/hotel";
 
 type Props = {
     reserveInformation?: AsideReserveInfoType;
@@ -21,7 +21,7 @@ type Props = {
         discountPrice: number;
         orderSubTotalDiscount: number;
         orderSubTotal: number;
-        isValid: boolean;
+        isValid: true;
     };
     discountLoading?: boolean;
 }
@@ -304,9 +304,35 @@ const Aside: React.FC<Props> = props => {
 
                 </div>
                 :
-                <div >
-                    <Skeleton />
+                <div className='border border-neutral-300 bg-white rounded-md mb-4'>
+                <Skeleton className='mx-4 my-3.5 w-28' />
+                <div className='border-t border-neutral-300 p-4'>
+                  <div className='grid gap-3 grid-cols-4'>
+                    <Skeleton type='image' />
+                    <div className='col-span-3'>
+                      <Skeleton className='mb-3 w-2/3' />
+                      <Skeleton className='mb-3 w-1/3' />
+                      <Skeleton className='w-full' />
+                    </div>
+                  </div>
+
+                  <div className='border-t border-neutral-300 my-5' />
+
+                  <Skeleton className='mb-3 w-full' />
+                  <Skeleton className='mb-3 w-2/3' />
+                  <Skeleton className='mb-3 w-1/3' />
+                  <Skeleton className='mb-3 w-2/3' />
+
+                  <div className='border-t border-neutral-300 my-5' />
+
+                  <Skeleton className='mb-3 w-full' />
+                  <Skeleton className='mb-3 w-full' />
+                  <Skeleton className='mb-3 w-full' />
+
+                  <Skeleton className='mb-3 w-full mt-6' type='button' />
+
                 </div>
+              </div>
             }
 
             {/* {

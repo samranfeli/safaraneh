@@ -20,7 +20,7 @@ const SpecialRequests:React.FC<Props> = () =>{
 
     return(
                     
-        <div className='md:col-span-3 pt-4'>
+        <div className='pt-4'>
 
         <button 
           type='button'

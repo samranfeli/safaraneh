@@ -1,6 +1,7 @@
 import axios from 'axios';
 
 import { Header, ServerAddress, Hotel } from "../../../enum/url";
+import { DomesticHotelPrereserveParams } from '../types/hotel';
 
 export const getDomesticHotelDetailById = async (id: number, acceptLanguage: string = 'fa-IR') => {
     try {
@@ -256,3 +257,28 @@ export const domesticHotelGetValidate = async (key: string, acceptLanguage: stri
         return error
     }
 }
+
+
+export const domesticHotelPreReserve = async (param :DomesticHotelPrereserveParams , acceptLanguage: string = 'fa-IR') => {
+
+    try {
+      let response = await axios.post(
+        `${ServerAddress.Type}${ServerAddress.Hotel_Availability}${Hotel.PreReserve}`,
+        param,
+        {
+          headers: {
+            accept: 'text/plain',
+            'Content-Type': 'application/json',
+            apikey: process.env.PROJECT_SERVER_APIKEY,
+            'Accept-Language': acceptLanguage,
+            TenantId: process.env.ABP_TENANT_ID,
+            Currency: 'IRR'
+          },
+        },
+      )
+      return response
+    } catch (error) {
+      return error
+    }
+  }
+

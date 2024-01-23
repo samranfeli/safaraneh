@@ -400,3 +400,23 @@ export interface AsideReserveInfoType {
     selectedExtraBedCount?:any;
     promoCodePrice?:any;
 }
+
+export interface DomesticHotelPrereserveParams {
+    reserver: {
+        gender: boolean;
+        firstName: string;
+        lastName: string;
+        email: string;
+        nationalId: string;
+        phoneNumber: string;
+    };
+    passengers: {
+        gender: boolean;
+        firstName: string;
+        lastName: string;
+        roomNumber: number;
+        extraBed: number;
+    }[];
+    specialRequest: string;
+    preReserveKey: string;
+}

@@ -6,7 +6,7 @@ import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 import { useRouter } from 'next/router';
 import Head from 'next/head';
 
-import { domesticHotelGetValidate, getDomesticHotelDetailById } from '@/modules/domesticHotel/actions';
+import { domesticHotelGetValidate, domesticHotelPreReserve, getDomesticHotelDetailById } from '@/modules/domesticHotel/actions';
 import Aside from '@/modules/domesticHotel/components/shared/Aside';
 import { getDatesDiff } from '@/modules/shared/helpers';
 import { AsideHotelInfoType, AsideReserveInfoType, DomesticHotelDetailType, DomesticHotelGetValidateResponse } from '@/modules/domesticHotel/types/hotel';
@@ -14,12 +14,21 @@ import SpecialReauests from '@/modules/domesticHotel/components/checkout/Special
 import ReserverInformation from '@/modules/domesticHotel/components/checkout/ReserverInformation';
 import RoomItemInformation from '@/modules/domesticHotel/components/checkout/RoomItemInformation';
 import DiscountForm from '@/modules/domesticHotel/components/checkout/DiscountForm';
-import { validateDiscountCode } from '@/modules/payment/actions';
+import { registerDiscountCode, validateDiscountCode } from '@/modules/payment/actions';
+import { useAppDispatch } from '@/modules/shared/hooks/use-store';
+import { setReduxError } from '@/modules/shared/store/errorSlice';
+import { dateFormat } from '@/modules/shared/helpers';
+import Steps from '@/modules/shared/components/ui/Steps';
+import Link from 'next/link';
+import Skeleton from '@/modules/shared/components/ui/Skeleton';
+import { LeftCaret } from '@/modules/shared/components/ui/icons';
 
 const Checkout: NextPage = () => {
 
   const { t } = useTranslation('common');
   const { t: tHotel } = useTranslation('hotel');
+
+  const dispatch = useAppDispatch();
 
   const router = useRouter();
   const pathSegments = router.asPath.split("?")[0].split("#")[0].split("/");
@@ -34,6 +43,20 @@ const Checkout: NextPage = () => {
 
   const [discountData, setDiscountData] = useState<any>();
   const [discountLoading, setDiscountLoading] = useState<boolean>(false);
+
+
+  let backUrl: string = "";
+  const checkinDate = reserveInfo?.checkin && new Date(reserveInfo.checkin);
+  const checkoutDate = reserveInfo?.checkout && new Date(reserveInfo.checkout);
+
+  if (hotelInfo && checkinDate && checkoutDate) {
+
+    const checkin = dateFormat(checkinDate);
+    const checkout = dateFormat(checkoutDate);
+
+    backUrl = `${hotelInfo.Url}/location-${hotelInfo.CityId}/checkin-${checkin}/checkout-${checkout}`;
+  }
+
 
   useEffect(() => {
 
@@ -132,16 +155,33 @@ const Checkout: NextPage = () => {
 
   const submitHandler = async (params: any) => {
 
-    console.log(params);
-    
-    debugger;
 
-    const gggg = {
-      passengers: [
-        {
-          "childrenAge": []
-        }
-      ]
+    const reserveResponse: any = await domesticHotelPreReserve(params);
+
+    if (reserveResponse.data && reserveResponse.data.result) {
+      const id = reserveResponse.data.result.id;
+      const username = reserveResponse.data.result.username;
+
+      if (discountData?.promoCodeId) {
+        await registerDiscountCode({ discountPromoCode: discountData.promoCodeId, reserveId: id, username: username });
+      }
+
+      if (reserveResponse.data.result.rooms.every((x: any) => x.availablityType === "Online")) {
+        router.push(`/payment?username=${username}&reserveId=${id}`);
+      } else {
+        router.push(`/hotel/capacity?reserveId=${id}&username=${username}`);
+      }
+
+    } else {
+
+      dispatch(setReduxError({
+        title: tHotel('error-in-reserve-room'),
+        message: tHotel('sorry-room-is-full'),
+        isVisible: true,
+        closeErrorLink: backUrl || "/",
+        closeButtonText: backUrl ? tHotel('choose-room') : t("home")
+      }));
+
     }
   }
 
@@ -194,6 +234,21 @@ const Checkout: NextPage = () => {
 
       <div className='max-w-container mx-auto px-5 py-4'>
 
+        <Steps
+          className='py-3 mb-2'
+          items={[
+            { label: t('completing-informaion'), status: 'active' },
+            { label: tHotel('checking-capacity'), status: 'up-comming' },
+            { label: t('confirm-pay'), status: 'up-comming' },
+            { label: t('completing-pay'), status: 'up-comming' }
+          ]}
+        />
+
+        {backUrl ? (
+          <Link href={backUrl} className='text-sm text-blue-500 mb-4 inline-block'> <LeftCaret className='inline-block align-middle w-5 h-5 fill-current rtl:rotate-180' /> برگشت به انتخاب اتاق </Link>
+        ) : (
+          <Skeleton className='mt-2 mb-3 w-60' />
+        )}
 
         {!!reserveInfo && (
           <Formik
@@ -216,7 +271,7 @@ const Checkout: NextPage = () => {
 
                   <div className='md:col-span-7 lg:col-span-2'>
 
-                    <div className='bg-white border border-neutral-300 p-5 rounded-lg grid md:grid-cols-3 gap-2'>
+                    <div className='bg-white border border-neutral-300 p-5 rounded-lg'>
 
                       <ReserverInformation
                         errors={errors}
@@ -263,6 +318,7 @@ const Checkout: NextPage = () => {
                   </div>
 
                   <div className='md:col-span-5 lg:col-span-1'>
+
                     <Aside
                       hotelInformation={hotelInformation}
                       reserveInformation={reserveInformation}
@@ -274,23 +330,44 @@ const Checkout: NextPage = () => {
                     />
 
                     <div className='bg-white p-4 border border-neutral-300 rounded-md mb-4 border-t-2 border-t-orange-400'>
-                      <h5 className='font-semibold text-orange-400 mb-2 leading-6'>
-                        {t('price-will-increase')}
-                      </h5>
-                      <p className='text-2xs'>
-                        {t('price-will-increase-desc')}
-                      </p>
+                      {hotelInfo ? (
+                        <>
+                          <h5 className='font-semibold text-orange-400 mb-2 leading-6'>
+                            {t('price-will-increase')}
+                          </h5>
+                          <p className='text-2xs'>
+                            {t('price-will-increase-desc')}
+                          </p>
+                        </>
+                      ) : (
+                        <>
+                          <Skeleton className='mb-3 w-1/3' />
+                          <Skeleton className='mb- w-2/3' />
+                        </>
+                      )}
+
                     </div>
 
 
                     <div className='bg-white p-4 border border-neutral-300 rounded-md mb-4 border-t-2 border-t-blue-500'>
-                      <h5 className='font-semibold text-blue-500 mb-2 leading-6'>
-                        {tHotel('recent-reserve-number')}
-                      </h5>
-                      {!! hotelInfo && <p className='text-2xs'>
-                        {tHotel('theNumberOfRecentReservationsOfThisHotelIs', {number:hotelInfo?.TopSelling})}
-                      </p>}
+                      {hotelInfo ? (
+                        <>
+                          <h5 className='font-semibold text-blue-500 mb-2 leading-6'>
+                            {tHotel('recent-reserve-number')}
+                          </h5>
+                          <p className='text-2xs'>
+                            {tHotel('theNumberOfRecentReservationsOfThisHotelIs', { number: hotelInfo?.TopSelling })}
+                          </p>
+                        </>
+                      ) : (
+                        <>
+                          <Skeleton className='mb-3 w-1/3' />
+                          <Skeleton className='mb- w-2/3' />
+                        </>
+                      )}
+
                     </div>
+
 
                   </div>
                 </Form>
