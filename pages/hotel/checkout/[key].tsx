@@ -318,47 +318,16 @@ const Checkout: NextPage = () => {
                   </div>
 
                   <div className='md:col-span-5 lg:col-span-1'>
-                    {(hotelInfo && reserveInfo) ? (
-                      <Aside
-                        hotelInformation={hotelInformation}
-                        reserveInformation={reserveInformation}
-                        hasSubmit
-                        submitLoading={false}
-                        roomExtraBed={roomsExtraBed}
-                        discountLoading={discountLoading}
-                        discountResponse={discountData?.isValid ? discountData : undefined}
-                      />
-                    ) : (
-                      <div className='border border-neutral-300 bg-white rounded-md mb-4'>
-                        <Skeleton className='mx-4 my-3.5 w-28' />
-                        <div className='border-t border-neutral-300 p-4'>
-                          <div className='grid gap-3 grid-cols-4'>
-                            <Skeleton type='image' />
-                            <div className='col-span-3'>
-                              <Skeleton className='mb-3 w-2/3' />
-                              <Skeleton className='mb-3 w-1/3' />
-                              <Skeleton className='w-full' />
-                            </div>
-                          </div>
 
-                          <div className='border-t border-neutral-300 my-5' />
-
-                          <Skeleton className='mb-3 w-full' />
-                          <Skeleton className='mb-3 w-2/3' />
-                          <Skeleton className='mb-3 w-1/3' />
-                          <Skeleton className='mb-3 w-2/3' />
-
-                          <div className='border-t border-neutral-300 my-5' />
-
-                          <Skeleton className='mb-3 w-full' />
-                          <Skeleton className='mb-3 w-full' />
-                          <Skeleton className='mb-3 w-full' />
-
-                          <Skeleton className='mb-3 w-full mt-6' type='button' />
-
-                        </div>
-                      </div>
-                    )}
+                    <Aside
+                      hotelInformation={hotelInformation}
+                      reserveInformation={reserveInformation}
+                      hasSubmit
+                      submitLoading={false}
+                      roomExtraBed={roomsExtraBed}
+                      discountLoading={discountLoading}
+                      discountResponse={discountData?.isValid ? discountData : undefined}
+                    />
 
                     <div className='bg-white p-4 border border-neutral-300 rounded-md mb-4 border-t-2 border-t-orange-400'>
                       {hotelInfo ? (
