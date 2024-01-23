@@ -8,7 +8,7 @@ import BestHotels from "./BestHotelsSidebar";
 const Sidebar: NextPage<any> = ({ recentBlogs, CategoriesNames , SearchItem }) => {
     
     return (
-        <div className="h-dvh">
+        <div className="sticky top-5">
             <div className="border-b-4 border-blue-800">
                 <p className="text-white p-2 rounded-md bg-blue-800 inline text-xs">دسته بندی</p>
             </div>
@@ -41,10 +41,10 @@ const Sidebar: NextPage<any> = ({ recentBlogs, CategoriesNames , SearchItem }) =
             
 
             <div className="p-1 mt-7">
-                <div className=" border-b-4 border-blue-800">
+                <div className="border-b-4 border-blue-800">
                     <p className="text-xs bg-blue-800 rounded-md inline text-white p-2">پرطرفدارترین هتل های ایران</p>
                 </div>
-                <div className="flex w-full mt-7">
+                <div className="w-full mt-7">
                 <BestHotels />
                 </div>    
             </div>

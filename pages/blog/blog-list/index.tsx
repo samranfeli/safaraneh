@@ -28,9 +28,11 @@ export default BlogList;
 
 export const getStaticProps: GetStaticProps = async (context: any) => {
 
-    let recentBlogs : any = await getBlogs(3);
-    let AllBlog: any = await getBlogs(100)
-    let categories_name : any = await GetCategories()
+    const [recentBlogs, AllBlog, categories_name] = await Promise.all<any>([
+        getBlogs(3),
+        getBlogs(100),
+        GetCategories()
+    ])
     return (
         {
             props: {

@@ -33,9 +33,12 @@ export default Category;
 
 export async function getServerSideProps(context: any) {
     const categoryItem : any = context.query.categoriItem
-    let data: any = await getBlogs(3)
-    let BlogCategory: any = await GetBlogPostCategory(+categoryItem)
-    let categories_name : any = await GetCategories()
+
+    const [data, BlogCategory, categories_name] = await Promise.all<any>([
+        getBlogs(3),
+        GetBlogPostCategory(+ categoryItem),
+        GetCategories()
+    ])
     return (
         {
             props: {

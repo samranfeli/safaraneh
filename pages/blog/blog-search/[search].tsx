@@ -1,4 +1,4 @@
-import { GetCategories, GetSearchBlogPosts, getBlogs } from "@/modules/blogs/actions";
+import { GetBlogPostCategory, GetCategories, GetSearchBlogPosts, getBlogs } from "@/modules/blogs/actions";
 import NavbarBlog from "@/modules/blogs/components/template/BreadCrumpt";
 import Title from "@/modules/blogs/components/BlogSearch/Title";
 import Content from "@/modules/blogs/components/template/Content";
@@ -28,10 +28,11 @@ export default Search;
 export async function getServerSideProps(context: any) { 
     const search = context.query.search;
 
-    let SearchBlog: any = await GetSearchBlogPosts(search);
-    let categories_name: any = await GetCategories();
-    let recentBlogs: any = await getBlogs(3)
-
+    const [SearchBlog, categories_name, recentBlogs] = await Promise.all<any>([
+        GetBlogPostCategory(search),
+        GetCategories(),
+        getBlogs(3)
+    ])
     return ({
         props: {
             ...await (serverSideTranslations(context.locale, ['common'])),

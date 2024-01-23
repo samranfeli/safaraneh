@@ -30,10 +30,12 @@ export default Tag;
 export async function getServerSideProps(context: any) {
     let tag = context.query.tag;
 
-    let TagName : any = await GetTagName(+tag)
-    let TagBlogs: any = await GetTags(+tag)
-    let categories_name: any = await GetCategories()
-    let recentBlogs: any = await getBlogs(3)
+    const [TagName, TagBlogs, categories_name, recentBlogs] = await Promise.all<any>([
+        GetTagName(+tag),
+        GetTags(+tag),
+        GetCategories(),
+        getBlogs(3)
+    ])
     
     return ({
         props: {
