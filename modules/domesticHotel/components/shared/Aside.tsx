@@ -339,10 +339,7 @@ const Aside: React.FC<Props> = props => {
 
                 </div>
 
-
-
             </div>
-
 
             {/* {
             hotelInformation ?

@@ -44,7 +44,6 @@ const Checkout: NextPage = () => {
   const [discountData, setDiscountData] = useState<any>();
   const [discountLoading, setDiscountLoading] = useState<boolean>(false);
 
-
   let backUrl: string = "";
   const checkinDate = reserveInfo?.checkin && new Date(reserveInfo.checkin);
   const checkoutDate = reserveInfo?.checkout && new Date(reserveInfo.checkout);
@@ -56,7 +55,6 @@ const Checkout: NextPage = () => {
 
     backUrl = `${hotelInfo.Url}/location-${hotelInfo.CityId}/checkin-${checkin}/checkout-${checkout}`;
   }
-
 
   useEffect(() => {
 
@@ -85,7 +83,6 @@ const Checkout: NextPage = () => {
     }
 
   }, [key]);
-
 
   let hotelInformation: AsideHotelInfoType;
   let reserveInformation: AsideReserveInfoType;
@@ -152,9 +149,7 @@ const Checkout: NextPage = () => {
     }
   }
 
-
   const submitHandler = async (params: any) => {
-
 
     const reserveResponse: any = await domesticHotelPreReserve(params);
 
@@ -348,7 +343,6 @@ const Checkout: NextPage = () => {
 
                     </div>
 
-
                     <div className='bg-white p-4 border border-neutral-300 rounded-md mb-4 border-t-2 border-t-blue-500'>
                       {hotelInfo ? (
                         <>
@@ -367,8 +361,6 @@ const Checkout: NextPage = () => {
                       )}
 
                     </div>
-
-
                   </div>
                 </Form>
               )
@@ -384,11 +376,9 @@ const Checkout: NextPage = () => {
                 <Skeleton className='mb-5' />
                 <Skeleton className='w-1/3' />
               </div>
-
               <h5 className='font-semibold my-6'>
                 <Skeleton className='w-52' />
               </h5>
-
               <div className='bg-white border border-neutral-300 p-5 rounded-lg mb-6'>
                 <Skeleton className='mb-6 w-40' />
                 <Skeleton className='mb-5' />
@@ -397,36 +387,25 @@ const Checkout: NextPage = () => {
                 <Skeleton className='w-1/3 mb-5' />
                 <Skeleton />
               </div>
-
               <div className='bg-white border border-neutral-300 p-5 rounded-lg'>
                 <Skeleton className='mb-6 w-40' />
                 <Skeleton className='w-1/3' />
               </div>
-
             </div>
 
             <div className='md:col-span-5 lg:col-span-1'>
-
               <Aside />
-
               <div className='bg-white p-4 border border-neutral-300 rounded-md mb-4 border-t-2 border-t-orange-400'>
                 <Skeleton className='mb-3 w-1/3' />
                 <Skeleton className='mb- w-2/3' />
-
               </div>
-
-
               <div className='bg-white p-4 border border-neutral-300 rounded-md mb-4 border-t-2 border-t-blue-500'>
                 <Skeleton className='mb-3 w-1/3' />
                 <Skeleton className='mb- w-2/3' />
-
               </div>
-
-
             </div>
           </div>
         )}
-
 
       </div>
     </>
