@@ -162,7 +162,7 @@ const Checkout: NextPage = () => {
       }
 
       if (reserveResponse.data.result.rooms.every((x: any) => x.availablityType === "Online")) {
-        router.push(`/payment?username=${username}&reserveId=${id}`);
+        router.push(`/payment?reserveId=${id}&username=${username}`);
       } else {
         router.push(`/hotel/capacity?reserveId=${id}&username=${username}`);
       }

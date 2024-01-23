@@ -11,7 +11,7 @@ export const getPortal = async (acceptLanguage: string = "fa-IR") => {
             headers: {
                 ...Header,
                 "Accept-Language": acceptLanguage,
-                "Apikey": process.env.PROJECT_SERVER_APIKEY
+                "Apikey": process.env.PROJECT_PORTAL_APIKEY
             }
         });
         return (response)

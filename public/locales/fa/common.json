@@ -9,7 +9,10 @@
   "cip": "تشریفات فرودگاهی",
   "close": "بستن",
   "complete-reserve-and-get-confirmation": "تکمیل خرید و دریافت تاییدیه",
+  "completing-informaion": "تکمیل اطلاعات",
   "completing-information": "تکمیل اطلاعات",
+  "completing-pay": "تکمیل خرید",
+  "confirm-pay": "تایید و پرداخت",
   "contact-us": "تماس با ما",
   "create-account": "ثبت نام",
   "discount": "تخفیف",
@@ -22,10 +25,7 @@
   "fill-passengers-information": "مشخصات مسافران را وارد کنید",
   "filter": "فیلتر",
   "first-name": "نام",
-  "completing-informaion": "تکمیل اطلاعات",
   "foreign-flight": "پرواز خارجی",
-  "confirm-pay": "تایید و پرداخت",
-  "completing-pay": "تکمیل خرید",
   "foreign-hotel": "هتل خارجی",
   "full-name": "نام و نام خانوادگی",
   "home": "خانه",
@@ -75,5 +75,7 @@
   "special-requests-desc": "درخواست های خاص تضمینی نیستند و به صلاحدید هتل هستند. بسته به سیاست های هتل ممکن است هزینه های اضافی اعمال شود.",
   "sum": "مجموع",
   "support": "پشتیبانی",
-  "terms": "قوانین و مقررات"
+  "terms": "قوانین و مقررات",
+  "tracking-code": "کد پیگیری",
+  "with-this-code": "از طریق این کد می توانید رزروتان را پیگیری کنید"
 }
