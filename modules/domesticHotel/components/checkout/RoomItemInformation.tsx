@@ -98,8 +98,8 @@ const RoomItemInformation: React.FC<Props> = props => {
         <Bed className='w-5 h-5 fill-current inline-block align-middle rtl:ml-2 ltr:mr-2' /> {tHotel('room')} {roomIndex + 1} - {roomItem.name}
       </h5>
 
-      <div role="group" aria-labelledby="my-radio-group">
-        <label className='block leading-4 text-xs' > جنسیت </label>
+      <div role="group" className="leading-4" >
+        <label className='block text-xs mb-1' > جنسیت </label>
         <label className='inline-flex items-center gap-1 rtl:ml-4 ltr:mr-4'>
           <Field
             type="radio"

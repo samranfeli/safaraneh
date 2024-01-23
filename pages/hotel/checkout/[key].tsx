@@ -154,7 +154,7 @@ const Checkout: NextPage = () => {
       } else {
         router.push(`/hotel/capacity?reserveId=${id}&username=${username}`);
       }
-      
+
     } else {
 
       let backUrl: string = "";
@@ -262,7 +262,7 @@ const Checkout: NextPage = () => {
 
                   <div className='md:col-span-7 lg:col-span-2'>
 
-                    <div className='bg-white border border-neutral-300 p-5 rounded-lg grid md:grid-cols-3 gap-2'>
+                    <div className='bg-white border border-neutral-300 p-5 rounded-lg'>
 
                       <ReserverInformation
                         errors={errors}
