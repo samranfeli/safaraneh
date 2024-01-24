@@ -1,4 +1,4 @@
-import NavbarBlog from "@/modules/blogs/components/template/NavbarBlog";
+import NavbarBlog from "@/modules/blogs/components/template/BreadCrumpt";
 import Title from "@/modules/blogs/components/BlogCategory/Title";
 import { NextPage } from "next";
 import { GetBlogPostCategory, GetCategories, getBlogs } from "@/modules/blogs/actions";
@@ -33,9 +33,12 @@ export default Category;
 
 export async function getServerSideProps(context: any) {
     const categoryItem : any = context.query.categoriItem
-    let data: any = await getBlogs(3)
-    let BlogCategory: any = await GetBlogPostCategory(+categoryItem)
-    let categories_name : any = await GetCategories()
+
+    const [data, BlogCategory, categories_name] = await Promise.all<any>([
+        getBlogs(3),
+        GetBlogPostCategory(+ categoryItem),
+        GetCategories()
+    ])
     return (
         {
             props: {

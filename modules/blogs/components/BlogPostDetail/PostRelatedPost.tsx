@@ -15,12 +15,12 @@ const RelatedPost: NextPage<any> = ({ Post, AllPost }) => {
                 RelatedPost &&
                 RelatedPost.slice(0, 3).map((post : any) => 
                     <Link href={`/blog/${post.slug}`} key={post.id} >
-                        <Image src={post.images.large} width={900} height={200} alt="pic" className="rounded"/>
-                        <div className="bg-white shadow-lg rounded-lg p-5 max-md:p-2 relative bottom-10 mr-2 ml-2 max-xl:text-xs">
+                        <Image src={post.images.large} width={200} height={200} alt="pic" className="rounded w-full"/>
+                        <div className="bg-white shadow-lg rounded-lg p-5 max-lg:p-3 relative bottom-10 mr-2">
                             <Link href={`/blog/category/${post.categories[0]}`} className="text-red-500 text-xs mb-2 hover:text-red-300">
                                 {post.categories_names}
                             </Link>
-                            <p className="font-bold hover:text-blue-900">{post.title.rendered}</p>
+                            <p className="font-bold hover:text-blue-900 max-xl:text-sm">{post.title.rendered}</p>
                         </div>
                     </Link>
                     )

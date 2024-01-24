@@ -1,6 +1,6 @@
 import { GetStaticProps, NextPage } from "next";
 import { GetBestCategory, GetBestCategory2, GetCategories, GetCities, getBlogs } from "@/modules/blogs/actions";
-import NavbarBlog from "@/modules/blogs/components/template/NavbarBlog";
+import NavbarBlog from "@/modules/blogs/components/template/BreadCrumpt";
 import CategoryBlog from "@/modules/blogs/components/BlogHome/CategoryHomeBlog";
 import SearchBox from "@/modules/blogs/components/BlogHome/SearchBox";
 import NewBlog from "@/modules/blogs/components/BlogHome/NewBlogItem";
@@ -17,7 +17,9 @@ const Blog: NextPage<any> = ({ NewBlogs, Cities, Categories , Categories2 ,Categ
         <div className="bg-white">
             <NavbarBlog />
             <BlogCities data={Cities} />
+            <div className="bg-slate-100 pt-14 pb-14">
             <CategoryBlog data={Categories} data2={Categories2} CategoriesData={Categories3} />
+            </div>
             <SearchBox />
             <NewBlog blogs={NewBlogs} />
         </div>
