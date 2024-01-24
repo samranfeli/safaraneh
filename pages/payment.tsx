@@ -12,7 +12,7 @@ import { AsideHotelInfoType, AsideReserveInfoType, DomesticHotelDetailType, Dome
 import { getDatesDiff } from '@/modules/shared/helpers';
 import Skeleton from '@/modules/shared/components/ui/Skeleton';
 import { TabItem } from '@/modules/shared/types/common';
-import Tabs from '@/modules/shared/components/ui/Tabs';
+import Tab from '@/modules/shared/components/ui/Tab';
 import OnlinePayment from '@/modules/payment/components/OnlinePayment';
 import CardToCard from '@/modules/payment/components/CardToCard';
 import CreditPayment from '@/modules/payment/components/CreditPayment';
@@ -199,7 +199,7 @@ const Payment: NextPage = () => {
 
             <h2 className='text-2xl mt-4 mb-8'> چگونه می خواهید پرداخت کنید؟ </h2>
             
-            <Tabs
+            <Tab
               style2
               items={tabItems}
             />

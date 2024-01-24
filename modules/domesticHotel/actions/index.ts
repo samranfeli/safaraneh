@@ -109,6 +109,7 @@ export const SearchHotels = async (url: string, acceptLanguage: string = 'fa-IR'
             url: `${ServerAddress.Type}${ServerAddress.Hotel_Main}${Hotel.SearchHotels}`,
             headers: {
                 ...Header,
+                apikey: process.env.PROJECT_PORTAL_APIKEY,
                 "Accept-Language": acceptLanguage
             }
         });
