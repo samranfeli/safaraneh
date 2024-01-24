@@ -10,25 +10,23 @@ interface Props {
 
 const BlogItem: NextPage<any> = ({data}) => {
     return (
-        <div>
-            <div className="grid grid-cols-3 gap-6 max-sm:grid-cols-1 mt-6 max-sm:mt-12 scale-95 max-sm:scale-100 w-full">
-                <div>
+            <div className="grid grid-cols-3 gap-6 max-sm:grid-cols-1 mt-6 max-sm:mt-12 scale-95 max-sm:scale-100 w-full max-sm:-space-y-2">
                     <Link href={`/blog/${data.slug}`}>
-                        <Image src={data?.images.large}
-                            alt="pic" height={150} width={200} className="w-full rounded-md max-sm:mr-3" priority={data?.id} />
+                <Image src={data?.images.large}
+                    alt="pic" height={150} width={200} className="w-full rounded-md max-sm:mr-3" priority={true} />
                     </Link>
-                </div>
 
-                <div className="w-full col-span-2 rounded-md pl-5 pr-5 pt-5 pb-2 h-full relative border-gray-200 border-2 max-sm:border-0 max-sm:pt-0">
+                <div
+                className="w-full col-span-2 rounded-md pl-5 pr-5 pt-5 pb-2 h-full relative border-gray-200 border-2 max-sm:border-0 max-sm:pt-0 ">
                     <Link href={`/blog/category/${data.categories[0]}`}
                         className="text-red-600 block hover:text-red-400 translation-all duration-300">
                         {data?.categories_names[0]}
                     </Link>
                     <Link href={`/blog/${data.slug}`}
-                        className="block font-semibold text-xl max-lg:text-lg h-20 max-sm:h-14 hover:text-blue-800 mt-2 translation-all duration-300 max-sm:text-sm">
+                        className="block font-semibold text-xl max-lg:text-lg pb-12 max-md:pb-4 max-sm:h-14 hover:text-blue-800 mt-2 translation-all duration-300 max-sm:text-sm">
                          {data?.title.rendered}
                     </Link>
-                <div className="flex justify-between text-sm">
+                <div className="flex justify-between text-sm pb-1">
                     <div className="flex justify-between text-gray-400">
                         <p>{data?.date}</p>
                         <p className="scale-150 ml-2 mr-2">.</p>
@@ -43,8 +41,7 @@ const BlogItem: NextPage<any> = ({data}) => {
                         </Link>
                 </div>
             </div>
-        </div >
-        </div>       
+        </div >     
     )
 }
 

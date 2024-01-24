@@ -17,7 +17,9 @@ const Blog: NextPage<any> = ({ NewBlogs, Cities, Categories , Categories2 ,Categ
         <div className="bg-white">
             <NavbarBlog />
             <BlogCities data={Cities} />
+            <div className="bg-slate-100 pt-14 pb-14">
             <CategoryBlog data={Categories} data2={Categories2} CategoriesData={Categories3} />
+            </div>
             <SearchBox />
             <NewBlog blogs={NewBlogs} />
         </div>

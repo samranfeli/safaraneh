@@ -9,7 +9,7 @@ const SidebarSearchBlog: NextPage = () => {
     return (
         <div>
             <div className="mt-3 border-b-4 border-blue-800">
-                <p className="inline bg-blue-800 rounded text-white p-2 text-xs">جستجو</p>
+                <h2 className="inline bg-blue-800 rounded text-white p-2 text-xs">جستجو</h2>
             </div>
             <div>
                 <form className="flex mt-5">

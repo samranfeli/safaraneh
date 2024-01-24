@@ -17,7 +17,7 @@ const BlogList: NextPage<any> = ({ AllBlog, recentBlogs, categories_name }:
             <AllData.Provider value={[ AllBlog, recentBlogs, categories_name ]}>
                 <NavbarBlog data={'جدیدترین مقالات'} />
                 <Title />
-                <Content Blogs={AllBlog} LastBlogs={recentBlogs} CategoriesName={categories_name}/>
+                <Content Blogs={AllBlog} LastBlogs={recentBlogs?.slice(0,3)} CategoriesName={categories_name}/>
             </AllData.Provider>
         </div>
     )
@@ -28,8 +28,7 @@ export default BlogList;
 
 export const getStaticProps: GetStaticProps = async (context: any) => {
 
-    const [recentBlogs, AllBlog, categories_name] = await Promise.all<any>([
-        getBlogs(3),
+    const [ AllBlog, categories_name] = await Promise.all<any>([
         getBlogs(100),
         GetCategories()
     ])
@@ -38,7 +37,7 @@ export const getStaticProps: GetStaticProps = async (context: any) => {
             props: {
                 ...await (serverSideTranslations(context.locale, ['common'])),
                 AllBlog: AllBlog?.data || null,
-                recentBlogs: recentBlogs?.data || null,
+                recentBlogs: AllBlog?.data || null,
                 categories_name: categories_name?.data || null
             },
             revalidate : 60 * 60 * 24//12 Hours
