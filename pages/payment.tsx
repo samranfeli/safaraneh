@@ -1,6 +1,6 @@
 import Steps from '@/modules/shared/components/ui/Steps';
 import { useState, useEffect } from 'react';
-import type { NextPage } from 'next';
+import type { GetServerSideProps, NextPage } from 'next';
 import { useTranslation } from 'next-i18next';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 import Head from 'next/head';
@@ -253,13 +253,14 @@ const Payment: NextPage = () => {
   )
 }
 
-export const getStaticProps = async (context: any) => {
+export const getServerSideProps: GetServerSideProps = async (context: any) => {
+  
   return ({
     props: {
-      ...await serverSideTranslations(context.locale, ['common', 'hotel']),
-      context: context
-    }
+      ...await (serverSideTranslations(context.locale, ['common', 'hotel']))
+
+    },
   })
-};
+}
 
 export default Payment;
