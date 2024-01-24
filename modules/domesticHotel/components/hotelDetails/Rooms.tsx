@@ -8,6 +8,7 @@ import useHttp from '@/modules/shared/hooks/use-http';
 import { useRouter } from 'next/router';
 import RoomItem from './RoomItem';
 import { addSomeDays, dateFormat } from '@/modules/shared/helpers';
+import { domesticHotelValidateRoom } from '../../actions';
 
 type Props = {
     hotelId: number;
@@ -20,20 +21,20 @@ const Rooms: React.FC<Props> = props => {
     const router = useRouter();
     const { asPath } = router;
 
-    const { t: tHotel} = useTranslation('hotel');
+    const { t: tHotel } = useTranslation('hotel');
 
     const [availabilites, setAvailabilities] = useState<DomesticHotelAvailability[] | undefined>();
 
     const [selectedRoomToken, setSelectedRoomToken] = useState<string>();
 
-    const today =  dateFormat(new Date());
+    const today = dateFormat(new Date());
     const tomorrow = dateFormat(addSomeDays(new Date()));
     let checkin = today;
-    let checkout =tomorrow;
+    let checkout = tomorrow;
 
     if (asPath.includes("checkin") && asPath.includes("checkout")) {
-        checkin = asPath.split('checkin-')[1].split("/")[0];
-        checkout = asPath.split('checkout-')[1].split("/")[0];
+        checkin = asPath.split('checkin-')[1].split("/")[0].split("?")[0];
+        checkout = asPath.split('checkout-')[1].split("/")[0].split("?")[0];
     }
 
     const { sendRequest, loading } = useHttp();
@@ -67,14 +68,38 @@ const Rooms: React.FC<Props> = props => {
 
     }, [hotelId, fetchRooms]);
 
-    useEffect(()=>{
-        if(selectedRoomToken){
+    useEffect(() => {
+        if (selectedRoomToken) {
             router.push("/hotel/checkout/123")
         }
-    },[selectedRoomToken])
+    }, [selectedRoomToken])
 
-    const selectRoomHandle = (token:string, count: number) => {
+    const selectRoomHandle = async (token: string, count: number) => {
         setSelectedRoomToken(token);
+
+        let utm: undefined | { utmSource: string; utmKey: string };
+        if (router.query && router.query.utm_source && router.query.utm_key) {
+            utm = {
+                utmSource: router.query.utm_source! as string,
+                utmKey: router.query.utm_key! as string
+            }
+        }
+
+        const preReserveResponse: any = await domesticHotelValidateRoom({
+            bookingToken: token,
+            checkin: checkin,
+            checkout: checkout,
+            count: count,
+            MetaSearchName: utm?.utmSource || null,
+            MetaSearchKey: utm?.utmKey || null
+        });
+
+        if (preReserveResponse.data) {
+            const key = preReserveResponse.data.result.preReserveKey;
+            router.push(`/hotel/checkout/key=${key}`);
+        }
+
+
     }
 
     return (

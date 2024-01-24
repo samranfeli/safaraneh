@@ -495,7 +495,7 @@ const HotelList: NextPage<Props> = props => {
             <button type='button' className='relative block w-full lg:mb-5' onClick={() => { setShowMap(true) }}>
               <Image src="/images/map-cover.svg" alt="showMap" className='block border w-full h-24 rounded-xl object-cover' width={354} height={100} />
                <span className='absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-white px-3 py-1 border-1 border-blue-600 rounded font-semibold select-none leading-5 text-xs whitespace-nowrap'>
-                {tHotel('viewHotelsOnMap', {cityName: entity?.EntityName || hotels[0].CityName})}
+                {tHotel('viewHotelsOnMap', {cityName: entity?.EntityName || cityName})}
               </span>
             </button>
 

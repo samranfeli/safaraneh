@@ -2,7 +2,7 @@ import { useTranslation } from 'next-i18next';
 
 import SearchForm from '../../domesticHotel/components/shared/SearchForm';
 import {Apartment,Travel} from '../../shared/components/ui/icons';
-import Tabs from '../../shared/components/ui/tabs';
+import Tabs from '../../shared/components/ui/Tabs';
 import { TabItem } from '@/modules/shared/types/common';
 import Image from 'next/image';
 import { addSomeDays, dateFormat } from '@/modules/shared/helpers';
@@ -40,8 +40,7 @@ const Banner :React.FC = () => {
               alt="blue sky"
               width={1350}
               height={433}
-              priority
-              className='absolute top-0 left-0 w-full h-full object-cover object-center z-10'
+              className='absolute top-0 left-0 w-full h-full object-cover object-center z-10 max-sm:hidden'
             />
              <div className="max-w-container mx-auto pt-5 sm:px-3 sm:py-10 sm:pb-28 relative z-20">
 

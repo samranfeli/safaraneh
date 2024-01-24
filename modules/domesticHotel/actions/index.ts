@@ -1,6 +1,7 @@
 import axios from 'axios';
 
-import { Header,ServerAddress, Hotel } from "../../../enum/url";
+import { Header, ServerAddress, Hotel } from "../../../enum/url";
+import { DomesticHotelPrereserveParams } from '../types/hotel';
 
 export const getDomesticHotelDetailById = async (id: number, acceptLanguage: string = 'fa-IR') => {
     try {
@@ -90,7 +91,7 @@ export const getDomesticHotelDetailsByUrl = async (url: string, acceptLanguage: 
     }
 }
 
-export const SearchHotels = async (url :string, acceptLanguage: string = 'fa-IR') => {
+export const SearchHotels = async (url: string, acceptLanguage: string = 'fa-IR') => {
     try {
         const params = {
             IsInstant: null,
@@ -100,7 +101,7 @@ export const SearchHotels = async (url :string, acceptLanguage: string = 'fa-IR'
             SortColumn: 'Priority',
             SortDirection: 'Desc',
             filterUrl: url
-          };
+        };
 
         const response = await axios({
             method: "post",
@@ -202,4 +203,101 @@ export const getEntityNameByLocation = async (cityId: number, acceptLanguage: st
         return error
     }
 
+}
+
+export const domesticHotelValidateRoom = async (param: {
+    bookingToken: string;
+    checkin: string;
+    checkout: string;
+    count: number;
+    MetaSearchName?: string | null;
+    MetaSearchKey?: string | null;
+}, acceptLanguage: string = 'fa-IR') => {
+
+    // const token = localStorage.getItem('Token');
+
+    try {
+        let response = await axios.post(
+            `${ServerAddress.Type}${ServerAddress.Hotel_Availability}${Hotel.ValidateRoom}`,
+            param,
+            {
+                headers: {
+                    accept: 'text/plain',
+                    'Content-Type': 'application/json',
+                    TenantId: process.env.PROJECT_SERVER_TENANTID,
+                    // Authorization: `Bearer ${token}`,
+                    apikey: process.env.PROJECT_SERVER_APIKEY,
+                    'Accept-Language': acceptLanguage,
+                    Currency: 'IRR'
+                },
+            },
+        )
+        return response
+    } catch (error) {
+        return error
+    }
+}
+
+
+export const domesticHotelGetValidate = async (key: string, acceptLanguage: string = 'fa-IR') => {
+
+    try {
+        let response = await axios.get(
+            `${ServerAddress.Type}${ServerAddress.Hotel_Availability}${Hotel.GetValidate}?Id=${key}`,
+            {
+                headers: {
+                    'Content-Type': 'application/json',
+                    apikey: process.env.PROJECT_SERVER_APIKEY,
+                    'Accept-Language': acceptLanguage
+                },
+            },
+        )
+        return response
+    } catch (error) {
+        return error
+    }
+}
+
+
+export const domesticHotelPreReserve = async (param :DomesticHotelPrereserveParams , acceptLanguage: string = 'fa-IR') => {
+
+    try {
+      let response = await axios.post(
+        `${ServerAddress.Type}${ServerAddress.Hotel_Availability}${Hotel.PreReserve}`,
+        param,
+        {
+          headers: {
+            accept: 'text/plain',
+            'Content-Type': 'application/json',
+            apikey: process.env.PROJECT_SERVER_APIKEY,
+            'Accept-Language': acceptLanguage,
+            TenantId: process.env.PROJECT_SERVER_TENANTID,
+            Currency: 'IRR'
+          },
+        },
+      )
+      return response
+    } catch (error) {
+      return error
+    }
+  }
+
+
+export const domesticHotelGetReserveById = async (params: { reserveId: string, userName: string }, acceptLanguage: string = 'fa-IR') => {
+
+    try {
+        let response = await axios.get(
+            `${ServerAddress.Type}${ServerAddress.Hotel_Availability}${Hotel.GetReserveById}?ReserveId=${params.reserveId}&Username=${params.userName}`,
+            {
+                headers: {
+                    'Content-Type': 'application/json',
+                    apikey: process.env.PROJECT_SERVER_APIKEY,
+                    'Accept-Language': acceptLanguage
+                },
+            },
+        )
+        return response
+    } catch (error) {
+        return error
+    }
 }
