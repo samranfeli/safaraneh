@@ -1,5 +1,6 @@
 import { domesticHotelGetReserveById } from '@/modules/domesticHotel/actions';
 import CapacityAnimation from '@/modules/domesticHotel/components/capacity/CapacityAnimation';
+import { DomesticHotelGetReserveByIdData } from '@/modules/domesticHotel/types/hotel';
 import CountDown from '@/modules/shared/components/ui/CountDown';
 import Loading from '@/modules/shared/components/ui/Loading';
 import Steps from '@/modules/shared/components/ui/Steps';
@@ -17,7 +18,7 @@ const Capacity: NextPage = () => {
 
   const router = useRouter();
   
-  const [reserveInfo, setReserveInfo] = useState<any>(undefined);
+  const [reserveInfo, setReserveInfo] = useState<DomesticHotelGetReserveByIdData | undefined>(undefined);
   const [remainedSeconds, setRemainedSeconds] = useState<number>(600);
 
   const fetchData = async () => {
@@ -83,21 +84,21 @@ const Capacity: NextPage = () => {
         <Steps
           className='py-3 mb-2'
           items={[
-            { label: t('completing-informaion'), status: 'done' },
+            { label: t('completing-information'), status: 'done' },
             { label: tHotel('checking-capacity'), status: 'active' },
             { label: t('confirm-pay'), status: 'up-comming' },
-            { label: t('completing-pay'), status: 'up-comming' }
+            { label: t('complete-purchase'), status: 'up-comming' }
           ]}
         />
 
         <div className='py-16 flex flex-col gap-5 items-center'>
 
-          {(!reserveInfo || (reserveInfo.status !== 13 && reserveInfo.status !== 8)) && <CountDown seconds={remainedSeconds} />}
+          {(reserveInfo && reserveInfo.status === "Unavailable") || <CountDown seconds={remainedSeconds} />}
 
           <div className='mb-5 mt-2 max-w-lg text-center'>
 
             {remainedSeconds > 0 ? (
-              reserveInfo && (reserveInfo.status === 13 || reserveInfo.status === 8) ? (
+              (reserveInfo && reserveInfo.status === "Unavailable") ? (
                 tHotel('capacity-full-desc')
               ) : (
                 tHotel('capacity-checking-desc')
@@ -108,7 +109,7 @@ const Capacity: NextPage = () => {
 
           </div>
 
-          <CapacityAnimation failed={reserveInfo && (reserveInfo.status === 13 || reserveInfo.status === 8)} />
+          <CapacityAnimation failed={reserveInfo && reserveInfo.status === "Unavailable"} />
 
           <div className='text-center'>
             <div className='mb-4'>{t('with-this-code')}</div>

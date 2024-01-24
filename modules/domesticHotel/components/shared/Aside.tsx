@@ -182,14 +182,11 @@ const Aside: React.FC<Props> = props => {
                         </div>
                     )}
 
-                    {/* TODO: in case of reserve page check style */}
-                    {/* {!!reserveInformation.reserveId && (
-                            <div className='padding-start-10 padding-end-10 margin-top-15'>
-                                <div className='dashed-reserve-id'>
-                                    {t('tracking-code')} : {props.reserveInformation.reserveId}
-                                </div>
-                            </div>
-                        )} */}
+                    {!!reserveInformation.reserveId && (
+                        <div className='border border-2 border-dashed border-blue-100 text-blue-800 text-lg font-semibold p-2 mt-4 flex items-center justify-center gap-2'>
+                                {t('tracking-code')} : {reserveInformation.reserveId}
+                        </div>
+                    )}
 
                     {reserveInformation && (
                         <div className="text-xs flex items-center gap-2 pt-4 pb-1">
@@ -340,57 +337,6 @@ const Aside: React.FC<Props> = props => {
                 </div>
 
             </div>
-
-            {/* {
-            hotelInformation ?
-                props.isBooking ? <div className={styles.bookingNeedHelp}>
-                    <h4 className={styles.subjectBookingNeedHelp}>{t('need-help')}</h4>
-                    <div className={styles.contentBookingNeedHelp}>
-                        <span>{t('24hours-backup')}</span>
-                        <a href={`tel:${portalPhoneLink || safaranehPhoneLink}`}> {portalPhoneNumber || safaranehPhoneNumber} </a>
-                        <a href={`mailto:${portalEmailAddress || safaranehEmailAddress}`}> {portalEmailAddress || safaranehEmailAddress} </a>
-                    </div>
-                </div>
-                :
-                null
-            :
-            <div className={styles.alertSuccess}>
-                <Skeleton.Button active className={styles.subjectAlertInfoSkeleton} />
-                <Skeleton.Button active className={styles.contentAlertInfoSkeleton} />
-            </div>
-
-        }
-
-
-        {
-            hotelInformation ?
-            <div className={styles.alertSuccess}>
-                <h6>{t('price-will-increase')}</h6>
-                <span>{t('price-will-increase-desc')}</span>
-            </div>
-            :
-            <div className={styles.alertSuccess}>
-                <Skeleton.Button active className={styles.subjectAlertInfoSkeleton} />
-                <Skeleton.Button active className={styles.contentAlertInfoSkeleton} />
-            </div>
-        }
-            
-            {
-                hotelInformation ?
-                hotelInformation.TopSelling && !props.isBooking ?
-                <div className={styles.alertInfo}>
-                    <h6>{t('recent-reserve-number')}</h6>
-                    <span>
-                        {t('recent-reserve-number-of-hotel')}<b> {hotelInformation.TopSelling} </b> {t('are')}
-                    </span>
-                </div>
-                :null
-                :
-                <div className={styles.alertInfo}>
-                    <Skeleton.Button active className={styles.subjectAlertInfoSkeleton} />
-                    <Skeleton.Button active className={styles.contentAlertInfoSkeleton} />
-                </div>
-            } */}
 
         </div>
     )
