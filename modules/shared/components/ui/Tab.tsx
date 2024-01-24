@@ -8,7 +8,7 @@ type Props = {
     style2? :boolean;
 }
 
-const Tabs: React.FC<Props> = props => {
+const Tab: React.FC<Props> = props => {
 
     const { items , style2} = props;
 
@@ -47,4 +47,4 @@ const Tabs: React.FC<Props> = props => {
     )
 }
 
-export default Tabs;
+export default Tab;
