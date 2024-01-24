@@ -17,7 +17,7 @@ export const validateDiscountCode = async (params:{prereserveKey:string, type:Di
                 ...Header,
                 "Accept-Language": acceptLanguage,
                 //Currency: "IRR",
-                TenantId: process.env.ABP_TENANT_ID,
+                TenantId: process.env.PROJECT_SERVER_TENANTID,
             }
         });
         return (response)
@@ -40,7 +40,7 @@ export const registerDiscountCode = async (params:{reserveId:string, username:un
                 ...Header,
                 "Accept-Language": acceptLanguage,
                 //Currency: "IRR",
-                TenantId: process.env.ABP_TENANT_ID,
+                TenantId: process.env.PROJECT_SERVER_TENANTID,
             }
         });
         return (response)
