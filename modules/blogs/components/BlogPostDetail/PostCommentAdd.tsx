@@ -1,18 +1,10 @@
 import { NextPage } from "next";
 import { Field, Form, Formik } from "formik";
-import * as Yup from 'yup';
 import { useState } from "react";
 
 import { ServerAddress   } from "@/enum/url";
 import axios from "axios";
-
-
-
-const SendCommentValidation = Yup.object({
-    name:  Yup.string().required('لطفا نام را وارد کنید'),
-    email: Yup.string().email('لطفا ایمیل را صحیح وارد کنید'),
-    text:  Yup.string().required('متن نظر را کامل کنید')
-})
+import { validateEmail, validateEmailNotReqired, validateRequied } from "@/modules/shared/helpers/validation";
 
 const PostComment: NextPage<any> = ({ postId }) => {
     
@@ -36,10 +28,13 @@ const PostComment: NextPage<any> = ({ postId }) => {
             content: values.text,
             post: postId
         }
-        setnewCommentSubmitMessage('...در حال ارسال')
+        setnewCommentSubmitMessage('در حال ارسال...')
         axios.post(`${ServerAddress.Type}${ServerAddress.Blog}/wp-json/wp/v2/comments`, CommentUser)
             .then(res =>
             (res.status == 200 || res.status == 201 && setnewCommentSubmitMessage('نظر شما با موفقیت ثبت شد'),
+            setTimeout(() => {
+                setnewCommentSubmitMessage('')
+            },3000),
             actions.resetForm()))
     }
     
@@ -50,31 +45,36 @@ const PostComment: NextPage<any> = ({ postId }) => {
             <div className="w-full border-gray-200 border-2 p-8 rounded">
             <Formik
                     initialValues={initialdata}
-                    validationSchema={SendCommentValidation}
                     onSubmit={submitHandle}
                 >
-                    {({ errors }) => (
+                    {({ errors , touched }) => (
                     <Form className="grid grid-cols-2 gap-5 max-md:grid-cols-1">
                     <div>        
                         <label htmlFor="name"><span className="text-red-600">*</span>نام شما</label>
-                        <Field name="name" className="border-gray-400 border-2 p-2 w-full rounded outline-none focus:ring-1" />
-                        {errors.name && <small className="text-red-600 translation-all duration-200">{errors.name}</small>}
+                        <Field name="name" 
+                        className={`${errors.name ? 'border-red-600' : 'border-gray-400' } border-2 p-2 w-full rounded outline-none translation-all duration-300`}
+                        validate={(value: string) => validateRequied(value, 'لطفا نام خود را وارد کنید')}/>
+                        {errors.name && touched.name && <small className="text-red-600 translation-all duration-200">{errors.name}</small>}
                         <br/>        
                         <label htmlFor="email">ایمیل</label>
-                        <Field name="email" className="border-gray-400 border-2 p-2 w-full rounded outline-none focus:ring-1"/>
+                        <Field name="email"
+                        className={`${errors.email ? 'border-red-600' : 'border-gray-400' } border-2 p-2 w-full rounded outline-none  translation-all duration-300`}
+                        validate={(value: string) => validateEmailNotReqired({value,invalidMessage: 'invalid-email'})}/>
                         {errors.email && <small className="text-red-600">{errors.email}</small>}
                     </div>
                     <div>        
                         <label htmlFor="text">متن</label>
-                        <Field name="text" as='textarea' className="border-gray-400 border-2 p-2 w-full h-32 rounded outline-none focus:ring-1"/>
-                        {errors.text && <small className="text-red-600">{errors.text}</small>}
+                        <Field name="text" as='textarea'
+                            className={`${errors.text ? 'border-red-600' : 'border-gray-400' } border-2 p-2 w-full rounded outline-none translation-all duration-300`}
+                            validate={(value: any) => validateRequied(value, 'متن نظر را وارد کنید')}/>
+                        {errors.text && touched.text && <small className="text-red-600">{errors.text}</small>}
                     </div>
                             <button
                                 type="submit"
                                 className="bg-blue-300 p-2 text-white rounded w-fit"
                             >ارسال نظر</button>
                             <p className="text-xl font-bold">{newCommentSubmitMessage}</p>
-                </Form> 
+                </Form>
                     )}
             </Formik>
             </div>    

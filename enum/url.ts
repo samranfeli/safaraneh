@@ -22,51 +22,17 @@ export const Header = {
     Hotel_Main: process.env.PROJECT_SERVER_HOTEL_MAIN,
     Hotel_Data: process.env.PROJECT_SERVER_HOTEL_DATA,
     Hotel_Availability: process.env.PROJECT_SERVER_HOTEL_AVAILABILITY,
+    Coordinator: process.env.PROJECT_SERVER_COORDINATOR,
     Blog: process.env.PROJECT_SERVER_BLOG,
-    // Package: process.env.PROJECT_SERVER_PACKAGE,
     // Payment: process.env.PROJECT_SERVER_PAYMENT,
-    // localServer: process.env.PROJECT_SERVER_LOCALSERVER,
     Flight: process.env.PROJECT_SERVER_FLIGHT,
     Crm:process.env.PROJECT_SERVER_CRM
   };
+
   export const User = {
-    // Register: "/api/services/app/Account/Register", //for register new user
-    // RegisterByInfo: "/api/services/app/Account/RegisterByInfo", //register new user for namin travel
-    // Login: "/api/TokenAuth/Login", //for login user
-    // VarficationUser: "/api/services/app/Account/GetUser",
-    // Forgot: "/api/services/app/Account/ForgotPassword",
-    // Confrim: "/api/services/app/Account/ConfirmEmail",
-    // ResetPassword: "/api/services/app/Account/ResetPassword",
-    // Update: "/api/services/app/Account/Update",
-    // ChangePassword: "/api/services/app/Account/ChangePassword",
-    // CreateNewsLetter:"/api/services/app/NewsLetter/Create",
-    // CreateContactUs:"/api/services/app/ContactUs/Create",
-    // SendEmailActivation:"​/api/services/app/Account/SendEmailActivation",
-    // ActivateEmail:"/api/services/app/Account/ActivateEmail",
-    
-    //for itours ir only:
-    // IsUsernameExist:"/api/services/app/Account/IsUsernameExist",
-    // SendOTP:"/api/services/app/OTP/SendOTP",
-    // RegisterOrLogin:"/api/services/app/OTP/RegisterOrLogin",
-    // ChangePasswordByAuthorizedUser:"/api/services/app/Account/ChangePasswordByAuthorizedUser",
-    // ForgotPasswordByPhoneNumber:"/api/services/app/Account/ForgotPasswordByPhoneNumber",
-    //ResetPasswordByPhoneNumber:"/api/services/app/Account/ResetPasswordByPhoneNumber"
   };
+
   export const Flight = {
-    //GetLocation: "/api/services/app/BookingFlight/GetAirport",
-    // GetDomesticLocation:"/api/services/app/BookingFlight/GetDomesticAirport",
-    // GetAirline: "/api/services/app/BookingFlight/GetAirline",
-    //LowFareSearch: "/api/services/app/BookingFlight/LowFareSearch",
-    //ValidateFlight: "/api/services/app/BookingFlight/Validate",
-    // GetPNR: "/api/services/app/BookingFlight/ReservePNR",
-    //GetRules: "/api/services/app/BookingFlight/GetFlightRules",
-    // GetReserveByID: "/api/services/app/BookingFlight/GetFlightReserveById",
-    // GetDirectTicketByID: "/api/services/app/BookingFlight/GetDirectTicketById",
-    // BankStatus:"/api/services/app/BookingFlight/BankStatus",
-    // GetTime:"/api/services/app/BookingFlight/GetTime",
-    // GetDomesticRefundRules:"/api/services/app/DomesticFlightRefundRule/GetDomesticRefundRules",
-    // GetDomesticRefundRuleDetail:"/api/services/app/DomesticFlightRefundRule/GetDomesticRefundRuleDetail",
-    //GetAlternatives: "/api/services/app/BookingFlight/GetAlternatives"
   };
 
   export const Blog = {
@@ -105,56 +71,18 @@ export const Header = {
     getRates:"/v2/Comment/Rates",
     getCityFaqById:"/api/services/app/Faq/GetAll",
     GetEntityNameByLocation: "/v2/Entity/GetEntityNameByLocation",
-
     GetValidate:"/api/services/app/Booking/GetValidate",
     PreReserve: "/api/services/app/Booking/PreReserve",
     GetReserveById: "/api/services/app/Reserve/Get"
-
-
-    
-    
-    // GetAccomadtion: "/api/services/app/BookingHotel/GetSearch",
-    // GetPreReserveID: "/api/services/app/BookingHotel/GetPreReserveByKey",
-    // GetReserveByID: "/api/services/app/BookingHotel/GetReserveById",
-    // PostReserver: "/api/services/app/BookingHotel/Reserve",
-    // GetVoucherDetails: "/api/services/app/BookingHotel/GetReserveById",
-    // BookHotel: "/api/services/app/BookingHotel/Book",
-    // GetRoom: "/api/services/app/BookingHotel/GetRoom",
-    // GETType: "/api/services/app/Reserve/GetReserveById",
-    // GetCancellationPolicy: "/api/services/app/BookingHotel/GetCancellationPolicy",
   };
-  export const Package = {
-    // PackageAvailibility: "/api/services/app/Booking/Availability",
-    // PackageGetAvailability: "/api/services/app/Booking/GetAvailability",
-    // GetPackageHotelDetailById: "/api/services/app/Booking/GetHotelDetailById",
-    // PreReserveFlight:"/api/services/app/Booking/PreReserveFlight",
-    // PreReserveRoom:"/api/services/app/Booking/PreReserveRoom",
-    // reserve:"/api/services/app/Booking/Reserve",
-    // Confirm:'/api/services/app/Booking/Confirm',
-    // PackageValidateFlight:"/api/services/app/Booking/ValidateFlight",
-    // GetByPrereserveKey:"/api/services/app/PreReserve/Get",
-    // GetReserveById:"/api/services/app/Reserve/Get",
-    // GetLocation:"/api/services/app/Booking/GetAirports"
-  };
+
   export const Reserve = {
-    // hotel: "/api/services/app/Reserve/GetReserves",
-    // naminTravelFlight : "/api/services/app/Reserve/GetAll",
-    // getReserveFromCoordinator : "/api/services/app/Order/Get"
+     GetReserveFromCoordinator : "/api/services/app/Order/Get"
   };
+
   export const Payment = {
-    
     ValidateDiscountCode:"/api/services/app/Discount/Validate",
     RegisterDiscountCode: "/api/services/app/Discount/Register"
-
-    // GetBanksInformation: "/api/services/app/ReserveBankGateway/GetAll",
-    // MakeToken: "/api/services/app/ReserveBankGateway/MakeToken",
-    // GatewayReport: "/api/services/app/BankGatewayLog/GetAll",
-    // DomesticFlightRefund:"/api/services/app/RefundRequest/Refund",
-    // GetBalance :"/api/services/app/Deposit/GetBalance",
-    // GetDepositBanksList:"/api/services/app/UserDepositBankGateway/GetAll",
-    // MakeTokenDeposit:"/api/services/app/UserDepositBankGateway/MakeToken",
-    // ConfirmByDeposit:"/api/services/app/DepositReserve/ConfirmByDeposit",
-    // GetTransactionByReserveId:"/api/services/app/Transaction/GetByReserveId"
   };
   
   export const ServerStatus = {

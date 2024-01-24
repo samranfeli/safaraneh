@@ -13,7 +13,7 @@ type Props = {
 const NewBlog: NextPage<Props> = (props) => {
     
     return (
-        <div className="p-16 max-xl:p-2 max-w-screen-xl m-auto">
+        <div className="max-xl:p-5 max-w-container m-auto">
             <p className="text-2xl">جدیدترین مطالب</p>
             {
                 props.blogs?.map(blog =>

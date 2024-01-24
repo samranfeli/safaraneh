@@ -2,7 +2,7 @@ import { useTranslation } from 'next-i18next';
 
 import SearchForm from '../../domesticHotel/components/shared/SearchForm';
 import {Apartment,Travel} from '../../shared/components/ui/icons';
-import Tabs from '../../shared/components/ui/tabs';
+import Tabs from '../../shared/components/ui/Tabs';
 import { TabItem } from '@/modules/shared/types/common';
 import Image from 'next/image';
 import { addSomeDays, dateFormat } from '@/modules/shared/helpers';

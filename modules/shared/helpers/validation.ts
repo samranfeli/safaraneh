@@ -17,6 +17,15 @@ export const validateEmail = ({value, reqiredMessage, invalidMessage}:{value: st
     return error;
 }
 
+export const validateEmailNotReqired = ({value, invalidMessage}:{value: string, invalidMessage: string}) => {
+    let error;
+    if (value && !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(value)) {
+        error = invalidMessage;
+    }
+
+    return error;
+}
+
 
 export const validateRequiedPersianAndEnglish = (value: string, reqiredMessage: string, invalidMessage: string) => {
     let error;

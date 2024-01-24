@@ -118,9 +118,7 @@ const Checkout: NextPage = () => {
         cancellationPolicyStatus: roomItem.cancellationPolicyStatus,
         bed: roomItem.bed,
         extraBed: roomItem.extraBed,
-        pricing: roomItem.pricing,
-        maxChildAge: roomItem.maxChildAge,
-        maxInfantAge: roomItem.maxInfantAge
+        pricing: roomItem.pricing
       })),
 
       salePrice: reserveInfo.rooms.reduce((totalPrice: number, roomItem: DomesticHotelGetValidateResponse['rooms'][0]) => {
@@ -232,10 +230,10 @@ const Checkout: NextPage = () => {
         <Steps
           className='py-3 mb-2'
           items={[
-            { label: t('completing-informaion'), status: 'active' },
+            { label: t('completing-information'), status: 'active' },
             { label: tHotel('checking-capacity'), status: 'up-comming' },
             { label: t('confirm-pay'), status: 'up-comming' },
-            { label: t('completing-pay'), status: 'up-comming' }
+            { label: t('complete-purchase'), status: 'up-comming' }
           ]}
         />
 
