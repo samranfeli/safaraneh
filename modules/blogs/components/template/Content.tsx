@@ -34,7 +34,7 @@ const Content: NextPage<Props> = ({Blogs,LastBlogs,CategoriesName}) => {
     const [pageNumber, setpageNumber] = useState<any>([])
     const [list, setlist] = useState<[number , number]>([0 , 10])
     return (
-        <div className="grid grid-cols-8 gap-1 max-w-container m-auto max-sm:p-2 max-lg:grid-cols-1">
+        <div className="grid grid-cols-8 gap-5 max-w-container m-auto p-5 max-sm:p-2 max-lg:grid-cols-1">
             <div className="col-span-6">
                 {
                     Blogs &&
