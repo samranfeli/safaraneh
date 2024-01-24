@@ -23,7 +23,7 @@ const BlogItem: NextPage<any> = ({data}) => {
                         {data?.categories_names[0]}
                     </Link>
                     <Link href={`/blog/${data.slug}`}
-                        className="block font-semibold text-xl max-lg:text-lg pb-12 max-md:pb-4 max-sm:h-14 hover:text-blue-800 mt-2 translation-all duration-300 max-sm:text-sm">
+                        className="block font-semibold text-xl max-lg:text-lg h-18 max-sm:h-10 hover:text-blue-800 mt-2 translation-all duration-300 max-sm:text-sm">
                          {data?.title.rendered}
                     </Link>
                 <div className="flex justify-between text-sm pb-1">
