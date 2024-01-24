@@ -11,6 +11,11 @@ import { domesticHotelGetReserveById, getDomesticHotelDetailById } from '@/modul
 import { AsideHotelInfoType, AsideReserveInfoType, DomesticHotelDetailType, DomesticHotelGetReserveByIdData } from '@/modules/domesticHotel/types/hotel';
 import { getDatesDiff } from '@/modules/shared/helpers';
 import Skeleton from '@/modules/shared/components/ui/Skeleton';
+import { TabItem } from '@/modules/shared/types/common';
+import Tabs from '@/modules/shared/components/ui/Tabs';
+import OnlinePayment from '@/modules/payment/components/OnlinePayment';
+import CardToCard from '@/modules/payment/components/CardToCard';
+import CreditPayment from '@/modules/payment/components/CreditPayment';
 
 
 const Payment: NextPage = () => {
@@ -66,6 +71,27 @@ const Payment: NextPage = () => {
     }
 
   }, [type, username, reserveId]);
+
+
+  const tabItems: TabItem[] = [
+    {
+      key: '1',
+      label: ("آنلاین"),
+      children: (<OnlinePayment />),
+    },
+    {
+      key: '2',
+      label: ("کارت به کارت"),
+      children: (<CardToCard />),
+    },
+    {
+      key: '3',
+      label: ("اعتباری"),
+      children: (<CreditPayment />),
+    }
+  ];
+
+
 
   let domesticHotelInformation: AsideHotelInfoType | undefined = undefined;
   let domesticHotelReserveInformation: AsideReserveInfoType | undefined = undefined;
@@ -170,8 +196,13 @@ const Payment: NextPage = () => {
 
         <div className='grid gap-4 md:grid-cols-3'>
           <div className='md:col-span-2 bg-white rounded-lg border border-neutral-300 mb-4 p-4'>
-          
-            <h2 className='text-2xl my-4'> چگونه می خواهید پرداخت کنید؟ </h2>
+
+            <h2 className='text-2xl mt-4 mb-8'> چگونه می خواهید پرداخت کنید؟ </h2>
+            
+            <Tabs
+              style2
+              items={tabItems}
+            />
 
           </div>
 
