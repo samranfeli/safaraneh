@@ -306,8 +306,117 @@ export interface SearchHotelItem {
 }
 
 export interface PricedHotelItem extends SearchHotelItem {
-    ratesInfo?: "loading" | {Satisfaction: number; TotalRowCount: number;};
-    priceInfo: "loading" | "notPriced" | "need-to-inquire" | {boardPrice : number; salePrice : number;};
-} 
+    ratesInfo?: "loading" | { Satisfaction: number; TotalRowCount: number; };
+    priceInfo: "loading" | "notPriced" | "need-to-inquire" | { boardPrice: number; salePrice: number; };
+}
 
 export type SortTypes = "priority" | "price" | "starRate" | "name" | "gueatRate";
+
+
+export interface DomesticHotelGetValidateResponse {
+    preReserveKey?: string;
+    accommodationId: number;
+    checkin: string;
+    checkout: string;
+    count: number,
+    supplierType: "Safaraneh" | "Snapp" | "ChannelLead" | "HotelYar" | "Eghamat24";
+    rooms:
+    {
+        roomId?: number;
+        name?: string;
+        image?: string;
+        bed: number;
+        extraBed: number;
+        providerName?: string;
+        supplierRefrence?: string;
+        maxInfantAge: number;
+        maxChildAge: number;
+        supplierType: "Safaraneh" | "Snapp" | "ChannelLead" | "HotelYar" | "Eghamat24";
+        available?: number;
+        description?: string;
+        availablityType: "Online" | "Offline" | "Request" | "Completion";
+        boardCode: "Undefined" | "BB" | "FB" | "HB" | "RO" | "Hour6" | "Hour10";
+        boardExtra?: string;
+        nightly: {
+            date: string;
+            amount: number;
+            board?: number;
+        }[],
+        pricing: {
+            amount: number;
+            isSelected: boolean;
+            isShow: boolean;
+            ageCategoryType: "ADL" | "CHD" | "INF";
+            type: "Room" | "RoomBoard" | "ExtraBed" | "HalfCharge" | "RoomNet" | "Markup" | "Commission" | "PromoCode";
+        }[]
+        ,
+        cancellationPolicyStatus: "Refundable" | "NonRefundable" | "Unknown" | "CallSupport";
+        cancellationPolicyFees: {
+            amount: number;
+            fromDate?: string;
+        }[]
+    }[]
+}
+
+export interface AsideHotelInfoType {
+    image: {
+        url?: string;
+        alt?: string;
+        title?: string;
+    },
+    name: string;
+    rating?: number;
+    address?: string;
+    TopSelling?: number;
+    Url?: string;
+    CityId?: number;
+
+}
+
+export interface AsideReserveInfoType {
+    checkin: string;
+    checkout: string;
+    duration: number;
+    rooms: {
+        name: string | undefined;
+        board: "Undefined" | "BB" | "FB" | "HB" | "RO" | "Hour6" | "Hour10";
+        cancellationPolicyStatus: "Refundable" | "NonRefundable" | "Unknown" | "CallSupport";
+        bed: number;
+        extraBed: number;
+        pricing: {
+            amount: number;
+            isSelected: boolean;
+            isShow: boolean;
+            ageCategoryType: "ADL" | "CHD" | "INF";
+            type: "Room" | "RoomBoard" | "ExtraBed" | "HalfCharge" | "RoomNet" | "Markup" | "Commission" | "PromoCode";
+        }[];
+        maxChildAge: number;
+        maxInfantAge: number;
+    }[]
+    salePrice: number;
+    boardPrice: number;
+
+    selectedExtraBedPrice?: any;
+    selectedExtraBedCount?:any;
+    promoCodePrice?:any;
+}
+
+export interface DomesticHotelPrereserveParams {
+    reserver: {
+        gender: boolean;
+        firstName: string;
+        lastName: string;
+        email: string;
+        nationalId: string;
+        phoneNumber: string;
+    };
+    passengers: {
+        gender: boolean;
+        firstName: string;
+        lastName: string;
+        roomNumber: number;
+        extraBed: number;
+    }[];
+    specialRequest: string;
+    preReserveKey: string;
+}

@@ -46,7 +46,7 @@ const Button: React.FC<PropsWithChildren<Props>> = props => {
     }
 
     return(
-        <button typeof={props.type || "button"} className={className} onClick={props.onClick}>
+        <button type={props.type || "button"} className={className} onClick={props.onClick}>
             {props.children}
             {props.loading ? <span className="animate-spin block border-2 border-white rounded-full border-r-transparent border-t-transparent w-5 h-5" /> : null}
             {arrow}

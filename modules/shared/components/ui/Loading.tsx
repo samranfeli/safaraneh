@@ -1,6 +1,7 @@
 type Props = {
     className?:string;
-    size?: "small" | "large" | "medium"
+    size?: "small" | "large" | "medium";
+    bgGray?:boolean;
 }
 
 const Loading : React.FC<Props> = props => {
@@ -18,7 +19,7 @@ const Loading : React.FC<Props> = props => {
     return(
         <span 
             className={`relative ${sizeClassNames} animate-spin inline-block ${props.className}  before:block before:rounded-full before:w-full before:h-full before:absolute before:gradient-circle-loading 
-            after:block after:rounded-full after:absolute after:bg-white 
+            after:block after:rounded-full after:absolute ${props.bgGray? "after:bg-body-background" : "after:bg-white"} 
             `} 
         />
     )

@@ -23,10 +23,16 @@ const config: Config = {
         skeleton: {
           '0% ': { transform: 'translateX(100%)' },
           '100%': { transform: 'translateX(-100%)' },
+        },
+        left2right : {
+          '0% ': { left: '0' },
+          '100%': { left: '100%' },
         }
       },
       animation: {
         skeleton: 'skeleton 1s linear infinite',
+        left2right: 'left2right 1.2s cubic-bezier(0.52, 0.22, 0.45, 0.74) infinite alternate',
+        
       },
       colors: {
 

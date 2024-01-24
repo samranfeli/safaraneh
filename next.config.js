@@ -29,15 +29,19 @@ const nextConfig = {
     PROJECT_SERVER_USER: "",
     PROJECT_SERVER_PAYMENT: "",
     PROJECT_SERVER_LOCALSERVER: "",
-    PROJECT_SERVER_APIKEY: "b4fa99cc-3dfd-40a5-8bcf-53acdc2dbd84",
+
+    PROJECT_SERVER_APIKEY: 'e8fad1497a1244f29f15cde4a242baf0',
+    PROJECT_PORTAL_APIKEY: 'b4fa99cc-3dfd-40a5-8bcf-53acdc2dbd84',
+
     PROJECT_SERVER_HOTEL_WP:"wp.safaraneh.com",
     PROJECT_SERVER_HOTEL_MAIN: "api.safaraneh.com",
     PROJECT_SERVER_HOTEL_DATA: "hoteldomesticdata.safaraneh.com",
     PROJECT_SERVER_HOTEL_AVAILABILITY: "hotelv4.safaraneh.com",
     PROJECT_SERVER_BLOG :"panel.safaraneh.com",
+    PROJECT_SERVER_CRM:"crm.safaraneh.com",
     PROJECT_SERVER_FLIGHT: "",
     PROJECT_SERVER_PACKAGE: "",
-    PROJECT_SERVER_TENANTID: "",
+    PROJECT_SERVER_TENANTID: "1040",
     PROJECT_SERVER_NATIONALITY: "",
     PORT: '',
     PROJECT_SERVER_GA_ID: ""

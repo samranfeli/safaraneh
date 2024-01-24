@@ -11,7 +11,7 @@ export const Header = {
     "Accept-Language": "en-US",
     "currency": "USD",
     "apikey": process.env.PROJECT_SERVER_APIKEY,
-    "tenantid": process.env.PROJECT_SERVER_TENANTID,
+    // "tenantid": process.env.PROJECT_SERVER_TENANTID,
   };
   //to do: static header parameters!
 
@@ -26,7 +26,8 @@ export const Header = {
     // Package: process.env.PROJECT_SERVER_PACKAGE,
     // Payment: process.env.PROJECT_SERVER_PAYMENT,
     // localServer: process.env.PROJECT_SERVER_LOCALSERVER,
-    Flight: process.env.PROJECT_SERVER_FLIGHT
+    Flight: process.env.PROJECT_SERVER_FLIGHT,
+    Crm:process.env.PROJECT_SERVER_CRM
   };
   export const User = {
     // Register: "/api/services/app/Account/Register", //for register new user
@@ -99,15 +100,20 @@ export const Header = {
     AvailabilityByHotelId:"/api/services/app/Booking/AvailabilityByHotelId",
     GetRooms:"/api/services/app/Booking/GetRoom",
     GetDomesticHotelDetails:"/api/services/app/Accommodation/Get",
-
+    ValidateRoom:"/api/services/app/Booking/Validate",
     SearchHotels:"/v2/Hotel/SearchHotels",
     getRates:"/v2/Comment/Rates",
     getCityFaqById:"/api/services/app/Faq/GetAll",
-    GetEntityNameByLocation: "/v2/Entity/GetEntityNameByLocation"
+    GetEntityNameByLocation: "/v2/Entity/GetEntityNameByLocation",
+
+    GetValidate:"/api/services/app/Booking/GetValidate",
+    PreReserve: "/api/services/app/Booking/PreReserve",
+    GetReserveById: "/api/services/app/Reserve/Get"
+
+
     
     
     // GetAccomadtion: "/api/services/app/BookingHotel/GetSearch",
-    // PreReserve: "/api/services/app/BookingHotel/PreReserve",
     // GetPreReserveID: "/api/services/app/BookingHotel/GetPreReserveByKey",
     // GetReserveByID: "/api/services/app/BookingHotel/GetReserveById",
     // PostReserver: "/api/services/app/BookingHotel/Reserve",
@@ -136,6 +142,10 @@ export const Header = {
     // getReserveFromCoordinator : "/api/services/app/Order/Get"
   };
   export const Payment = {
+    
+    ValidateDiscountCode:"/api/services/app/Discount/Validate",
+    RegisterDiscountCode: "/api/services/app/Discount/Register"
+
     // GetBanksInformation: "/api/services/app/ReserveBankGateway/GetAll",
     // MakeToken: "/api/services/app/ReserveBankGateway/MakeToken",
     // GatewayReport: "/api/services/app/BankGatewayLog/GetAll",
