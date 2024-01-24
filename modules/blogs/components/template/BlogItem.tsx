@@ -2,6 +2,7 @@ import { NextPage } from "next";
 import Link from "next/link";
 import Image from "next/image";
 import { BlogItemType } from "../../types/blog";
+import { ArrowLeft, ArrowRight } from "@/modules/shared/components/ui/icons";
 
 interface Props {
     data? : BlogItemType[]
@@ -9,33 +10,38 @@ interface Props {
 
 const BlogItem: NextPage<any> = ({data}) => {
     return (
-        <div>
-            <div className="grid grid-cols-3 gap-6 max-sm:grid-cols-1 mt-6 scale-95 max-sm:scale-100 w-full">
-                <div>
+            <div className="grid grid-cols-3 gap-6 max-sm:grid-cols-1 mt-6 max-sm:mt-12 scale- max-sm:scale-100 w-full max-sm:-space-y-2">
                     <Link href={`/blog/${data.slug}`}>
-                        <Image src={data?.images.medium}
-                        alt="pic" height={400} width={600} className="object-fit rounded-md max-sm:mr-3" />
+                <Image src={data?.images.large}
+                    alt="pic" height={150} width={200} className="w-full rounded-md max-sm:mr-3" priority={true} />
                     </Link>
-                </div>
 
-                <div className="w-full col-span-2 rounded-md p-4" style={{ border: 'solid 1px rgba(0,0,0,0.1)' }}>
-                    <Link href={`/blog/category/${data.categories[0]}`} className="text-red-600 block hover:text-red-400 translation-all duration-300">
+                <div
+                className="w-full col-span-2 rounded-md pl-5 pr-5 pt-5 pb-2 h-full relative border-gray-200 border-2 max-sm:border-0 max-sm:pt-0 ">
+                    <Link href={`/blog/category/${data.categories[0]}`}
+                        className="text-red-600 block hover:text-red-400 translation-all duration-300">
                         {data?.categories_names[0]}
                     </Link>
-                    <Link href={`/blog/${data.slug}`} className="font-semibold text-xl p-2 hover:text-blue-900 block translation-all duration-300 max-sm:text-sm">
-                        {data?.title.rendered}
+                    <Link href={`/blog/${data.slug}`}
+                        className="block font-semibold text-xl max-lg:text-lg h-18 max-sm:h-10 hover:text-blue-800 mt-2 translation-all duration-300 max-sm:text-sm">
+                         {data?.title.rendered}
                     </Link>
-                <div className="flex justify-between text-xs mt-10 max-lg:mt-10 ">
-                    <div className="flex w-52 justify-between text-gray-400">
+                <div className="flex justify-between text-sm pb-1">
+                    <div className="flex justify-between text-gray-400">
                         <p>{data?.date}</p>
-                        <p className="scale-150">.</p>
+                        <p className="scale-150 ml-2 mr-2">.</p>
                         <p>{data?.acf.time_read}</p>
-                    </div>
-                    <Link href={`/blog/${data?.slug}`} className="ml-5 text-sm font-semibold">ادامه مطلب</Link>
+                        </div>
+                        <Link href={`/blog/${data?.slug}`} className="flex ml-2 max-md:hidden">
+                            <p className="text-sm font-semibold hover:text-blue-800">ادامه مطلب</p>
+                            <ArrowLeft
+                                className="w-7 h-fit mr-1 bg-gray-200 rounded-2xl p-1 ltr:hidden hover:bg-gray-400 translation-all duration-300" />
+                                <ArrowRight
+                                className="w-7 h-fit mr-1 bg-gray-200 rounded-2xl p-1 rtl:hidden hover:bg-gray-400 translation-all duration-300" />   
+                        </Link>
                 </div>
             </div>
-        </div >
-        </div>       
+        </div >     
     )
 }
 

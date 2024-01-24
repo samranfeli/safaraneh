@@ -5,7 +5,7 @@ const Title: NextPage = () => {
         <div>
         <div className="text-center p-16">
             <h2 className="text-4xl p-4 font-bold">جدیدترین مطالب</h2>
-            <p>حرفه ای ترین شبکه معرفی هتل های ایران</p>
+            <p className="whitespace-nowrap">حرفه ای ترین شبکه معرفی هتل های ایران</p>
         </div>
         </div>
     )
