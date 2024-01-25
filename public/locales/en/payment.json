@@ -1,0 +1,15 @@
+{
+    "15-minutes": "The capacity of the hotel is reserved for you for up to 15 minutes. Please make your payment at this time.",
+    "accept-privacy": "By completing this reservation, you agree to the terms and conditions as well as the terms of privacy.",
+    "can-not-pay-reserve": "payment is not available for this reserve",
+    "error-in-pay": "Your payment has encountered a problem!",
+    "pay": "payment",
+    "pay-error": "Payment error",
+    "please-choose-pay-panel": "Select the desired port?",
+    "please-pay-again": "Please re-pay from the following section",
+    "second-password": "Dynamic your second password for online payment.",
+    "second-password-desc": "Dynamic second password activation guide",
+    "shetab-card": "Payment with all Shetab member cards",
+    "total-price": "Final amount",
+    "total-price-pay": "total payment amount"
+}

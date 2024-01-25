@@ -49,3 +49,22 @@ export const registerDiscountCode = async (params:{reserveId:string, username:un
     }
 }
 
+export const getReserveBankGateway = async (id:string, acceptLanguage: string = 'fa-IR') => {
+    try {
+      const res = await axios.get(
+        `${ServerAddress.Type}${ServerAddress.Payment}${Payment.GetBankGateway}?ReserveId=${id}`,
+        {
+          headers: {
+            ...Header,
+            "Accept-Language": acceptLanguage,
+            //TenantId: process.env.ABP_TENANT_ID,
+          },
+        },
+      )
+      return res
+    } catch (error:any) {
+      return error.response
+    }
+  }
+
+

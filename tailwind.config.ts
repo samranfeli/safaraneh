@@ -76,6 +76,9 @@ const config: Config = {
       boxShadow: {
         'normal': '0 0 10px 0 rgba(0, 0, 0, 0.1)',
       },
+      borderWidth: {
+        '3': '3px'
+      },
       fontSize: {
         '4xs':'10px',
         '3xs':'11px',
