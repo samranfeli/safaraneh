@@ -12,7 +12,7 @@ const BlogItem: NextPage<any> = ({data}) => {
     return (
             <div className="grid grid-cols-3 gap-6 max-sm:grid-cols-1 mt-6 max-sm:mt-12 scale- max-sm:scale-100 w-full max-sm:-space-y-2">
                     <Link href={`/blog/${data.slug}`}>
-                <Image src={data?.images.large}
+                <Image src={data?.images?.large}
                     alt="pic" height={150} width={200} className="w-full rounded-md max-sm:mr-3" priority={true} />
                     </Link>
 
@@ -23,8 +23,8 @@ const BlogItem: NextPage<any> = ({data}) => {
                         {data?.categories_names[0]}
                     </Link>
                     <Link href={`/blog/${data.slug}`}
-                        className="block font-semibold text-xl max-lg:text-lg h-18 max-sm:h-10 hover:text-blue-800 mt-2 translation-all duration-300 max-sm:text-sm">
-                         {data?.title.rendered}
+                        className="block font-semibold text-lg h-18 max-sm:h-fit max-sm:pb-2 hover:text-blue-800 mt-2 translation-all duration-300 max-sm:text-sm">
+                         {data?.title?.rendered}
                     </Link>
                 <div className="flex justify-between text-sm pb-1">
                     <div className="flex justify-between text-gray-400">

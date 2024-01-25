@@ -32,7 +32,7 @@ const DetailBlog: NextPage<any> = ({ BlogPost , CategoriesName , recentBlogs, Al
                     <RelatedPost Post={BlogPost} AllPost={AllBlogs} />
                     <DetailBlogAcordion blog={BlogPost?.[0]} />
                     <GetComment />
-                    <PostComment postId={BlogPost[0].id} />
+                    <PostComment postId={BlogPost?.[0].id} />
                 </div>
             </div>
         </div>

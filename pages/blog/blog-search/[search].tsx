@@ -16,7 +16,7 @@ const Search: NextPage<any> = ({ SearchBlog, LastBlogs, categories_name }) => {
             <SearchData.Provider value={[SearchBlog, LastBlogs,categories_name]}>
                 <NavbarBlog data={`جستوجوی"${NavData}"`} />
                 <Title />
-                <Content Blogs={SearchBlog} LastBlogs={LastBlogs} CategoriesName={categories_name} />
+                <Content Blogs={SearchBlog} LastBlogs={LastBlogs} CategoriesName={categories_name} blogPages={'9'}/>
             </SearchData.Provider>
         </div>
     )

@@ -4,7 +4,7 @@ import { useState } from "react";
 
 import { ServerAddress   } from "@/enum/url";
 import axios from "axios";
-import { validateEmail, validateEmailNotReqired, validateRequied } from "@/modules/shared/helpers/validation";
+import { validateEmailNotReqired, validateRequied } from "@/modules/shared/helpers/validation";
 
 const PostComment: NextPage<any> = ({ postId }) => {
     
@@ -30,6 +30,7 @@ const PostComment: NextPage<any> = ({ postId }) => {
         }
         setnewCommentSubmitMessage('در حال ارسال...')
         axios.post(`${ServerAddress.Type}${ServerAddress.Blog}/wp-json/wp/v2/comments`, CommentUser)
+            .then()
             .then(res =>
             (res.status == 200 || res.status == 201 && setnewCommentSubmitMessage('نظر شما با موفقیت ثبت شد'),
             setTimeout(() => {
@@ -52,20 +53,20 @@ const PostComment: NextPage<any> = ({ postId }) => {
                     <div>        
                         <label htmlFor="name"><span className="text-red-600">*</span>نام شما</label>
                         <Field name="name" 
-                        className={`${errors.name ? 'border-red-600' : 'border-gray-400' } border-2 p-2 w-full rounded outline-none translation-all duration-300`}
+                        className={`${errors.name&&touched.name ? 'border-red-600' : 'border-gray-400' } border-2 p-2 w-full rounded outline-none translation-all duration-300`}
                         validate={(value: string) => validateRequied(value, 'لطفا نام خود را وارد کنید')}/>
                         {errors.name && touched.name && <small className="text-red-600 translation-all duration-200">{errors.name}</small>}
                         <br/>        
                         <label htmlFor="email">ایمیل</label>
                         <Field name="email"
-                        className={`${errors.email ? 'border-red-600' : 'border-gray-400' } border-2 p-2 w-full rounded outline-none  translation-all duration-300`}
-                        validate={(value: string) => validateEmailNotReqired({value,invalidMessage: 'invalid-email'})}/>
+                        className={`${errors.email&&touched.email ? 'border-red-600' : 'border-gray-400' } border-2 p-2 w-full rounded outline-none  translation-all duration-300`}
+                        validate={(value: string) => validateEmailNotReqired({value,invalidMessage: 'ایمیل معتبر نیست'})}/>
                         {errors.email && <small className="text-red-600">{errors.email}</small>}
                     </div>
                     <div>        
                         <label htmlFor="text">متن</label>
                         <Field name="text" as='textarea'
-                            className={`${errors.text ? 'border-red-600' : 'border-gray-400' } border-2 p-2 w-full rounded outline-none translation-all duration-300`}
+                            className={`${errors.text&&touched.text ? 'border-red-600' : 'border-gray-400' } border-2 p-2 w-full rounded outline-none translation-all duration-300`}
                             validate={(value: any) => validateRequied(value, 'متن نظر را وارد کنید')}/>
                         {errors.text && touched.text && <small className="text-red-600">{errors.text}</small>}
                     </div>
