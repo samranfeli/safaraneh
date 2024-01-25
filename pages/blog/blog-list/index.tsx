@@ -3,22 +3,41 @@ import NavbarBlog from "@/modules/blogs/components/template/BreadCrumpt";
 import Title from "@/modules/blogs/components/BlogList/Titile";
 import { BlogItemType, CategoriesNameType } from "@/modules/blogs/types/blog";
 import { GetStaticProps, NextPage } from "next";
-import { createContext } from "react";
 import Content from "@/modules/blogs/components/template/Content";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
+import { useEffect, useState } from "react";
+import { useRouter } from "next/router";
 
 
-export const AllData = createContext<any | null>(null)
-const BlogList: NextPage<any> = ({ AllBlog, recentBlogs, categories_name }:
+
+const BlogList: NextPage<any> = ({ AllBlog, categories_name }:
     { AllBlog?: BlogItemType[], recentBlogs?: BlogItemType[], categories_name?: CategoriesNameType[] }) => {
+        
+    const [Pages, setPages] = useState<any>()
+    const [blogs, setblogs] = useState<any>()
+
+    const router = useRouter()
     
-    return (
-        <div className="bg-white">
-            <AllData.Provider value={[ AllBlog, recentBlogs, categories_name ]}>
+
+    
+    useEffect(() => {
+        getBlogs(1)
+            .then((res: any) => setPages(Object.values(res.headers)[3]) )
+    
+        setblogs(null)
+        const getBlogsPages = async() => {
+            const data: any = await getBlogs(+router.query.page)
+            setblogs(data.data)
+        }
+        getBlogsPages()
+    } ,[router])
+    
+
+        return (
+            <div className="bg-white">
                 <NavbarBlog data={'جدیدترین مقالات'} />
                 <Title />
-                <Content Blogs={AllBlog} LastBlogs={recentBlogs?.slice(0,3)} CategoriesName={categories_name}/>
-            </AllData.Provider>
+                <Content Blogs={router.query.page ? blogs : AllBlog} LastBlogs={AllBlog?.slice(0, 3)} CategoriesName={categories_name} blogPages={Pages} />
         </div>
     )
 }
@@ -29,7 +48,7 @@ export default BlogList;
 export const getStaticProps: GetStaticProps = async (context: any) => {
 
     const [ AllBlog, categories_name] = await Promise.all<any>([
-        getBlogs(100),
+        getBlogs(1),
         GetCategories()
     ])
     return (
@@ -37,7 +56,6 @@ export const getStaticProps: GetStaticProps = async (context: any) => {
             props: {
                 ...await (serverSideTranslations(context.locale, ['common'])),
                 AllBlog: AllBlog?.data || null,
-                recentBlogs: AllBlog?.data || null,
                 categories_name: categories_name?.data || null
             },
             revalidate : 60 * 60 * 24//12 Hours

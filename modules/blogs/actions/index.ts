@@ -6,7 +6,7 @@ export const getBlogs = async (perPage : number) => {
 
     try {
         let response = await axios.get(
-            `${ServerAddress.Type}${ServerAddress.Blog}${Blog.getPosts}?per_page=${perPage}`,
+            `${ServerAddress.Type}${ServerAddress.Blog}${Blog.getPosts}?page=${perPage}`,
         )
         return response
     } catch (error) {
