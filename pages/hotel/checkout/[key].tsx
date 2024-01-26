@@ -44,6 +44,10 @@ const Checkout: NextPage = () => {
   const [discountData, setDiscountData] = useState<any>();
   const [discountLoading, setDiscountLoading] = useState<boolean>(false);
 
+  const [promoCode,setPromoCode] = useState<string>("");
+
+  const [submitLoading,setSubmitLoading] = useState<boolean>(false);
+
   let backUrl: string = "";
   const checkinDate = reserveInfo?.checkin && new Date(reserveInfo.checkin);
   const checkoutDate = reserveInfo?.checkout && new Date(reserveInfo.checkout);
@@ -149,14 +153,16 @@ const Checkout: NextPage = () => {
 
   const submitHandler = async (params: any) => {
 
+    setSubmitLoading(true);
+
     const reserveResponse: any = await domesticHotelPreReserve(params);
 
     if (reserveResponse.data && reserveResponse.data.result) {
       const id = reserveResponse.data.result.id;
       const username = reserveResponse.data.result.username;
 
-      if (discountData?.promoCodeId) {
-        await registerDiscountCode({ discountPromoCode: discountData.promoCodeId, reserveId: id, username: username });
+      if (discountData?.isValid && promoCode) {
+        await registerDiscountCode({ discountPromoCode: promoCode , reserveId: id.toString(), username: username });
       }
 
       if (reserveResponse.data.result.rooms.every((x: any) => x.availablityType === "Online")) {
@@ -212,7 +218,8 @@ const Checkout: NextPage = () => {
     setDiscountLoading(false);
 
     if (response?.data?.result) {
-      setDiscountData(response.data.result)
+      setDiscountData(response.data.result);
+      setPromoCode(value);
     } else if (response?.data?.error) {
       setDiscountData(response.data?.error);
     }
@@ -316,7 +323,7 @@ const Checkout: NextPage = () => {
                       hotelInformation={hotelInformation}
                       reserveInformation={reserveInformation}
                       hasSubmit
-                      submitLoading={false}
+                      submitLoading={submitLoading}
                       roomExtraBed={roomsExtraBed}
                       discountLoading={discountLoading}
                       discountResponse={discountData?.isValid ? discountData : undefined}

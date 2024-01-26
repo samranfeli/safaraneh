@@ -2,7 +2,7 @@ import { useTranslation } from 'next-i18next';
 
 import SearchForm from '../../domesticHotel/components/shared/SearchForm';
 import {Apartment,Travel} from '../../shared/components/ui/icons';
-import Tabs from '../../shared/components/ui/Tabs';
+import Tab from '../../shared/components/ui/Tab';
 import { TabItem } from '@/modules/shared/types/common';
 import Image from 'next/image';
 import { addSomeDays, dateFormat } from '@/modules/shared/helpers';
@@ -47,7 +47,7 @@ const Banner :React.FC = () => {
                 <h1 className="text-white drop-shadow-lg text-center font-bold text-xl sm:text-4xl mb-6 sm:mb-10" > {tHome("Plan-your-trip")} </h1>
                 
                 <div className="px-5 pt-3 sm:p-5 bg-white sm:rounded-lg">
-                   <Tabs items={items} />
+                   <Tab items={items} />
                 </div>
 
 

@@ -9,7 +9,6 @@
 export const Header = {
     "Content-Type": "application/json",
     "Accept-Language": "en-US",
-    "currency": "USD",
     "apikey": process.env.PROJECT_SERVER_APIKEY,
     // "tenantid": process.env.PROJECT_SERVER_TENANTID,
   };
