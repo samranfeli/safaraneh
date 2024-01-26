@@ -10,8 +10,8 @@ import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 
 
 export const AllBlogs = createContext<any | null>(null)
-const Category: NextPage<any> = ({ LastBlogs, BlogCategory, categories_name }:
-    { LastBlogs?: BlogItemType[], BlogCategory?: BlogItemType[], categories_name : CategoriesNameType[] }) => {
+const Category: NextPage<any> = ({ LastBlogs, BlogCategory, categories_name, pages }:
+    { LastBlogs?: BlogItemType[], BlogCategory?: BlogItemType[], categories_name : CategoriesNameType[], pages : string }) => {
     
     
     const query: any = useRouter().query.categoriItem;
@@ -22,7 +22,7 @@ const Category: NextPage<any> = ({ LastBlogs, BlogCategory, categories_name }:
             <AllBlogs.Provider value={[BlogCategory,LastBlogs, categories_name]} >
             <NavbarBlog data={NavData} />
             <Title />
-            <Content Blogs={BlogCategory} LastBlogs={LastBlogs} CategoriesName={categories_name} />
+            <Content Blogs={BlogCategory} blogPages={pages}  LastBlogs={LastBlogs?.slice(0,3)} CategoriesName={categories_name} />
             </AllBlogs.Provider>
         </div>
     )
@@ -35,7 +35,7 @@ export async function getServerSideProps(context: any) {
     const categoryItem : any = context.query.categoriItem
 
     const [data, BlogCategory, categories_name] = await Promise.all<any>([
-        getBlogs(3),
+        getBlogs(1),
         GetBlogPostCategory(+ categoryItem),
         GetCategories()
     ])
@@ -44,6 +44,7 @@ export async function getServerSideProps(context: any) {
             props: {
                 ...await (serverSideTranslations(context.locale, ['common'])),
                 LastBlogs: data?.data || null,
+                pages: BlogCategory?.headers['x-wp-totalpages'],
                 BlogCategory: BlogCategory?.data || null,
                 categories_name: categories_name?.data || null
             }
