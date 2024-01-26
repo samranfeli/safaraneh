@@ -82,7 +82,8 @@ export const Header = {
   export const Payment = {
     ValidateDiscountCode:"/api/services/app/Discount/Validate",
     RegisterDiscountCode: "/api/services/app/Discount/Register",
-    GetBankGateway:"/api/services/app/ReserveBankGateway/GetAll"
+    GetBankGateway:"/api/services/app/ReserveBankGateway/GetAll",
+    MakeToken:"/api/services/app/ReserveBankGateway/MakeToken"
   };
   
   export const ServerStatus = {

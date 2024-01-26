@@ -8,8 +8,8 @@ import Link from 'next/link';
 import { useState, useEffect } from 'react';
 
 type Props = {
-    submitLoading?: boolean;
-    onSubmit: (gatewayId: string) => void;
+    goToBankLoading?: boolean;
+    onSubmit: (gatewayId: number) => void;
     expireDate?: string;
     bankGatewayList?: any;
     isError?: any;
@@ -25,7 +25,7 @@ const OnlinePayment: React.FC<Props> = props => {
 
     const {
         bankGatewayList,
-        submitLoading,
+        goToBankLoading,
         isError,
         expireDate,
         type,
@@ -33,11 +33,22 @@ const OnlinePayment: React.FC<Props> = props => {
     } = props
 
 
-    const [gatewayId, setGatewayId] = useState<string>('')
-    const [remaindSeconds, setRemaindSeconds] = useState<number>(100)
+    const [gatewayId, setGatewayId] = useState<number>();
+    const [remaindSeconds, setRemaindSeconds] = useState<number>(100);
+
+    let firstBankId: number | undefined = undefined;
+    if (bankGatewayList?.gateways?.length) {
+        firstBankId = bankGatewayList.gateways[0].id;
+    }
+
+    useEffect(() => {
+        if (firstBankId) {
+            setGatewayId(firstBankId);
+        }
+    }, [firstBankId]);
 
     const submit = () => {
-        if (!sumbitBtnIsDisabled && !props.submitLoading) {
+        if (!sumbitBtnIsDisabled && !props.goToBankLoading && gatewayId) {
             props.onSubmit(gatewayId)
         }
     }
@@ -52,18 +63,22 @@ const OnlinePayment: React.FC<Props> = props => {
 
         if (second > 0) {
             return (
-                <div>
-                    <h6> درخواست رزرو تایید شد </h6>
-                    <span> خواهشمند است حداکثر ظرف مدت </span>
-                    {days ? <b>{days} روز </b> : null}
-                    {hours ? <b>{hours} ساعت </b> : null}
-                    {minutes ? <b>{minutes} دقیقه </b> : null}
-                    {seconds ? <b>{seconds} ثانیه </b> : null}
-                    <span>
-                        {' '}
-                        نسبت به پرداخت صورتحساب اقدام فرمایید. بدیهی است پس از منقضی شدن
-                        زمان مذکور درخواست شما لغو می گردد.{' '}
-                    </span>
+                <div className='bg-white p-4 border border-neutral-300 rounded-md mb-4 border-t-2 border-t-orange-400 mt-8'>
+                    <h6 className='text-orange-400 font-semibold mb-1'> درخواست رزرو تایید شد </h6>
+                    <p className='text-xs'>
+                        <span> خواهشمند است حداکثر ظرف مدت </span>
+                        {days ? <b> <span className='font-mono'> {days} </span> روز </b> : null}
+                        {hours ? <b> <span className='font-mono'> {hours} </span> ساعت </b> : null}
+                        {!!(minutes && (hours || days)) && (<span> و </span>)}
+                        {minutes ? <b> <span className='font-mono'> {minutes} </span> دقیقه </b> : null}
+                        {!!(seconds && (minutes || hours)) && (<span> و </span>)}
+                        {seconds ? <b> <span className='font-mono'> {seconds} </span> ثانیه </b> : null}
+                        <span>
+                            {' '}
+                            نسبت به پرداخت صورتحساب اقدام فرمایید. بدیهی است پس از منقضی شدن
+                            زمان مذکور درخواست شما لغو می گردد.{' '}
+                        </span>
+                    </p>
                 </div>
             )
         }
@@ -181,13 +196,13 @@ const OnlinePayment: React.FC<Props> = props => {
                         </div>
 
                         <div className='flex gap-4 my-4'>
-                            {bankGatewayList.gateways.flatMap((x:any) => ([x,x])).map((bank: any, index: number) => (
+                            {bankGatewayList.gateways.map((bank: any, index: number) => (
                                 <button
                                     key={index}
+                                    disabled={type === 'HotelDomestic' && remaindSeconds < 1}
                                     type='button'
                                     onClick={() => { setGatewayId(bank.id) }}
-                                    disabled={true}
-                                    className={`border border-3 px-4 py-3 text-sm grow text-center rounded-sm text-blue-700 select-none outline-none border-blue-500 bg-blue-50 disabled:border-neutral-400 disabled:bg-neutral-200 disabled:grayscale`}
+                                    className={`border border-3 px-4 py-3 text-sm grow text-center rounded-sm text-blue-700 select-none outline-none border-blue-500 disabled:border-neutral-400 disabled:bg-neutral-200 disabled:grayscale ${gatewayId === bank.id ? "bg-blue-100" : "bg-blue-50"}`}
                                 >
                                     <img
                                         className="block mx-auto mb-1"
@@ -197,26 +212,25 @@ const OnlinePayment: React.FC<Props> = props => {
                                     {bank.name}
                                 </button>
                             ))}
+
+                            {/* <button
+
+                                type='button'
+                                onClick={() => { setGatewayId(100) }}
+                                disabled={type === 'HotelDomestic' && remaindSeconds < 1}
+                                className={`border border-3 px-4 py-3 text-sm grow text-center rounded-sm text-blue-700 select-none outline-none border-blue-500 disabled:border-neutral-400 disabled:bg-neutral-200 disabled:grayscale ${gatewayId === 100 ? "bg-blue-100" : "bg-blue-50"}`}
+                            >
+                                <img
+                                    className="block mx-auto mb-1"
+                                    src={"bank.image.path"}
+                                    alt={"bank.image.altAttribute"}
+                                />
+                                صادرات
+                            </button> */}
+
+
+
                         </div>
-
-                        {/* <Radio.Group
-                    className="bankGateWaysRadio"
-                    defaultValue={bankGatewayList.gateways[0].id}
-                    onChange={(e:any) => setGatewayId(e.target.value)}
-                  >
-                    {bankGatewayList.gateways.map((bank, index) => (
-                      <Radio.Button value={bank.id} key={index}>
-                        <img
-                          className="gatewaysRadioIcon"
-                          src={bank.image.path}
-                          alt={bank.image.altAttribute}
-                        />
-                        {bank.name}
-                      </Radio.Button>
-                    ))}
-      
-
-                  </Radio.Group> */}
 
 
                         {coordinatorPrice ? (
@@ -231,7 +245,7 @@ const OnlinePayment: React.FC<Props> = props => {
                             className="h-12 px-5 font-semibold w-full sm:w-60"
                             onClick={submit}
                             disabled={sumbitBtnIsDisabled}
-                            loading={submitLoading}
+                            loading={goToBankLoading}
                         >
 
                             {tPayment('pay')}

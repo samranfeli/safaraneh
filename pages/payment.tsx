@@ -1,7 +1,7 @@
 import Steps from '@/modules/shared/components/ui/Steps';
 import { useState, useEffect } from 'react';
 import type { GetServerSideProps, NextPage } from 'next';
-import { useTranslation } from 'next-i18next';
+import { useTranslation, i18n } from "next-i18next";
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 import Head from 'next/head';
 import { getReserveFromCoordinator } from '@/modules/shared/actions';
@@ -16,7 +16,7 @@ import Tab from '@/modules/shared/components/ui/Tab';
 import OnlinePayment from '@/modules/payment/components/OnlinePayment';
 import CardToCard from '@/modules/payment/components/CardToCard';
 import CreditPayment from '@/modules/payment/components/CreditPayment';
-import { getReserveBankGateway } from '@/modules/payment/actions';
+import { getReserveBankGateway, makeToken } from '@/modules/payment/actions';
 import { useAppDispatch } from '@/modules/shared/hooks/use-store';
 import { setReduxError } from '@/modules/shared/store/errorSlice';
 
@@ -39,6 +39,8 @@ const Payment: NextPage = () => {
   const [domesticHotelReserveData, setDomesticHotelReserveData] = useState<DomesticHotelGetReserveByIdData>();
   const [domesticHotelData, setDomesticHotelData] = useState<DomesticHotelDetailType>();
   const [bankGatewayList, setBankGatewayList] = useState([]);
+
+  const [goToBankLoading,setGoToBankLoading] = useState<boolean>(false);
 
   const [expireDate, setExpireDate] = useState();
 
@@ -101,6 +103,40 @@ const Payment: NextPage = () => {
   }, [type, username, reserveId]);
 
 
+  const goTobank = async (gatewayId:number) => {
+    
+    if (!reserveId) return;
+
+    setGoToBankLoading(true);
+
+    const callbackUrl = window?.location?.origin + (i18n?.language === "fa" ? "/fa" : "en") +"/callback";
+      
+      debugger;
+
+    const params = {
+      gatewayId: gatewayId,
+      callBackUrl: callbackUrl,
+      reserveId: reserveId,
+    };
+    const response = await makeToken(params);
+    if (response.status == 200) {
+      window.location.replace(
+        `https://payline.safaraneh.com/fa/Reserves/Payment/PaymentRequest?tokenId=${response.data.result.tokenId}`
+      );
+    } else {
+      
+      debugger;
+      dispatch(setReduxError({
+        title: t('error'),
+        message:response.data.error.message,
+        isVisible: true
+    }));
+
+      setGoToBankLoading(false);
+    }
+  };
+
+
   const tabItems: TabItem[] = [
     {
       key: '1',
@@ -108,11 +144,11 @@ const Payment: NextPage = () => {
       children: (
         <OnlinePayment
           coordinatorPrice={coordinatorPrice}
-          onSubmit={(bankId) => { debugger }}
+          onSubmit={(bankId) => { goTobank(bankId) }}
           bankGatewayList={bankGatewayList}
           expireDate={expireDate}
           isError={""}
-          submitLoading={false}
+          goToBankLoading={goToBankLoading}
           type={type}
         />
       ),

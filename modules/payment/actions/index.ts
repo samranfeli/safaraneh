@@ -67,4 +67,24 @@ export const getReserveBankGateway = async (id:string, acceptLanguage: string = 
     }
   }
 
+  export const makeToken = async (params:{gatewayId: number, callBackUrl: string, reserveId: string}) => {
+    try {
+      const res = await axios.post(
+        `${ServerAddress.Type}${ServerAddress.Payment}${Payment.MakeToken}`,
+        params,
+        {
+          headers: {
+            'Content-Type': 'application/json',
+            accept: 'text/plain',
+            'Accept-Language': 'fa-IR',
+            TenantId: process.env.PROJECT_SERVER_TENANTID,
+          },
+        },
+      )
+      return res
+    } catch (error:any) {
+      console.log('error', error)
+      return error.response
+    }
+  }
 
