@@ -34,12 +34,12 @@ const Content: NextPage<Props> = ({Blogs,LastBlogs,CategoriesName,blogPages}) =>
             <div className="col-span-6">
                 {
                     Blogs && blogPages ?
-                    Blogs?.map((blog : any ) => <BlogItem data={blog} key={blog.id} /> ): <p>loading</p>
+                    Blogs?.map((blog : any, blogIndex:number ) => <BlogItem data={blog} key={blog.id} index={blogIndex} /> ): <p>loading</p>
                 }
-                    <ul className="flex justify-center rounded mt-4 max-sm:m-4 p-3" style={{border:'solid 1px rgba(0,0,0,.2)'}}>
+                    <ul className="flex flex-wrap justify-center rounded mt-4 max-sm:m-4 p-3" style={{border:'solid 1px rgba(0,0,0,.2)'}}>
                     {
                         pageNumber.length ?
-                        pageNumber.map((item: any) => <li key={item} onClick={() => router.replace({query:{...router.query , page:item}})}
+                        pageNumber.map((item: any) => <li key={item} onClick={() => router.push({query:{...router.query , page:item}})}
                             className={`scale-50 w-1 text-center rounded-3xl ml-2  max-sm:m-2 cursor-pointer translation-all duration-300`}>
                         {item}
                         </li>) : 

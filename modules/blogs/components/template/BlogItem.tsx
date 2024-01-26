@@ -5,15 +5,16 @@ import { BlogItemType } from "../../types/blog";
 import { ArrowLeft, ArrowRight } from "@/modules/shared/components/ui/icons";
 
 interface Props {
-    data? : BlogItemType[]
+    data? : BlogItemType[];
+    index:number;
 }
 
-const BlogItem: NextPage<any> = ({data}) => {
+const BlogItem: NextPage<any> = ({data,index}) => {
     return (
             <div className="grid grid-cols-3 gap-6 max-sm:grid-cols-1 mt-6 max-sm:mt-12 scale- max-sm:scale-100 w-full max-sm:-space-y-2">
                     <Link href={`/blog/${data.slug}`}>
                 <Image src={data?.images?.large}
-                    alt="pic" height={150} width={200} className="w-full rounded-md max-sm:mr-3" priority={true} />
+                    alt="pic" height={150} width={200} className="w-full rounded-md max-sm:mr-3" priority={!index} />
                     </Link>
 
                 <div
