@@ -33,6 +33,7 @@ const Payment: NextPage = () => {
   const pathArray = router.asPath.split("?")[1]?.split("#")[0].split("&");
   const username = pathArray.find(item => item.includes("username="))?.split("username=")[1];
   const reserveId = pathArray.find(item => item.includes("reserveId="))?.split("reserveId=")[1];
+  const status: string | undefined = pathArray.find(item => item.includes("status="))?.split("status=")[1];
 
   const [type, setType] = useState<"Undefined" | "HotelDomestic" | "FlightDomestic" | "Bus" | "Package" | "Flight" | "Hotel" | "PnrOutside" | "Cip" | "Activity">();
   const [coordinatorPrice, setCoordinatorPrice] = useState<number>();
@@ -110,14 +111,13 @@ const Payment: NextPage = () => {
     setGoToBankLoading(true);
 
     const callbackUrl = window?.location?.origin + (i18n?.language === "fa" ? "/fa" : "en") +"/callback";
-      
-      debugger;
-
+  
     const params = {
       gatewayId: gatewayId,
       callBackUrl: callbackUrl,
       reserveId: reserveId,
     };
+    
     const response = await makeToken(params);
     if (response.status == 200) {
       window.location.replace(
@@ -147,7 +147,7 @@ const Payment: NextPage = () => {
           onSubmit={(bankId) => { goTobank(bankId) }}
           bankGatewayList={bankGatewayList}
           expireDate={expireDate}
-          isError={""}
+          status={status}
           goToBankLoading={goToBankLoading}
           type={type}
         />

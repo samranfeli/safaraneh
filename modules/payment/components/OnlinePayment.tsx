@@ -1,7 +1,7 @@
 import Button from '@/modules/shared/components/ui/Button';
 import Loading from '@/modules/shared/components/ui/Loading';
 import Skeleton from '@/modules/shared/components/ui/Skeleton';
-import { ErrorIcon, InfoCircle } from '@/modules/shared/components/ui/icons';
+import { Close, InfoCircle } from '@/modules/shared/components/ui/icons';
 import { getDatesDiff, numberWithCommas } from '@/modules/shared/helpers';
 import { useTranslation } from 'next-i18next';
 import Link from 'next/link';
@@ -12,10 +12,9 @@ type Props = {
     onSubmit: (gatewayId: number) => void;
     expireDate?: string;
     bankGatewayList?: any;
-    isError?: any;
+    status?: any;
     type?: "Undefined" | "HotelDomestic" | "FlightDomestic" | "Bus" | "Package" | "Flight" | "Hotel" | "PnrOutside" | "Cip" | "Activity";
     coordinatorPrice?: number;
-
 }
 
 const OnlinePayment: React.FC<Props> = props => {
@@ -26,12 +25,11 @@ const OnlinePayment: React.FC<Props> = props => {
     const {
         bankGatewayList,
         goToBankLoading,
-        isError,
+        status,
         expireDate,
         type,
         coordinatorPrice
     } = props
-
 
     const [gatewayId, setGatewayId] = useState<number>();
     const [remaindSeconds, setRemaindSeconds] = useState<number>(100);
@@ -117,7 +115,6 @@ const OnlinePayment: React.FC<Props> = props => {
     }, [props.expireDate])
 
 
-
     let sumbitBtnIsDisabled = false
     if (
         type === 'Hotel' ||
@@ -127,12 +124,8 @@ const OnlinePayment: React.FC<Props> = props => {
         sumbitBtnIsDisabled = true
     }
     return (
-        <div
-            className='pt-10'
-        // className={`${styles.contentBooking} ${styles.contentPayment} ${
-        //   process.env.THEME_NAME === 'TRAVELO' && styles.contentPaymentTravelo
-        // }`}
-        >
+        <div className='pt-10'>
+
             {type === 'HotelDomestic' && remaindSeconds < 1 && (
                 <div className='border p-4 border-neutral-300 rounded border-t-4 border-t-red-500 text-xs'>
                     <h6 className='text-red-600 text-sm font-semibold'> اخطار! </h6>
@@ -142,23 +135,19 @@ const OnlinePayment: React.FC<Props> = props => {
                 </div>
             )}
 
-            {isError === '0' || isError === 0 ? (
-                <div
-                //className={styles.errorPayment}
-                >
-                    <div
-                    //className={styles.subject}
-                    >
-                        <ErrorIcon className='w-6 h-6 full-red-500' />
+            {!!(status === '0' || status === 0) && (remaindSeconds > 1) && (
+                <div className='text-center border border-neutral-300 rounded-md my-5 p-5' >
 
+                    <Close className='fill-white bg-red-600 rounded-full p-1 w-12 h-12 block mx-auto mb-4' />
+
+                    <h5 className='font-semibold text-lg mb-2'>
                         {tPayment('error-in-pay')}
-                    </div>
-                    <span>{tPayment('please-pay-again')}</span>
-                </div>
-            ) : (
-                ''
-            )}
+                    </h5>
 
+                    <p className='text-sm'>{tPayment('please-pay-again')}</p>
+
+                </div>
+            )}
 
             <p className='text-sm mt-5'>
                 <InfoCircle className='w-5 h-5 full-neutral-500 inline-block align-middle rtl:ml-2 ltr:mr-2' />
@@ -169,124 +158,76 @@ const OnlinePayment: React.FC<Props> = props => {
                 {tPayment('second-password-desc')}
             </Link>
 
-
-
-
             {bankGatewayList && bankGatewayList.gateways ? (
-                <div
-                //className={styles.howPay}
-                >
+                <div>
                     <h5 className='text-xl mb-5'>
                         {tPayment('please-choose-pay-panel')}
                     </h5>
-                    <div
-                        className=''
-                    //   className={`${styles.cardBody} ${
-                    //     type === 'HotelDomestic' && remaindSeconds < 1
-                    //       ? 'card-body-disable'
-                    //       : ''
-                    //   }`}
-                    >
-                        <div className='bg-neutral-50 p-2 sm:p-4 text-xs rounded flex items-center gap-2'>
-                            <img
-                                src={bankGatewayList.image.path}
-                                alt={bankGatewayList.image.altAttribute}
-                            />
-                            {bankGatewayList.description}
-                        </div>
+                    <div className='bg-neutral-50 p-2 sm:p-4 text-xs rounded flex items-center gap-2'>
+                        <img
+                            src={bankGatewayList.image.path}
+                            alt={bankGatewayList.image.altAttribute}
+                        />
+                        {bankGatewayList.description}
+                    </div>
 
-                        <div className='flex gap-4 my-4'>
-                            {bankGatewayList.gateways.map((bank: any, index: number) => (
-                                <button
-                                    key={index}
-                                    disabled={type === 'HotelDomestic' && remaindSeconds < 1}
-                                    type='button'
-                                    onClick={() => { setGatewayId(bank.id) }}
-                                    className={`border border-3 px-4 py-3 text-sm grow text-center rounded-sm text-blue-700 select-none outline-none border-blue-500 disabled:border-neutral-400 disabled:bg-neutral-200 disabled:grayscale ${gatewayId === bank.id ? "bg-blue-100" : "bg-blue-50"}`}
-                                >
-                                    <img
-                                        className="block mx-auto mb-1"
-                                        src={bank.image.path}
-                                        alt={bank.image.altAttribute}
-                                    />
-                                    {bank.name}
-                                </button>
-                            ))}
-
-                            {/* <button
-
-                                type='button'
-                                onClick={() => { setGatewayId(100) }}
+                    <div className='flex gap-4 my-4'>
+                        {bankGatewayList.gateways.map((bank: any, index: number) => (
+                            <button
+                                key={index}
                                 disabled={type === 'HotelDomestic' && remaindSeconds < 1}
-                                className={`border border-3 px-4 py-3 text-sm grow text-center rounded-sm text-blue-700 select-none outline-none border-blue-500 disabled:border-neutral-400 disabled:bg-neutral-200 disabled:grayscale ${gatewayId === 100 ? "bg-blue-100" : "bg-blue-50"}`}
+                                type='button'
+                                onClick={() => { setGatewayId(bank.id) }}
+                                className={`border border-3 px-4 py-3 text-sm grow text-center rounded-sm text-blue-700 select-none outline-none border-blue-500 disabled:border-neutral-400 disabled:bg-neutral-200 disabled:grayscale ${gatewayId === bank.id ? "bg-blue-100" : "bg-blue-50"}`}
                             >
                                 <img
                                     className="block mx-auto mb-1"
-                                    src={"bank.image.path"}
-                                    alt={"bank.image.altAttribute"}
+                                    src={bank.image.path}
+                                    alt={bank.image.altAttribute}
                                 />
-                                صادرات
-                            </button> */}
+                                {bank.name}
+                            </button>
+                        ))}
 
-
-
-                        </div>
-
-
-                        {coordinatorPrice ? (
-                            <div className='text-sm font-semibold py-4'>
-                                {tPayment('total-price')} :  {numberWithCommas(coordinatorPrice)} {t('rial')}
-                            </div>
-                        ) : (
-                            <Skeleton />
-                        )}
-
-                        <Button
-                            className="h-12 px-5 font-semibold w-full sm:w-60"
-                            onClick={submit}
-                            disabled={sumbitBtnIsDisabled}
-                            loading={goToBankLoading}
-                        >
-
-                            {tPayment('pay')}
-
-                            {/* {loadingSubmit ? (
-                          <LoadingOutlined
-                            spin
-                            className={styles.loadingFlight}
-                          ></LoadingOutlined>
-                        ) : (
-                          <LockIcon />
-                        )} */}
-
-                        </Button>
-
-
-                        <p className='my-4 text-neutral-400 text-xs' >
-                            {tPayment('accept-privacy')}
-                        </p>
                     </div>
+
+
+                    {coordinatorPrice ? (
+                        <div className='text-sm font-semibold py-4'>
+                            {tPayment('total-price')} :  {numberWithCommas(coordinatorPrice)} {t('rial')}
+                        </div>
+                    ) : (
+                        <Skeleton />
+                    )}
+
+                    <Button
+                        className="h-12 px-5 font-semibold w-full sm:w-60"
+                        onClick={submit}
+                        disabled={sumbitBtnIsDisabled}
+                        loading={goToBankLoading}
+                    >
+
+                        {tPayment('pay')}
+
+                    </Button>
+
+
+                    <p className='my-4 text-neutral-400 text-xs' >
+                        {tPayment('accept-privacy')}
+                    </p>
                 </div>
             ) : (
-                <div
-                //className={styles.howPay}
-                >
-                    <div
-                    //className={styles.cardTitle}
-                    >
-                        {tPayment('please-choose-pay-panel')}</div>
-                    <div
-                    //className={styles.cardBody}
-                    >
-                        <div
-                        //className={styles.loading}
-                        >
-                            <Loading size='small' />
-
-                            <span>در حال بارگذاری</span>
-                        </div>
+                <>
+                    <div>
+                        {tPayment('please-choose-pay-panel')}
                     </div>
-                </div>
+
+                    <div className='flex gap-3 items-center' >
+                        <Loading size='small' />
+
+                        در حال بارگذاری
+                    </div>
+                </>
             )}
 
             {type === 'HotelDomestic' && remaindTimeElement(remaindSeconds)}
