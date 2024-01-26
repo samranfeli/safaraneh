@@ -78,7 +78,7 @@ const HotelList: NextPage<Props> = props => {
   }
 
   let cityId: number;
-  if (props.searchHotelsData?.Hotels[0].CityId) {
+  if (props.searchHotelsData?.Hotels[0]?.CityId) {
     cityId = props.searchHotelsData.Hotels[0].CityId;
   }
 
@@ -609,9 +609,8 @@ export const getServerSideProps: GetServerSideProps = async (context: any) => {
   } = await SearchHotels(url, locale);
 
   let faqResponse: any;
-  if (searchHotelsResponse?.data?.Hotels[0].CityId) {
+  if (searchHotelsResponse?.data?.Hotels[0]?.CityId) {
     faqResponse = await GetCityFaqById(searchHotelsResponse?.data?.Hotels[0].CityId);
-
   }
 
   return ({

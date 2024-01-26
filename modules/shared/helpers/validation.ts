@@ -6,11 +6,11 @@ export const validateRequied = (value: string, message: string) => {
     return error;
 }
 
-export const validateEmail = ({value, reqiredMessage, invalidMessage}:{value: string, reqiredMessage: string, invalidMessage: string}) => {
+export const validateEmail = ({value, reqiredMessage, invalidMessage}:{value: string, reqiredMessage?: string, invalidMessage: string}) => {
     let error;
     if (!value && reqiredMessage) {
         error = reqiredMessage;
-    } else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(value)) {
+    } else if (value && !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(value)) {
         error = invalidMessage;
     }
 
