@@ -7,14 +7,15 @@ import Content from "@/modules/blogs/components/template/Content";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 
 
-const Tag: NextPage<any> = ({ TagBlogs, TagName, categories_name, recentBlogs }) => {
-  console.log(TagName);
+const Tag: NextPage<any> = ({ TagBlogs, TagName, categories_name, recentBlogs, pages }) => {
   
+    console.log(TagBlogs);
+    
     return (
         <div className="bg-white">
                 <NavbarBlog data={TagName.name} />
                 <Title title={TagName?.name} />
-                <Content Blogs={TagBlogs}  LastBlogs={recentBlogs} CategoriesName={categories_name}  />
+                <Content Blogs={TagBlogs} blogPages={pages}  LastBlogs={recentBlogs?.slice(0,3)} CategoriesName={categories_name}  />
         </div>
     )
 }
@@ -30,7 +31,7 @@ export async function getServerSideProps(context: any) {
         GetTagName(+tag),
         GetTags(+tag),
         GetCategories(),
-        getBlogs(3)
+        getBlogs(1)
     ])
     
     return ({
@@ -38,6 +39,7 @@ export async function getServerSideProps(context: any) {
             ...await (serverSideTranslations(context.locale, ['common'])),
             TagName: TagName?.data || null,
             TagBlogs: TagBlogs?.data || null,
+            pages: TagBlogs?.headers['x-wp-totalpages'],
             recentBlogs: recentBlogs?.data || null,
             categories_name: categories_name?.data || null
         }

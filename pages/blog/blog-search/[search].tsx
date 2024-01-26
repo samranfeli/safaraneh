@@ -8,7 +8,7 @@ import { useRouter } from "next/router";
 import { createContext } from "react";
 
 export const SearchData = createContext<any | null>(null)
-const Search: NextPage<any> = ({ SearchBlog, LastBlogs, categories_name }) => {
+const Search: NextPage<any> = ({ SearchBlog, LastBlogs, categories_name, pages }) => {
     
     const NavData = useRouter().query.search
     return (
@@ -16,7 +16,7 @@ const Search: NextPage<any> = ({ SearchBlog, LastBlogs, categories_name }) => {
             <SearchData.Provider value={[SearchBlog, LastBlogs,categories_name]}>
                 <NavbarBlog data={`جستوجوی"${NavData}"`} />
                 <Title />
-                <Content Blogs={SearchBlog} LastBlogs={LastBlogs} CategoriesName={categories_name} blogPages={'9'}/>
+                <Content Blogs={SearchBlog} LastBlogs={LastBlogs.slice(0,3)} CategoriesName={categories_name} blogPages={pages}/>
             </SearchData.Provider>
         </div>
     )
@@ -31,13 +31,14 @@ export async function getServerSideProps(context: any) {
     const [SearchBlog, categories_name, recentBlogs] = await Promise.all<any>([
         GetSearchBlogPosts(search),
         GetCategories(),
-        getBlogs(3)
+        getBlogs(1)
     ])
     return ({
         props: {
             ...await (serverSideTranslations(context.locale, ['common'])),
             categories_name: categories_name?.data || null,
             LastBlogs: recentBlogs?.data || null,
+            pages: SearchBlog?.headers['x-wp-totalpages'],
             SearchBlog : SearchBlog?.data || null
         }
     })
