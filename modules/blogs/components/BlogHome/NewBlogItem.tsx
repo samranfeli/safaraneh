@@ -54,7 +54,7 @@ const NewBlog: NextPage<Props> = (props) => {
                 )
             }
             {!props.blogs && <p className="text-center">خطا در اتصال به شبکه</p>}
-                <Link href='/blog/blog-list'>
+                <Link href='/blog-list'>
                     <div  className="w-full rounded text-center p-4 mt-10 hover:bg-gray-100 translation-all duration-300" style={{border:'solid 1px rgba(0,0,0,0.1)'}}>
                         <p>مشاهده مطالب بیشتر</p>
                     </div>

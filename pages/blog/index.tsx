@@ -32,7 +32,7 @@ export const getStaticProps: GetStaticProps = async (context: any) => {
     const { locale, query } = context;
     
     const [Blogdata, Cities, Categories, Categories2, Categories3] = await Promise.all<any>([
-        getBlogs(10),
+        getBlogs(1),
         GetCities(),
         GetBestCategory(),
         GetBestCategory2(),

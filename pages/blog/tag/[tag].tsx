@@ -4,21 +4,17 @@ import NavbarBlog from "@/modules/blogs/components/template/BreadCrumpt";
 import { NextPage } from "next";
 import { createContext } from "react";
 import Content from "@/modules/blogs/components/template/Content";
-import { useRouter } from "next/router";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 
 
-export const TagData = createContext<any | null>(null)
 const Tag: NextPage<any> = ({ TagBlogs, TagName, categories_name, recentBlogs }) => {
   console.log(TagName);
   
     return (
         <div className="bg-white">
-            <TagData.Provider value={[TagBlogs,recentBlogs,categories_name]}>
                 <NavbarBlog data={TagName.name} />
                 <Title title={TagName?.name} />
-                <Content Blogs={TagBlogs} LastBlogs={recentBlogs} CategoriesName={categories_name} />
-            </TagData.Provider>
+                <Content Blogs={TagBlogs}  LastBlogs={recentBlogs} CategoriesName={categories_name}  />
         </div>
     )
 }
