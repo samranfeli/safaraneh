@@ -69,7 +69,7 @@ export const Header = {
     SearchHotels:"/v2/Hotel/SearchHotels",
     getRates:"/v2/Comment/Rates",
     getCityFaqById:"/api/services/app/Faq/GetAll",
-    GetEntityNameByLocation: "/v2/Entity/GetEntityNameByLocation",
+    GetEntityNameByLocation: "/api/services/app/Entity/Get",
     GetValidate:"/api/services/app/Booking/GetValidate",
     PreReserve: "/api/services/app/Booking/PreReserve",
     GetReserveById: "/api/services/app/Reserve/Get"

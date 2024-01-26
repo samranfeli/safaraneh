@@ -68,7 +68,7 @@ const HotelList: NextPage<Props> = props => {
 
   const [sortFactor, setSortFactor] = useState<SortTypes>("priority");
 
-  const [entity, setEntity] = useState<{ EntityName: string; EntityTypeId: number }>();
+  const [entity, setEntity] = useState<{ EntityName: string; EntityType: "City" | "Province" | "Hotel" }>();
 
   const [showMap, setShowMap] = useState<boolean>(false);
 
@@ -265,8 +265,9 @@ const HotelList: NextPage<Props> = props => {
 
     const fetchEntityDetail = async (id: number) => {
       const entityResponse: any = await getEntityNameByLocation(id, 'fa-IR');
-      if (entityResponse?.data) {
-        setEntity(entityResponse.data);
+
+      if (entityResponse?.data?.result) {
+        setEntity({ EntityName: entityResponse.data.result.name, EntityType: entityResponse.data.result.type });
       }
     }
 
@@ -400,7 +401,7 @@ const HotelList: NextPage<Props> = props => {
   const defaultDestination: EntitySearchResultItemType = {
     name: entity?.EntityName,
     displayName: entity?.EntityName,
-    type: entity?.EntityTypeId === 3 ? 'City' : 'Province'
+    type: entity?.EntityType || 'City'
   }
 
 
@@ -469,9 +470,9 @@ const HotelList: NextPage<Props> = props => {
 
   })
 
-  let fallbackLocation : [number, number] | undefined;
+  let fallbackLocation: [number, number] | undefined;
   const firstHotelWithLocation = hotels.find(hotel => (hotel.Latitude && hotel.Longitude));
-  if (firstHotelWithLocation){
+  if (firstHotelWithLocation) {
     fallbackLocation = [firstHotelWithLocation.Latitude!, firstHotelWithLocation.Longitude!];
   }
 
@@ -494,8 +495,8 @@ const HotelList: NextPage<Props> = props => {
 
             <button type='button' className='relative block w-full lg:mb-5' onClick={() => { setShowMap(true) }}>
               <Image src="/images/map-cover.svg" alt="showMap" className='block border w-full h-24 rounded-xl object-cover' width={354} height={100} />
-               <span className='absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-white px-3 py-1 border-1 border-blue-600 rounded font-semibold select-none leading-5 text-xs whitespace-nowrap'>
-                {tHotel('viewHotelsOnMap', {cityName: entity?.EntityName || cityName})}
+              <span className='absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-white px-3 py-1 border-1 border-blue-600 rounded font-semibold select-none leading-5 text-xs whitespace-nowrap'>
+                {tHotel('viewHotelsOnMap', { cityName: entity?.EntityName || cityName })}
               </span>
             </button>
 
@@ -569,9 +570,9 @@ const HotelList: NextPage<Props> = props => {
       </div>
 
       {!!showMap && <HotelsOnMap
-        fallbackLocation = {fallbackLocation}
-        priceIsFetched = {!!pricesData}
-        scoreIsFetched = {!!ratesData}
+        fallbackLocation={fallbackLocation}
+        priceIsFetched={!!pricesData}
+        scoreIsFetched={!!ratesData}
         allHotelsLength={hotels.length}
         setSort={setSortFactor}
         sortBy={sortFactor}

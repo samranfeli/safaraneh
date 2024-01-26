@@ -190,7 +190,7 @@ export const GetCityFaqById = async (cityId: number, acceptLanguage: string = 'f
 export const getEntityNameByLocation = async (cityId: number, acceptLanguage: string = 'fa-IR') => {
     try {
         let response = await axios.get(
-            `${ServerAddress.Type}${ServerAddress.Hotel_Main}${Hotel.GetEntityNameByLocation}?location=${cityId}`,
+            `${ServerAddress.Type}${ServerAddress.Hotel_Data}${Hotel.GetEntityNameByLocation}?id=${cityId}`,
             {
                 headers: {
                     'Content-Type': 'application/json',
