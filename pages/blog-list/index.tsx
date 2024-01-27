@@ -5,8 +5,6 @@ import { BlogItemType, CategoriesNameType } from "@/modules/blogs/types/blog";
 import { GetStaticProps, NextPage } from "next";
 import Content from "@/modules/blogs/components/template/Content";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
-import { useEffect, useState } from "react";
-import { useRouter } from "next/router";
 
 
 
@@ -33,17 +31,17 @@ export async function  getServerSideProps (context: any)  {
         GetCategories()
     ])
 
-
     return (
         {
             props: {
                 ...await (serverSideTranslations(context.locale, ['common'])),
                 blogsPage: blogsPage?.data || null,
-                pages: pageOne?.headers['x-wp-totalpages'],
+                pages: pageOne?.headers?.['x-wp-totalpages'],
                 categories_name: categories_name?.data || null,
                 recentBlogs: pageOne.data || null
             },
 
         }
     )
+
 }
