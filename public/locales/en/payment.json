@@ -1,8 +1,10 @@
 {
     "15-minutes": "The capacity of the hotel is reserved for you for up to 15 minutes. Please make your payment at this time.",
+    "24hours-backup": "Support team from 9:00 to 23:00",
     "accept-privacy": "By completing this reservation, you agree to the terms and conditions as well as the terms of privacy.",
     "can-not-pay-reserve": "payment is not available for this reserve",
     "error-in-pay": "Your payment has encountered a problem!",
+    "need-help": "Need help?",
     "pay": "payment",
     "pay-error": "Payment error",
     "please-choose-pay-panel": "Select the desired port?",

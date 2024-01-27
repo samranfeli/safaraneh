@@ -284,7 +284,7 @@ const Payment: NextPage = () => {
 
           <div>
 
-            {domesticHotelInformation && domesticHotelReserveInformation && <DomesticHotelAside hotelInformation={domesticHotelInformation} reserveInformation={domesticHotelReserveInformation} />}
+            <DomesticHotelAside hotelInformation={domesticHotelInformation} reserveInformation={domesticHotelReserveInformation} />
 
             <div className='bg-white p-4 border border-neutral-300 rounded-md mb-4 border-t-2 border-t-orange-400'>
               {domesticHotelInformation ? (
@@ -330,7 +330,6 @@ const Payment: NextPage = () => {
 }
 
 export const getServerSideProps: GetServerSideProps = async (context: any) => {
-
   return ({
     props: {
       ...await (serverSideTranslations(context.locale, ['common', 'hotel','payment']))

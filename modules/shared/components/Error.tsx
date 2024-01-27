@@ -2,9 +2,9 @@
 import { useTranslation } from "next-i18next";
 import Router from "next/router";
 
-import { useAppDispatch, useAppSelector } from "./hooks/use-store";
-import { setReduxError } from './store/errorSlice';
-import { ErrorIcon } from "./components/ui/icons";
+import { useAppDispatch, useAppSelector } from "../hooks/use-store";
+import { setReduxError } from '../store/errorSlice';
+import { ErrorIcon } from "./ui/icons";
 
 const Error: React.FC = () => {
 

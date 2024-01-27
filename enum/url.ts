@@ -72,7 +72,8 @@ export const Header = {
     GetEntityNameByLocation: "/api/services/app/Entity/Get",
     GetValidate:"/api/services/app/Booking/GetValidate",
     PreReserve: "/api/services/app/Booking/PreReserve",
-    GetReserveById: "/api/services/app/Reserve/Get"
+    GetReserveById: "/api/services/app/Reserve/Get",
+    Confirm:"/api/services/app/Booking/Confirm"
   };
 
   export const Reserve = {
