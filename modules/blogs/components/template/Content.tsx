@@ -17,25 +17,12 @@ interface Props {
 const Content: NextPage<Props> = ({Blogs,LastBlogs,CategoriesName,blogPages}) => {
     
 
-    let listPage :any = []
-    useEffect(() => {
-            for (let i = 1; i <= +blogPages; i++) {
-                listPage.push(i)
-            }
-        setpageNumber(listPage)
-        
-    }, [blogPages])
-    
-
-    const [pageNumber, setpageNumber] = useState<any>([])
-
-    const router = useRouter()
     return (
         <div className="grid grid-cols-8 gap-5 max-w-container m-auto p-5 max-sm:p-2 max-lg:grid-cols-1">
             <div className="col-span-6">
                 {
                     Blogs && blogPages ?
-                    Blogs?.map((blog : any ) => <BlogItem data={blog} key={blog.id} /> ): <p>loading</p>
+                    Blogs?.map((blog : any , index : number ) => <BlogItem data={blog} key={blog.id} index={index} /> ): <p>loading</p>
                 }
                        <Pagination perPage={blogPages} />    
             </div>
