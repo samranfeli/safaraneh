@@ -4,6 +4,7 @@ import { useTranslation } from "next-i18next";
 import TravelServices from "./travelServices";
 import Language from "./Language";
 import Image from "next/image";
+import TrackOrder from "./TrackOrder";
 
 type Props = {
     logo: string;
@@ -36,9 +37,7 @@ const Header:React.FC<Props> = props => {
                     {t('sign-in-up')}
                 </button>
 
-                <button type="button" aria-label={t('retrieve-my-booking')} className="h-12 text-sm text-blue-700 hover:text-blue-500 ltr:float-right rtl:float-left rtl:ml-5 ltr:mr-5 hidden md:block" >
-                    {t('retrieve-my-booking')}
-                </button>
+                <TrackOrder />
 
                 <Language className="ltr:float-right rtl:float-left rtl:ml-5 ltr:mr-5 hidden md:block" buttonClassName="h-12"  />
             </div>

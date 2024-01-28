@@ -13,6 +13,8 @@ type Props = {
     setFieldValue:any;
     onChange?: (value: string) => void;
     value: string;
+    labelIsSimple?:boolean;
+    showRequiredStar?:boolean;
 }
 
 const FormikField: React.FC<Props> = props => {
@@ -21,21 +23,26 @@ const FormikField: React.FC<Props> = props => {
 
 
     useEffect(()=>{
+        if (props.labelIsSimple){
+            return;
+        }
         if (props.value){
             setLabelUp(true);
         }else{
             setLabelUp(false);
         }
+
     },[props.value]);
 
     return (
-        <div className={`${props.errorText ? "has-validation-error" : ""}`}>
+        <div className={`${props.errorText ? "has-validation-error" : ""} ${props.className || ""}`}>
             <div className='relative'>
                 {!!props.label && (
                     <label
                         htmlFor={props.id}
-                        className={`select-none pointer-events-none block leading-4 absolute px-2 bg-white transition-all duration-300 -translate-y-1/2 rtl:right-1 ltr:left-1 ${labelUp ? "top-0 text-xs" : "top-1/2 text-sm"}`}
+                        className={`select-none pointer-events-none block leading-4 ${props.labelIsSimple?"mb-3":"absolute px-2 bg-white transition-all duration-300 -translate-y-1/2 rtl:right-1 ltr:left-1"} ${props.labelIsSimple ? "text-base" : labelUp ? "top-0 text-xs" : "top-1/2 text-sm"}`}
                     >
+                        {!!(props.labelIsSimple && props.showRequiredStar) && <span className='text-red-600'>* </span>}
                         {props.label}
                     </label>
                 )}
@@ -43,8 +50,8 @@ const FormikField: React.FC<Props> = props => {
                 <Field
                     maxLength={props.maxLength || undefined}
                     validate={props.validateFunction}
-                    onFocus={() => { setLabelUp(true) }}
-                    onBlur={(e: any) => { setLabelUp(e.currentTarget.value.trim()) }}
+                    onFocus={() => {props.labelIsSimple? null :setLabelUp(true) }}
+                    onBlur={(e: any) => { props.labelIsSimple? null : setLabelUp(e.currentTarget.value.trim()) }}
                     id={props.id}
                     name={props.name}
                     autoComplete="off"

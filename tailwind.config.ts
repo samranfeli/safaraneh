@@ -64,6 +64,9 @@ const config: Config = {
         'body-background': 'var(--body-background)'
 
       },
+      width: {
+        '520':'520px'
+      },
       maxWidth: {
         container: 'var(--container-max-width)'
       },
