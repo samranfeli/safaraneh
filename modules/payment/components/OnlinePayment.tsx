@@ -1,7 +1,7 @@
 import Button from '@/modules/shared/components/ui/Button';
 import Loading from '@/modules/shared/components/ui/Loading';
 import Skeleton from '@/modules/shared/components/ui/Skeleton';
-import { Close, InfoCircle } from '@/modules/shared/components/ui/icons';
+import { Close, InfoCircle, Lock } from '@/modules/shared/components/ui/icons';
 import { getDatesDiff, numberWithCommas } from '@/modules/shared/helpers';
 import { useTranslation } from 'next-i18next';
 import Link from 'next/link';
@@ -106,8 +106,6 @@ const OnlinePayment: React.FC<Props> = props => {
             } else {
                 setRemaindSeconds(0)
             }
-        } else {
-            setRemaindSeconds(0)
         }
         return () => {
             clearInterval(countDownTimer)
@@ -207,7 +205,7 @@ const OnlinePayment: React.FC<Props> = props => {
                         loading={goToBankLoading}
                     >
 
-                        {tPayment('pay')}
+                        <Lock className='fill-current w-5 h-5' />  {tPayment('pay')}
 
                     </Button>
 
@@ -222,7 +220,7 @@ const OnlinePayment: React.FC<Props> = props => {
                         {tPayment('please-choose-pay-panel')}
                     </div>
 
-                    <div className='flex gap-3 items-center' >
+                    <div className='flex gap-3 items-center justify-center py-6' >
                         <Loading size='small' />
 
                         در حال بارگذاری
