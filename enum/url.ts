@@ -23,7 +23,7 @@ export const Header = {
     Hotel_Availability: process.env.PROJECT_SERVER_HOTEL_AVAILABILITY,
     Coordinator: process.env.PROJECT_SERVER_COORDINATOR,
     Blog: process.env.PROJECT_SERVER_BLOG,
-    // Payment: process.env.PROJECT_SERVER_PAYMENT,
+    Payment: process.env.PROJECT_SERVER_PAYMENT,
     Flight: process.env.PROJECT_SERVER_FLIGHT,
     Crm:process.env.PROJECT_SERVER_CRM
   };
@@ -69,10 +69,11 @@ export const Header = {
     SearchHotels:"/v2/Hotel/SearchHotels",
     getRates:"/v2/Comment/Rates",
     getCityFaqById:"/api/services/app/Faq/GetAll",
-    GetEntityNameByLocation: "/v2/Entity/GetEntityNameByLocation",
+    GetEntityNameByLocation: "/api/services/app/Entity/Get",
     GetValidate:"/api/services/app/Booking/GetValidate",
     PreReserve: "/api/services/app/Booking/PreReserve",
-    GetReserveById: "/api/services/app/Reserve/Get"
+    GetReserveById: "/api/services/app/Reserve/Get",
+    Confirm:"/api/services/app/Booking/Confirm"
   };
 
   export const Reserve = {
@@ -81,7 +82,9 @@ export const Header = {
 
   export const Payment = {
     ValidateDiscountCode:"/api/services/app/Discount/Validate",
-    RegisterDiscountCode: "/api/services/app/Discount/Register"
+    RegisterDiscountCode: "/api/services/app/Discount/Register",
+    GetBankGateway:"/api/services/app/ReserveBankGateway/GetAll",
+    MakeToken:"/api/services/app/ReserveBankGateway/MakeToken"
   };
   
   export const ServerStatus = {

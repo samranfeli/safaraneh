@@ -19,7 +19,7 @@ const HotelFacilities: React.FC<Props> = props => {
     const { t: tHotel } = useTranslation('hotel');
 
     if (!facilities) {
-        return "loading..."
+        return null;
     }
 
     return (

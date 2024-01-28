@@ -49,7 +49,12 @@ export const addSomeDays = (date: Date, increment: number = 1) => {
     return newDate;
 }
 
-export const getDatesDiff = (a:Date, b:Date) => {
+export const getDatesDiff = (a:Date, b:Date, unit?:"seconds") => {
+
+    if (unit && unit === "seconds" ){
+        var seconds = (b.getTime() - a.getTime()) / 1000;
+        return Math.floor(seconds);
+    }
 
     const _MS_PER_DAY = 1000 * 60 * 60 * 24;
     const utca = Date.UTC(a.getFullYear(), a.getMonth(), a.getDate());

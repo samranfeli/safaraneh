@@ -4,8 +4,8 @@ type Props ={
 
 const CreditPayment : React.FC<Props> = props => {
     return(
-        <div>
-            CreditPayment
+        <div className="p-10 text-center text-2xl" dir="ltr">
+            under construction...
         </div>
     )
 }

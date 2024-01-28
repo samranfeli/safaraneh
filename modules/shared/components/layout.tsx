@@ -1,9 +1,9 @@
-import Header from "./components/header";
-import Footer from "./components/footer";
+import Header from "./header";
+import Footer from "./footer";
 import Error from './Error';
 import { PropsWithChildren } from "react";
 import { useRouter } from "next/router";
-import { useAppSelector } from "./hooks/use-store";
+import { useAppSelector } from "../hooks/use-store";
 
 type Props = {
     logo:string;
@@ -27,7 +27,7 @@ const Layout: React.FC<PropsWithChildren<Props>> = props => {
 
     return (
 
-        <div className={`wrapper leading-7 ${process.env.THEME || ""} lang-${locale} ${locale === "fa" ? "rtl" : ""} ${isBodyScrollable?"":"overflow-hidden h-screen lg:h-auto"}`} >
+        <div className={`wrapper leading-7 ${process.env.THEME || ""} lang-${locale} ${locale === "fa" ? "rtl" : ""} ${isBodyScrollable?"":"overflow-hidden h-screen"}`} >
             <Error />
             <Header logo={props.logo} siteName={props.siteName} />
             <main id="main" className={`min-h-desktop-main relative ${isHeaderUnderMain?"z-50":"z-10"}`}>

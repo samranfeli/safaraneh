@@ -18,6 +18,8 @@ type Props = {
         format?: string
     }
     initialValue?: string;
+    labelIsSimple?:boolean;
+    showRequiredStar?:boolean;
 }
 
 type CountryObject = {
@@ -131,73 +133,76 @@ const PhoneInput: React.FC<Props> = props => {
     const expectedTotalLength = expectedLength ? expectedLength + country.dialCode.length : undefined;
 
     return (
-        <div>
-            <div className='relative grid grid-cols-5 text-sm' dir='ltr' ref={codeRef}>
+        <div className={props.className || ""}>
+            <div className='relative'>
                 {!!props.label && (
                     <label
-                        className={`select-none pointer-events-none block leading-4 absolute px-2 bg-white transition-all duration-300 -translate-y-1/2 right-1 ${labelUp ? "top-0 text-xs" : "top-1/2 text-sm"}`}
+                        className={`select-none pointer-events-none block leading-4 ${props.labelIsSimple?"mb-3":"z-10 absolute px-2 bg-white transition-all duration-300 -translate-y-1/2 right-1"} ${props.labelIsSimple ? "text-base" : labelUp ? "top-0 text-xs" : "top-1/2 text-sm"}`}
                     >
+                        {!!(props.labelIsSimple && props.showRequiredStar) && <span className='text-red-600'>* </span>}
                         {props.label}
                     </label>
                 )}
+                <div className='relative grid grid-cols-5 text-sm' dir='ltr' ref={codeRef}>
 
-                {!typedCode && <div className='absolute left-3 top-1/2 -translate-y-1/2 flex gap-2 items-center pointer-events-none'>
-                    <Image
-                        src={`/images/flags/${country?.countryCode || defaultCountry.countryCode}.svg`}
-                        alt={country?.countryCode || defaultCountry.countryCode}
-                        width={30}
-                        height={16}
-                        className='w-8 h-5 object-cover border'
-                    /> +{country?.dialCode}
-                </div>}
+                    {!typedCode && <div className='absolute left-3 top-1/2 -translate-y-1/2 flex gap-2 items-center pointer-events-none'>
+                        <Image
+                            src={`/images/flags/${country?.countryCode || defaultCountry.countryCode}.svg`}
+                            alt={country?.countryCode || defaultCountry.countryCode}
+                            width={30}
+                            height={16}
+                            className='w-8 h-5 object-cover border'
+                        /> +{country?.dialCode}
+                    </div>}
 
-                <Field
-                    className={`h-10 border ${errorText && isTouched ? "border-red-500" : "border-neutral-300 focus:border-blue-500"} px-22 rounded-l-md col-span-2 px-2 outline-none`}
-                    type='text'
-                    autoComplete="off"
-                    onChange={(e: any) => { setTypedCode(e.target.value) }}
-                    value={typedCode || ""}
-                    onFocus={() => { setOpenCodes(true); }}
-                />
+                    <Field
+                        className={`h-10 border ${errorText && isTouched ? "border-red-500" : "border-neutral-300 focus:border-blue-500"} px-22 rounded-l-md col-span-2 px-2 outline-none`}
+                        type='text'
+                        autoComplete="off"
+                        onChange={(e: any) => { setTypedCode(e.target.value) }}
+                        value={typedCode || ""}
+                        onFocus={() => { setOpenCodes(true); }}
+                    />
 
-                <input
-                    type='text'
-                    onFocus={() => { setLabelUp(true) }}
-                    onBlur={(e: any) => { setLabelUp(e.currentTarget.value.trim()) }}
-                    autoComplete="off"
-                    onChange={(e: any) => { setPhoneNumberValue(e.target.value) }}
-                    value={phoneNumberValue}
-                    maxLength={expectedLength || 15}
-                    className={`h-10 border ${errorText && isTouched ? "border-red-500" : "border-neutral-300 focus:border-blue-500"} px-2 col-span-3 border-l-none rounded-r-md outline-none`}
-                />
+                    <input
+                        type='text'
+                        onFocus={() => { setLabelUp(true) }}
+                        onBlur={(e: any) => { setLabelUp(e.currentTarget.value.trim()) }}
+                        autoComplete="off"
+                        onChange={(e: any) => { if (e.target.value[0] === "0") return; setPhoneNumberValue(e.target.value) }}
+                        value={phoneNumberValue}
+                        maxLength={expectedLength || 15}
+                        className={`h-10 border ${errorText && isTouched ? "border-red-500" : "border-neutral-300 focus:border-blue-500"} px-2 col-span-3 border-l-none rounded-r-md outline-none`}
+                    />
 
-                <Field
-                    validate={(value: string) => validateMobileNumberId({
-                        expectedLength: expectedTotalLength,
-                        invalidMessage: t('invalid-phone-number'),
-                        reqiredMessage: t('please-enter-phone-number'),
-                        value: value
-                    })}
-                    type='hidden'
-                    name={props.name}
-                />
+                    <Field
+                        validate={(value: string) => validateMobileNumberId({
+                            expectedLength: expectedTotalLength,
+                            invalidMessage: t('invalid-phone-number'),
+                            reqiredMessage: t('please-enter-phone-number'),
+                            value: value
+                        })}
+                        type='hidden'
+                        name={props.name}
+                    />
 
-                {!!openCodes && <div className='absolute top-full left-0 min-w-full bg-white shadow z-10 max-h-44 overflow-auto'>
-                    {filterCodeItems.map(item => {
-                        return (
-                            <div
-                                className='flex gap-2 items-center text-sm select-none cursor-pointer hover:bg-neutral-800 border-neutral-800 hover:text-white px-2'
-                                dir='ltr'
-                                key={item[2].toString()}
-                                onClick={() => { selectCountry(item) }}
-                            >
-                                <Image src={`/images/flags/${item[2]}.svg`} alt={item[0]! as string} width={30} height={16} className='w-8 h-5 object-cover border' />
-                                +{item[3]}
-                            </div>
-                        )
-                    })}
-                </div>}
-                
+                    {!!openCodes && <div className='absolute top-full left-0 min-w-full bg-white shadow z-10 max-h-44 overflow-auto'>
+                        {filterCodeItems.map(item => {
+                            return (
+                                <div
+                                    className='flex gap-2 items-center text-sm select-none cursor-pointer hover:bg-neutral-800 border-neutral-800 hover:text-white px-2'
+                                    dir='ltr'
+                                    key={item[2].toString()}
+                                    onClick={() => { selectCountry(item) }}
+                                >
+                                    <Image src={`/images/flags/${item[2]}.svg`} alt={item[0]! as string} width={30} height={16} className='w-8 h-5 object-cover border' />
+                                    +{item[3]}
+                                </div>
+                            )
+                        })}
+                    </div>}
+                    
+                </div>
             </div>
             {errorText && isTouched && <div className='text-red-500 text-xs'>{errorText}</div>}
         </div>

@@ -18,7 +18,7 @@ const HotelAbout: React.FC<Props> = props => {
     const [showAll, setShowAll] = useState<boolean>(false);
 
     if (!description) {
-        return "loading..."
+        return null
     }
 
     const splitedContent = description.split("</p>");

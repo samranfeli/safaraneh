@@ -12,6 +12,9 @@ const Loading : React.FC<Props> = props => {
         case "small":
             sizeClassNames = "w-6 h-6 after:top-0.5 after:bottom-0.5 after:right-0.5 after:left-0.5";
             break;
+        case "large":
+            sizeClassNames = "w-20 h-20 after:top-2 after:bottom-2 after:right-2 after:left-2";
+            break;
         default:
             sizeClassNames  = "w-10 h-10 after:top-1 after:bottom-1 after:right-1 after:left-1";
     }
