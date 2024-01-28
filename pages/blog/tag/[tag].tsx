@@ -37,7 +37,7 @@ export async function getServerSideProps(context: any) {
             ...await (serverSideTranslations(context.locale, ['common'])),
             TagName: TagName?.data || null,
             TagBlogs: TagBlogs?.data || null,
-            pages: TagBlogs?.headers['x-wp-totalpages'],
+            pages: TagBlogs?.headers?.['x-wp-totalpages'],
             recentBlogs: recentBlogs?.data || null,
             categories_name: categories_name?.data || null
         }

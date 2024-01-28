@@ -42,10 +42,11 @@ const DetailBlog: NextPage<any> = ({ BlogPost , CategoriesName , recentBlogs, Al
 
 export async function getServerSideProps(context: any) {
 
-    let BlogPost: any = await GetBlogPostDetails(context.query.DetailBlog)
-    let recentBlogs: any = await getBlogs({page:1})
-    let CategoriesName: any = await GetCategories()
-    let RelatedPost: any = await getBlogs({page:6})
+    const [BlogPost, recentBlogs, CategoriesName] = await Promise.all<any>([
+        GetBlogPostDetails(context.query.DetailBlog),
+        getBlogs({ page: 1 }),
+        GetCategories()
+    ]) 
     return (
         {
             props: {
@@ -53,7 +54,7 @@ export async function getServerSideProps(context: any) {
                 BlogPost: BlogPost?.data || null,
                 recentBlogs: recentBlogs?.data || null,
                 CategoriesName: CategoriesName?.data || null,
-                AllBlogs: RelatedPost?.data || null
+                AllBlogs: BlogPost?.data || null
             }
         }
     )
