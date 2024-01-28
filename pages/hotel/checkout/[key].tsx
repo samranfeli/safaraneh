@@ -328,7 +328,7 @@ const Checkout: NextPage = () => {
                       discountLoading={discountLoading}
                       discountResponse={discountData?.isValid ? discountData : undefined}
                     />
-
+{/* 
                     <div className='bg-white p-4 border border-neutral-300 rounded-md mb-4 border-t-2 border-t-orange-400'>
                       {hotelInfo ? (
                         <>
@@ -346,9 +346,9 @@ const Checkout: NextPage = () => {
                         </>
                       )}
 
-                    </div>
+                    </div> */}
 
-                    <div className='bg-white p-4 border border-neutral-300 rounded-md mb-4 border-t-2 border-t-blue-500'>
+                    {/* <div className='bg-white p-4 border border-neutral-300 rounded-md mb-4 border-t-2 border-t-blue-500'>
                       {hotelInfo ? (
                         <>
                           <h5 className='font-semibold text-blue-500 mb-2 leading-6'>
@@ -365,7 +365,8 @@ const Checkout: NextPage = () => {
                         </>
                       )}
 
-                    </div>
+                    </div> */}
+                    
                   </div>
                 </Form>
               )

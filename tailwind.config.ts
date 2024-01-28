@@ -64,6 +64,9 @@ const config: Config = {
         'body-background': 'var(--body-background)'
 
       },
+      width: {
+        '520':'520px'
+      },
       maxWidth: {
         container: 'var(--container-max-width)'
       },
@@ -75,6 +78,9 @@ const config: Config = {
       },
       boxShadow: {
         'normal': '0 0 10px 0 rgba(0, 0, 0, 0.1)',
+      },
+      borderWidth: {
+        '3': '3px'
       },
       fontSize: {
         '4xs':'10px',

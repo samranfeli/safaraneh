@@ -60,9 +60,9 @@ const TravelServices: React.FC<Props> = props => {
 
                 <div className={menuWrapperClassNames}  >
                     <div className="md:hidden border-b border-neutral-200 p-5 flex justify-between items-center">
-                        <Link onClick={()=>{setOpenMenu(false)}} href="/" className="block">
+                        {!!logo && <Link onClick={()=>{setOpenMenu(false)}} href="/" className="block">
                             <Image src={logo} alt={siteName} width={115} height={48} />
-                        </Link>
+                        </Link>}
                         <button aria-label={t('close')} type="button" onClick={() => { setOpenMenu(false) }}>
                             <Close className="w-6 h-6 fill-neutral-400" />
                         </button>

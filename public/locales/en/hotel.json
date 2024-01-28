@@ -59,6 +59,7 @@
     "restaurant-quality": "Restaurant and Coffee Shop quality",
     "restaurant-quality-from-10": "Restaurant and Coffee Shop Quality: {{resturantquality}} of 10",
     "room": "Room",
+    "room-details": "Room details",
     "room-reserve": "Room reservation",
     "room-status": "Peace, cleanliness and condition of the rooms",
     "room-status-from-10": "The comfort, cleanliness and condition of the rooms: {{roomservice}} of 10",

@@ -64,9 +64,9 @@ const Footer: React.FC<Props> = props => {
                     </Link>
                 </nav>
 
-                <Link href="/">
+                {!!logo && <Link href="/">
                     <Image src={logo} alt={siteName} width={115} height={48} className="block mx-auto mb-4" onContextMenu={e => {e.preventDefault()}} />
-                </Link>
+                </Link>}
 
                 <div className="flex gap-4 justify-center mb-4">
                     {t('support')}

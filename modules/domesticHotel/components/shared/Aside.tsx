@@ -189,7 +189,7 @@ const Aside: React.FC<Props> = props => {
                     )}
 
                     {reserveInformation && (
-                        <div className="text-xs flex items-center gap-2 pt-4 pb-1">
+                        <div className="text-xs flex flex-wrap items-center gap-2 pt-4 pb-1 leading-4 mb-2">
 
                             <Calendar className="w-5 h-5 fill-neutral-600" />
 

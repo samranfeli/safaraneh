@@ -15,7 +15,7 @@ import '../styles/leaflet.css';
 import { store } from '../modules/shared/store';
 import { PortalDataType } from '@/modules/shared/types/common';
 import { getPortal } from '@/modules/shared/actions/portalActions';
-import Layout from '@/modules/shared/layout';
+import Layout from '@/modules/shared/components/layout';
 
 type TProps = Pick<AppProps, "Component" | "pageProps"> & {
   portalData?: PortalDataType;

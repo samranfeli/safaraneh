@@ -16,7 +16,7 @@ const Tab: React.FC<Props> = props => {
 
     let tabClassName = (active:boolean) => {
         if(style2){
-            return `shadow-normal relative grow text-blue-700 border border-2 rounded py-3 transition-all ${active?"bg-blue-50 font-semibold text-primary-700 border-primary-700":"border-transparent text-neutral-600"}`
+            return `shadow-normal basis-20 relative grow text-blue-700 border border-2 rounded py-3 transition-all ${active?"bg-blue-50 font-semibold text-primary-700 border-primary-700":"border-transparent text-neutral-600"}`
         }else{
             return `text-2xs sm:text-sm px-2 sm:px-5 py-1 sm:py-2 border-b-2 transition-all ${active ? "text-primary-700 border-primary-700" : "border-transparent text-neutral-600"}`;
         }
