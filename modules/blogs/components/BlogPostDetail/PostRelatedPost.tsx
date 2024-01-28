@@ -5,7 +5,7 @@ import Link from "next/link";
 const RelatedPost: NextPage<any> = ({ Post, AllPost }) => {
     
     
-    const RelatedPost = AllPost?.filter((item: any) => item.categories == Post[0].categories[0] && item.id !== Post[0].id) || null
+    const RelatedPost = AllPost?.filter((item: any) => item.categories == Post?.[0].categories[0] && item.id !== Post[0].id) || null
     
     return (
         <div>

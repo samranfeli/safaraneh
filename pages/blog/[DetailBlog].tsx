@@ -1,4 +1,4 @@
-import { GetBlogPostCategory, GetBlogPostDetails, GetCategories, getBlogs } from "@/modules/blogs/actions";
+import { GetBlogPostDetails, GetCategories, getBlogs } from "@/modules/blogs/actions";
 import { NextPage } from "next";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 import { useRouter } from "next/router";
@@ -25,7 +25,7 @@ const DetailBlog: NextPage<any> = ({ BlogPost , CategoriesName , recentBlogs, Al
                     <ContentPost content={BlogPost?.[0]} />
                 </div>
                 <div className="col-span-2 max-lg:col-span-6 w-full mt-5 ">
-                    <Sidebar recentBlogs={recentBlogs} CategoriesNames={CategoriesName} />
+                    <Sidebar recentBlogs={recentBlogs?.slice(0,3)} CategoriesNames={CategoriesName} />
                 </div>
                 </div>
                 <div className="p-8"> 
@@ -42,9 +42,9 @@ const DetailBlog: NextPage<any> = ({ BlogPost , CategoriesName , recentBlogs, Al
 export async function getServerSideProps(context: any) {
 
     let BlogPost: any = await GetBlogPostDetails(context.query.DetailBlog)
-    let recentBlogs: any = await getBlogs(3)
+    let recentBlogs: any = await getBlogs({page:1})
     let CategoriesName: any = await GetCategories()
-    let RelatedPost: any = await getBlogs(60)
+    let RelatedPost: any = await getBlogs({page:6})
     return (
         {
             props: {

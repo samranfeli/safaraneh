@@ -1,7 +1,7 @@
 import NavbarBlog from "@/modules/blogs/components/template/BreadCrumpt";
-import Title from "@/modules/blogs/components/BlogCategory/Title";
+import Title from "@/modules/blogs/components/template/Title";
 import { NextPage } from "next";
-import { GetBlogPostCategory, GetCategories, getBlogs } from "@/modules/blogs/actions";
+import { GetCategories, getBlogs } from "@/modules/blogs/actions";
 import { BlogItemType, CategoriesNameType } from "@/modules/blogs/types/blog";
 import { createContext } from "react";
 import { useRouter } from "next/router";
@@ -9,21 +9,18 @@ import Content from "@/modules/blogs/components/template/Content";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 
 
-export const AllBlogs = createContext<any | null>(null)
 const Category: NextPage<any> = ({ LastBlogs, BlogCategory, categories_name, pages }:
     { LastBlogs?: BlogItemType[], BlogCategory?: BlogItemType[], categories_name : CategoriesNameType[], pages : string }) => {
     
-    
     const query: any = useRouter().query.categoriItem;
     const NavData = categories_name?.find(item => item.id == +query)?.name || null
+    const TitleData = BlogCategory?.find((item : any) => item.categories[0] == +query)?.categories_names?.[0]
 
     return (
         <div className="bg-white">
-            <AllBlogs.Provider value={[BlogCategory,LastBlogs, categories_name]} >
             <NavbarBlog data={NavData} />
-            <Title />
+            <Title data={TitleData} />
             <Content Blogs={BlogCategory} blogPages={pages}  LastBlogs={LastBlogs?.slice(0,3)} CategoriesName={categories_name} />
-            </AllBlogs.Provider>
         </div>
     )
 }
@@ -32,18 +29,19 @@ export default Category;
 
 
 export async function getServerSideProps(context: any) {
-    const categoryItem : any = context.query.categoriItem
+    const categoryItemQuery: any = context.query.categoriItem
+    const pageQuery : any = context.query.page || 1
 
-    const [data, BlogCategory, categories_name] = await Promise.all<any>([
-        getBlogs(1),
-        GetBlogPostCategory(+ categoryItem),
+    const [LastBlog, BlogCategory, categories_name] = await Promise.all<any>([
+        getBlogs({page:1}),
+        getBlogs({page:pageQuery,category:categoryItemQuery}),
         GetCategories()
     ])
     return (
         {
             props: {
                 ...await (serverSideTranslations(context.locale, ['common'])),
-                LastBlogs: data?.data || null,
+                LastBlogs: LastBlog?.data || null,
                 pages: BlogCategory?.headers['x-wp-totalpages'],
                 BlogCategory: BlogCategory?.data || null,
                 categories_name: categories_name?.data || null

@@ -13,7 +13,7 @@ const BlogItem: NextPage<any> = ({data,index}) => {
             <div className="grid grid-cols-3 gap-6 max-sm:grid-cols-1 mt-6 max-sm:mt-12 scale- max-sm:scale-100 w-full max-sm:-space-y-2">
                     <Link href={`/blog/${data.slug}`}>
                 <Image src={data?.images?.large}
-                    alt="pic" height={150} width={200} className="w-full rounded-md max-sm:mr-3" priority={!index} />
+                    alt="pic" height={150} width={300} className="w-full rounded-md max-sm:mr-3" priority={!index} />
                     </Link>
 
                 <div

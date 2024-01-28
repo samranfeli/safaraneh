@@ -36,20 +36,13 @@ export const Header = {
 
   export const Blog = {
     getPosts: "//wp-json/wp/v2/posts",
-    getTagPost: '/wp-json/wp/v2/posts?tags=',
-
-    getCategoriesBlog: '/wp-json/wp/v2/posts?categories=',
     
+    getCategories: '/wp-json/wp/v2/best_category',
     getCategories1: '/wp-json/wp/v2/best_category?categories=2',
     getCategories2: '/wp-json/wp/v2/best_category?categories=3',
-    
     getCategoeyName: '/wp-json/wp/v2/categories',
-    
-    
-    
     getCities: "//wp-json/wp/v2/cities/",
     getTagName: '/wp-json/wp/v2/tags/',
-    getSearchPost: '/wp-json/wp/v2/posts?search='
   }
 
   export const Hotel = {

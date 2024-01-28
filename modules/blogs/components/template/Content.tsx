@@ -24,7 +24,7 @@ const Content: NextPage<Props> = ({Blogs,LastBlogs,CategoriesName,blogPages}) =>
                     Blogs && blogPages ?
                     Blogs?.map((blog : any , index : number ) => <BlogItem data={blog} key={blog.id} index={index} /> ): <p>loading</p>
                 }
-                       <Pagination perPage={blogPages} />    
+                       <Pagination perPage={blogPages} />
             </div>
             <div className="col-span-2 max-lg:col-span-6" >
                 <Sidebar recentBlogs={LastBlogs} CategoriesNames={CategoriesName}
