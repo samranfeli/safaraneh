@@ -33,7 +33,9 @@ const RoomItem: React.FC<Props> = props => {
     let image = <div className='md:w-1/4 shrink-0 flex items-center justify-center bg-neutral-100 p-5 rtl:rounded-r-xl'><DefaultRoom className='fill-neutral-300 w-20 h-20' /></div>
 
     if (room.image) {
-        image = <Image className='w-full md:w-1/4 object-cover object-center' src={room.image} alt={room.name || "room name"} width="300" height="200" />
+        image = <div className='bg-neutral-300 w-full md:w-1/4 flex items-center justify-center max-md:rounded-t-xl md:rtl:rounded-r-xl md:ltr:rounded-l-xl'>
+            <Image className='h-36 w-full object-cover object-center max-md:rounded-t-xl md:rtl:rounded-r-xl md:ltr:rounded-l-xl' src={room.image} alt={room.name || "room name"} width="300" height="200" />
+        </div> 
     }
 
 
@@ -183,10 +185,9 @@ const RoomItem: React.FC<Props> = props => {
         <div className='bg-white border border-neutral-300 rounded-xl mt-4 md:flex'>
             {image}
             <div className='p-4 grid grid-cols-1 sm:grid-cols-2 leading-5 text-sm grow gap-5'>
-                <h3 className='sm:col-span-2 text-lg md:text-xl font-semibold'> {room.name}</h3>
                 <div className='sm:flex flex-col gap-2'>
 
-
+                    <h3 className='text-lg md:text-xl font-semibold'> {room.name}</h3>
                     {rate.view && (
                         <div>
                             {rate.view.name}

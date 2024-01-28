@@ -11,6 +11,7 @@ import FormikField from "../ui/FormikField";
 import { validateEmail, validateRequied } from "../../helpers/validation";
 import Button from "../ui/Button";
 import { useRouter } from "next/router";
+import { getReserveFromCoordinator } from "../../actions";
 
 const TrackOrder: React.FC = () => {
 
@@ -57,7 +58,7 @@ const TrackOrder: React.FC = () => {
         return (() => { clearTimeout(timeOut); })
     }, [delayedOpen]);
 
-    const submitHandler = (value: {
+    const submitHandler = async (values: {
         reserveId: string;
         email: string;
         phoneNumber?: undefined;
@@ -66,7 +67,19 @@ const TrackOrder: React.FC = () => {
         phoneNumber: string;
         email?: undefined;
     }) => {
-        debugger;
+
+        const userName = values.phoneNumber || values.email || "";
+
+        const reserveResponse: any = await getReserveFromCoordinator({username:userName , reserveId: values.reserveId});
+
+        if (reserveResponse?.data?.result?.type){
+            if (reserveResponse.data.result.type==="HotelDomestic"){
+                setOpen(false);
+                router.push(`/myaccount/booking/hotel?username=${userName}&reserveId=${values.reserveId}`);
+            }
+        }else{
+            debugger;
+        }
     }
 
     return (
@@ -103,26 +116,31 @@ const TrackOrder: React.FC = () => {
                             </button>
                         </div>
 
-                        <div className="p-4">
-                            <input
-                                type="radio"
-                                id="mobile-radio"
-                                value="mobile"
-                                onChange={e => { if (e.target.checked) { setType("mobile") } }}
-                                checked={type === "mobile"}
-                            />
+                        <div className="p-4 flex gap-5 items-center">
+                            <div className="flex items-center gap-1">
+                                <input
+                                    type="radio"
+                                    id="mobile-radio"
+                                    value="mobile"
+                                    onChange={e => { if (e.target.checked) { setType("mobile") } }}
+                                    checked={type === "mobile"}
+                                    className="cursor-pointer"
+                                />
 
-                            <label htmlFor="mobile-radio"> موبایل </label>
+                                <label htmlFor="mobile-radio" className="cursor-pointer"> موبایل </label>
+                            </div>
+                            <div className="flex items-center gap-1">
+                                <input
+                                    type="radio"
+                                    id="email-radio"
+                                    value="email"
+                                    onChange={e => { if (e.target.checked) { setType("email") } }}
+                                    checked={type === "email"}
+                                    className="cursor-pointer"
+                                />
 
-                            <input
-                                type="radio"
-                                id="email-radio"
-                                value="email"
-                                onChange={e => { if (e.target.checked) { setType("email") } }}
-                                checked={type === "email"}
-                            />
-
-                            <label htmlFor="email-radio"> ایمیل </label>
+                                <label htmlFor="email-radio" className="cursor-pointer"> ایمیل </label>
+                            </div>
 
                         </div>
 

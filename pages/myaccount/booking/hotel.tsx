@@ -17,7 +17,7 @@ import Steps from '@/modules/shared/components/ui/Steps';
 import Skeleton from '@/modules/shared/components/ui/Skeleton';
 import BookingContent from '@/modules/domesticHotel/components/booking/BookingContent';
 
-const Booking: NextPage = ({ portalData }: { portalData?: PortalDataType }) => {
+const DomesticHotelReserveDetail: NextPage = ({ portalData }: { portalData?: PortalDataType }) => {
 
     const { t } = useTranslation('common');
     const { t: tHotel } = useTranslation('hotel');
@@ -228,25 +228,6 @@ const Booking: NextPage = ({ portalData }: { portalData?: PortalDataType }) => {
                             )}
                         </div>
 
-                        {/* <div className='bg-white p-4 border border-neutral-300 rounded-md mb-4 border-t-2 border-t-orange-400'>
-                            {domesticHotelInformation ? (
-                                <>
-                                    <h5 className='font-semibold text-orange-400 mb-2 leading-6'>
-                                        {t('price-will-increase')}
-                                    </h5>
-                                    <p className='text-2xs'>
-                                        {t('price-will-increase-desc')}
-                                    </p>
-                                </>
-                            ) : (
-                                <>
-                                    <Skeleton className='mb-3 w-1/3' />
-                                    <Skeleton className='mb- w-2/3' />
-                                </>
-                            )}
-
-                        </div> */}
-
                     </div>
                 </div>
             </div>
@@ -263,4 +244,4 @@ export const getServerSideProps: GetServerSideProps = async (context: any) => {
     })
 }
 
-export default Booking;
+export default DomesticHotelReserveDetail;

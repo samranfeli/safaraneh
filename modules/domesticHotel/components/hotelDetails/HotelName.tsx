@@ -26,7 +26,7 @@ const HotelName: React.FC<Props> = props => {
     const [showMap, setShowMap] = useState<boolean>(false);
 
     if (!hotelData) {
-        return "loading..."
+        return null
     }
 
     const closeMapModal = () => { setShowMap(false) };
