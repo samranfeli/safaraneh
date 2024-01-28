@@ -1,6 +1,6 @@
-import { GetBlogPostCategory, GetCategories, GetSearchBlogPosts, getBlogs } from "@/modules/blogs/actions";
+import {  GetCategories, getBlogs } from "@/modules/blogs/actions";
 import NavbarBlog from "@/modules/blogs/components/template/BreadCrumpt";
-import Title from "@/modules/blogs/components/BlogSearch/Title";
+import Title from "@/modules/blogs/components/template/Title";
 import Content from "@/modules/blogs/components/template/Content";
 import { NextPage } from "next";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
@@ -15,7 +15,7 @@ const Search: NextPage<any> = ({ SearchBlog, LastBlogs, categories_name, pages }
         <div className="bg-white">
             <SearchData.Provider value={[SearchBlog, LastBlogs,categories_name]}>
                 <NavbarBlog data={`جستوجوی"${NavData}"`} />
-                <Title />
+                <Title data={'جستجوی'} searchValue={NavData} />
                 <Content Blogs={SearchBlog} LastBlogs={LastBlogs.slice(0,3)} CategoriesName={categories_name} blogPages={pages}/>
             </SearchData.Provider>
         </div>
@@ -26,12 +26,13 @@ export default Search;
 
 
 export async function getServerSideProps(context: any) { 
-    const search = context.query.search;
+    const searchQuery = context.query.search;
+    const pageQuery = context.query.page || 1
 
     const [SearchBlog, categories_name, recentBlogs] = await Promise.all<any>([
-        GetSearchBlogPosts(search),
+        getBlogs({page:pageQuery , search: searchQuery}),
         GetCategories(),
-        getBlogs(1)
+        getBlogs({page:1})
     ])
     return ({
         props: {

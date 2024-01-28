@@ -18,13 +18,13 @@ const Content: NextPage<Props> = ({Blogs,LastBlogs,CategoriesName,blogPages}) =>
     
 
     return (
-        <div className="grid grid-cols-8 gap-5 max-w-container m-auto p-5 max-sm:p-2 max-lg:grid-cols-1">
+        <div className="grid grid-cols-8 gap-5 max-w-container m-auto p-5 max-sm:p-1 max-lg:grid-cols-1">
             <div className="col-span-6">
                 {
                     Blogs && blogPages ?
                     Blogs?.map((blog : any , index : number ) => <BlogItem data={blog} key={blog.id} index={index} /> ): <p>loading</p>
                 }
-                       <Pagination perPage={blogPages} />    
+                       <Pagination perPage={blogPages} />
             </div>
             <div className="col-span-2 max-lg:col-span-6" >
                 <Sidebar recentBlogs={LastBlogs} CategoriesNames={CategoriesName}

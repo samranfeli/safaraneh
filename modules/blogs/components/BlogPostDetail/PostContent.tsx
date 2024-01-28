@@ -7,7 +7,6 @@ const ContentPost: NextPage<any> = ({content}) => {
     return (
         <div>
             {content && parse(content?.content.rendered)}
-
             <div className="flex mt-10">
                 <p>تگ ها:</p>
                 {

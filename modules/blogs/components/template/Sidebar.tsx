@@ -5,10 +5,10 @@ import SidebarSearchBlog from "./SidebarSearchBlog";
 import Link from "next/link";
 import BestHotels from "./BestHotelsSidebar";
 
-const Sidebar: NextPage<any> = ({ recentBlogs, CategoriesNames , SearchItem }) => {
+const Sidebar: NextPage<any> = ({ recentBlogs, CategoriesNames, SearchItem, NotSticky }) => {
     
     return (
-        <div className="sticky top-5 bottom-5 w-full max-lg:mt-10">
+        <div className={`${!NotSticky && 'sticky top-5 bottom-5'} w-full max-lg:mt-10`}>
             <div className="border-b-4 border-blue-800">
                 <h2 className="text-white p-2 rounded-md bg-blue-800 inline text-xs">دسته بندی</h2>
             </div>
