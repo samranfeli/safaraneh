@@ -17,18 +17,19 @@ const DetailBlog: NextPage<any> = ({ BlogPost , CategoriesName , recentBlogs, Al
     const NavData = useRouter().query.DetailBlog
     return (
         <div className="bg-white">
-            <div className="max-w-screen-xl m-auto">
+            <div className="max-w-container m-auto">
                 <NavbarBlog data={NavData} category={[BlogPost?.[0].categories_names[0],BlogPost?.[0].categories[0]]} />
                 <TitlePost BlogPost={BlogPost} />
-                <div className="grid grid-cols-8 gap-8 mt-10 p-14 max-xl:p-5 max-lg:grid-cols-1">
+                <div className="grid grid-cols-8 gap-8 mt-10 p-5 max-sm:p-3 max-lg:grid-cols-1">
                 <div className="text-sm leading-8 col-span-6">
                     <ContentPost content={BlogPost?.[0]} />
                 </div>
                 <div className="col-span-2 max-lg:col-span-6 w-full mt-5 ">
-                    <Sidebar recentBlogs={recentBlogs?.slice(0,3)} CategoriesNames={CategoriesName} />
+                    <Sidebar recentBlogs={recentBlogs?.slice(0,3)} CategoriesNames={CategoriesName} NotSticky={true} />
                 </div>
                 </div>
-                <div className="p-8"> 
+                <hr className="m-3 mt-10"/>
+                <div className="p-5 mt-10"> 
                     <RelatedPost Post={BlogPost} AllPost={AllBlogs} />
                     <DetailBlogAcordion blog={BlogPost?.[0]} />
                     <GetComment />

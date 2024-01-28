@@ -6,7 +6,7 @@ import { useState } from "react";
 const TitlePost: NextPage<any> = ({ BlogPost }) => {
     
     return (
-        <div className="pl-14 pr-14  max-xl:pl-6 max-xl:pr-6 max-sm:p-2">
+        <div className="pl-5 pr-5 max-sm:p-2">
         <div className="overflow-hidden rounded-md flex items-center relative h-550 max-lg:h-full max-lg:mt-5">
                 <div className="text-center absolute z-20 w-full p-4">
                     <Link href={`/blog/category/${BlogPost?.[0].categories[0]}`}

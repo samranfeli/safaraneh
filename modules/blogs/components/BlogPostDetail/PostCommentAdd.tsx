@@ -24,19 +24,21 @@ const PostComment: NextPage<any> = ({ postId }) => {
     const submitHandle = async (values: FormValues, actions: any) => {
         let CommentUser = {
             author_name: values.name,
-            author_email: values.email,
+            author_email: values.email || null,
             content: values.text,
             post: postId
         }
         setnewCommentSubmitMessage('در حال ارسال...')
-        axios.post(`${ServerAddress.Type}${ServerAddress.Blog}/wp-json/wp/v2/comments`, CommentUser)
-            .then()
-            .then(res =>
-            (res.status == 200 || res.status == 201 && setnewCommentSubmitMessage('نظر شما با موفقیت ثبت شد'),
-            setTimeout(() => {
+        const post = await axios.post(`${ServerAddress.Type}${ServerAddress.Blog}/wp-json/wp/v2/comments`, CommentUser)
+        if (post.status == 200 || post.status == 201) {
+            setnewCommentSubmitMessage('نظر شما با موفقیت ثبت شد')
+            setInterval(() => {
                 setnewCommentSubmitMessage('')
-            },3000),
-            actions.resetForm()))
+            },(5000))
+        }
+        else {
+            setnewCommentSubmitMessage('نظر شما ثبت نشد')
+        }
     }
     
     return (
