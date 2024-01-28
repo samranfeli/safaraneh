@@ -1,16 +1,21 @@
 import { useEffect, useState } from 'react';
-import Steps from '@/modules/shared/components/ui/Steps';
+import { useRouter } from 'next/router';
 import type { GetServerSideProps, NextPage } from 'next';
 import { useTranslation } from 'next-i18next';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 import Head from 'next/head';
-import { useRouter } from 'next/router';
+
 import { DomesticHotelConfirm, domesticHotelGetReserveById, getDomesticHotelDetailById } from '@/modules/domesticHotel/actions';
-import { AsideHotelInfoType, AsideReserveInfoType, DomesticHotelDetailType, DomesticHotelGetReserveByIdData } from '@/modules/domesticHotel/types/hotel';
-import { getDatesDiff } from '@/modules/shared/helpers';
-import Aside from '@/modules/domesticHotel/components/shared/Aside';
-import Skeleton from '@/modules/shared/components/ui/Skeleton';
 import { PortalDataType } from '@/modules/shared/types/common';
+import { AsideHotelInfoType, AsideReserveInfoType, DomesticHotelConfirmType, DomesticHotelDetailType, DomesticHotelGetReserveByIdData } from '@/modules/domesticHotel/types/hotel';
+import { setReduxError } from '@/modules/shared/store/errorSlice';
+import { useAppDispatch } from '@/modules/shared/hooks/use-store';
+import { getDatesDiff } from '@/modules/shared/helpers';
+
+import Aside from '@/modules/domesticHotel/components/shared/Aside';
+import Steps from '@/modules/shared/components/ui/Steps';
+import Skeleton from '@/modules/shared/components/ui/Skeleton';
+import BookingContent from '@/modules/domesticHotel/components/booking/BookingContent';
 
 const Booking: NextPage = ({ portalData }: { portalData?: PortalDataType }) => {
 
@@ -19,6 +24,8 @@ const Booking: NextPage = ({ portalData }: { portalData?: PortalDataType }) => {
     const { t: tPayment } = useTranslation('payment');
 
     const router = useRouter();
+
+    const dispatch = useAppDispatch();
 
     const pathArray = router.asPath.split("?")[1]?.split("#")[0].split("&");
     const username: string | undefined = pathArray.find(item => item.includes("username="))?.split("username=")[1];
@@ -31,7 +38,8 @@ const Booking: NextPage = ({ portalData }: { portalData?: PortalDataType }) => {
     const phoneNumber = phoneLink?.replace("+98", "0");
     const email = portalData?.Phrases?.find(item => item.Keyword === "Email")?.Value || "";
 
-
+    const [confirmData, setConfirmData] = useState<DomesticHotelConfirmType>();
+    const [confirmLoading, setConfirmLoading] = useState<boolean>(true);
 
     useEffect(() => {
 
@@ -50,16 +58,36 @@ const Booking: NextPage = ({ portalData }: { portalData?: PortalDataType }) => {
 
             fetchDomesticHotelReserve();
 
-            const confirm =async () => {
-                const response :any = await DomesticHotelConfirm({reserveId:reserveId, username: username}, 'fa-IR');
-                debugger;                
+            const confirm = async () => {
+
+                setConfirmLoading(true);
+
+                const response: any = await DomesticHotelConfirm({ reserveId: reserveId, username: username }, 'fa-IR');
+                if (response.status === 200) {
+                    if (response.data.result.isCompleted) {
+                        setConfirmData(response.data.result);
+
+                        setConfirmLoading(false);
+
+                    } else {
+                        setTimeout(confirm, 4000);
+                    }
+                } else {
+                    setConfirmLoading(false);
+
+                    dispatch(setReduxError({
+                        title: t('error'),
+                        message: response.data.error.message,
+                        isVisible: true
+                    }));
+
+                }
             }
 
             confirm();
         }
 
     }, [username, reserveId]);
-
 
     let domesticHotelInformation: AsideHotelInfoType | undefined = undefined;
     let domesticHotelReserveInformation: AsideReserveInfoType | undefined = undefined;
@@ -153,7 +181,7 @@ const Booking: NextPage = ({ portalData }: { portalData?: PortalDataType }) => {
             <div className='max-w-container mx-auto px-5 py-4'>
 
                 <Steps
-                    className='py-3 mb-2'
+                    className='py-3 mb-2 max-md:hidden'
                     items={[
                         { label: t('completing-information'), status: 'done' },
                         { label: tHotel('checking-capacity'), status: 'done' },
@@ -164,7 +192,16 @@ const Booking: NextPage = ({ portalData }: { portalData?: PortalDataType }) => {
 
                 <div className='grid gap-4 md:grid-cols-3'>
                     <div className='md:col-span-2'>
-                        main
+                        <BookingContent
+                            confirmLoading={confirmLoading}
+                            confirmStatus={confirmData?.reserve.status}
+                            reserveId={reserveId}
+                            username={username}
+                            reserveInfo={domesticHotelReserveData}
+                            portalEmail={email}
+                            portalPhoneLink={phoneLink}
+                            portalPhoneNumber={phoneNumber}
+                        />
                     </div>
                     <div>
 
@@ -173,17 +210,15 @@ const Booking: NextPage = ({ portalData }: { portalData?: PortalDataType }) => {
                             reserveInformation={domesticHotelReserveInformation}
                         />
 
-                        <div className='bg-white border border-neutral-300 rounded-md mb-4'>
+                        <div className='bg-white border border-neutral-300 rounded-md mb-4 p-4'>
                             {domesticHotelInformation ? (
                                 <>
-                                    <h5 className='font-semibold leading-6 p-3 border-b text-sm'>
+                                    <h5 className='font-semibold leading-6 mb-3 border-b text-sm'>
                                         {tPayment('need-help')}
                                     </h5>
-                                    <div className='p-3'>
-                                        <p className='block mb-3'>{tPayment('24hours-backup')}</p>
-                                        <a href={`tel:${phoneLink}`} className='block mb-1 text-base text-blue-800 rtl:text-right font-semibold underline-offset-2 underline' dir="ltr"> {phoneNumber} </a>
-                                        <a href={`mailto:${email}`} className='block text-base text-blue-800 rtl:text-right font-sans font-semibold underline-offset-2 underline' dir="ltr"> {email} </a>
-                                    </div>
+                                    <p className='block mb-3'>{tPayment('24hours-backup')}</p>
+                                    <a href={`tel:${phoneLink}`} className='block mb-1 text-base text-blue-800 rtl:text-right font-semibold underline-offset-2 underline' dir="ltr"> {phoneNumber} </a>
+                                    <a href={`mailto:${email}`} className='block text-base text-blue-800 rtl:text-right font-sans font-semibold underline-offset-2 underline' dir="ltr"> {email} </a>
                                 </>
                             ) : (
                                 <>
@@ -224,10 +259,8 @@ export const getServerSideProps: GetServerSideProps = async (context: any) => {
     return ({
         props: {
             ...await (serverSideTranslations(context.locale, ['common', 'hotel', 'payment']))
-
         },
     })
 }
-
 
 export default Booking;

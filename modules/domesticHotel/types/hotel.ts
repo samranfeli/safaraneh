@@ -374,7 +374,7 @@ export interface AsideHotelInfoType {
 }
 
 export interface AsideReserveInfoType {
-    reserveId?:number;
+    reserveId?: number;
     checkin: string;
     checkout: string;
     duration: number;
@@ -448,7 +448,7 @@ export interface DomesticHotelGetReserveByIdData {
         boardCode: "Undefined" | "BB" | "FB" | "HB" | "RO" | "Hour6" | "Hour10";
         cancellationPolicyStatus?: "Refundable" | "NonRefundable" | "Unknown" | "CallSupport";
         bed: number;
-        pricing:{
+        pricing: {
             amount: number;
             isSelected: boolean;
             isShow: boolean;
@@ -458,28 +458,24 @@ export interface DomesticHotelGetReserveByIdData {
         extraBed: number;
         maxInfantAge: number;
         maxChildAge: number;
-        
-        // "roomId": 0,
-        // "supplierType": "Safaraneh",
-        // "available": 10,
-        // "description": null,
-        // "providerName": null,
-        // "supplierRefrence": "188772",
-        // "availablityType": "Online",
-        // "boardExtra": null,
-        // "passengers": [
-        //   {
-        //     "gender": true,
-        //     "firstName": "تست",
-        //     "lastName": "تست",
-        //     "nationalId": null,
-        //     "extraBed": 1,
-        //     "childrenAge": [],
-        //     "nationality": 0
-        //   }
-        // ],
-        // "nightly": [],
-        // "cancellationPolicyFees": []
+        image?:string;
+        description?: string;
+        passengers: {
+            gender: boolean;
+            firstName: string;
+            lastName: string;
+            // "nationalId": null,
+            // "extraBed": 1,
+            // "childrenAge": [],
+            // "nationality": 0
+          }[];
     }[]
 
+}
+
+export interface DomesticHotelConfirmType {
+    isCompleted: boolean;
+    reserve: {
+        status: "Undefined" | "Registered" | "Pending" | "Issued" | "Canceled" | "WebServiceCancel" | "PaymentSuccessful" | "WebServiceUnsuccessful" | "PriceChange" | "Unavailable" | "Refunded" | "Voided" | "InProgress" | "PaidBack" | "RefundInProgress" | "Changed" | "OnCredit";
+    }
 }
