@@ -2,11 +2,41 @@ import axios from 'axios';
 
 import { ServerAddress, Blog } from "../../../enum/url";
 
-export const getBlogs = async (perPage : number) => {
+export const getBlogs = async (options: {per_page?:number, page?: number; tags?: number; category?: any; search?: any }) => {
+
+  let url = `${ServerAddress.Type}${ServerAddress.Blog}${Blog.getPosts}`;
+
+  const queries = [];
+
+  if (options.page) {
+    queries.push(`page=${options.page}`);
+  }
+
+  if (options.category) {
+    queries.push(`categories=${options.category}`);
+  }
+
+  if (options.tags) {
+    queries.push(`tags=${options.tags}`)
+  }
+
+  if (options.search) {
+    queries.push(`search=${options.search}`)  
+  }
+
+  if(options.per_page){
+    queries.push(`per_page=${options.per_page}`)  
+  }
+
+  let q: string = '';
+  if (queries.length) {
+    q = queries.join("&");
+    q = "?" + q;
+  }
 
     try {
-        let response = await axios.get(
-            `${ServerAddress.Type}${ServerAddress.Blog}${Blog.getPosts}?per_page=${perPage}`,
+      let response = await axios.get(
+          url+q
         )
         return response
     } catch (error) {
@@ -32,11 +62,10 @@ export const GetCities = async () => {
     }
 };
 
-
-export const GetBestCategory = async () => {
+export const GetBestCategory = async (id : number) => {
     try {
       const res = await axios.get(
-        `${ServerAddress.Type}${ServerAddress.Blog}${Blog.getCategories2}`,
+        `${ServerAddress.Type}${ServerAddress.Blog}${Blog.getCategories}${id}`,
         {
           headers: {
             // "Content-Type": "application/json",
@@ -50,46 +79,6 @@ export const GetBestCategory = async () => {
     } catch (error : any) {
       console.log("error", error);
       return error.response
-    }
-};
-
-export const GetBestCategory2 = async () => {
-    try {
-      const res = await axios.get(
-        `${ServerAddress.Type}${ServerAddress.Blog}${Blog.getCategories1}`,
-        {
-          headers: {
-            // "Content-Type": "application/json",
-            // accept: "text/plain",
-            // "Abp.TenantId": process.env.ABP_TENANT_ID,
-            // "Accept-Language": "fa-IR",
-          },
-        }
-      );
-      return res;
-    } catch (error : any) {
-      console.log("error", error);
-      return error.response
-    }
-};
-
-export const GetBlogPostCategory = async (id: number) => {
-    try {
-        const res = await axios.get(
-            `${ServerAddress.Type}${ServerAddress.Blog}${Blog.getCategoriesBlog}${id}&per_page=100`,
-            {
-                headers: {
-                    // "Content-Type": "application/json",
-                    // accept: "text/plain",
-                    // "Abp.TenantId": process.env.ABP_TENANT_ID,
-                    // "Accept-Language": "fa-IR",
-                },
-            }
-        );
-        return res;
-    } catch (error: any) {
-        console.log("error", error);
-        return error.response
     }
 };
 
@@ -117,37 +106,6 @@ export const GetTagName = async (id : number) => {
   try {
     const res = await axios.get(
       `${ServerAddress.Type}${ServerAddress.Blog}${Blog.getTagName}${id}`
-    );
-    return res;
-  } catch (error : any) {
-    console.log("error", error);
-    return error.response
-  }
-};
-
-export const GetTags = async (id : number) => {
-  try {
-    const res = await axios.get(
-      `${ServerAddress.Type}${ServerAddress.Blog}${Blog.getTagPost}${id}`
-    );
-    return res;
-  } catch (error : any) {
-    console.log("error", error);
-    return error.response
-  }
-};
-
-export const GetSearchBlogPosts = async (value : any) => {
-  try {
-    const res = await axios.get(
-      `${ServerAddress.Type}${ServerAddress.Blog}${Blog.getSearchPost}${value}`,
-      {
-        headers: {
-          // "Content-Type": "application/json",
-          // accept: "text/plain",
-          // "Accept-Language": "fa-IR",
-        },
-      }
     );
     return res;
   } catch (error : any) {

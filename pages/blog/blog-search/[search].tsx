@@ -1,23 +1,22 @@
-import { GetBlogPostCategory, GetCategories, GetSearchBlogPosts, getBlogs } from "@/modules/blogs/actions";
+import {  GetCategories, getBlogs } from "@/modules/blogs/actions";
 import NavbarBlog from "@/modules/blogs/components/template/BreadCrumpt";
-import Title from "@/modules/blogs/components/BlogSearch/Title";
+import Title from "@/modules/blogs/components/template/Title";
 import Content from "@/modules/blogs/components/template/Content";
 import { NextPage } from "next";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 import { useRouter } from "next/router";
 import { createContext } from "react";
+import { BlogItemType, CategoriesNameType } from "@/modules/blogs/types/blog";
 
-export const SearchData = createContext<any | null>(null)
-const Search: NextPage<any> = ({ SearchBlog, LastBlogs, categories_name }) => {
+const Search: NextPage<any> = ({ SearchBlog, LastBlogs, categories_name, pages }:
+    {SearchBlog: BlogItemType[], LastBlogs:BlogItemType[], categories_name:CategoriesNameType[],pages:string}) => {
     
     const NavData = useRouter().query.search
     return (
         <div className="bg-white">
-            <SearchData.Provider value={[SearchBlog, LastBlogs,categories_name]}>
                 <NavbarBlog data={`جستوجوی"${NavData}"`} />
-                <Title />
-                <Content Blogs={SearchBlog} LastBlogs={LastBlogs} CategoriesName={categories_name} />
-            </SearchData.Provider>
+                <Title data={'جستجوی'} searchValue={NavData} />
+                <Content Blogs={SearchBlog} LastBlogs={LastBlogs.slice(0,3)} CategoriesName={categories_name} blogPages={pages}/>
         </div>
     )
 }
@@ -26,18 +25,20 @@ export default Search;
 
 
 export async function getServerSideProps(context: any) { 
-    const search = context.query.search;
+    const searchQuery = context.query.search;
+    const pageQuery = context.query.page || 1
 
     const [SearchBlog, categories_name, recentBlogs] = await Promise.all<any>([
-        GetSearchBlogPosts(search),
+        getBlogs({page:pageQuery , search: searchQuery}),
         GetCategories(),
-        getBlogs(3)
+        getBlogs({page:1})
     ])
     return ({
         props: {
             ...await (serverSideTranslations(context.locale, ['common'])),
             categories_name: categories_name?.data || null,
             LastBlogs: recentBlogs?.data || null,
+            pages: SearchBlog?.headers?.['x-wp-totalpages'],
             SearchBlog : SearchBlog?.data || null
         }
     })

@@ -13,24 +13,23 @@ type Props = {
 const NewBlog: NextPage<Props> = (props) => {
     
     return (
-        <div className="max-xl:p-5 max-w-container m-auto">
-            <p className="text-2xl">جدیدترین مطالب</p>
+        <div className="max-xl:p-5 max-sm:p-3 max-w-container m-auto">
+            <p className="text-2xl p-2">جدیدترین مطالب</p>
             {
                 props.blogs?.map(blog =>
                     <div key={blog.title.rendered}>
                     <div className="grid grid-cols-3 gap-4 mt-10 max-sm:grid-cols-1">
-                    <div>
+                            
                         <Link href={`blog/${blog.slug}`}>
                             <Image src={blog.images.large}
                             alt={blog.title.rendered} height={100} width={300} className="rounded-md max-sm:mr-2 w-full" />
                         </Link>
-                    </div>
     
-                    <div className="w-full col-span-2 rounded p-5 max-sm:p-2" style={{border:'solid 1px rgba(0,0,0,0.2)'}}>
+                    <div className="w-full col-span-2 rounded p-5 border-gray-200 border-2 max-sm:border-0 max-sm:p-2 max-sm:mb-5">
                         <Link href={`/blog/category/${blog.categories[0]}`} className="pr-2 text-red-600 block hover:text-red-400 translation-all duration-300">
                                 {blog.categories_names[0]}
                         </Link>
-                        <Link href={`/blog/${blog.slug}`} className="leading-9 font-bold text-lg max-sm:text-base p-2 hover:text-blue-900 block translation-all duration-300">
+                        <Link href={`/blog/${blog.slug}`} className="leading-9 font-bold text-lg max-sm:text-base p-2 pt-1 hover:text-blue-900 block translation-all duration-300">
                             {blog.title.rendered}
                         </Link>
                         <div className="text-sm text-gray-500 pr-2 max-sm:mt-1">{parse(blog.excerpt.rendered)} </div>
@@ -53,12 +52,11 @@ const NewBlog: NextPage<Props> = (props) => {
                     </div>
                 )
             }
-            {!props.blogs && <p className="text-center">خطا در اتصال به شبکه</p>}
-                <Link href='/blog/blog-list'>
-                    <div  className="w-full rounded text-center p-4 mt-10 hover:bg-gray-100 translation-all duration-300" style={{border:'solid 1px rgba(0,0,0,0.1)'}}>
+            <div  className="w-full rounded text-center mt-14 relative bottom-5 p-4 hover:bg-gray-100 translation-all duration-300 border-gray-200 border-2">
+                <Link href='/blog-list'>
                         <p>مشاهده مطالب بیشتر</p>
-                    </div>
                 </Link>
+            </div>
             
         </div>
     )

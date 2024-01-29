@@ -1,5 +1,5 @@
 import { GetStaticProps, NextPage } from "next";
-import { GetBestCategory, GetBestCategory2, GetCategories, GetCities, getBlogs } from "@/modules/blogs/actions";
+import { GetBestCategory, GetCategories, GetCities, getBlogs } from "@/modules/blogs/actions";
 import NavbarBlog from "@/modules/blogs/components/template/BreadCrumpt";
 import CategoryBlog from "@/modules/blogs/components/BlogHome/CategoryHomeBlog";
 import SearchBox from "@/modules/blogs/components/BlogHome/SearchBox";
@@ -32,10 +32,10 @@ export const getStaticProps: GetStaticProps = async (context: any) => {
     const { locale, query } = context;
     
     const [Blogdata, Cities, Categories, Categories2, Categories3] = await Promise.all<any>([
-        getBlogs(10),
+        getBlogs({page:1}),
         GetCities(),
-        GetBestCategory(),
-        GetBestCategory2(),
+        GetBestCategory(3),
+        GetBestCategory(2),
         GetCategories(),
     ])
   
