@@ -62,31 +62,10 @@ export const GetCities = async () => {
     }
 };
 
-
-export const GetBestCategory = async () => {
+export const GetBestCategory = async (id : number) => {
     try {
       const res = await axios.get(
-        `${ServerAddress.Type}${ServerAddress.Blog}${Blog.getCategories2}`,
-        {
-          headers: {
-            // "Content-Type": "application/json",
-            // accept: "text/plain",
-            // "Abp.TenantId": process.env.ABP_TENANT_ID,
-            // "Accept-Language": "fa-IR",
-          },
-        }
-      );
-      return res;
-    } catch (error : any) {
-      console.log("error", error);
-      return error.response
-    }
-};
-
-export const GetBestCategory2 = async () => {
-    try {
-      const res = await axios.get(
-        `${ServerAddress.Type}${ServerAddress.Blog}${Blog.getCategories1}`,
+        `${ServerAddress.Type}${ServerAddress.Blog}${Blog.getCategories}${id}`,
         {
           headers: {
             // "Content-Type": "application/json",

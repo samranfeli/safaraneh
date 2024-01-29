@@ -36,10 +36,7 @@ export const Header = {
 
   export const Blog = {
     getPosts: "//wp-json/wp/v2/posts",
-    
-    getCategories: '/wp-json/wp/v2/best_category',
-    getCategories1: '/wp-json/wp/v2/best_category?categories=2',
-    getCategories2: '/wp-json/wp/v2/best_category?categories=3',
+    getCategories: '/wp-json/wp/v2/best_category?categories=',
     getCategoeyName: '/wp-json/wp/v2/categories',
     getCities: "//wp-json/wp/v2/cities/",
     getTagName: '/wp-json/wp/v2/tags/',

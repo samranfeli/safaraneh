@@ -4,9 +4,11 @@ import NavbarBlog from "@/modules/blogs/components/template/BreadCrumpt";
 import { NextPage } from "next";
 import Content from "@/modules/blogs/components/template/Content";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
+import { BlogItemType, CategoriesNameType } from "@/modules/blogs/types/blog";
 
 
-const Tag: NextPage<any> = ({ TagBlogs, TagName, categories_name, recentBlogs, pages }) => {
+const Tag: NextPage<any> = ({ TagBlogs, TagName, categories_name, recentBlogs, pages } :
+    {TagBlogs : BlogItemType[] , TagName:any , categories_name:CategoriesNameType[], recentBlogs: BlogItemType[],pages:string}) => {
     
     return (
         <div className="bg-white">

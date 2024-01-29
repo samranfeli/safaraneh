@@ -6,9 +6,11 @@ import { NextPage } from "next";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 import { useRouter } from "next/router";
 import { createContext } from "react";
+import { BlogItemType, CategoriesNameType } from "@/modules/blogs/types/blog";
 
 export const SearchData = createContext<any | null>(null)
-const Search: NextPage<any> = ({ SearchBlog, LastBlogs, categories_name, pages }) => {
+const Search: NextPage<any> = ({ SearchBlog, LastBlogs, categories_name, pages }:
+    {SearchBlog: BlogItemType[], LastBlogs:BlogItemType[], categories_name:CategoriesNameType[],pages:string}) => {
     
     const NavData = useRouter().query.search
     return (

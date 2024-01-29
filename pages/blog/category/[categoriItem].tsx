@@ -3,7 +3,6 @@ import Title from "@/modules/blogs/components/template/Title";
 import { NextPage } from "next";
 import { GetCategories, getBlogs } from "@/modules/blogs/actions";
 import { BlogItemType, CategoriesNameType } from "@/modules/blogs/types/blog";
-import { createContext } from "react";
 import { useRouter } from "next/router";
 import Content from "@/modules/blogs/components/template/Content";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";

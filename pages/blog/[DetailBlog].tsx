@@ -44,7 +44,7 @@ export async function getServerSideProps(context: any) {
 
     const [BlogPost, recentBlogs, CategoriesName] = await Promise.all<any>([
         GetBlogPostDetails(context.query.DetailBlog),
-        getBlogs({ page: 1 }),
+        getBlogs({page:1, per_page:10}),
         GetCategories()
     ]) 
     return (
