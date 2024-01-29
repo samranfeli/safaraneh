@@ -62,7 +62,7 @@ const Home: NextPage = ({ blogs, portalData }: { blogs?: BlogItemType[], portalD
 
 export const getStaticProps = async (context: any) => {
 
-  const recentBlogPost : any = await getBlogs(4);
+  const recentBlogPost : any = await getBlogs({page:1, per_page:4});
 
   return ({
     props: {

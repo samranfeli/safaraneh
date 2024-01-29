@@ -2,7 +2,7 @@ import axios from 'axios';
 
 import { ServerAddress, Blog } from "../../../enum/url";
 
-export const getBlogs = async (options: { page?: number; tags?: number; category?: string; search?: any }) => {
+export const getBlogs = async (options: {per_page?:number, page?: number; tags?: number; category?: string; search?: any }) => {
 
   let url = `${ServerAddress.Type}${ServerAddress.Blog}${Blog.getPosts}`;
 
@@ -22,6 +22,10 @@ export const getBlogs = async (options: { page?: number; tags?: number; category
 
   if (options.search) {
     queries.push(`search=${options.search}`)  
+  }
+
+  if(options.per_page){
+    queries.push(`per_page=${options.per_page}`)  
   }
 
   let q: string = '';
