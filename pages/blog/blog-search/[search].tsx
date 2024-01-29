@@ -8,18 +8,15 @@ import { useRouter } from "next/router";
 import { createContext } from "react";
 import { BlogItemType, CategoriesNameType } from "@/modules/blogs/types/blog";
 
-export const SearchData = createContext<any | null>(null)
 const Search: NextPage<any> = ({ SearchBlog, LastBlogs, categories_name, pages }:
     {SearchBlog: BlogItemType[], LastBlogs:BlogItemType[], categories_name:CategoriesNameType[],pages:string}) => {
     
     const NavData = useRouter().query.search
     return (
         <div className="bg-white">
-            <SearchData.Provider value={[SearchBlog, LastBlogs,categories_name]}>
                 <NavbarBlog data={`جستوجوی"${NavData}"`} />
                 <Title data={'جستجوی'} searchValue={NavData} />
                 <Content Blogs={SearchBlog} LastBlogs={LastBlogs.slice(0,3)} CategoriesName={categories_name} blogPages={pages}/>
-            </SearchData.Provider>
         </div>
     )
 }

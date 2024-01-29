@@ -24,11 +24,13 @@ const Pagination: NextPage<any> = ({ perPage }) => {
         else router.replace({ query: { ...routerQuery, page: b } })
     }
     return (
-        <div className="flex flex-wrap justify-center rounded mt-4 max-sm:m-4 p-3 max-md:gap-8 max-sm:gap-5 gap-10" style={{ border: 'solid 1px rgba(0,0,0,.2)' }}>
+        <div className="flex flex-wrap justify-center rounded mt-4 max-sm:m-4 p-3 max-sm:p-1 max-sm:pt-3 max-sm:pb-3 max-md:gap-8 max-sm:gap-3 gap-10" style={{ border: 'solid 1px rgba(0,0,0,.2)' }}>
             
             <span
                 className={`${+page == listPage[0] && 'hidden'} cursor-pointer w-7 text-center bg-gray-200 hover:bg-gray-300 translation-all duration-300 rounded ltr:hidden`}
-                onClick={() => btnClick(false, +page - 1)} >P</span>
+                onClick={() => btnClick(false, +page - 1)} >
+                <ArrowRight className="w-full p-1 ltr:hidden"/> <ArrowLeft className="w-full p-1 rtl:hidden"/>
+            </span>
     
             <span
                 className={`${+page - listPage[0] <= 2 && 'hidden'} cursor-pointer pl-2 pr-2 hover:bg-gray-200 rounded translation-all duration-300`}
@@ -76,7 +78,9 @@ const Pagination: NextPage<any> = ({ perPage }) => {
             
             <span
                 className={` ${+page == listPage[+listPage.length - 1] && 'hidden'} cursor-pointer bg-gray-200 w-7 text-center hover:bg-gray-300 translation-all duration-300 rounded ltr:hidden`}
-                onClick={() => btnClick(false, +page + 1)} >N</span>
+                onClick={() => btnClick(false, +page + 1)} >
+                <ArrowLeft className="w-full p-1 ltr:hidden"/> <ArrowRight className="w-full p-1 rtl:hidden"/>
+                </span>
 
         </div>
     )

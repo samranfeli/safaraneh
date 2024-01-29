@@ -15,6 +15,7 @@ interface Props {
 
 
 const Content: NextPage<Props> = ({Blogs,LastBlogs,CategoriesName,blogPages}) => {
+    console.log(useRouter());
     
 
     return (
@@ -28,7 +29,7 @@ const Content: NextPage<Props> = ({Blogs,LastBlogs,CategoriesName,blogPages}) =>
             </div>
             <div className="col-span-2 max-lg:col-span-6" >
                 <Sidebar recentBlogs={LastBlogs} CategoriesNames={CategoriesName}
-                    SearchItem={useRouter().asPath == "/blog-list" || useRouter().query.search ? true : false} />
+                    SearchItem={useRouter().pathname == "/blog-list" || useRouter().query.search ? true : false} />
             </div>
 
         </div>
