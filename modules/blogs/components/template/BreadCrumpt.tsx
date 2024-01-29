@@ -7,7 +7,7 @@ const NavbarBlog: NextPage<any> = ({data , category}) => {
     
     return (
         <div
-            className={`w-full flex max-w-container ml-auto mr-auto text-xs space-x-2 rtl:pr-5 ltr:pl-5 rtl:max-sm:pr-3 `}>
+            className={`w-full flex flex-wrap max-w-container ml-auto mr-auto text-xs space-x-2 rtl:pr-5 ltr:pl-5 rtl:max-sm:pr-3 `}>
             <Link href='/'>
                 <Home className="w-5 opacity-30"/>
             </Link><p className="text-gray-400">/</p>

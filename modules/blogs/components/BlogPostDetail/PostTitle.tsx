@@ -9,10 +9,10 @@ const TitlePost: NextPage<any> = ({ BlogPost }) => {
         <div className="overflow-hidden rounded-md flex items-center relative h-550 max-lg:h-full max-lg:mt-5">
                 <div className="text-center absolute z-20 w-full p-4">
                     <Link href={`/blog/category/${BlogPost?.[0].categories[0]}`}
-                        className="bg-white text-sm text-red-600 p-3 max-sm:p-1 rounded-2xl hover:text-white hover:bg-red-600 translation-all duration-300">
+                        className="bg-white text-sm text-red-600 p-3 rounded-2xl hover:text-white hover:bg-red-600 translation-all duration-300">
                     {BlogPost?.[0].categories_names[0]}</Link>
                     <p
-                        className="font-bold text-4xl max-sm:text-2xl text-white mt-8 leading-9 text-center">
+                        className="font-bold text-4xl max-sm:text-xl text-white mt-8 leading-10 text-center">
                         {BlogPost?.[0].title.rendered}
                     </p>
                 </div>

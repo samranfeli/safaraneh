@@ -66,7 +66,7 @@ const PostComment: NextPage<any> = ({ postId }) => {
                         {errors.email && <small className="text-red-600">{errors.email}</small>}
                     </div>
                     <div>        
-                        <label htmlFor="text">متن</label>
+                        <label htmlFor="text"><span className="text-red-600">*</span>متن</label>
                         <Field name="text" as='textarea'
                             className={`${errors.text&&touched.text ? 'border-red-600' : 'border-gray-400' } border-2 p-2 w-full rounded outline-none translation-all duration-300`}
                             validate={(value: any) => validateRequied(value, 'متن نظر را وارد کنید')}/>
