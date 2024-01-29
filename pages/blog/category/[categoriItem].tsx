@@ -10,7 +10,8 @@ import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 
 
 const Category: NextPage<any> = ({ LastBlogs, BlogCategory, categories_name, pages }:
-    { LastBlogs?: BlogItemType[], BlogCategory?: BlogItemType[], categories_name : CategoriesNameType[], pages : string }) => {
+    { LastBlogs?: BlogItemType[], BlogCategory?: BlogItemType[], categories_name: CategoriesNameType[], pages: string }) => {
+    
     
     const query: any = useRouter().query.categoriItem;
     const NavData = categories_name?.find(item => item.id == +query)?.name || null
@@ -42,9 +43,9 @@ export async function getServerSideProps(context: any) {
             props: {
                 ...await (serverSideTranslations(context.locale, ['common'])),
                 LastBlogs: LastBlog?.data || null,
-                pages: BlogCategory?.headers['x-wp-totalpages'],
+                pages: BlogCategory?.headers?.['x-wp-totalpages'],
                 BlogCategory: BlogCategory?.data || null,
-                categories_name: categories_name?.data || null
+                categories_name: categories_name?.data || null,
             }
         }
     )

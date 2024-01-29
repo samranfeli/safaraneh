@@ -6,7 +6,8 @@ import { useEffect, useState } from "react";
 const Pagination: NextPage<any> = ({ perPage }) => {
 
     const router = useRouter()
-    const page : any = useRouter().query.page || 1
+    const page: any = useRouter().query.page || 1
+    const routerQuery : any = useRouter().query
 
     const list : any = []
     useEffect(() => {
@@ -19,8 +20,8 @@ const Pagination: NextPage<any> = ({ perPage }) => {
     const [listPage,setListPage] : any = useState([])
     
     const btnClick = (a : any , b : any) => {
-        if (a) router.replace({ query: { ...page.query, page: a } })
-        else router.replace({ query: { ...page.query, page: b } })
+        if (a) router.replace({ query: { ...routerQuery, page: a } })
+        else router.replace({ query: { ...routerQuery, page: b } })
     }
     return (
         <div className="flex flex-wrap justify-center rounded mt-4 max-sm:m-4 p-3 max-md:gap-8 max-sm:gap-5 gap-10" style={{ border: 'solid 1px rgba(0,0,0,.2)' }}>

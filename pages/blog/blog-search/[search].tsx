@@ -39,7 +39,7 @@ export async function getServerSideProps(context: any) {
             ...await (serverSideTranslations(context.locale, ['common'])),
             categories_name: categories_name?.data || null,
             LastBlogs: recentBlogs?.data || null,
-            pages: SearchBlog?.headers['x-wp-totalpages'],
+            pages: SearchBlog?.headers?.['x-wp-totalpages'],
             SearchBlog : SearchBlog?.data || null
         }
     })
