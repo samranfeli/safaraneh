@@ -206,7 +206,7 @@ export const getServerSideProps: GetServerSideProps = async (context: any) => {
 
   const url = encodeURI(`/${locale}/hotel/${query.hotelDetail![0]}`);
 
-  const allData: any = await getDomesticHotelDetailsByUrl(url, locale === "en__" ? "en-US" : "fa-IR");
+  const allData: any = await getDomesticHotelDetailsByUrl(url, locale === "en" ? "en-US" : "fa-IR");
 
   return ({
     props: {
