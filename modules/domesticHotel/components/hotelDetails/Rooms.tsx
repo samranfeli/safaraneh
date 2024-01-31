@@ -1,14 +1,11 @@
-import { useTranslation } from 'next-i18next';
-import { useEffect, useCallback, useState } from 'react';
-import { AxiosResponse } from 'axios';
+import { i18n, useTranslation } from 'next-i18next';
+import { useEffect, useState } from 'react';
 
-import { Header, ServerAddress, Hotel } from "../../../../enum/url";
 import { DomesticHotelAvailability } from '@/modules/domesticHotel/types/hotel';
-import useHttp from '@/modules/shared/hooks/use-http';
 import { useRouter } from 'next/router';
 import RoomItem from './RoomItem';
 import { addSomeDays, dateFormat } from '@/modules/shared/helpers';
-import { domesticHotelValidateRoom } from '../../actions';
+import { GetRooms, domesticHotelValidateRoom } from '../../actions';
 
 type Props = {
     hotelId: number;
@@ -37,36 +34,25 @@ const Rooms: React.FC<Props> = props => {
         checkout = asPath.split('checkout-')[1].split("/")[0].split("?")[0];
     }
 
-    const { sendRequest, loading } = useHttp();
-
-    const fetchRooms = useCallback((id: number, acceptLanguage?: "fa-IR" | "en-US") => {
-
-
-
-        sendRequest({
-            url: `${ServerAddress.Type}${ServerAddress.Hotel_Availability}${Hotel.GetRooms}?Id=${id}&CheckIn=${checkin}&CheckOut=${checkout}`,
-            header: {
-                ...Header,
-                "Accept-Language": acceptLanguage || "fa-IR",
-                Apikey: process.env.PROJECT_SERVER_APIKEY
-            }
-        }, (response: AxiosResponse) => {
-            if (response.data.result) {
-                setAvailabilities(response.data.result.availabilities);
-            } else if (response.data.success) {
-                debugger;
-                //setReduxError()
-                //setErrorText(noResultMessage || 'No result found!');
-            }
-        })
-    }, [checkin, checkout]);
-
+    
     useEffect(() => {
         if (hotelId) {
-            fetchRooms(hotelId);
+            
+            const fetchRooms = async () => {
+        
+                const response : any = await GetRooms({id:hotelId, checkin:checkin, checkout:checkout}, i18n?.language === "fa"? "fa-IR" : "en-US");
+
+                if (response?.data.result) {
+                    setAvailabilities(response.data.result.availabilities);
+                } else if (response.data.success) {
+                    debugger;
+                }
+            };
+
+            fetchRooms();
         }
 
-    }, [hotelId, fetchRooms]);
+    }, [hotelId]);
 
     useEffect(() => {
         if (selectedRoomToken) {
@@ -98,7 +84,6 @@ const Rooms: React.FC<Props> = props => {
             const key = preReserveResponse.data.result.preReserveKey;
             router.push(`/hotel/checkout/key=${key}`);
         }
-
 
     }
 

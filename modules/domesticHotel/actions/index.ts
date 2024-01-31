@@ -170,6 +170,46 @@ export const getEntityNameByLocation = async (cityId: number, acceptLanguage: st
 
 }
 
+export const GetRooms = async (params:{id:number,checkin:string,checkout:string  } , acceptLanguage: string = 'fa-IR') => {
+    try {
+        let response = await axios.get(
+            `${ServerAddress.Type}${ServerAddress.Hotel_Availability}${Hotel.GetRooms}?Id=${params.id}&CheckIn=${params.checkin}&CheckOut=${params.checkout}`,
+            {
+                headers: {
+                    'Content-Type': 'application/json',
+                    apikey: process.env.PROJECT_SERVER_APIKEY,
+                    'Accept-Language': acceptLanguage
+                },
+            },
+        )
+        return response
+    } catch (error) {
+        return error
+    }
+}
+
+export const insertComment = async (param: any, acceptLanguage: string = 'fa-IR') => {
+
+    try {
+        let response = await axios.post(
+            `${ServerAddress.Type}${ServerAddress.Hotel_Main}${Hotel.InsertComment}`,
+            param,
+            {
+                headers: {
+                    ...Header,
+                    "Accept-Language": acceptLanguage,
+                    // apikey: "68703d73-c92c-4105-9f71-9f718aaad2cc"
+                    apikey: process.env.PROJECT_SERVER_APIKEY,
+                },
+            },
+        )
+        return response
+    } catch (error) {
+        return error
+    }
+}
+
+
 export const domesticHotelValidateRoom = async (param: {
     bookingToken: string;
     checkin: string;

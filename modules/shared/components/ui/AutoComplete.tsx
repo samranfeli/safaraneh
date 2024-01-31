@@ -1,10 +1,12 @@
-import { useCallback, useEffect, useState, useRef, ReactNode, PropsWithChildren, memo, ReactElement } from 'react';
-import { AxiosResponse } from 'axios';
+import { useCallback, useEffect, useState, useRef, ReactNode, PropsWithChildren, memo } from 'react';
+import axios from 'axios';
 
-import useHttp from '../../hooks/use-http';
 import { Header } from '../../../../enum/url';
 import { Close, Location } from '../ui/icons';
 import Skeleton from './Skeleton';
+import { useAppDispatch } from '../../hooks/use-store';
+import { setReduxError } from '../../store/errorSlice';
+import { useTranslation } from 'next-i18next';
 
 type Props<T> = {
     placeholder?: string;
@@ -28,16 +30,20 @@ function AutoComplete<T>(props: PropsWithChildren<Props<T>>) {
 
     const { checkTypingLanguage, url, noResultMessage, onChangeHandle, acceptLanguage, min, icon } = props;
 
+    const {t} = useTranslation("common");
+
     const inputRef = useRef<HTMLInputElement>(null);
     const wrapperRef = useRef<HTMLDivElement>(null);
 
-    const { loading, errorMessage: fetchErrorMessage, sendRequest } = useHttp();
+    const dispatch = useAppDispatch();
 
     const [typingValue, setTypingValue] = useState<string>("");
     const [selectedItem, setSelectedItem] = useState<string>("");
     const [errorText, setErrorText] = useState<string>("");
     const [items, setItems] = useState<T[]>([]);
     const [showList, setShowList] = useState<boolean>(false);
+
+    const [loading, setLoading] = useState<boolean>(false);
 
     let direction: "rtl" | "ltr" | undefined;
     if (checkTypingLanguage) {
@@ -59,28 +65,43 @@ function AutoComplete<T>(props: PropsWithChildren<Props<T>>) {
         }
     }
 
-    const fetchData = useCallback((value: string, acceptLanguage?: "fa-IR" | "en-US") => {
-        sendRequest({
-            url: `${url}?input=${value}`,
-            header: {
-                ...Header,
-                "Accept-Language": acceptLanguage || "en-US",
-            },
-            method: 'post'
-        }, (response: AxiosResponse) => {
-            if (response.data.result) {
-                setItems(response.data.result);
-            } else if (response.data.success) {
-                setErrorText(noResultMessage || 'No result found!');
-            }
-        })
-    }, [noResultMessage, url]);
+    const fetchData = async (value: string, acceptLanguage?: "fa-IR" | "en-US") => {
+        setLoading(true);
+    
+        try{
+            const response = await axios({
+                method: "post",
+                url:   `${url}?input=${value}`,
+                headers: {
+                    ...Header,
+                    apikey: process.env.PROJECT_PORTAL_APIKEY,
+                    "Accept-Language": acceptLanguage || "en-US",
+                }
+            }) 
 
-    useEffect(() => {
-        if (fetchErrorMessage) {
-            setErrorText(fetchErrorMessage)
+            if (response?.data?.result?.length) {
+                setItems(response.data.result);
+            } else {
+                setItems([]);
+                if (response.data.success) {
+                    setErrorText(noResultMessage || 'No result found!');
+                }
+            }
+
+        }catch (error:any){
+            if(error.message){
+                dispatch(setReduxError({
+                    title: t('error'),
+                    message: error.message,
+                    isVisible : true
+                }))
+            }
+
+        } finally {
+            setLoading(false);
         }
-    }, [fetchErrorMessage]);
+
+    };
 
     useEffect(() => {
 
@@ -90,7 +111,7 @@ function AutoComplete<T>(props: PropsWithChildren<Props<T>>) {
             onChangeHandle(undefined);
             setSelectedItem("");
         }
-        
+
         if (errorText) {
             setErrorText("");
         }
@@ -103,7 +124,7 @@ function AutoComplete<T>(props: PropsWithChildren<Props<T>>) {
             clearTimeout(fetchTimeout);
         }
 
-    }, [typingValue, fetchData, min, direction, acceptLanguage, onChangeHandle]);
+    }, [typingValue, min, direction, acceptLanguage, onChangeHandle]);
 
     const selectItemHandle = (item: T) => {
         onChangeHandle(item);
@@ -140,11 +161,16 @@ function AutoComplete<T>(props: PropsWithChildren<Props<T>>) {
     let loadingElement: ReactNode | null = null;
 
     if (items?.length || props.defaultList?.length) {
-        let data = props.defaultList;
+        let data;
+        if(!typingValue){
+            data = props.defaultList;
+        }else{
+            data = undefined;
+        }
         if (items?.length) {
             data = items;
         }
-        listElement = data!.map((item, index) => <div
+        listElement = data?.map((item, index) => <div
             onClick={selectItemHandle.bind(null, item)}
             key={index}
             className="border-b border-gray-200 first:rounded-t last:rounded-b last:border-none cursor-pointer transition-all"
@@ -218,7 +244,7 @@ function AutoComplete<T>(props: PropsWithChildren<Props<T>>) {
     if (icon && icon === "location"){
         iconElement = <Location className={iconClassName} />;
     }
-    
+
     let content = null;
     if (listElement) {
         content = listElement;
