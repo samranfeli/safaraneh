@@ -479,3 +479,67 @@ export interface DomesticHotelConfirmType {
         status: "Undefined" | "Registered" | "Pending" | "Issued" | "Canceled" | "WebServiceCancel" | "PaymentSuccessful" | "WebServiceUnsuccessful" | "PriceChange" | "Unavailable" | "Refunded" | "Voided" | "InProgress" | "PaidBack" | "RefundInProgress" | "Changed" | "OnCredit";
     }
 }
+
+export interface DomesticHotelSummaryDetail {
+    coordinates: {
+        latitude?: number;
+        longitude?: number;
+      };
+      picture: {
+        path?: string;
+        altAttribute?: string;
+        titleAttribute?: string;
+      };
+      displayName?: string;
+      name?:string;
+      cityId?: number;
+      city: {
+        name?: string;
+        id?:number;
+        // title: "string",
+        // type: "string",
+        // isActive: true,
+        // parentId: 0,
+        // searchValue: "string",
+        // displayName: "string",
+      };
+      rating?:number;
+      address?: string;
+      url?: string;
+      
+    // "type": "Hotel",
+    // "name": "string",
+    // "checkinTime": "string",
+    // "checkoutTime": "string",
+    // "instruction": "string",
+    // "briefDescription": "string",
+    // "description": "string",
+    // "mendatoryFee": "string",
+    // "alertNote": "string",
+    // "telNumber": "string",
+    // "isPromotion": true,
+    // "pageTitle": "string",
+    // "metaKeyword": "string",
+    // "metaDescription": "string",
+    // "faqs": [
+    //   {
+    //     "title": "string",
+    //     "isActive": true,
+    //     "priority": 0,
+    //     "entity": {
+    //       "title": "string",
+    //       "type": "string",
+    //       "isActive": true,
+    //       "parentId": 0,
+    //       "name": "string",
+    //       "searchValue": "string",
+    //       "displayName": "string",
+    //       "id": 0
+    //     },
+    //     "question": "string",
+    //     "answer": "string",
+    //     "id": 0
+    //   }
+    // ],
+    // "id": 0
+  }

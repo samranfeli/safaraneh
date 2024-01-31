@@ -7,10 +7,9 @@ import Head from 'next/head';
 import { getReserveFromCoordinator } from '@/modules/shared/actions';
 import { useRouter } from 'next/router';
 import DomesticHotelAside from '@/modules/domesticHotel/components/shared/Aside';
-import { domesticHotelGetReserveById, getDomesticHotelDetailById } from '@/modules/domesticHotel/actions';
-import { AsideHotelInfoType, AsideReserveInfoType, DomesticHotelDetailType, DomesticHotelGetReserveByIdData } from '@/modules/domesticHotel/types/hotel';
+import { domesticHotelGetReserveById, getDomesticHotelSummaryDetailById } from '@/modules/domesticHotel/actions';
+import { AsideHotelInfoType, AsideReserveInfoType, DomesticHotelGetReserveByIdData, DomesticHotelSummaryDetail } from '@/modules/domesticHotel/types/hotel';
 import { getDatesDiff } from '@/modules/shared/helpers';
-import Skeleton from '@/modules/shared/components/ui/Skeleton';
 import { TabItem } from '@/modules/shared/types/common';
 import Tab from '@/modules/shared/components/ui/Tab';
 import OnlinePayment from '@/modules/payment/components/OnlinePayment';
@@ -24,7 +23,6 @@ import { setReduxError } from '@/modules/shared/store/errorSlice';
 const Payment: NextPage = () => {
 
   const { t } = useTranslation('common');
-  const { t: tHotel } = useTranslation('hotel');
 
   const router = useRouter();
 
@@ -38,7 +36,7 @@ const Payment: NextPage = () => {
   const [type, setType] = useState<"Undefined" | "HotelDomestic" | "FlightDomestic" | "Bus" | "Package" | "Flight" | "Hotel" | "PnrOutside" | "Cip" | "Activity">();
   const [coordinatorPrice, setCoordinatorPrice] = useState<number>();
   const [domesticHotelReserveData, setDomesticHotelReserveData] = useState<DomesticHotelGetReserveByIdData>();
-  const [domesticHotelData, setDomesticHotelData] = useState<DomesticHotelDetailType>();
+  const [domesticHotelData, setDomesticHotelData] = useState<DomesticHotelSummaryDetail>();
   const [bankGatewayList, setBankGatewayList] = useState([]);
 
   const [goToBankLoading,setGoToBankLoading] = useState<boolean>(false);
@@ -91,9 +89,10 @@ const Payment: NextPage = () => {
           setDomesticHotelReserveData(response.data.result)
           setExpireDate(response.data.result.expirTime);
 
-          const hotelDataResponse = await getDomesticHotelDetailById(response.data.result.accommodationId || response.data.result.accommodation?.id);
-          if (hotelDataResponse?.data) {
-            setDomesticHotelData(hotelDataResponse.data);
+
+          const hotelDataResponse: { data?: { result?: DomesticHotelSummaryDetail } } = await getDomesticHotelSummaryDetailById(response.data.result.accommodationId || response.data.result.accommodation?.id);
+          if (hotelDataResponse.data?.result) {
+            setDomesticHotelData(hotelDataResponse.data.result);
           }
         }
       }
@@ -173,16 +172,15 @@ const Payment: NextPage = () => {
   if (domesticHotelData) {
     domesticHotelInformation = {
       image: {
-        url: domesticHotelData.ImageUrl,
-        alt: domesticHotelData.ImageAlt,
-        title: domesticHotelData.ImageTitle
+        url: domesticHotelData.picture?.path,
+        alt: domesticHotelData.picture?.altAttribute || domesticHotelData.displayName || "",
+        title: domesticHotelData.picture?.titleAttribute || domesticHotelData.displayName || ""
       },
-      name: `${domesticHotelData.HotelCategoryName} ${domesticHotelData.HotelName} ${domesticHotelData.CityName}`,
-      rating: domesticHotelData.HotelRating,
-      address: domesticHotelData.Address,
-      TopSelling: domesticHotelData.TopSelling,
-      Url: domesticHotelData.Url,
-      CityId: domesticHotelData.CityId
+      name: domesticHotelData.displayName || domesticHotelData.name || "" ,
+      rating: domesticHotelData.rating,
+      address: domesticHotelData.address,
+      Url: domesticHotelData.url,
+      CityId: domesticHotelData.cityId || domesticHotelData.city?.id
     }
   }
   if (domesticHotelReserveData) {

@@ -3,24 +3,21 @@ import { useRouter } from 'next/router';
 import type { GetServerSideProps, NextPage } from 'next';
 import { useTranslation } from 'next-i18next';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
-import Head from 'next/head';
+import Link from 'next/link';
+import Image from 'next/image';
 
-import { DomesticHotelConfirm, domesticHotelGetReserveById, getDomesticHotelDetailById } from '@/modules/domesticHotel/actions';
+import { domesticHotelGetReserveById, getDomesticHotelSummaryDetailById } from '@/modules/domesticHotel/actions';
 import { PortalDataType } from '@/modules/shared/types/common';
-import { AsideHotelInfoType, AsideReserveInfoType, DomesticHotelConfirmType, DomesticHotelDetailType, DomesticHotelGetReserveByIdData } from '@/modules/domesticHotel/types/hotel';
-import { setReduxError } from '@/modules/shared/store/errorSlice';
-import { useAppDispatch } from '@/modules/shared/hooks/use-store';
+import { DomesticHotelGetReserveByIdData, DomesticHotelSummaryDetail } from '@/modules/domesticHotel/types/hotel';
 import { dateDiplayFormat, getDatesDiff, numberWithCommas } from '@/modules/shared/helpers';
 
-import Aside from '@/modules/domesticHotel/components/shared/Aside';
-import Steps from '@/modules/shared/components/ui/Steps';
+import { Bed, DefaultRoom, Directions, Email, EmailGrayIcon, Location, Lock, Phone, PhoneGrayIcon, RightCaret, Tik, User, WhatsappGrayIcon } from '@/modules/shared/components/ui/icons';
+
 import Skeleton from '@/modules/shared/components/ui/Skeleton';
-import BookingContent from '@/modules/domesticHotel/components/booking/BookingContent';
-import ReserverInformation from '@/modules/domesticHotel/components/checkout/ReserverInformation';
-import { Bed, EmailGrayIcon, Lock, PhoneGrayIcon, RightCaret, Tik, User, WhatsappGrayIcon } from '@/modules/shared/components/ui/icons';
-import Link from 'next/link';
 import Tag from '@/modules/shared/components/ui/Tag';
 import DownloadPdfVoucher from '@/modules/domesticHotel/components/booking/DownloadPdfVoucher';
+import Rating from '@/modules/shared/components/ui/Rating';
+import HotelMap from '@/modules/domesticHotel/components/hotelDetails/HotelMap';
 
 const DomesticHotelReserveDetail: NextPage = ({ portalData }: { portalData?: PortalDataType }) => {
 
@@ -30,15 +27,15 @@ const DomesticHotelReserveDetail: NextPage = ({ portalData }: { portalData?: Por
 
     const router = useRouter();
 
-    const dispatch = useAppDispatch();
-
     const pathArray = router.asPath.split("?")[1]?.split("#")[0].split("&");
     const username: string | undefined = pathArray.find(item => item.includes("username="))?.split("username=")[1];
     const reserveId: string | undefined = pathArray.find(item => item.includes("reserveId="))?.split("reserveId=")[1];
 
     const [reserveNotFound, setReserveNotFound] = useState<boolean>(false);
     const [reserveData, setReserveData] = useState<DomesticHotelGetReserveByIdData>();
-    const [hotelData, setHotelData] = useState<DomesticHotelDetailType>();
+    const [hotelData, setHotelData] = useState<DomesticHotelSummaryDetail>();
+
+    const [showMap, setShowMap] = useState<boolean>(false);
 
     const [copied, setCopied] = useState<boolean>(false);
 
@@ -55,9 +52,9 @@ const DomesticHotelReserveDetail: NextPage = ({ portalData }: { portalData?: Por
                 if (response.data.result) {
                     setReserveData(response.data.result)
 
-                    const hotelDataResponse = await getDomesticHotelDetailById(response.data.result.accommodationId || response.data.result.accommodation?.id);
-                    if (hotelDataResponse?.data) {
-                        setHotelData(hotelDataResponse.data);
+                    const hotelDataResponse: { data?: { result?: DomesticHotelSummaryDetail } } = await getDomesticHotelSummaryDetailById(response.data.result.accommodationId || response.data.result.accommodation?.id);
+                    if (hotelDataResponse.data?.result) {
+                        setHotelData(hotelDataResponse.data.result);
                     }
                 } else {
                     setReserveNotFound(true);
@@ -75,7 +72,6 @@ const DomesticHotelReserveDetail: NextPage = ({ portalData }: { portalData?: Por
     let price: number = 0;
 
     if (reserveData?.rooms) {
-        debugger;
         guests = reserveData.rooms.reduce((sum, room) => (sum + room.bed), 0);
         price = reserveData.rooms.reduce((sum, room) => {
             const roomPrice = room.pricing?.find(x => x.ageCategoryType === "ADL" && x.type === "Room")?.amount || 0;
@@ -144,8 +140,6 @@ const DomesticHotelReserveDetail: NextPage = ({ portalData }: { portalData?: Por
 
     }
 
-
-
     return (
         <>
             <div className='max-w-container mx-auto px-5 py-4'>
@@ -201,11 +195,21 @@ const DomesticHotelReserveDetail: NextPage = ({ portalData }: { portalData?: Por
                                 <>
 
                                     <div className='relative text-white'>
-                                        <img
-                                            src={hotelData.ImageUrl || "https://cdn.safaraneh.com/Images/Accommodations/fa/evinhotel.jpg"}
-                                            alt={hotelData.ImageAlt || hotelData.HotelName}
-                                            className='w-full h-44 object-cover'
-                                        />
+                                        {hotelData.picture?.path ? (
+                                            <Image
+                                                src={hotelData.picture.path}
+                                                alt={hotelData.picture.altAttribute || hotelData.picture.titleAttribute || hotelData.displayName || ""}
+                                                className='w-full h-44 object-cover'
+                                                width={766}
+                                                height={176}
+                                            />
+                                        ) : (
+                                            <div
+                                                className="p-10 bg-neutral-100 flex items-center justify-center h-full max-lg:rounded-t-lg lg:rtl:rounded-r-lg lg:ltr:rounded-l-lg"
+                                            >
+                                                <DefaultRoom className="fill-neutral-300 w-20 h-20" />
+                                            </div>
+                                        )}
                                         <div
                                             className='absolute top-0 bottom-0 right-0 left-0 bg-[#00314380]'
                                         />
@@ -219,7 +223,7 @@ const DomesticHotelReserveDetail: NextPage = ({ portalData }: { portalData?: Por
 
                                         </button>
 
-                                        <h4 className='text-4xl font-semibold absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2'> {hotelData.CityName} </h4>
+                                        <h4 className='text-4xl font-semibold absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2'> {hotelData.city.name || hotelData.displayName || ""} </h4>
 
                                         <Bed
                                             className='w-12 h-12 fill-blue-400 absolute bottom-0 left-1/2 -translate-x-1/2 translate-y-1/2 p-3 bg-white border border-neutral-300'
@@ -228,7 +232,7 @@ const DomesticHotelReserveDetail: NextPage = ({ portalData }: { portalData?: Por
                                     </div>
 
                                     <div className='p-4 pt-10'>
-                                        <h1 className='text-center font-semibold text-2xl mb-3'> {`${hotelData.HotelCategoryName} ${hotelData.HotelName} ${hotelData.CityName}`}</h1>
+                                        <h1 className='text-center font-semibold text-2xl mb-3'> {hotelData.displayName}</h1>
 
                                         <div className='flex gap-1 items-center justify-center'>
 
@@ -286,12 +290,149 @@ const DomesticHotelReserveDetail: NextPage = ({ portalData }: { portalData?: Por
 
                                 </>
                             ) : (
-                                <Skeleton />
+                                <>
+                                    <div className='py-14 bg-gray-300 mb-5'>
+                                        <Skeleton className='w-32 mx-auto' />
+                                    </div>
+                                    <Skeleton className='w-40 mx-auto mb-4' />
+                                    <Skeleton className='w-44 mx-auto mb-5' />
+                                    <Skeleton type='button' className='w-24 mx-auto mb-5' />
+                                    <div className='border border-neutral-300 px-4 py-4 mb-4 sm:w-96 mx-auto text-sm'>
+                                        <Skeleton className='w-24 mb-4' />
+                                        <Skeleton className='w-1/3 mb-4' />
+                                        <Skeleton className='w-2/3' />
+                                    </div>
+                                </>
                             )}
 
                         </div>
 
 
+
+                        {!!hotelData ? (
+                            <div className='border border-neutral-300 bg-white rounded-md mb-4 p-5'>
+
+                                <h2 className='font-semibold text-lg mb-1'> {hotelData.displayName} </h2>
+
+                                {hotelData.rating && <Rating number={hotelData.rating} className='mb-2' />}
+
+                                <p className='flex gap-2 items-center mb-3 text-sm text-neutral-500'>
+                                    <Location className='w-5 h-5 fill-current block' />
+                                    {hotelData.address}
+                                </p>
+
+                                <div className='flex flex-col md:flex-row gap-y-1 gap-x-10 text-xs text-blue-800 font-semibold md:items-center border-b border-neutral-300 pb-5 mb-5'>
+                                    {hotelData.coordinates.latitude && hotelData.coordinates.longitude &&
+                                        <div className='flex gap-2 items-center'>
+
+                                            <Directions className='w-5 h-5 fill-current block' />
+
+                                            <button type='button'
+                                                onClick={() => { setShowMap(true) }}
+                                            >
+                                                هتل روی نقشه
+                                            </button>
+                                            {!!(showMap && hotelData.coordinates?.latitude && hotelData.coordinates?.longitude) && <HotelMap
+                                                closeMapModal={() => { setShowMap(false) }}
+                                                latLong={[hotelData.coordinates.latitude, hotelData.coordinates.longitude]}
+                                            />}
+                                        </div>
+                                    }
+
+                                    <div className='flex gap-2 items-center'>
+                                        <Phone className='w-5 h-5 fill-current' />
+                                        <a href={`tel:${phoneLink}`}>{phoneNumber}</a>
+                                    </div>
+                                    <div className='flex gap-2 items-center'>
+                                        <Email className='w-5 h-5 fill-current' />
+                                        <a href={`mailto:${email}`}>{email}</a>
+                                    </div>
+                                </div>
+
+                                {reserveData && <div className='text-sm border-b border-neutral-300 pb-5 mb-5'>
+                                    <div className='flex justify-between items-center mb-1' >
+                                        تعداد شب
+                                        <span>
+                                            {getDatesDiff(new Date(reserveData.checkout), new Date(reserveData?.checkin))} {tHotel("night")}
+                                        </span>
+                                    </div>
+
+                                    <div className='flex justify-between items-center mb-1' >
+                                        {t("checkin-date")}
+                                        <span>
+                                            {dateDiplayFormat({ date: reserveData.checkin, format: 'dd mm yyyy', locale: "fa" })}
+                                        </span>
+                                    </div>
+
+                                    <div className='flex justify-between items-center mb-1'>
+                                        {t("checkout-date")}
+                                        <span>
+                                            {dateDiplayFormat({ date: reserveData.checkout, format: 'dd mm yyyy', locale: "fa" })}
+                                        </span>
+                                    </div>
+
+                                    <div className='flex justify-between items-center mb-1'>
+                                        نام رزرو کننده
+                                        <span>{reserveData.reserver?.firstName} {reserveData.reserver?.lastName}</span>
+                                    </div>
+                                </div>}
+
+                                <div className='mb-2'> {t("reserve-details")} </div>
+                                {reserveData?.rooms.map((roomItem, index) => (
+                                    <div key={index} className='border border-neutral-300 p-5 mb-4 rounded-md sm:flex justify-between gap-5 text-sm'>
+
+                                        <div>
+                                            <div className='flex items-center gap-2'>
+                                                <Bed className='w-5 h-5 fill-current' />
+                                                <span>{roomItem.name}</span>
+                                            </div>
+                                            <div className='flex items-center gap-2'>
+                                                <User className='w-5 h-5 fill-current' />
+                                                <span>{roomItem.bed} {t('adult')}</span>
+                                            </div>
+                                        </div>
+
+                                        <div>
+                                            {roomItem.passengers?.map((passengerItem, passengerIndex) => (
+                                                <div key={passengerIndex}>
+                                                    {passengerItem.firstName} {passengerItem.lastName}
+                                                </div>
+                                            ))}
+                                        </div>
+                                    </div>
+                                ))}
+                            </div>
+                        ) : (
+                            <div className='border border-neutral-300 bg-white rounded-md p-5 mb-4'>
+                                <Skeleton className='w-24 mb-4' />
+                                <Skeleton className='w-1/3 mb-4' />
+                                <Skeleton className='w-2/3 mb-4' />
+                                <Skeleton className='w-3/4 mb-4' />
+                                <hr className='my-5' />
+                                <div className='flex justify-between mb-4'>
+                                    <Skeleton className='w-20' />
+                                    <Skeleton className='w-24' />
+                                </div>
+                                <div className='flex justify-between mb-4'>
+                                    <Skeleton className='w-20' />
+                                    <Skeleton className='w-24' />
+                                </div>
+                                <div className='flex justify-between mb-4'>
+                                    <Skeleton className='w-20' />
+                                    <Skeleton className='w-24' />
+                                </div>
+                                <div className='flex justify-between mb-4'>
+                                    <Skeleton className='w-20' />
+                                    <Skeleton className='w-24' />
+                                </div>
+                                <hr className='my-5' />
+                                <Skeleton className='w-24 mb-4' />
+                                <Skeleton className='w-1/3 mb-4' />
+                                <Skeleton className='w-2/3 mb-4' />
+                            </div>
+                        )}
+
+                        {!!hotelData ? (
                         <div className="border border-neutral-300 bg-white rounded-md mb-4 p-5">
 
                             <h5 className="font-semibold mb-2 text-lg">{tPayment("need-help")}</h5>
@@ -329,11 +470,18 @@ const DomesticHotelReserveDetail: NextPage = ({ portalData }: { portalData?: Por
                                 </div>
                             </div>
                         </div>
+                        ):(
+                            <div className='border border-neutral-300 bg-white rounded-md p-5 mb-4'>
+                                <Skeleton className='w-24 mb-4' />
+                                <Skeleton className='w-1/3 mb-4' />
+                                <Skeleton className='w-2/3 mb-4' />
+                                <Skeleton className='w-3/4' />
+                            </div>
+                        )}
 
                     </div>
                 </div>
             </div>
-
         </>
     )
 }

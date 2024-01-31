@@ -26,6 +26,7 @@ const DownloadPdfVoucher: React.FC<Props> = props => {
             },
             method: 'get'
         }, (response: AxiosResponse) => {
+            debugger;
             if (response?.data?.result) {
                 const url = `https://hotelv2.safaraneh.com/File/DownloadTempFile?filename=${response.data.result.fileName}.pdf&fileType=${response.data.result.fileType}&fileToken=${response.data.result.fileToken}`;
                 let a = document.createElement('a');
