@@ -46,7 +46,7 @@ export const Header = {
     GetLocation: "/api/services/app/BookingHotel/GetLocation",
     GetEntity:"/api/services/app/Entity/Search",
     GetHotelById: "/v2/Hotel/GetHotelById",
-    GetHotelByUrl: "/v2/Hotel/GetHotelByUrl",
+    GetHotelSummaryDetailById: "/api/services/app/Accommodation/Get",
     GetScore: "/v2/Comment/GetScore",
     GetAccommodationData :"/api/services/app/Accommodation/Get",
     GetPageByUrl: "/v2/Page/GetPageByUrl",

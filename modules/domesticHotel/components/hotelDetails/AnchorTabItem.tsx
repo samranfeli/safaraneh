@@ -69,7 +69,7 @@ const AnchorTabItem: React.FC<Props> = props => {
             ref={anchorRef}
             onClick={scrollToTarget}
             href={"#" + props.target}
-            className={`font-semibold pb-0 pt-1 leading-5 px-2 md:p-2 lg:p-4 text-2xs sm:text-sm block border-b-2 ${active ? "text-blue-500 border-blue-500" : "border-transparent"}`}
+            className={`font-semibold leading-5 py-4 px-1.5 md:px-2 lg:px-4 text-2xs sm:text-sm block border-b-2 ${active ? "text-blue-500 border-blue-500" : "border-transparent"}`}
         > {props.title} </a>
     )
 }

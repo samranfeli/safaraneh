@@ -5,9 +5,9 @@ import { useTranslation } from 'next-i18next';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 import Head from 'next/head';
 
-import { DomesticHotelConfirm, domesticHotelGetReserveById, getDomesticHotelDetailById } from '@/modules/domesticHotel/actions';
+import { DomesticHotelConfirm, domesticHotelGetReserveById, getDomesticHotelSummaryDetailById } from '@/modules/domesticHotel/actions';
 import { PortalDataType } from '@/modules/shared/types/common';
-import { AsideHotelInfoType, AsideReserveInfoType, DomesticHotelConfirmType, DomesticHotelDetailType, DomesticHotelGetReserveByIdData } from '@/modules/domesticHotel/types/hotel';
+import { AsideHotelInfoType, AsideReserveInfoType, DomesticHotelConfirmType, DomesticHotelGetReserveByIdData, DomesticHotelSummaryDetail } from '@/modules/domesticHotel/types/hotel';
 import { setReduxError } from '@/modules/shared/store/errorSlice';
 import { useAppDispatch } from '@/modules/shared/hooks/use-store';
 import { getDatesDiff } from '@/modules/shared/helpers';
@@ -32,7 +32,7 @@ const Booking: NextPage = ({ portalData }: { portalData?: PortalDataType }) => {
     const reserveId: string | undefined = pathArray.find(item => item.includes("reserveId="))?.split("reserveId=")[1];
 
     const [domesticHotelReserveData, setDomesticHotelReserveData] = useState<DomesticHotelGetReserveByIdData>();
-    const [domesticHotelData, setDomesticHotelData] = useState<DomesticHotelDetailType>();
+    const [domesticHotelData, setDomesticHotelData] = useState<DomesticHotelSummaryDetail>();
 
     const phoneLink = portalData?.Phrases?.find(item => item.Keyword === "PhoneNumber")?.Value || "";
     const phoneNumber = phoneLink?.replace("+98", "0");
@@ -49,9 +49,10 @@ const Booking: NextPage = ({ portalData }: { portalData?: PortalDataType }) => {
                 if (response.data.result) {
                     setDomesticHotelReserveData(response.data.result)
 
-                    const hotelDataResponse = await getDomesticHotelDetailById(response.data.result.accommodationId || response.data.result.accommodation?.id);
-                    if (hotelDataResponse?.data) {
-                        setDomesticHotelData(hotelDataResponse.data);
+
+                    const hotelDataResponse: { data?: { result?: DomesticHotelSummaryDetail } } = await getDomesticHotelSummaryDetailById(response.data.result.accommodationId || response.data.result.accommodation?.id);
+                    if (hotelDataResponse?.data?.result) {
+                        setDomesticHotelData(hotelDataResponse.data.result);
                     }
                 }
             }
@@ -95,16 +96,15 @@ const Booking: NextPage = ({ portalData }: { portalData?: PortalDataType }) => {
     if (domesticHotelData) {
         domesticHotelInformation = {
             image: {
-                url: domesticHotelData.ImageUrl,
-                alt: domesticHotelData.ImageAlt,
-                title: domesticHotelData.ImageTitle
+                url: domesticHotelData.picture?.path,
+                alt: domesticHotelData.picture?.altAttribute || domesticHotelData.displayName || "",
+                title: domesticHotelData.picture?.titleAttribute || domesticHotelData.displayName || ""
             },
-            name: `${domesticHotelData.HotelCategoryName} ${domesticHotelData.HotelName} ${domesticHotelData.CityName}`,
-            rating: domesticHotelData.HotelRating,
-            address: domesticHotelData.Address,
-            TopSelling: domesticHotelData.TopSelling,
-            Url: domesticHotelData.Url,
-            CityId: domesticHotelData.CityId
+            name: domesticHotelData.displayName || domesticHotelData.name || "",
+            rating: domesticHotelData.rating,
+            address: domesticHotelData.address,
+            Url: domesticHotelData.url,
+            CityId: domesticHotelData.cityId || domesticHotelData.city?.id
         }
     }
     if (domesticHotelReserveData) {
