@@ -25,16 +25,16 @@ const NewBlog: NextPage<Props> = (props) => {
                             alt={blog.title.rendered} height={100} width={300} className="rounded-md max-sm:mr-2 w-full" />
                         </Link>
     
-                    <div className="w-full col-span-2 rounded p-5 border-gray-200 border-2 max-sm:border-0 max-sm:p-2 max-sm:mb-5">
-                        <Link href={`/blog/category/${blog.categories[0]}`} className="pr-2 text-red-600 block hover:text-red-400 translation-all duration-300">
+                    <div className="w-full col-span-2 rounded p-5 border-gray-200 border-2 max-sm:border-0 max-sm:p-2 max-sm:pt-0 max-sm:mb-6">
+                        <Link href={`/blog/category/${blog.categories[0]}`} className="pr-2 max-sm:text-xs text-red-600 block hover:text-red-400 translation-all duration-300">
                                 {blog.categories_names[0]}
                         </Link>
                         <Link href={`/blog/${blog.slug}`} className="leading-9 font-bold text-lg max-sm:text-base p-2 pt-1 hover:text-blue-900 block translation-all duration-300">
                             {blog.title.rendered}
                         </Link>
-                        <div className="text-sm text-gray-500 pr-2 max-sm:mt-1">{parse(blog.excerpt.rendered)} </div>
+                        <div className="text-xs max-sm:text-3xs text-gray-500 pr-2 max-sm:mt-1">{parse(blog.excerpt.rendered)} </div>
                         <div className="flex justify-between text-xs mt-4">
-                            <div className="flex w-52 justify-between text-gray-500 pr-2">
+                            <div className="flex w-52 justify-between text-gray-600 pr-2 max-sm:text-2xs">
                                 <p>{blog.date}</p>
                                 <p className="font-bold text-3xl">.</p>
                                 <p>{blog.acf.time_read}</p>

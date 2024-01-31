@@ -1,0 +1,19 @@
+.content  h2{
+    font-size: 20px;
+    padding-top: 40px;
+    padding-bottom: 15px;
+}
+.content a {
+    font-size: 16px;
+}
+.content hr {
+    margin-top: 17px;
+    margin-bottom: 17px;
+}
+.content li {
+    display: inline-block;
+    padding: 20px;
+}
+.content img {
+    border-radius: 5px;
+}

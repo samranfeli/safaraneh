@@ -45,7 +45,7 @@ const PostComment: NextPage<any> = ({ postId }) => {
         <div>
             <h2 className="mt-20 text-3xl mb-10">ثبت نظر</h2>
 
-            <div className="w-full border-gray-200 border-2 p-8 rounded">
+            <div className="w-full border-gray-200 border-2 max-sm:border-0 max-sm:p-2 p-8 rounded">
             <Formik
                     initialValues={initialdata}
                     onSubmit={submitHandle}
