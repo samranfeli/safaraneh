@@ -1,10 +1,9 @@
 import { useTranslation, i18n } from "next-i18next";
 import { useCallback, useEffect, useState } from 'react';
-import { AxiosResponse } from 'axios';
+import axios from 'axios';
 import { useRouter } from "next/router";
 
-import useHttp from '../../../shared/hooks/use-http';
-import { getDomesticHotelSummaryDetailById} from "@/modules/domesticHotel/actions";
+import { getDomesticHotelSummaryDetailById } from "@/modules/domesticHotel/actions";
 import { Header, ServerAddress, Hotel } from "../../../../enum/url";
 import AutoComplete from "../../../shared/components/ui/AutoComplete";
 import { ApartmentOutline, Home2, Location } from "../../../shared/components/ui/icons";
@@ -59,10 +58,8 @@ const SearchForm: React.FC<Props> = props => {
         setSubmitLoading(false);
     }, [routerPath]);
 
-    const { sendRequest } = useHttp();
 
-
-    const url = `${ServerAddress.Type}${ServerAddress.Hotel_Data}${Hotel.GetEntity}`;
+    const autoCompleteUrl = `${ServerAddress.Type}${ServerAddress.Hotel_Data}${Hotel.GetEntity}`;
 
     useEffect(() => {
 
@@ -78,24 +75,42 @@ const SearchForm: React.FC<Props> = props => {
             } else {
                 const acceptLanguage = i18n && i18n.language === "fa" ? "fa-IR" : "en-US";
 
-                sendRequest({
-                    dontShowError: true,
-                    url: url,
-                    header: {
-                        ...Header,
-                        "Accept-Language": acceptLanguage,
-                    },
-                    method: 'post'
-                }, (response: AxiosResponse) => {
-                    if (response.data.result) {
-                        setDefaultDestinations(response.data.result);
-                        localStorage.setItem('domesticHotelSearchDefaultDestinations', JSON.stringify(response.data.result));
+                const fetchDefaultDestinations = async () => {
+                    try {
+                        const response = await axios({
+                            method: "post",
+                            url: autoCompleteUrl,
+                            headers: {
+                                ...Header,
+                                apikey: process.env.PROJECT_PORTAL_APIKEY,
+                                "Accept-Language": acceptLanguage || "en-US",
+                            }
+                        })
+
+                        if (response?.data?.result?.length) {
+
+                            setDefaultDestinations(response.data.result);
+                            localStorage.setItem('domesticHotelSearchDefaultDestinations', JSON.stringify(response.data.result));
+
+                        }
+
+                    } catch (error: any) {
+                        if (error.message) {
+                            dispatch(setReduxError({
+                                title: t('error'),
+                                message: error.message,
+                                isVisible: true
+                            }))
+                        }
+
                     }
-                });
+                }
+                fetchDefaultDestinations();
+
             }
         }
 
-    }, [sendRequest, i18n?.language]);
+    }, [i18n?.language]);
 
 
     const submitHandler = async () => {
@@ -139,7 +154,7 @@ const SearchForm: React.FC<Props> = props => {
                 break;
 
             case "Hotel":
-                const hotelDetailsResponse = await getDomesticHotelSummaryDetailById(selectedDestination.id!, i18n?.language);
+                const hotelDetailsResponse = await getDomesticHotelSummaryDetailById(selectedDestination.id!, i18n?.language === "fa" ? "fa-IR" : "en-US");
 
                 if (hotelDetailsResponse.data?.result?.url) {
                     url = hotelDetailsResponse.data.result.url;
@@ -167,7 +182,7 @@ const SearchForm: React.FC<Props> = props => {
         }
 
         let urlSegment = "";
-        if (selectedDestination.id){
+        if (selectedDestination.id) {
             urlSegment = `/location-${selectedDestination.id}`;
         }
 
@@ -206,7 +221,7 @@ const SearchForm: React.FC<Props> = props => {
                     min={2}
                     value={selectedDestination}
                     onChangeHandle={setSelectedDestination}
-                    url={url}
+                    url={autoCompleteUrl}
                 />
             </div>
             <div className="col-span-1 md:col-span-3 relative">
