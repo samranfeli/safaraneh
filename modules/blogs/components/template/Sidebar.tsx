@@ -1,9 +1,9 @@
 import { NextPage } from "next";
 import Image from "next/image";
-import RecentBlogSidebar from "./RecentBlogSidebar";
+import RecentBlogSidebar from "./SidebarRecentBlog";
 import SidebarSearchBlog from "./SidebarSearchBlog";
 import Link from "next/link";
-import BestHotels from "./BestHotelsSidebar";
+import BestHotels from "./SidebarBestHotels";
 
 const Sidebar: NextPage<any> = ({ recentBlogs, CategoriesNames, SearchItem, NotSticky }) => {
     

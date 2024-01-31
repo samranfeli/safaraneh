@@ -3,7 +3,6 @@ import { NextPage } from "next";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 import { useRouter } from "next/router";
 import NavbarBlog from "@/modules/blogs/components/template/BreadCrumpt";
-import Sidebar from "@/modules/blogs/components/template/Sidebar";
 import ContentPost from "@/modules/blogs/components/BlogPostDetail/PostContent";
 import TitlePost from "@/modules/blogs/components/BlogPostDetail/PostTitle";
 import RelatedPost from "@/modules/blogs/components/BlogPostDetail/PostRelatedPost";
