@@ -1,11 +1,9 @@
-import { AxiosResponse } from 'axios';
 import { Formik, Form, Field } from 'formik';
-import { useTranslation } from 'next-i18next';
+import { i18n, useTranslation } from 'next-i18next';
 
-import { ServerAddress, Hotel, Header } from '@/enum/url';
-import useHttp from '@/modules/shared/hooks/use-http';
 import Button from '@/modules/shared/components/ui/Button';
 import { validateRequied, validateEmail } from '@/modules/shared/helpers/validation';
+import { insertComment } from '@/modules/domesticHotel/actions';
 
 type Props = {
     pageId: number
@@ -15,8 +13,6 @@ const CommentForm: React.FC<Props> = props => {
 
     const { t } = useTranslation('common');
     const { t: tHotel } = useTranslation('hotel');
-
-    const { sendRequest, loading } = useHttp();
 
     type FormValues = {
         FullName: string;
@@ -60,21 +56,12 @@ const CommentForm: React.FC<Props> = props => {
 
         actions.resetForm();
 
-        sendRequest({
-            url: `${ServerAddress.Type}${ServerAddress.Hotel_Main}${Hotel.InsertComment}`,
-            header: {
-                ...Header,
-                "Accept-Language": 'fa-IR',
-                apikey: "68703d73-c92c-4105-9f71-9f718aaad2cc"
-            },
-            method: 'post',
-            data: params,
-        }, (response: AxiosResponse) => {
-            if (response.data.result) {
-                debugger;
-                //toDo
-            }
-        });
+        const response : any = await insertComment(params, i18n?.language === 'fa'?"fa-IR":"en-US");
+
+        if (response?.data?.result) {
+            debugger;
+            //toDo
+        }
 
     }
 
