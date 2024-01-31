@@ -4,7 +4,7 @@ import { AxiosResponse } from 'axios';
 import { useRouter } from "next/router";
 
 import useHttp from '../../../shared/hooks/use-http';
-import { getDomesticHotelDetailById } from "@/modules/domesticHotel/actions";
+import { getDomesticHotelSummaryDetailById} from "@/modules/domesticHotel/actions";
 import { Header, ServerAddress, Hotel } from "../../../../enum/url";
 import AutoComplete from "../../../shared/components/ui/AutoComplete";
 import { ApartmentOutline, Home2, Location } from "../../../shared/components/ui/icons";
@@ -139,10 +139,10 @@ const SearchForm: React.FC<Props> = props => {
                 break;
 
             case "Hotel":
-                const hotelDetailsResponse = await getDomesticHotelDetailById(selectedDestination.id!, i18n?.language);
+                const hotelDetailsResponse = await getDomesticHotelSummaryDetailById(selectedDestination.id!, i18n?.language);
 
-                if (hotelDetailsResponse.status === 200) {
-                    url = hotelDetailsResponse.data.Url;
+                if (hotelDetailsResponse.data?.result?.url) {
+                    url = hotelDetailsResponse.data.result.url;
                 } else {
                     let message = "";
                     if (hotelDetailsResponse.response) {

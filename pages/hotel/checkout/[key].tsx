@@ -6,10 +6,10 @@ import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 import { useRouter } from 'next/router';
 import Head from 'next/head';
 
-import { domesticHotelGetValidate, domesticHotelPreReserve, getDomesticHotelDetailById } from '@/modules/domesticHotel/actions';
+import { domesticHotelGetValidate, domesticHotelPreReserve, getDomesticHotelSummaryDetailById } from '@/modules/domesticHotel/actions';
 import Aside from '@/modules/domesticHotel/components/shared/Aside';
 import { getDatesDiff } from '@/modules/shared/helpers';
-import { AsideHotelInfoType, AsideReserveInfoType, DomesticHotelDetailType, DomesticHotelGetValidateResponse } from '@/modules/domesticHotel/types/hotel';
+import { AsideHotelInfoType, AsideReserveInfoType, DomesticHotelGetValidateResponse, DomesticHotelSummaryDetail } from '@/modules/domesticHotel/types/hotel';
 import SpecialReauests from '@/modules/domesticHotel/components/checkout/SpecialRequests';
 import ReserverInformation from '@/modules/domesticHotel/components/checkout/ReserverInformation';
 import RoomItemInformation from '@/modules/domesticHotel/components/checkout/RoomItemInformation';
@@ -36,7 +36,7 @@ const Checkout: NextPage = () => {
   const key = keySegment?.split("key=")[1];
 
   const [reserveInfo, setReserveInfo] = useState<DomesticHotelGetValidateResponse>();
-  const [hotelInfo, setHotelInfo] = useState<DomesticHotelDetailType>();
+  const [hotelInfo, setHotelInfo] = useState<DomesticHotelSummaryDetail>();
   const [reserverIsPassenger, setReserverIsPassenger] = useState<boolean>(true);
 
   const [roomsExtraBed, setRoomsExtraBed] = useState<number[]>([]);
@@ -57,7 +57,7 @@ const Checkout: NextPage = () => {
     const checkin = dateFormat(checkinDate);
     const checkout = dateFormat(checkoutDate);
 
-    backUrl = `${hotelInfo.Url}/location-${hotelInfo.CityId}/checkin-${checkin}/checkout-${checkout}`;
+    backUrl = `${hotelInfo.url}/location-${hotelInfo.cityId || hotelInfo.city?.id}/checkin-${checkin}/checkout-${checkout}`;
   }
 
   useEffect(() => {
@@ -74,10 +74,12 @@ const Checkout: NextPage = () => {
         const hotelId = response.data.result.accommodationId;
 
         if (!hotelId) return;
-        const hotelResponse: any = await getDomesticHotelDetailById(hotelId);
-        if (hotelResponse.data) {
-          setHotelInfo(hotelResponse.data);
+        
+        const hotelDataResponse: { data?: { result?: DomesticHotelSummaryDetail } } = await getDomesticHotelSummaryDetailById(hotelId);
+        if (hotelDataResponse.data?.result) {
+          setHotelInfo(hotelDataResponse.data.result);
         }
+
       }
 
     }
@@ -94,16 +96,15 @@ const Checkout: NextPage = () => {
   if (hotelInfo) {
     hotelInformation = {
       image: {
-        url: hotelInfo.ImageUrl,
-        alt: hotelInfo.ImageAlt,
-        title: hotelInfo.ImageTitle
+        url: hotelInfo.picture?.path,
+        alt: hotelInfo.picture?.altAttribute || hotelInfo.displayName || "",
+        title:  hotelInfo.picture?.titleAttribute || hotelInfo.displayName || "",
       },
-      name: `${hotelInfo.HotelCategoryName} ${hotelInfo.HotelName} ${hotelInfo.CityName}`,
-      rating: hotelInfo.HotelRating,
-      address: hotelInfo.Address,
-      TopSelling: hotelInfo.TopSelling,
-      Url: hotelInfo.Url,
-      CityId: hotelInfo.CityId
+      name: hotelInfo.displayName || hotelInfo.name || "",
+      rating: hotelInfo.rating,
+      address: hotelInfo.address,
+      Url: hotelInfo.url,
+      CityId: hotelInfo.cityId || hotelInfo.city?.id
     }
   }
 
@@ -401,14 +402,6 @@ const Checkout: NextPage = () => {
 
             <div className='md:col-span-5 lg:col-span-1'>
               <Aside />
-              <div className='bg-white p-4 border border-neutral-300 rounded-md mb-4 border-t-2 border-t-orange-400'>
-                <Skeleton className='mb-3 w-1/3' />
-                <Skeleton className='mb- w-2/3' />
-              </div>
-              <div className='bg-white p-4 border border-neutral-300 rounded-md mb-4 border-t-2 border-t-blue-500'>
-                <Skeleton className='mb-3 w-1/3' />
-                <Skeleton className='mb- w-2/3' />
-              </div>
             </div>
           </div>
         )}

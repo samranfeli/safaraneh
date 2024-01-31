@@ -24,6 +24,9 @@ const TrackOrder: React.FC = () => {
     const [type, setType] = useState<"email" | "mobile">('mobile');
 
     const [open, setOpen] = useState<boolean>(false);
+    const [loading, setLoading] = useState<boolean>(false);
+    const [error, setError] = useState<boolean>(false);
+
 
     const [delayedOpen, setDelayedOpen] = useState<boolean>(false);
 
@@ -68,17 +71,25 @@ const TrackOrder: React.FC = () => {
         email?: undefined;
     }) => {
 
-        const userName = values.phoneNumber || values.email || "";
+        setLoading(true);
+
+        let userName;
+
+        if(type === "email"){
+            userName = values.email || "";
+        }else{
+            userName = values.phoneNumber || "";
+        }
 
         const reserveResponse: any = await getReserveFromCoordinator({username:userName , reserveId: values.reserveId});
-
+        setLoading(false);
         if (reserveResponse?.data?.result?.type){
             if (reserveResponse.data.result.type==="HotelDomestic"){
                 setOpen(false);
                 router.push(`/myaccount/booking/hotel?username=${userName}&reserveId=${values.reserveId}`);
             }
         }else{
-            debugger;
+            setError(true);
         }
     }
 
@@ -116,7 +127,7 @@ const TrackOrder: React.FC = () => {
                             </button>
                         </div>
 
-                        <div className="p-4 flex gap-5 items-center">
+                        <div className="pt-4 px-6 flex gap-5 items-center">
                             <div className="flex items-center gap-1">
                                 <input
                                     type="radio"
@@ -141,7 +152,6 @@ const TrackOrder: React.FC = () => {
 
                                 <label htmlFor="email-radio" className="cursor-pointer"> ایمیل </label>
                             </div>
-
                         </div>
 
                         <Formik
@@ -152,7 +162,7 @@ const TrackOrder: React.FC = () => {
                             {({ errors, touched, setFieldValue, values }) => {
                                 return (
 
-                                    <Form className='p-8' autoComplete='off' >
+                                    <Form className='p-6' autoComplete='off' >
 
                                         {(type === "mobile" &&
                                             <PhoneInput
@@ -166,6 +176,7 @@ const TrackOrder: React.FC = () => {
                                                     }
                                                 }
                                                 onChange={(v: string) => {
+                                                    setError(false);
                                                     setFieldValue('phoneNumber', v)
                                                 }}
                                                 name='phoneNumber'
@@ -183,6 +194,7 @@ const TrackOrder: React.FC = () => {
                                                 labelIsSimple
                                                 showRequiredStar
                                                 className="mb-5"
+                                                onChange={() => {setError(false);}}
                                                 setFieldValue={setFieldValue}
                                                 errorText={errors.email as string}
                                                 id='email'
@@ -199,6 +211,7 @@ const TrackOrder: React.FC = () => {
                                             labelIsSimple
                                             showRequiredStar
                                             setFieldValue={setFieldValue}
+                                            onChange={()=>{setError(false);}}
                                             errorText={errors.reserveId}
                                             id='reserveId'
                                             name='reserveId'
@@ -212,9 +225,16 @@ const TrackOrder: React.FC = () => {
                                         <Button
                                             type="submit"
                                             className="h-12 w-full"
+                                            loading={loading}
                                         >
                                             ادامه
                                         </Button>
+
+                                        {!!error && (
+                                            <div className="text-red-500 py-3 font-semibold text-center mt-5">
+                                                متاسفانه رزروی با این مشخصات یافت نشد!
+                                            </div>
+                                        )}
 
                                     </Form>
                                 )
