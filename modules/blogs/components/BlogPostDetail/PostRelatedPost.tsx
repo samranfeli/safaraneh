@@ -7,7 +7,9 @@ const RelatedPost: NextPage<any> = ({Posts , Blog} : {Posts:BlogItemType[],Blog:
     
     return (
         <div>
-            <h2 className="text-3xl mb-10" >مطالب مرتبط</h2>
+            {
+                Posts && <h2 className="text-3xl mb-10" >مطالب مرتبط</h2>
+            }
         <div className="w-full grid grid-cols-3 max-md:grid-cols-2 max-sm:grid-cols-1 justify-center gap-4">
                 {
                 Posts &&

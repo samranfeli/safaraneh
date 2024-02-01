@@ -1,6 +1,6 @@
 .content  h2{
     font-size: 20px;
-    padding-top: 40px;
+    padding-top: 30px;
     padding-bottom: 15px;
 }
 .content a {
@@ -11,8 +11,8 @@
     margin-bottom: 17px;
 }
 .content li {
-    display: inline-block;
-    padding: 20px;
+    color: rgb(81, 81, 81);
+    padding-right: 15px;
 }
 .content img {
     border-radius: 5px;
