@@ -32,7 +32,7 @@ const NewBlog: NextPage<Props> = (props) => {
                         <Link href={`/blog/${blog.slug}`} className="leading-9 font-bold text-lg max-sm:text-base p-2 pt-1 hover:text-blue-900 block translation-all duration-300">
                             {blog.title.rendered}
                         </Link>
-                        <div className="text-xs max-sm:text-3xs text-gray-500 pr-2 max-sm:mt-1">{parse(blog.excerpt.rendered)} </div>
+                        <div className="text-xs max-md:text-3xs text-gray-500 pr-2 max-sm:mt-1">{parse(blog.excerpt.rendered)} </div>
                         <div className="flex justify-between text-xs mt-4">
                             <div className="flex w-52 justify-between text-gray-600 pr-2 max-sm:text-2xs">
                                 <p>{blog.date}</p>

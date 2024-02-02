@@ -6,7 +6,7 @@ const TitlePost: NextPage<any> = ({ BlogPost }) => {
     
     return (
         <div className="pl-5 pr-5 max-sm:p-3">
-        <div className="overflow-hidden rounded-md flex items-center relative h-550 max-lg:h-full max-lg:mt-5 shadow-xl">
+        <div className="overflow-hidden rounded-md flex items-center relative h-550 max-lg:h-full max-lg:mt-5 shadow-xl max-sm:shadow-none">
                 <div className="text-center absolute z-20 w-full p-4">
                     <Link href={`/blog/category/${BlogPost?.[0].categories[0]}`}
                         className="bg-white text-sm text-red-600 p-3 rounded-2xl hover:text-white hover:bg-red-600 translation-all duration-300">

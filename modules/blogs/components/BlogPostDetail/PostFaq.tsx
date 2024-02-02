@@ -7,7 +7,7 @@ const DetailBlogAcordion: NextPage<any> = ({ blog }) => {
     return (
         <div className="space-y-5 mt-20">
             {
-                blog.acf.pp_faq.pp_subject_q1  && <h2 className="text-3xl mb-10">سوالات متداول</h2>
+                blog && blog.acf.pp_faq.pp_subject_q1  && <h2 className="text-3xl mb-10">سوالات متداول</h2>
             }
             {
                 blog && blog.acf.pp_faq.pp_subject_q1 && blog.acf.pp_faq.pp_answer_q1 &&                
