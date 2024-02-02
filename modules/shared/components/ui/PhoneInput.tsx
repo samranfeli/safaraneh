@@ -169,7 +169,7 @@ const PhoneInput: React.FC<Props> = props => {
                         onFocus={() => { setLabelUp(true) }}
                         onBlur={(e: any) => { setLabelUp(e.currentTarget.value.trim()) }}
                         autoComplete="off"
-                        onChange={(e: any) => { if (e.target.value[0] === "0") return; setPhoneNumberValue(e.target.value) }}
+                        onChange={(e: any) => { if (["0","۰","٠"].includes(e.target.value[0])) return; setPhoneNumberValue(e.target.value) }}
                         value={phoneNumberValue}
                         maxLength={expectedLength || 15}
                         className={`h-10 border ${errorText && isTouched ? "border-red-500" : "border-neutral-300 focus:border-blue-500"} px-2 col-span-3 border-l-none rounded-r-md outline-none`}
