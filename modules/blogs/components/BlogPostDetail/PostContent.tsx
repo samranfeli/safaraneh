@@ -12,13 +12,13 @@ const ContentPost: NextPage<any> = ({ content, recentBlogs, CategoriesNames }) =
                 <div className={styles.content}>
                     {content && parse(content?.content.rendered)}
                 </div>
-            <div className="flex flex-wrap mt-10">
-                <p className="text-xl">تگ ها:</p>
+            <div className="flex flex-wrap mt-10 gap-3">
+                <p>تگ ها:</p>
                 {
                     content &&
                     content.tags_names.map((tag: any, index: any) =>
                         <Link href={`/blog/tag/${content.tags[index]}`}
-                            className="mr-10 hover:text-blue-500" key={tag}> #{tag}
+                            className="hover:text-blue-500 translation-all duration-200" key={tag}> #{tag}
                         </Link>)
                 }
             </div>

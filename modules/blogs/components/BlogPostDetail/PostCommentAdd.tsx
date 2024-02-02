@@ -32,6 +32,7 @@ const PostComment: NextPage<any> = ({ postId }) => {
         const post = await axios.post(`${ServerAddress.Type}${ServerAddress.Blog}/wp-json/wp/v2/comments`, CommentUser)
         if (post.status == 200 || post.status == 201) {
             setnewCommentSubmitMessage('نظر شما با موفقیت ثبت شد')
+            actions.resetForm()
             setInterval(() => {
                 setnewCommentSubmitMessage('')
             },(5000))
