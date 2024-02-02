@@ -6,6 +6,7 @@ import { useRouter } from 'next/router';
 import RoomItem from './RoomItem';
 import { addSomeDays, dateFormat } from '@/modules/shared/helpers';
 import { GetRooms, domesticHotelValidateRoom } from '../../actions';
+import { InfoCircle } from '@/modules/shared/components/ui/icons';
 
 type Props = {
     hotelId: number;
@@ -34,13 +35,13 @@ const Rooms: React.FC<Props> = props => {
         checkout = asPath.split('checkout-')[1].split("/")[0].split("?")[0];
     }
 
-    
+
     useEffect(() => {
         if (hotelId) {
-            
+
             const fetchRooms = async () => {
-        
-                const response : any = await GetRooms({id:hotelId, checkin:checkin, checkout:checkout}, i18n?.language === "fa"? "fa-IR" : "en-US");
+
+                const response: any = await GetRooms({ id: hotelId, checkin: checkin, checkout: checkout }, i18n?.language === "fa" ? "fa-IR" : "en-US");
 
                 if (response?.data.result) {
                     setAvailabilities(response.data.result.availabilities);
@@ -90,19 +91,35 @@ const Rooms: React.FC<Props> = props => {
     return (
 
         <div id="rooms_section" className="max-w-container mx-auto px-3 sm:px-5 pt-7 md:pt-10">
-            <h2 className="text-lg lg:text-3xl font-semibold mb-3 md:mb-7"> {tHotel('choose-room')}  </h2>
 
-            {availabilites?.map(availability => {
-                return availability.rates?.map(rateItem => (
-                    <RoomItem
-                        key={rateItem.bookingToken}
-                        rate={rateItem}
-                        room={availability.rooms![0]}
-                        onSelectRoom={selectRoomHandle}
-                        selectedRoomToken={selectedRoomToken}
-                    />
-                ))
-            })}
+            {(availabilites && availabilites.length === 0) ? (
+                <div className='bg-white rounded-xl p-3 sm:p-7'>
+                    <div className='bg-red-100 p-2 sm:p-4 flex gap-3 rounded'>
+                        <InfoCircle className='fill-red-600 w-5 h-5' />
+                        <div className='grow'>
+                            <h4 className='font-semibold text-red-600 mb-2 leading-6'> اتاقی موجود نیست! </h4>
+                            <p className='text-sm'>
+                                متاسفانه اتاقی در دسترس نیست ، لطفاً تاریخ دیگری را انتخاب کنید یا هتل دیگری جستجو نمایید.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            ) : (
+                <>
+                    <h2 className="text-lg lg:text-3xl font-semibold mb-3 md:mb-7"> {tHotel('choose-room')}  </h2>
+                    {availabilites?.map(availability => {
+                        return availability.rates?.map(rateItem => (
+                            <RoomItem
+                                key={rateItem.bookingToken}
+                                rate={rateItem}
+                                room={availability.rooms![0]}
+                                onSelectRoom={selectRoomHandle}
+                                selectedRoomToken={selectedRoomToken}
+                            />
+                        ))
+                    })}
+                </>
+            )}
         </div>
 
     )

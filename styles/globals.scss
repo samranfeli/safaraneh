@@ -24,6 +24,9 @@
   .bg-blue-gradient{
     background: linear-gradient(-290deg,#11558b -46%,#3665ac -14%,#5992e8 99%);
   }
+  .bg-travel-pattern {
+    background-image: url("/images/pattern.png");
+  }
 
   input.noStyleInputNumber::-webkit-outer-spin-button,
   input.noStyleInputNumber::-webkit-inner-spin-button {
