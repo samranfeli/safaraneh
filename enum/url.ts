@@ -16,7 +16,7 @@ export const Header = {
 
   export const ServerAddress = {
     Type: process.env.PROJECT_SERVER_TYPE,
-    // User: process.env.PROJECT_SERVER_USER,
+    Identity: process.env.PROJECT_SERVER_IDENTITY,
     Hotel_WP: process.env.PROJECT_SERVER_HOTEL_WP,
     Hotel_Main: process.env.PROJECT_SERVER_HOTEL_MAIN,
     Hotel_Data: process.env.PROJECT_SERVER_HOTEL_DATA,
@@ -28,7 +28,8 @@ export const Header = {
     Crm:process.env.PROJECT_SERVER_CRM
   };
 
-  export const User = {
+  export const Identity = {
+    SendOTP:"/api/services/app/OTP/SendOTP"
   };
 
   export const Flight = {

@@ -5,6 +5,7 @@ import TravelServices from "./travelServices";
 import Language from "./Language";
 import Image from "next/image";
 import TrackOrder from "./TrackOrder";
+import HeaderAuthentication from "@/modules/authentication/components/HeaderAuthentication";
 
 type Props = {
     logo: string;
@@ -33,9 +34,7 @@ const Header:React.FC<Props> = props => {
                 <div className="gap-4 items-center hidden md:flex">
                 </div> */}
                 
-                <button type="button" aria-label={t('sign-in-up')} className="h-12 text-sm text-blue-700 hover:text-blue-500 ltr:float-right rtl:float-left hidden md:block" >
-                    {t('sign-in-up')}
-                </button>
+                <HeaderAuthentication />
 
                 <TrackOrder />
 
