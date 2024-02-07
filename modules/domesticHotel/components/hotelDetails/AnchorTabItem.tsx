@@ -7,7 +7,7 @@ type Props = {
 
 const AnchorTabItem: React.FC<Props> = props => {
 
-    const anchorRef = useRef<HTMLAnchorElement>(null);
+    const anchorRef = useRef<HTMLButtonElement>(null);
 
     const [active, setActive] = useState<boolean>(false);
 
@@ -65,12 +65,11 @@ const AnchorTabItem: React.FC<Props> = props => {
     }
 
     return (
-        <a
+        <button
             ref={anchorRef}
             onClick={scrollToTarget}
-            href={"#" + props.target}
             className={`font-semibold leading-5 py-4 px-1.5 md:px-2 lg:px-4 text-2xs sm:text-sm block border-b-2 ${active ? "text-blue-500 border-blue-500" : "border-transparent"}`}
-        > {props.title} </a>
+        > {props.title} </button>
     )
 }
 

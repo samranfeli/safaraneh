@@ -9,6 +9,8 @@ export default function Document() {
       <body className="bg-body-background text-neutral-700 rtl:font-samim" >
         <Main />
         <div id="modal_portal" className='relative z-50'></div>
+        <div id="modal_portal_2" className='relative z-50'></div>
+        <div id="error_modal_portal" className='relative z-50'></div>
         <NextScript />
       </body>
     </Html>

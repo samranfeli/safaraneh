@@ -146,7 +146,7 @@ const HotelListItem: React.FC<Props> = props => {
             key={hotel.CityId}
             className="grid md:grid-cols-12 mb-4 border border-neutral-200 bg-white rounded-lg relative"
         >
-            <Link href={hotel.Url!+searchInfo} className="md:col-span-12 lg:col-span-4">
+            <Link href={hotel.Url!+searchInfo} className="md:col-span-12 lg:col-span-4 bg-travel-pattern">
                 {hotel.ImageUrl ? (
                     <Image
                         src={hotel.ImageUrl}

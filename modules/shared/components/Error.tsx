@@ -5,6 +5,7 @@ import Router from "next/router";
 import { useAppDispatch, useAppSelector } from "../hooks/use-store";
 import { setReduxError } from '../store/errorSlice';
 import { ErrorIcon } from "./ui/icons";
+import ModalPortal from "./ui/ModalPortal";
 
 const Error: React.FC = () => {
 
@@ -29,9 +30,11 @@ const Error: React.FC = () => {
         closeHandler();
     }
 
-    if (storedError.isVisible) {
-
-        return (
+    return (
+        <ModalPortal
+            show={storedError.isVisible}
+            selector='error_modal_portal'
+        >
             <div className="fixed top-0 left-0 right-0 bottom-0 h-screen w-screen bg-black/50 backdrop-blur-sm z-50 flex justify-center items-center">
 
                 <div className="bg-white rounded-xl px-5 pt-10 pb-12 w-full max-w-md text-center">
@@ -58,11 +61,9 @@ const Error: React.FC = () => {
                 </div>
 
             </div>
+        </ModalPortal>
 
-        )
-    }
-
-    return null;
+    )
 }
 
 export default Error;

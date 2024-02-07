@@ -39,6 +39,7 @@ const nextConfig = {
     PROJECT_SERVER_BLOG :"panel.safaraneh.com",
     PROJECT_SERVER_CRM:"crm.safaraneh.com",
     PROJECT_SERVER_PAYMENT: "payline.safaraneh.com",
+    PROJECT_SERVER_IDENTITY:"identity.safaraneh.com",
     PROJECT_SERVER_FLIGHT: "",
     PROJECT_SERVER_TENANTID: "1040",
     PROJECT_SERVER_NATIONALITY: "",

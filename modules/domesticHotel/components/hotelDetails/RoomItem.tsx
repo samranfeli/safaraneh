@@ -30,10 +30,10 @@ const RoomItem: React.FC<Props> = props => {
         return null;
     }
 
-    let image = <div className='md:w-1/4 shrink-0 flex items-center justify-center bg-neutral-100 p-5 rtl:rounded-r-xl'><DefaultRoom className='fill-neutral-300 w-20 h-20' /></div>
+    let image = <div className='bg-travel-pattern md:w-1/4 shrink-0 flex items-center justify-center bg-neutral-100 p-5 rtl:rounded-r-xl'><DefaultRoom className='fill-neutral-300 w-20 h-20' /></div>
 
     if (room.image) {
-        image = <div className='bg-neutral-300 w-full md:w-1/4 flex items-center justify-center max-md:rounded-t-xl md:rtl:rounded-r-xl md:ltr:rounded-l-xl'>
+        image = <div className='bg-travel-pattern bg-neutral-300 w-full md:w-1/4 flex items-center justify-center max-md:rounded-t-xl md:rtl:rounded-r-xl md:ltr:rounded-l-xl'>
             <Image className='h-36 w-full object-cover object-center max-md:rounded-t-xl md:rtl:rounded-r-xl md:ltr:rounded-l-xl' src={room.image} alt={room.name || "room name"} width="300" height="200" />
         </div> 
     }
