@@ -21,7 +21,7 @@ const NewBlog: NextPage<Props> = (props) => {
                     <div className="grid grid-cols-3 gap-4 mt-10 max-sm:grid-cols-1">
                             
                         <Link href={`blog/${blog.slug}`}>
-                            <Image src={blog.images.large}
+                            <Image src={blog.images.large} onContextMenu={(e) => e.preventDefault()}
                             alt={blog.title.rendered} height={100} width={300} className="rounded-md max-sm:mr-2 w-full" />
                         </Link>
     

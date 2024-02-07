@@ -9,7 +9,7 @@ const ContentPost: NextPage<any> = ({ content, recentBlogs, CategoriesNames }) =
     return (
         <div className="grid grid-cols-8 gap-8 mt-5 p-5 max-sm:p-3 max-lg:grid-cols-1">
             <div className="text-sm leading-8 col-span-6">
-                <div className={styles.content}>
+                <div className={styles.content} onContextMenu={(e) => e.preventDefault()}>
                     {content && parse(content?.content.rendered)}
                 </div>
             <div className="flex flex-wrap mt-10 gap-3">
