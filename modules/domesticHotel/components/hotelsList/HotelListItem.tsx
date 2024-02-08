@@ -153,6 +153,7 @@ const HotelListItem: React.FC<Props> = props => {
                         alt={hotel.ImageAlt || hotel.HotelName!}
                         width={288}
                         height={200}
+                        onContextMenu={(e)=> e.preventDefault()}
                         priority={!props.index}
                         className="h-48 object-cover w-full max-lg:rounded-t-lg lg:rtl:rounded-r-lg lg:ltr:rounded-l-lg"
                     />

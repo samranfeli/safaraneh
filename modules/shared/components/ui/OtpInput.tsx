@@ -11,7 +11,9 @@ const OtpInput: React.FC<Props> = props => {
     useEffect(() => {
         const isFilled = value.every(item => (item !== undefined && item !== ""));
         if (isFilled) {
-            props.onChange(value.join(""))
+            props.onChange(value.join(""));
+        }else{
+            props.onChange("");
         }
     }, [...value]);
 
