@@ -31,7 +31,7 @@ console.log(CategoriesName);
     return (
         <div className="bg-white">
             <div className="max-w-container m-auto">
-                <NavbarBlog data={BlogPost?.[0].title.rendered} category={[BlogPost?.[0].categories_names[0],BlogPost?.[0].categories[0]]} />
+                <NavbarBlog data={BlogPost?.[0].title?.rendered} category={[BlogPost?.[0].categories_names[0],BlogPost?.[0].categories[0]]} />
                 <TitlePost BlogPost={BlogPost} />
                     <ContentPost content={BlogPost?.[0]} recentBlogs={recentBlogs?.slice(0,3)} CategoriesNames={CategoriesName} />
                 <hr className="m-3 mt-10"/>

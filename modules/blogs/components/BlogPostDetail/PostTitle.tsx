@@ -18,7 +18,7 @@ const TitlePost: NextPage<any> = ({ BlogPost }) => {
                 </div>
                 <div className="w-full h-full absolute z-10 bg-black/40 bottom-0"></div>
                 <Image
-                    src={BlogPost?.[0].images.large} alt={BlogPost?.[0].title.rendered}
+                    src={BlogPost?.[0].images.large} alt={BlogPost?.[0].title.rendered} onContextMenu={(e) => e.preventDefault()}
                     width={400} height={250} className="w-full" priority={true} />
         </div>
             <div className="w-full flex justify-center max-sm:w-fit text-center"> 

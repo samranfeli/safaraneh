@@ -48,7 +48,7 @@ export const getStaticProps: GetStaticProps = async (context: any) => {
         Categories2: Categories2?.data || null,
         Categories3: Categories3?.data || null
         },
-        revalidate: 60 * 60 * 12 //12 Hours
+        revalidate: 12 * 60 * 60 //12 Hours
     })
   }
 
