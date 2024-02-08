@@ -38,15 +38,17 @@ export const validateRequiedPersianAndEnglish = (value: string, reqiredMessage: 
     return error;
 }
 
-export const validateNationalId = ({value, reqiredMessage, invalidMessage }:{value: string, reqiredMessage: string, invalidMessage: string}) => {
+export const validateNationalId = ({ value, reqiredMessage, invalidMessage }: { value: string, reqiredMessage?: string, invalidMessage: string }) => {
     let error;
     if (!value && reqiredMessage) {
         error = reqiredMessage;
     } else if (
-        !/^[0123456789۰۱۲۳۴۵۶۷۸۹]*$/.test(value)
-        ||
-        value.length !== 10
-        ) {
+        value && (
+            !/^[0123456789۰۱۲۳۴۵۶۷۸۹]*$/.test(value)
+            ||
+            value.length !== 10
+        )
+    ) {
         error = invalidMessage;
     }
 

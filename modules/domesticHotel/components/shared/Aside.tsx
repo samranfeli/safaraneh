@@ -147,6 +147,7 @@ const Aside: React.FC<Props> = props => {
                         <div className="grid grid-cols-4 gap-x-3 gap-y-2">
                             {hotelInformation.image.url ? (
                                 <Image
+                                    onContextMenu={(e)=> e.preventDefault()}
                                     src={hotelInformation.image.url}
                                     alt={hotelInformation?.image?.alt || hotelInformation.name}
                                     title={hotelInformation?.image?.title}

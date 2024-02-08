@@ -3,8 +3,10 @@ import Footer from "./footer";
 import Error from './Error';
 import { PropsWithChildren, useEffect , useState} from "react";
 import { useRouter } from "next/router";
-import {useAppSelector } from "../hooks/use-store";
+import {useAppDispatch, useAppSelector } from "../hooks/use-store";
 import PageLoadingBar from "./ui/PageLoadingBar";
+import { setReduxUser } from "@/modules/authentication/store/authenticationSlice";
+import { getCurrentUserProfile } from "@/modules/authentication/actions";
 
 type Props = {
     logo:string;
@@ -20,6 +22,7 @@ type Props = {
 
 const Layout: React.FC<PropsWithChildren<Props>> = props => {
     const router = useRouter();
+    const dispatch = useAppDispatch();
 
     const { locale } = router;
 
@@ -49,6 +52,38 @@ const Layout: React.FC<PropsWithChildren<Props>> = props => {
             });
         })
     },[router.asPath]);
+
+    useEffect(()=>{
+        const token = localStorage?.getItem('Token');
+        if (token) {
+          const getUserData = async () => {
+            dispatch(setReduxUser({
+              isAuthenticated: false,
+              user: {},
+              getUserLoading: true
+            }));
+    
+            const response: any = await getCurrentUserProfile(token);
+    
+            if (response && response.status === 200) {
+              dispatch(setReduxUser({
+                isAuthenticated: true,
+                user: response.data?.result,
+                getUserLoading: false
+              }));
+            } else {
+              dispatch(setReduxUser({
+                isAuthenticated: false,
+                user: {},
+                getUserLoading: false
+              }));
+            }
+    
+          }
+    
+          getUserData();
+        }
+    },[]);
 
     return (
 

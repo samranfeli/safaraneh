@@ -209,7 +209,7 @@ const BookingContent: React.FC<Props> = props => {
 
                                 <div className="flex items-start p-3 gap-3" >
 
-                                    {item.image && <Image src={item.image} className="object-cover h-20 w-28" alt="" width={112} height={80} />}
+                                    {item.image && <Image src={item.image} onContextMenu={(e)=> e.preventDefault()} className="object-cover h-20 w-28" alt="" width={112} height={80} />}
 
                                     <div>
                                         <Bed className="w-5 h-5 fill-gray-400 inline-block align-middle rtl:ml-1  ltr:mr-1" /> {item.name}

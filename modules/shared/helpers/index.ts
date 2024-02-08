@@ -14,7 +14,7 @@ export const dateDiplayFormat = ({ date, format, locale }: { date: string; forma
     const day = dateObject.toLocaleString(locale, { day: "numeric" });
     const weekDay = dateObject.toLocaleString(locale, { weekday: 'short' });
     const month = dateObject.toLocaleString(locale, { month: "long" });
-    const day2digit = dateObject.toLocaleString(locale, { month: "2-digit" })
+    const day2digit = dateObject.toLocaleString(locale, { day: "2-digit" })
     const month2digit = dateObject.toLocaleString(locale, { month: "2-digit" });
     const year = dateObject.toLocaleString(locale, { year: "numeric" });
 
@@ -28,6 +28,9 @@ export const dateDiplayFormat = ({ date, format, locale }: { date: string; forma
 
     if (format === "yyyy/mm/dd") {
         return (`${year}/${month2digit}/${day2digit}`)
+    }
+    if (format === "YYYY-MM-DD") {
+        return (`${year}-${month2digit}-${day2digit}`)
     }
 
     return date;

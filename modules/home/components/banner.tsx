@@ -40,6 +40,7 @@ const Banner :React.FC = () => {
               alt="blue sky"
               width={1350}
               height={433}
+              onContextMenu={(e)=> e.preventDefault()}
               className='absolute top-0 left-0 w-full h-full object-cover object-center z-10 max-sm:hidden'
             />
              <div className="max-w-container mx-auto pt-5 sm:px-3 sm:py-10 sm:pb-28 relative z-20">

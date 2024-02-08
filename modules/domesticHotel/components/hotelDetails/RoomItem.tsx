@@ -2,7 +2,7 @@ import { useTranslation } from 'next-i18next';
 import { useState } from 'react';
 import Image from 'next/image';
 
-import {DomesticHotelRateItem, DomesticHotelRoomItem } from '@/modules/domesticHotel/types/hotel';
+import { DomesticHotelRateItem, DomesticHotelRoomItem } from '@/modules/domesticHotel/types/hotel';
 import { Bed, DefaultRoom, InfoCircle, Restaurant, Tik, User } from '@/modules/shared/components/ui/icons';
 import { numberWithCommas } from '@/modules/shared/helpers';
 import Tooltip from '@/modules/shared/components/ui/Tooltip';
@@ -21,7 +21,7 @@ const RoomItem: React.FC<Props> = props => {
     const { rate, room, selectedRoomToken } = props;
 
     const { t } = useTranslation('common');
-    const { t : tHotel } = useTranslation('hotel');
+    const { t: tHotel } = useTranslation('hotel');
 
     const [count, setCount] = useState(1);
 
@@ -34,10 +34,16 @@ const RoomItem: React.FC<Props> = props => {
 
     if (room.image) {
         image = <div className='bg-travel-pattern bg-neutral-300 w-full md:w-1/4 flex items-center justify-center max-md:rounded-t-xl md:rtl:rounded-r-xl md:ltr:rounded-l-xl'>
-            <Image className='h-36 w-full object-cover object-center max-md:rounded-t-xl md:rtl:rounded-r-xl md:ltr:rounded-l-xl' src={room.image} alt={room.name || "room name"} width="300" height="200" />
-        </div> 
+            <Image
+                onContextMenu={(e) => e.preventDefault()}
+                className='h-36 w-full object-cover object-center max-md:rounded-t-xl md:rtl:rounded-r-xl md:ltr:rounded-l-xl'
+                src={room.image}
+                alt={room.name || "room name"}
+                width="300"
+                height="200"
+            />
+        </div>
     }
-
 
     const board = (code: string) => {
         switch (code) {
@@ -58,7 +64,6 @@ const RoomItem: React.FC<Props> = props => {
                 return code;
         }
     }
-
 
     let cancellation = null;
     if (rate.cancellationPolicy?.status) {
@@ -171,15 +176,12 @@ const RoomItem: React.FC<Props> = props => {
                 {prices?.roomPrice && prices.roomPrice < 1000 ?
                     "درخواست رزرو"
                     : rate.availablityType === "Online" ?
-                    tHotel("online-reserve")
+                        tHotel("online-reserve")
                         : tHotel("room-reserve")}
             </Button>
 
         )
     }
-
-
-
 
     return (
         <div className='bg-white border border-neutral-300 rounded-xl mt-4 md:flex'>
@@ -234,7 +236,6 @@ const RoomItem: React.FC<Props> = props => {
                         <Quantity disabled={!!selectedRoomToken} inputId={`counter-${rate.bookingToken}`} min={1} max={rate.available} onChange={setCount} />
                     </div>}
 
-
                     <div className='rtl:text-left ltr:text-right'>
 
                         {price}
@@ -243,11 +244,9 @@ const RoomItem: React.FC<Props> = props => {
 
                     </div>
 
-
                 </footer>
 
             </div>
-
 
         </div>
     )
