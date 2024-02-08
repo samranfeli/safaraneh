@@ -16,8 +16,10 @@ const SidebarSearchBlog: NextPage = () => {
                 <form className="flex mt-5">
                 <input type="text" className="p-1 rounded w-full  outline-none focus:ring-1" value={search} onChange={e => setsearch(e.target.value)}
                 placeholder="جستجوی مطلب..." style={{ border: '1px solid rgba(0,0,0,0.3)' }} />
-                <Link href={search?.length ? `/blog/blog-search/${search}` : `${useRouter().asPath}`}>
-                    <Search className="w-10 rtl:mr-2 ltr:ml-2 p-2 bg-blue-300 rounded"/>
+                <Link href={search?.length ? `/blog/blog-search/${search}` : `${useRouter().asPath}`} className="bg-blue-400 p-0 pr-3 pl-3  rounded-md mr-2">
+                    <button type="submit">
+                        <Search className="w-6 mt-2"/>
+                    </button> 
                 </Link>
                 </form>    
             </div>    
