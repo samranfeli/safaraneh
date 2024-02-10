@@ -3,20 +3,53 @@ import Button from "@/modules/shared/components/ui/Button";
 import PhoneInput from "@/modules/shared/components/ui/PhoneInput";
 import { Form, Formik } from "formik";
 import { useTranslation } from "next-i18next";
-import { sendOtp } from "../actions";
+import { registerOrLogin, sendOtp } from "../actions";
 import { useAppDispatch } from '@/modules/shared/hooks/use-store';
 import { setReduxError } from '@/modules/shared/store/errorSlice';
 import ModalPortal from '@/modules/shared/components/ui/ModalPortal';
 import Image from 'next/image';
 import OtpInput from '@/modules/shared/components/ui/OtpInput';
+import CountDown from '@/modules/shared/components/ui/CountDown';
+import Skeleton from '@/modules/shared/components/ui/Skeleton';
+import { setReduxUser } from '../store/authenticationSlice';
 
-const OTPLogin = () => {
+type Props = {
+    onBackToLoginWithPassword: () => void;
+    onCloseLogin:() => void;
+}
+
+const OTPLogin: React.FC<Props> = props => {
 
     const { t } = useTranslation('common');
     const [loading, setLoading] = useState<boolean>(false);
+    const [registerLoading, setRegisterLoading] = useState<boolean>(false);
     const [savedPhoneNumber, setSavedPhoneNumber] = useState<string>();
     const [showVerificationForm, setShowVerificationForm] = useState<boolean>(false);
+    const [sendCodeMoment, setSendCodeMoment] = useState<number>(new Date().getTime());
     const [showVerificationFormDelayed, setShowVerificationFormDelayed] = useState<boolean>(false);
+    const [remaindSeconds, setRemaindSeconds] = useState<number>(80);
+    const [enteredCode, setEnteredCode] = useState<string>("");
+
+    useEffect(() => {
+
+        let countDownTimer: any;
+
+        if (sendCodeMoment) {
+            countDownTimer = setInterval(() => {
+                setRemaindSeconds((prevState) => {
+                    if (prevState > 1) {
+                        return (prevState - 1);
+                    } else {
+                        clearInterval(countDownTimer);
+                        return 0
+                    }
+                })
+            }, 1000);
+        }
+
+        return (() => { clearInterval(countDownTimer); })
+
+    }, [sendCodeMoment]);
 
     useEffect(() => {
         if (!showVerificationFormDelayed) {
@@ -35,7 +68,7 @@ const OTPLogin = () => {
 
     const sendOtpCode = async (phoneNumber: string) => {
 
-        setLoading(true)
+        setLoading(true);
         try {
 
             const response: any = await sendOtp({ emailOrPhoneNumber: phoneNumber });
@@ -48,7 +81,10 @@ const OTPLogin = () => {
             }
             setLoading(false);
 
-            if (response.status == 200) setShowVerificationForm(true);
+            if (response.status == 200) {
+                setRemaindSeconds(80);
+                setTimeout(() => { setSendCodeMoment(new Date().getTime()) }, 200)
+            }
 
             if (response.status == 500)
 
@@ -59,7 +95,7 @@ const OTPLogin = () => {
                 }));
 
         } catch (error) {
-            debugger;
+            //debugger;
             setLoading(false);
             dispatch(setReduxError({
                 title: t('error'),
@@ -72,7 +108,66 @@ const OTPLogin = () => {
         phoneNumber: string;
     }) => {
         setSavedPhoneNumber(values.phoneNumber);
+        setShowVerificationForm(true);
         sendOtpCode(values.phoneNumber);
+    }
+
+    const onSuccessLogin = (response: any) => {
+        if (response && response.status === 200) {
+
+            const token = response.data?.result?.accessToken
+            localStorage.setItem('Token', token);
+            props.onCloseLogin();
+
+            dispatch(setReduxUser({
+                isAuthenticated: true,
+                user: response.data?.result?.user,
+                getUserLoading: false
+            }));
+
+        } else {
+            dispatch(setReduxUser({
+                isAuthenticated: false,
+                user: {},
+                getUserLoading: false
+            }));
+        }
+    }
+
+    const registerOtp = async (code: string) => {
+        if (code && savedPhoneNumber && code.length === 6) {
+            setRegisterLoading(true);
+
+            dispatch(setReduxUser({
+                isAuthenticated: false,
+                user: {},
+                getUserLoading: true
+            }));
+
+            const response: any = await registerOrLogin({ code: code, emailOrPhoneNumber: savedPhoneNumber });
+
+            setRegisterLoading(false)
+            if (response.status == 200) {
+
+                onSuccessLogin(response);
+                //props.handelModal(false)
+
+            } else {
+
+                dispatch(setReduxUser({
+                    isAuthenticated: false,
+                    user: {},
+                    getUserLoading: false
+                }));
+
+                //   onFailureRegister(
+                //     res && res.data
+                //       ? res.data.error.message
+                //       : 'عملیات با خطا مواجه شد',
+                //   )
+            }
+        }
+        debugger;
     }
 
     return (
@@ -155,9 +250,52 @@ const OTPLogin = () => {
                             اصلاح شماره موبایل
                         </button>
 
-                        <OtpInput 
-                            onChange={(e:string) => {debugger;}}
+                        <OtpInput
+                            onChange={(e: string) => {
+                                if (!enteredCode && e) {
+                                    registerOtp(e);
+                                }
+                                setEnteredCode(e);
+                            }}
                         />
+
+                        {savedPhoneNumber && remaindSeconds === 0 ? (
+                            <button
+                                type='button'
+                                className='mb-4 text-sm'
+                                onClick={() => { sendOtpCode(savedPhoneNumber) }}
+                            >
+                                ارسال مجدد کد
+                            </button>
+                        ) : loading ? (
+
+                            <Skeleton className='w-24 mt-1 mb-4' />
+
+                        ) : (
+                            <div className='mb-4 text-sm'>
+                                <CountDown
+                                    seconds={remaindSeconds}
+                                    simple
+                                />
+                                <span className='rtl:mr-3 ltr:ml-3'> تا درخواست مجدد کد </span>
+                            </div>
+                        )}
+
+                        <Button
+                            type='button'
+                            className='h-12 w-full sm:w-44 shrink-0'
+                            onClick={() => { registerOtp(enteredCode) }}
+                        >
+                            تایید و ادامه
+                        </Button>
+
+                        <button
+                            type='button'
+                            onClick={props.onBackToLoginWithPassword}
+                            className='text-sm text-blue-700 hover:text-blue-600'
+                        >
+                            ورود با کلمه عبور
+                        </button>
 
                     </div>
 

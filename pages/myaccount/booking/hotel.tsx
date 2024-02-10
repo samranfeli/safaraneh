@@ -202,6 +202,7 @@ const DomesticHotelReserveDetail: NextPage = ({ portalData }: { portalData?: Por
                                                 className='w-full h-44 object-cover'
                                                 width={766}
                                                 height={176}
+                                                onContextMenu={(e)=> e.preventDefault()}
                                             />
                                         ) : (
                                             <div

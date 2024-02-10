@@ -29,7 +29,9 @@ export const Header = {
   };
 
   export const Identity = {
-    SendOTP:"/api/services/app/OTP/SendOTP"
+    SendOTP: "/api/services/app/OTP/SendOTP",
+    RegisterOrLogin: "/api/services/app/OTP/RegisterOrLogin",
+    GetCurrentUserProfileForEdit: "/api/services/app/Profile/GetCurrentUserProfileForEdit"
   };
 
   export const Flight = {
@@ -74,7 +76,8 @@ export const Header = {
     ValidateDiscountCode:"/api/services/app/Discount/Validate",
     RegisterDiscountCode: "/api/services/app/Discount/Register",
     GetBankGateway:"/api/services/app/ReserveBankGateway/GetAll",
-    MakeToken:"/api/services/app/ReserveBankGateway/MakeToken"
+    MakeToken:"/api/services/app/ReserveBankGateway/MakeToken",
+    GetBalance:"/api/services/app/Deposit/GetBalance"
   };
   
   export const ServerStatus = {

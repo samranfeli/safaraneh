@@ -3,13 +3,15 @@ import errorSlice from "./errorSlice";
 import portalSlice from "./portalSlice";
 import domesticHotelSlice from "@/modules/domesticHotel/store/domesticHotelSlice";
 import stylesSlice from "./stylesSlice";
+import authenticationSlice from "@/modules/authentication/store/authenticationSlice";
 
 export const store = configureStore({
     reducer: {
         error: errorSlice,
         portal: portalSlice,
         domesticHotelFilter: domesticHotelSlice,
-        styles: stylesSlice
+        styles: stylesSlice,
+        authentication : authenticationSlice
     }
 })
 

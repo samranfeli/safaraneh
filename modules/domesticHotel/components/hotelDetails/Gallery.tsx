@@ -48,6 +48,7 @@ const Gallery: React.FC<Props> = props => {
                     <Image
                         key={slide.src}
                         priority={!index}
+                        onContextMenu={(e)=> e.preventDefault()}
                         src={slide.src}
                         alt={slide.alt}
                         sizes={index?"(max-width: 768px) 100vh, 578px" : "(max-width: 768px) 100vh, 287"}
