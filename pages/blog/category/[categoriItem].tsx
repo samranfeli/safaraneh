@@ -1,4 +1,4 @@
-import NavbarBlog from "@/modules/blogs/components/template/BreadCrumpt";
+import BreadCrumpt from "@/modules/blogs/components/template/BreadCrumpt";
 import Title from "@/modules/blogs/components/template/Title";
 import { NextPage } from "next";
 import { GetCategories, getBlogs } from "@/modules/blogs/actions";
@@ -18,7 +18,7 @@ const Category: NextPage<any> = ({ LastBlogs, BlogCategory, categories_name, pag
 
     return (
         <div className="bg-white">
-            <NavbarBlog data={NavData} />
+            <BreadCrumpt data={NavData} page="بلاگ"/>
             <Title data={TitleData} />
             <Content Blogs={BlogCategory} blogPages={pages}  LastBlogs={LastBlogs?.slice(0,3)} CategoriesName={categories_name} />
         </div>

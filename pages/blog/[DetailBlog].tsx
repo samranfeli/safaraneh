@@ -1,8 +1,7 @@
 import { GetBlogPostDetails, GetCategories, getBlogs } from "@/modules/blogs/actions";
 import { NextPage } from "next";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
-import { useRouter } from "next/router";
-import NavbarBlog from "@/modules/blogs/components/template/BreadCrumpt";
+import BreadCrumpt from "@/modules/blogs/components/template/BreadCrumpt";
 import ContentPost from "@/modules/blogs/components/BlogPostDetail/PostContent";
 import TitlePost from "@/modules/blogs/components/BlogPostDetail/PostTitle";
 import RelatedPost from "@/modules/blogs/components/BlogPostDetail/PostRelatedPost";
@@ -31,7 +30,7 @@ console.log(CategoriesName);
     return (
         <div className="bg-white">
             <div className="max-w-container m-auto">
-                <NavbarBlog data={BlogPost?.[0].title?.rendered} category={[BlogPost?.[0].categories_names[0],BlogPost?.[0].categories[0]]} />
+                <BreadCrumpt data={BlogPost?.[0].title?.rendered} page="بلاگ" category={[BlogPost?.[0].categories_names[0],BlogPost?.[0].categories[0]]} />
                 <TitlePost BlogPost={BlogPost} />
                     <ContentPost content={BlogPost?.[0]} recentBlogs={recentBlogs?.slice(0,3)} CategoriesNames={CategoriesName} />
                 <hr className="m-3 mt-10"/>

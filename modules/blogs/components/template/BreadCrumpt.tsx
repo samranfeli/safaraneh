@@ -1,8 +1,9 @@
 import { Home } from "@/modules/shared/components/ui/icons";
 import { NextPage } from "next";
 import Link from "next/link";
+import { useRouter } from "next/router";
 
-const NavbarBlog: NextPage<any> = ({data , category}) => {
+const BreadCrumpt: NextPage<any> = ({data , category , page}) => {
     
     return (
         <div
@@ -10,8 +11,8 @@ const NavbarBlog: NextPage<any> = ({data , category}) => {
             <Link href='/'>
                 <Home className="w-5 opacity-30 hover:opacity-100 translation-all duration-300"/>
             </Link><p className="text-gray-400">/</p>
-            <Link href='/blog' className={`${data && 'text-gray-400'} hover:text-black translation-all duration-300`}>
-                بلاگ
+            <Link href={page == "بلاگ" ? '/blog' : useRouter().query} className={`${data && 'text-gray-400'} hover:text-black translation-all duration-300`}>
+                {page}
             </Link><p className={`text-gray-400 ${!data && 'hidden'}`}>/</p>
             {
                 category &&
@@ -24,4 +25,4 @@ const NavbarBlog: NextPage<any> = ({data , category}) => {
     )
 }
 
-export default NavbarBlog;
+export default BreadCrumpt;

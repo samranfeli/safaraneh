@@ -11,7 +11,7 @@ type Props = {
 }
 
 const NewBlog: NextPage<Props> = (props) => {
-    
+
     return (
         <div className="max-xl:p-5 max-sm:p-3 max-w-container m-auto">
             <p className="text-2xl p-2">جدیدترین مطالب</p>
@@ -52,11 +52,11 @@ const NewBlog: NextPage<Props> = (props) => {
                     </div>
                 )
             }
+            <Link href='/blog-list'>
             <div  className="w-full rounded text-center mt-14 relative bottom-5 p-4 hover:bg-gray-100 translation-all duration-300 border-gray-200 border-2">
-                <Link href='/blog-list'>
                         <p>مشاهده مطالب بیشتر</p>
-                </Link>
             </div>
+            </Link>
             
         </div>
     )

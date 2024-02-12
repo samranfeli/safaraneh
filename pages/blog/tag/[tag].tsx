@@ -1,6 +1,6 @@
 import { GetTagName , GetCategories , getBlogs} from "@/modules/blogs/actions";
 import Title from "@/modules/blogs/components/template/Title";
-import NavbarBlog from "@/modules/blogs/components/template/BreadCrumpt";
+import BreadCrumpt from "@/modules/blogs/components/template/BreadCrumpt";
 import { NextPage } from "next";
 import Content from "@/modules/blogs/components/template/Content";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
@@ -12,7 +12,7 @@ const Tag: NextPage<any> = ({ TagBlogs, TagName, categories_name, recentBlogs, p
     
     return (
         <div className="bg-white">
-                <NavbarBlog data={TagName.name} />
+                <BreadCrumpt data={TagName.name} page="بلاگ" />
                 <Title data={TagName?.name} />
                 <Content Blogs={TagBlogs} blogPages={pages}  LastBlogs={recentBlogs?.slice(0,3)} CategoriesName={categories_name}  />
         </div>

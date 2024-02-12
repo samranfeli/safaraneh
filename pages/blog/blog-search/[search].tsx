@@ -1,11 +1,10 @@
 import {  GetCategories, getBlogs } from "@/modules/blogs/actions";
-import NavbarBlog from "@/modules/blogs/components/template/BreadCrumpt";
+import BreadCrumpt from "@/modules/blogs/components/template/BreadCrumpt";
 import Title from "@/modules/blogs/components/template/Title";
 import Content from "@/modules/blogs/components/template/Content";
 import { NextPage } from "next";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 import { useRouter } from "next/router";
-import { createContext } from "react";
 import { BlogItemType, CategoriesNameType } from "@/modules/blogs/types/blog";
 
 const Search: NextPage<any> = ({ SearchBlog, LastBlogs, categories_name, pages }:
@@ -14,7 +13,7 @@ const Search: NextPage<any> = ({ SearchBlog, LastBlogs, categories_name, pages }
     const NavData = useRouter().query.search
     return (
         <div className="bg-white">
-                <NavbarBlog data={`جستوجوی"${NavData}"`} />
+                <BreadCrumpt data={`جستوجوی"${NavData}"`} page='بلاگ' />
                 <Title data={'جستجوی'} searchValue={NavData} />
                 <Content Blogs={SearchBlog} LastBlogs={LastBlogs.slice(0,3)} CategoriesName={categories_name} blogPages={pages}/>
         </div>

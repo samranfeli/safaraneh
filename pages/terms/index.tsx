@@ -1,8 +1,11 @@
+import BreadCrumpt from "@/modules/blogs/components/template/BreadCrumpt";
 import { NextPage } from "next";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 
 const Terms: NextPage = () => {
     return (
+        <>
+        <BreadCrumpt page="قوانین و مقررات" />
         <div className="max-w-container m-auto pr-5 pl-5 max-sm:p-2">
             <h2 className="mt-10 font-bold text-2xl">قوانین و مقررات</h2>
             <div className="bg-white p-5 mt-4 rounded-lg border-2 border-gray space-y-5">
@@ -123,6 +126,7 @@ const Terms: NextPage = () => {
                 </p>
             </div>
         </div>
+        </>    
     )
 }
 
