@@ -6,7 +6,7 @@ const privacy: NextPage = () => {
     return (
         <>
         <BreadCrumpt page="حفظ حریم خصوصی"/>
-        <div className="max-w-container m-auto pl-5 pr-5">
+        <div className="max-w-container m-auto pl-5 pr-5 max-sm:pl-3 max-sm:pr-3">
             <h2 className="font-bold text-3xl mt-10 mb-5">حفظ حریم خصوصی</h2>
             <div className="bg-white border-2 border-gray space-y-6 p-5 rounded-md">
                 <p className="text-sm">

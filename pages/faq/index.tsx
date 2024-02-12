@@ -163,12 +163,12 @@ const faq: NextPage = () => {
     return (
         <>
         <BreadCrumpt page="سوالات متداول"/>
-        <div className="max-w-container m-auto p-5 mt-5">
+        <div className="max-w-container m-auto p-5 max-sm:p-2 mt-5">
         <h2 className="font-bold text-3xl">سوالات متداول</h2>
         <div className="pl-5 pr-5 pt-5 pb-10 mt-5 border-2 border-gray rounded-md space-y-3 bg-white">
             <h2 className="mt-6 mb-6 fnt-bold text-lg">هتل داخلی</h2>
             {
-                faqs.map(item => <Accordion content={item.a} title={item.q} />)
+                        faqs.map((item, index) => <Accordion content={item.a} title={item.q} key={index} />)
             }
         </div>
         </div> 
