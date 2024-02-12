@@ -10,7 +10,9 @@ type Props = {
     placeholder?:string;
 }
 
-const Select: React.FC<Props> = props => {
+const InputSelect: React.FC<Props> = props => {
+
+    const [typedValue, setTypedValue] = useState<string>(props.value);
 
     const [value, setValue] = useState<string>(props.value);
 
@@ -37,14 +39,29 @@ const Select: React.FC<Props> = props => {
         setOpen(false);
     }, [value]);
 
-    useEffect(()=>{
-        setValue(props.value);
-    },[props.value]);
+    // useEffect(()=>{
+    //     setValue(props.value);
+    // },[props.value]);
+
+
+    const items = props.items.filter(item => !typedValue || item.label.includes(typedValue));
 
     return (
         <div className={`relative ${props.wrapperClassName || ""}`} ref={wrapperRef}>
+            <div className={`before:w-2.5 before:h-2.5 before:pointer-events-none before:inline-block ${open ? "before:-rotate-135" : "before:rotate-45"} before:absolute before:border-b-2 before:border-r-2 before:carret-down before:absolute before:border-neutral-500 rtl:before:left-3 ltr:before:right-3 before:top-1/2 before:-mt-1.5`}>
+                <input 
+                    onChange={e => {
+                        setValue('');
+                        setTypedValue(e.target.value);
+                    }}
+                    value={typedValue}
+                    onFocus={e => { e.target.select();setOpen(true); }}
+                    className={`bg-white rounded border px-3 justify-center flex flex-col leading-5 text-sm select-none cursor-pointer ${props.className || "border-neutral-400"}`}
 
-            <div
+                />
+            </div>
+
+            {/* <div
                 className={`
                 bg-white rounded border px-3 h-12 justify-center flex flex-col leading-5 text-sm select-none cursor-pointer ${props.className || "border-neutral-400"}
                 before:w-2.5 before:h-2.5 before:inline-block ${open ? "before:-rotate-135" : "before:rotate-45"} before:absolute before:border-b-2 before:border-r-2 before:carret-down before:absolute before:border-neutral-500 rtl:before:left-3 ltr:before:right-3 before:top-1/2 before:-mt-1.5
@@ -57,14 +74,14 @@ const Select: React.FC<Props> = props => {
                     </label>
                 ) : null}
                 {props.items.find(item => item.value === value)?.label || props.placeholder || null}
-            </div>
+            </div> */}
 
             <div className={`absolute z-10 top-full rtl:right-0 ltr:left-0 bg-white min-w-full max-h-64 overflow-auto shadow transition-all ${open ? "visible opacity-100 mt-0" : "invisible opacity-0 mt-1"}`}>
-                {props.items.map(item => (
+                {items.map(item => (
                     <div
                         key={item.value}
-                        onClick={() => { setValue(item.value) }}
-                        className={`px-3 py-1 transition-all cursor-pointer select-none text-sm ${item.value === value ? "bg-blue-50" : "bg-white hover:bg-neutral-100"}`}
+                        onClick={() => { setValue(item.value);setTypedValue(item.value);setOpen(false); }}
+                        className={`whitespace-nowrap px-3 py-1 transition-all cursor-pointer select-none text-xs ${item.value === value ? "bg-blue-50" : "bg-white hover:bg-neutral-100"}`}
                     >
                         {item.label}
                     </div>
@@ -74,4 +91,4 @@ const Select: React.FC<Props> = props => {
     )
 }
 
-export default Select;
+export default InputSelect;

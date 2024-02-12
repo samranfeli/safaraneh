@@ -1,5 +1,7 @@
 import Button from "@/modules/shared/components/ui/Button";
+import DatePickerSelect from "@/modules/shared/components/ui/DatePickerSelect";
 import FormikField from "@/modules/shared/components/ui/FormikField";
+import { dateFormat, goBackYears } from "@/modules/shared/helpers";
 import { validateNationalId, validateRequiedPersianAndEnglish } from "@/modules/shared/helpers/validation";
 import { Field, Form, Formik } from "formik";
 import { useTranslation } from "next-i18next";
@@ -52,6 +54,10 @@ const EditProfileForm = () => {
         // }
     }
 
+    const maximumBirthDate = dateFormat(goBackYears(new Date(), 12));
+    const minimumBirthDate = dateFormat(goBackYears(new Date(), 100));
+
+
     return (
 
         <>
@@ -76,7 +82,7 @@ const EditProfileForm = () => {
                     return (
                         <Form autoComplete='off' >
 
-                            <div role="group" >
+                            <div role="group" className="mb-4" >
                                 <label className='block text-xs mb-1' > جنسیت </label>
                                 <label className='inline-flex items-center gap-1 rtl:ml-4 ltr:mr-4'>
                                     <Field
@@ -128,7 +134,7 @@ const EditProfileForm = () => {
                                     id='lastname'
                                     name='lastname'
                                     isTouched={touched.lastname}
-                                    label={t('first-name')}
+                                    label={t('last-name')}
                                     validateFunction={(value: string) => validateRequiedPersianAndEnglish(value, t('please-enter-first-name'), t('just-english-persian-letter-and-space'))}
                                     onChange={(value: string) => { setFieldValue('lastname', value, true) }}
                                     value={values.lastname}
@@ -149,8 +155,18 @@ const EditProfileForm = () => {
                                 />
 
                                 <div>
-                                    تاریخ تولد...
+
+                                <DatePickerSelect
+                                    //max={maximumBirthDate}
+                                    max="2023-12-11"
+                                    min={minimumBirthDate}
+                                    shamsi={true} 
+                                    label="تاریخ تولد"
+                                    descending
+                                />
                                 </div>
+
+
                             </div>
 
 

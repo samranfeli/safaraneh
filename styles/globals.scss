@@ -36,6 +36,12 @@
   input.noStyleInputNumber {
     -moz-appearance: textfield;
   }
+  .ltr{
+    direction: ltr;
+  }
+  .rtl{
+    direction: rtl;
+  }
 
 }
 

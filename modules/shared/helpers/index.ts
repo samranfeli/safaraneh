@@ -52,6 +52,14 @@ export const addSomeDays = (date: Date, increment: number = 1) => {
     return newDate;
 }
 
+export const goBackYears = (date: Date, years: number = 1) => {
+
+    const newDate = new Date(date.getTime() - years * 365.25 * 24 * 60 * 60 * 1000);
+
+    return newDate;
+}
+
+
 export const getDatesDiff = (a:Date, b:Date, unit?:"seconds") => {
 
     if (unit && unit === "seconds" ){
@@ -64,4 +72,20 @@ export const getDatesDiff = (a:Date, b:Date, unit?:"seconds") => {
     const utcb = Date.UTC(b.getFullYear(), b.getMonth(), b.getDate());
   
     return Math.abs(Math.floor((utcb - utca) / _MS_PER_DAY));
+}
+
+
+export const persianNumbersToEnglish = (number:string)=> {
+    
+    const persianNumbers = [/۰/g, /۱/g, /۲/g, /۳/g, /۴/g, /۵/g, /۶/g, /۷/g, /۸/g, /۹/g];
+    const arabicNumbers  = [/٠/g, /١/g, /٢/g, /٣/g, /٤/g, /٥/g, /٦/g, /٧/g, /٨/g, /٩/g];
+
+    if(typeof number === 'string')
+    {
+      for(var i=0; i<10; i++)
+      {
+        number = number.replace(persianNumbers[i], i.toString()).replace(arabicNumbers[i], i.toString());
+      }
+    }
+    return number;
 }
