@@ -2,7 +2,7 @@ import BreadCrumpt from "@/modules/blogs/components/template/BreadCrumpt";
 import { NextPage } from "next";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 import Link from "next/link";
-import Map from '../../modules/Footer/ContactMap';
+import Map from '../../modules/Contact/ContactMap';
 import instagram from '../../public/images/footer/Instagram.svg';
 import twitter from '../../public/images/footer/Twitter.svg';
 import linkden from '../../public/images/footer/Linkedin.svg';
@@ -40,7 +40,7 @@ const contact: NextPage = () => {
                         </div>
 
                         <h5 className="text-2xl pt-5 font-semibold">ما را در شبکه اجتماعی دنبال کنید</h5>
-                        <div className="flex max-lg:pt-5 max-lg:pb-10 gap-4">
+                        <div className="flex pt-2 max-lg:pb-10 gap-4">
                             <Link href="https://www.instagram.com/safaraneh_com/">
                                 <Image src={instagram} alt='instagram' width={30} height={30} />
                             </Link> 

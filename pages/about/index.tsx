@@ -45,7 +45,7 @@ const about: NextPage = () => {
             <BreadCrumpt page="درباره ما" />
             <div className="max-w-container m-auto p-5 max-sm:p-2 mt-6">
             <h2 className="text-3xl font-bold">درباره ما</h2>
-                <div className="bg-white rounded-md border-2 border-gray mt-10 p-7 pt-10 pb-10 space-y-7">
+                <div className="bg-white rounded-md border-2 border-gray mt-10 p-7 max-md:p-3 pt-10 pb-10 space-y-7">
                     <h5 className="text-xl font-semibold">سفرانه مشرق زمین</h5>
                     <p className="text-sm">
                     مدت زمان زیادی نیست که رزرو خدمات گردشگری نیز مانند صدها خدمات دیگر به دنیای دیجیتال قدم گذاشته و خیلی سریع روش‌های سنتی سفر کردن را پایان بخشیده. در دوران شروع دیجیتالی شدن رزرو خدمات گردشگری شرکت‌های کمی در این عرصه فعالیت داشتند.

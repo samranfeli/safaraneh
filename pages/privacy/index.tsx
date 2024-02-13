@@ -8,7 +8,7 @@ const privacy: NextPage = () => {
         <BreadCrumpt page="حفظ حریم خصوصی"/>
         <div className="max-w-container m-auto pl-5 pr-5 max-sm:pl-3 max-sm:pr-3">
             <h2 className="font-bold text-3xl mt-10 mb-5">حفظ حریم خصوصی</h2>
-            <div className="bg-white border-2 border-gray space-y-6 p-5 rounded-md">
+            <div className="bg-white border-2 border-gray space-y-6 p-5 max-md:p-3 max-md:pt-7 rounded-md">
                 <p className="text-sm">
                 در وهله اول حریم خصوصی کاربران سامانه سفرانه برای ما در بالاترین درجه اهمیت قرار دارد. شما به خدمات ارائه شده از سمت ما اعتماد می‌کنید و ما برای این اعتماد ارزش قائل هستیم. این بدان معنی است که متعهد به حفظ و حراست از تمامی اطلاعات شخصی هستیم که به ما ارائه می‌دهید. از داده های شما عزیزان تنها در راستای ارائه بهتر خدمات رزرو آنلاین به خود شما استفاده خواهیم کرد.
                 </p>
