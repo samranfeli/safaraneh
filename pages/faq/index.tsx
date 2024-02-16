@@ -171,8 +171,8 @@ const faq: NextPage = () => {
                         faqs.map((item, index) => <Accordion content={item.a} title={item.q} key={index} />)
             }
         </div>
-        </div> 
-        </>    
+        </div>
+        </>
     )
 }
 

@@ -29,7 +29,7 @@ const Home: NextPage = ({ blogs, portalData }: { blogs?: BlogItemType[], portalD
       Phrases: portalData.Phrases
     }));
   }
-  
+ 
   const logo = portalData?.Phrases?.find(item => item.Keyword === "Logo")?.ImageUrl || "";
   const siteName = portalData?.Phrases?.find(item => item.Keyword === "Name")?.Value || "";
 
