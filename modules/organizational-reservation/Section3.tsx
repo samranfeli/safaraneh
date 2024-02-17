@@ -3,7 +3,7 @@ import { NextPage } from "next";
 const Section3: NextPage = () => {
     return (
         <div className="mt-24 space-y-3">
-            <h2 className="text-4xl max-md:text-xl max-md:text-right font-semibold text-center leading-9">رزرو شرکتی هتل در سفرانه به چه صورت است؟</h2>
+            <h2 className="text-5xl text-lg:text-4xl max-md:text-xl max-md:text-right font-semibold text-center leading-9">رزرو شرکتی هتل در سفرانه به چه صورت است؟</h2>
             <ul className="list-decimal p-5 pb-0 leading-9">
                 <li> به قسمت ثبت نام در سفرانه مراجعه فرمایید.</li>
                 <li>مشخصات و اطلاعات تماس شرکتتان را ثبت کنید.</li>

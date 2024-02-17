@@ -13,13 +13,23 @@ const Section4: NextPage = () => {
                     خدمات ویژه سفرانه
                 </h2>
                 <ul className="select-none">
-                    <span></span>
-                    <li className="bg-white p-5 max-sm:p-2 mb-5 text-gray-500">
-                        ارائه تخفیف مازاد به شرکت ها و آژانس‌ها
+                    
+                    <li className="bg-white p-3 max-sm:p-2 mb-5 text-gray-500 relative ">
+                    <span className="w-12 h-full bg-orange-500 absolute bottom-0 right-0"></span>
+                        <p className="mr-12">ارائه تخفیف مازاد به شرکت ها و آژانس‌ها</p>
                     </li>
-                    <li className="bg-white p-5 max-sm:p-2 mb-5 text-gray-500">تضمین کمترین قیمت</li>
-                    <li className="bg-white p-5 max-sm:p-2 mb-5 text-gray-500">تنوع در راه‌های پرداخت</li>
-                    <li className="bg-white p-5 max-sm:p-2 mb-5 text-gray-500">امکان رزرو به صورت تقبل کلیه هزینه‌ها</li>
+                    <li className="bg-white p-3 max-sm:p-2 mb-5 text-gray-500 relative ">
+                    <span className="w-12 h-full bg-orange-500 absolute bottom-0 right-0"></span>
+                        <p className="mr-12">تضمین کمترین قیمت</p>
+                    </li>
+                    <li className="bg-white p-3 max-sm:p-2 mb-5 text-gray-500 relative ">
+                    <span className="w-12 h-full bg-orange-500 absolute bottom-0 right-0"></span>
+                        <p className="mr-12">تنوع در راه‌های پرداخت</p>
+                    </li>
+                    <li className="bg-white p-3 max-sm:p-2 mb-5 text-gray-500 relative ">
+                    <span className="w-12 h-full bg-orange-500 absolute bottom-0 right-0"></span>
+                        <p className="mr-12">امکان رزرو به صورت تقبل کلیه هزینه‌ها</p>
+                    </li>
                 </ul>
             </div>
             <div className="bg-blue-900 p-18 max-sm:p-10 ">
@@ -27,13 +37,22 @@ const Section4: NextPage = () => {
                 مزایای رزرو شرکتی در سفرانه
                 </h2>
                 <ul className="select-none">
-                    <span></span>
-                    <li className="bg-white p-5 max-sm:p-2 mb-5 text-gray-500">
-                        ارائه تخفیف مازاد به شرکت ها و آژانس‌ها
+                <li className="bg-white p-3 max-sm:p-2 mb-5 text-gray-500 relative ">
+                    <span className="w-12 h-full bg-orange-500 absolute bottom-0 right-0"></span>
+                        <p className="mr-12">ارائه فاکتور رسمی</p>
                     </li>
-                    <li className="bg-white p-5 max-sm:p-2 mb-5 text-gray-500">تضمین کمترین قیمت</li>
-                    <li className="bg-white p-5 max-sm:p-2 mb-5 text-gray-500">تنوع در راه‌های پرداخت</li>
-                    <li className="bg-white p-5 max-sm:p-2 mb-5 text-gray-500">امکان رزرو به صورت تقبل کلیه هزینه‌ها</li>
+                    <li className="bg-white p-3 max-sm:p-2 mb-5 text-gray-500 relative ">
+                    <span className="w-12 h-full bg-orange-500 absolute bottom-0 right-0"></span>
+                        <p className="mr-12">پشتیبانی اختصاصی برای شرکت‌ها در تمامی روزهای هفته</p>
+                    </li>
+                    <li className="bg-white p-3 max-sm:p-2 mb-5 text-gray-500 relative ">
+                    <span className="w-12 h-full bg-orange-500 absolute bottom-0 right-0"></span>
+                        <p className="mr-12">برگزاری همایش و رزرو سالن با حداقل قیمت</p>
+                    </li>
+                    <li className="bg-white p-3 max-sm:p-2 mb-5 text-gray-500 relative ">
+                    <span className="w-12 h-full bg-orange-500 absolute bottom-0 right-0"></span>
+                        <p className="mr-12">طراحی و اجرای تورهای اختصاصی پرسنلی و مأموریتی</p>
+                    </li>
                 </ul>
             </div>
             <Image src={conferancepic} alt="خدمات ویژه سفرانه" width={400} height={150}

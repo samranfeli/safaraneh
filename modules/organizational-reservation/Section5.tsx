@@ -71,7 +71,7 @@ const Section5: NextPage = () => {
             <br/>        
             <Field name="text" as='textarea' placeholder="متن"
                 className={`${errors.text&&touched.text ? 'border-red-600' : 'border-gray-300' } border-2 p-2 h-32 w-full rounded outline-none translation-all duration-300`}
-                validate={(value: any) => validateRequied(value, 'متن نظر را وارد کنید')}/>
+                validate={(value: any) => validateRequied(value, 'متن درخواست را وارد کنید')}/>
             {errors.text && touched.text && <small className="text-red-600">{errors.text}</small>}
                 <button
                     type="submit"

@@ -3,6 +3,7 @@ import { MapContainer, Marker, TileLayer } from "react-leaflet";
 import "leaflet/dist/leaflet.css";
 import { useEffect, useState } from "react";
 import { getPortal } from "../shared/actions/portalActions";
+import MapIcon from '../../public/images/organizational-reservation/marker-icon-2x.png';
 
 const MapContact: NextPage = () => {
 
@@ -11,11 +12,11 @@ const MapContact: NextPage = () => {
     useEffect(() => {
         const getData = async () => {
             const data = await getPortal()
-            setMapZone([+data.data.Phrases.find((item: any) => item.Keyword == 'Latitude').Value,
-                +data.data.Phrases.find((item: any) => item.Keyword == "Longitude").Value,
-                +data.data.Phrases.find((item: any) => item.Keyword == "MapZoom").Value
+            setMapZone([+data.data?.Phrases?.find((item: any) => item.Keyword == 'Latitude')?.Value,
+                +data.data?.Phrases?.find((item: any) => item.Keyword == "Longitude")?.Value,
+                +data.data?.Phrases?.find((item: any) => item.Keyword == "MapZoom")?.Value
             ])
-            
+
         }
         getData()
     }, [])
@@ -31,8 +32,8 @@ const MapContact: NextPage = () => {
                         url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
                     />
 
-                    <Marker position={[35.804149, 51.472863]} />
-                </MapContainer>
+                    <Marker position={[35.804149, 51.472863]}   />
+                </MapContainer> 
         }
     </>        
     )
