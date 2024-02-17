@@ -3,7 +3,6 @@ import Rating from "@/modules/shared/components/ui/Rating";
 import Skeleton from "@/modules/shared/components/ui/Skeleton";
 import { ArrowLeft, Tik, Bed, User, Calendar, DefaultRoom } from "@/modules/shared/components/ui/icons";
 import { dateDiplayFormat, getDatesDiff, numberWithCommas } from "@/modules/shared/helpers";
-import { useAppSelector } from "@/modules/shared/hooks/use-store";
 import { useTranslation } from "next-i18next";
 import Image from "next/image";
 import { AsideHotelInfoType, AsideReserveInfoType } from "../../types/hotel";
@@ -29,8 +28,6 @@ const Aside: React.FC<Props> = props => {
 
     const { t } = useTranslation('common');
     const { t: tHotel } = useTranslation('hotel');
-
-    const portalInfo = useAppSelector(state => state.portal);
 
     const { hotelInformation, reserveInformation, roomExtraBed, discountResponse, discountLoading } = props;
 
@@ -77,23 +74,6 @@ const Aside: React.FC<Props> = props => {
         activeExtraBedCount = extraBedCount;
     }
 
-    let safaranehEmailAddress = "support@safaraneh.com";
-    let safaranehPhoneNumber = "02126150051"
-    let safaranehPhoneLink = "+982126150051";
-
-    let portalEmailAddress;
-    let portalPhoneNumber;
-    let portalPhoneLink;
-
-    if (portalInfo?.Phrases) {
-        portalEmailAddress = portalInfo.Phrases.find(item => item.Keyword === "Email")?.Value;
-        portalPhoneNumber = portalInfo.Phrases.find(item => item.Keyword === "TelNumber")?.Value;
-
-        if (portalPhoneNumber && portalPhoneNumber[0] === "0") {
-            portalPhoneLink = portalPhoneNumber.substring(1);
-            portalPhoneLink = "+98" + portalPhoneLink;
-        }
-    }
     if (!reserveInformation) {
         return (
             <div className='border border-neutral-300 bg-white rounded-md mb-4'>

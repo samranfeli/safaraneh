@@ -59,7 +59,7 @@ const Select: React.FC<Props> = props => {
                 {props.items.find(item => item.value === value)?.label || props.placeholder || null}
             </div>
 
-            <div className={`absolute z-10 top-full rtl:right-0 ltr:left-0 bg-white min-w-full shadow transition-all ${open ? "visible opacity-100 mt-0" : "invisible opacity-0 mt-1"}`}>
+            <div className={`absolute z-10 top-full rtl:right-0 ltr:left-0 bg-white min-w-full max-h-64 overflow-auto shadow transition-all ${open ? "visible opacity-100 mt-0" : "invisible opacity-0 mt-1"}`}>
                 {props.items.map(item => (
                     <div
                         key={item.value}

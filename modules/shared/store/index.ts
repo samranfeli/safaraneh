@@ -1,6 +1,6 @@
 import { configureStore } from "@reduxjs/toolkit";
 import errorSlice from "./errorSlice";
-import portalSlice from "./portalSlice";
+import notificationSlice from "./notificationSlice";
 import domesticHotelSlice from "@/modules/domesticHotel/store/domesticHotelSlice";
 import stylesSlice from "./stylesSlice";
 import authenticationSlice from "@/modules/authentication/store/authenticationSlice";
@@ -8,7 +8,7 @@ import authenticationSlice from "@/modules/authentication/store/authenticationSl
 export const store = configureStore({
     reducer: {
         error: errorSlice,
-        portal: portalSlice,
+        notification: notificationSlice,
         domesticHotelFilter: domesticHotelSlice,
         styles: stylesSlice,
         authentication : authenticationSlice

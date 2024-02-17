@@ -72,16 +72,14 @@ const AccountSidebar: React.FC<Props> = props => {
                         <EditBeautiful className='block fill-current' /> {t("edit-profile")}
                     </Link>
 
-                    {/* {this.props.auth.user.emailAddress &&
-                !this.props.auth.user.isEmailConfirmed ? (
-                <div className={styles.warningConfirmAccount}>
-                    <InfoIcon />
-                    {t("confirm-email")}
                 </div>
-                ) : (
-                ""
-                )} */}
-                </div>
+
+                {!!(user?.emailAddress && !user.isEmailConfirmed) && (
+                    <div className="bg-[#f5e9ca] text-xs flex items-center gap-1 px-3 py-2 mb-5 rounded border border-orange-300">
+                        <InfoCircle className='w-5 h-5 fill-orange-400' />
+                        {t("confirm-email")}
+                    </div>
+                )}
 
                 <Link
                     href="/myaccount/booking"
