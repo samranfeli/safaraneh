@@ -52,9 +52,16 @@ export const addSomeDays = (date: Date, increment: number = 1) => {
     return newDate;
 }
 
-export const getDatesDiff = (a:Date, b:Date, unit?:"seconds") => {
+export const goBackYears = (date: Date, years: number = 1) => {
 
-    if (unit && unit === "seconds" ){
+    const newDate = new Date(date.getTime() - years * 365.25 * 24 * 60 * 60 * 1000);
+
+    return newDate;
+}
+
+export const getDatesDiff = (a: Date, b: Date, unit?: "seconds") => {
+
+    if (unit && unit === "seconds") {
         var seconds = (b.getTime() - a.getTime()) / 1000;
         return Math.floor(seconds);
     }
@@ -62,6 +69,69 @@ export const getDatesDiff = (a:Date, b:Date, unit?:"seconds") => {
     const _MS_PER_DAY = 1000 * 60 * 60 * 24;
     const utca = Date.UTC(a.getFullYear(), a.getMonth(), a.getDate());
     const utcb = Date.UTC(b.getFullYear(), b.getMonth(), b.getDate());
-  
+
     return Math.abs(Math.floor((utcb - utca) / _MS_PER_DAY));
+}
+
+export const persianNumbersToEnglish = (number: string) => {
+
+    const persianNumbers = [/۰/g, /۱/g, /۲/g, /۳/g, /۴/g, /۵/g, /۶/g, /۷/g, /۸/g, /۹/g];
+    const arabicNumbers = [/٠/g, /١/g, /٢/g, /٣/g, /٤/g, /٥/g, /٦/g, /٧/g, /٨/g, /٩/g];
+
+    if (typeof number === 'string') {
+        for (var i = 0; i < 10; i++) {
+            number = number.replace(persianNumbers[i], i.toString()).replace(arabicNumbers[i], i.toString());
+        }
+    }
+    return number;
+}
+
+export const shamsiToMiladi = (j_y: number, j_m: number, j_d: number) => {
+
+    const g_days_in_month = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
+    const j_days_in_month = [31, 31, 31, 31, 31, 31, 30, 30, 30, 30, 30, 29];
+
+    var jy = j_y - 979;
+    var jm = j_m - 1;
+    var jd = j_d - 1;
+
+    var j_day_no = 365 * jy + Math.floor(jy / 33) * 8 + Math.floor((jy % 33 + 3) / 4);
+    for (var i = 0; i < jm; ++i) j_day_no += j_days_in_month[i];
+
+    j_day_no += jd;
+
+    var g_day_no = j_day_no + 79;
+
+    var gy = 1600 + 400 * Math.floor(g_day_no / 146097); /* 146097 = 365*400 + 400/4 - 400/100 + 400/400 */
+    g_day_no = g_day_no % 146097;
+
+    var leap = true;
+    if (g_day_no >= 36525) /* 36525 = 365*100 + 100/4 */ {
+        g_day_no--;
+        gy += 100 * Math.floor(g_day_no / 36524); /* 36524 = 365*100 + 100/4 - 100/100 */
+        g_day_no = g_day_no % 36524;
+
+        if (g_day_no >= 365) g_day_no++;
+        else leap = false;
+    }
+
+    gy += 4 * Math.floor(g_day_no / 1461); /* 1461 = 365*4 + 4/4 */
+    g_day_no %= 1461;
+
+    if (g_day_no >= 366) {
+        leap = false;
+
+        g_day_no--;
+        gy += Math.floor(g_day_no / 365);
+        g_day_no = g_day_no % 365;
+    }
+
+    for (var i = 0; g_day_no >= g_days_in_month[i] + (i == 1 && leap ? 1 : 0); i++)
+        g_day_no -= g_days_in_month[i] + (i == 1 && leap ? 1 : 0);
+
+    let gm = (i + 1).toString().padStart(2, '0');
+    let gd = (g_day_no + 1).toString().padStart(2, '0');
+
+    return [gy, gm, gd];
+
 }

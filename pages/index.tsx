@@ -15,21 +15,9 @@ import HomeFAQ from '@/modules/home/components/HomeFAQ';
 import Newsletter from '@/modules/home/components/Newsletter';
 import Services from '@/modules/home/components/Services';
 import { PortalDataType } from '@/modules/shared/types/common';
-import { setReduxPortal } from '@/modules/shared/store/portalSlice';
-import { useAppDispatch, useAppSelector } from '@/modules/shared/hooks/use-store';
 
 const Home: NextPage = ({ blogs, portalData }: { blogs?: BlogItemType[], portalData?: PortalDataType}) => {
-  
-  const dispatch = useAppDispatch();
-  const portalInformation = useAppSelector(state => state.portal);
-
-  if (portalData && !portalInformation.Phrases.length ){
-    dispatch(setReduxPortal({
-      MetaTags: portalData.MetaTags,
-      Phrases: portalData.Phrases
-    }));
-  }
-  
+    
   const logo = portalData?.Phrases?.find(item => item.Keyword === "Logo")?.ImageUrl || "";
   const siteName = portalData?.Phrases?.find(item => item.Keyword === "Name")?.Value || "";
 

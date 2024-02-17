@@ -5,18 +5,82 @@ import { Form, Formik } from "formik";
 import { useTranslation } from "next-i18next";
 import FormikField from '@/modules/shared/components/ui/FormikField';
 import { validateEmail, validateRequied } from '@/modules/shared/helpers/validation';
+import { useAppDispatch } from '@/modules/shared/hooks/use-store';
+import { setReduxUser } from '../store/authenticationSlice';
+import { loginWithPassword } from '../actions';
+import { setReduxError } from '@/modules/shared/store/errorSlice';
 
-const LognWithPassword = () => {
+type Props = {
+    onCloseLogin: () => void;
+}
+const LognWithPassword: React.FC<Props> = props => {
 
     const { t } = useTranslation('common');
 
-    const [type, setType] = useState<"email" | "mobile">('email');
+    const dispatch = useAppDispatch();
 
-    const submitHandler = (values: {
+    const [type, setType] = useState<"email" | "mobile">('email');
+    const [loading, setLoding] = useState<boolean>(false);
+
+    const onSuccessLogin = (response: any) => {
+        const token = response.data?.result?.accessToken
+        localStorage.setItem('Token', token);
+        props.onCloseLogin();
+
+        dispatch(setReduxUser({
+            isAuthenticated: true,
+            user: response.data?.result?.user,
+            getUserLoading: false
+        }));
+
+    }
+
+    const submitHandler = async (values: {
         phoneNumber?: string;
         password: string;
         email?: string;
-    }) => { debugger; }
+    }) => {
+
+        if (!values.email && !values.phoneNumber) return;
+        
+        setLoding(true);
+
+        dispatch(setReduxUser({
+            isAuthenticated: false,
+            user: {},
+            getUserLoading: true
+        }));
+
+        const response: any = await loginWithPassword({
+            password: values.password,
+            emailOrPhoneNumber: (type === 'email' ? values.email : values.phoneNumber) as string
+        });
+        setLoding(false);
+
+        debugger;
+
+        if (response.status == 200) {
+
+            onSuccessLogin(response);
+
+        } else {
+
+            dispatch(setReduxUser({
+                isAuthenticated: false,
+                user: {},
+                getUserLoading: false
+            }));
+
+            if(response?.response?.data?.error?.message){
+                dispatch(setReduxError({
+                    title: t('error'),
+                    message: response.response.data.error.message,
+                    isVisible: true
+                }))
+            }
+        }
+
+    }
 
     return (
         <>
@@ -67,7 +131,6 @@ const LognWithPassword = () => {
                                     label={t("phone-number") + " (بدون صفر)"}
                                     errorText={errors.phoneNumber}
                                     className="mb-5"
-                                //initialValue='+989374755674'
                                 />
                             )}
 
@@ -90,6 +153,7 @@ const LognWithPassword = () => {
                             )}
 
                             <FormikField
+                                isPassword
                                 className="mb-5"
                                 labelIsSimple
                                 showRequiredStar
@@ -108,16 +172,10 @@ const LognWithPassword = () => {
                             <Button
                                 type="submit"
                                 className="h-12 w-full"
-                            //loading={loading}
+                                loading={loading}
                             >
                                 {t("sign-in")}
                             </Button>
-
-                            {/* {!!error && (
-                                <div className="text-red-500 py-3 font-semibold text-center mt-5">
-                                    متاسفانه رزروی با این مشخصات یافت نشد!
-                                </div>
-                            )} */}
 
                         </Form>
                     )

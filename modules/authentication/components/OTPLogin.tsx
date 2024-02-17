@@ -25,8 +25,8 @@ const OTPLogin: React.FC<Props> = props => {
     const [registerLoading, setRegisterLoading] = useState<boolean>(false);
     const [savedPhoneNumber, setSavedPhoneNumber] = useState<string>();
     const [showVerificationForm, setShowVerificationForm] = useState<boolean>(false);
-    const [sendCodeMoment, setSendCodeMoment] = useState<number>(new Date().getTime());
     const [showVerificationFormDelayed, setShowVerificationFormDelayed] = useState<boolean>(false);
+    const [sendCodeMoment, setSendCodeMoment] = useState<number>(new Date().getTime());
     const [remaindSeconds, setRemaindSeconds] = useState<number>(80);
     const [enteredCode, setEnteredCode] = useState<string>("");
 
@@ -95,7 +95,6 @@ const OTPLogin: React.FC<Props> = props => {
                 }));
 
         } catch (error) {
-            //debugger;
             setLoading(false);
             dispatch(setReduxError({
                 title: t('error'),
@@ -150,7 +149,6 @@ const OTPLogin: React.FC<Props> = props => {
             if (response.status == 200) {
 
                 onSuccessLogin(response);
-                //props.handelModal(false)
 
             } else {
 
@@ -160,11 +158,6 @@ const OTPLogin: React.FC<Props> = props => {
                     getUserLoading: false
                 }));
 
-                //   onFailureRegister(
-                //     res && res.data
-                //       ? res.data.error.message
-                //       : 'عملیات با خطا مواجه شد',
-                //   )
             }
         }
         debugger;
@@ -201,7 +194,6 @@ const OTPLogin: React.FC<Props> = props => {
                                 label={"شماره موبایل"}
                                 errorText={errors.phoneNumber}
                                 className="mb-5"
-                            //initialValue='+989374755674'
                             />
 
                             <Button
@@ -211,12 +203,6 @@ const OTPLogin: React.FC<Props> = props => {
                             >
                                 تایید و دریافت کد
                             </Button>
-
-                            {/* {!!error && (
-                                <div className="text-red-500 py-3 font-semibold text-center mt-5">
-                                    متاسفانه رزروی با این مشخصات یافت نشد!
-                                </div>
-                            )} */}
 
                         </Form>
                     )
@@ -246,7 +232,7 @@ const OTPLogin: React.FC<Props> = props => {
                             ارسال شد.
                         </p>
 
-                        <button className='text-blue-700 text-sm'>
+                        <button className='text-blue-700 text-sm' onClick={() => {setShowVerificationFormDelayed(false)}}>
                             اصلاح شماره موبایل
                         </button>
 
