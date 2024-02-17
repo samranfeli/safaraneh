@@ -7,55 +7,67 @@ import LognWithPassword from "./LognWithPassword";
 import OTPLogin from "./OTPLogin";
 
 type Props = {
-    setDelayedOpen: (value: SetStateAction<boolean>) => void;
+    setDelayedOpen?: (value: SetStateAction<boolean>) => void;
     loginWithPassword: boolean;
     setLoginWithPassword: (value: SetStateAction<boolean>) => void;
     toggleLoginType: () => void;
+    isNotModal?: boolean;
 }
 
 const LoginSidebar: React.FC<Props> = props => {
 
-    const { setDelayedOpen, loginWithPassword, setLoginWithPassword, toggleLoginType } = props;
+    const { loginWithPassword, setLoginWithPassword, toggleLoginType } = props;
 
     const { t } = useTranslation('common');
 
+    let setDelayedOpen: (state: boolean) => void;
+    if (props.setDelayedOpen) {
+        setDelayedOpen = props.setDelayedOpen;
+    } else {
+        setDelayedOpen = (state: boolean) => { return }
+    }
+
     return (
         <>
-            <div className='flex justify-between mb-2'>
-                <button
-                    className='p-3'
-                    type='button'
-                    aria-label={t('close')}
-                    onClick={() => { setDelayedOpen(false) }}
-                >
-                    <Close className='w-6 h-6 fill-neutral-400' />
-                </button>
-                <Link
-                    href="/signin"
-                    className='text-sm hover:text-blue-600 p-3 px-5'
-                >
-                    {t('sign-in-up')}
-                </Link>
-            </div>
-
-            <div className='px-5'>
-                <div className='bg-blue-gradient text-white p-4 rounded-md'>
-                    <h6 className='mb-4 font-semibold'> {t('sign-in-h6')} </h6>
-                    <ul className='text-2xs list-disc rtl:pr-5 ltr:pl-5'>
-                        <li className='mb-1'> {t('sign-in-desc-list-1')} </li>
-                        <li className='mb-1'> {t('sign-in-desc-list-2')} </li>
-                        <li className='mb-1'> {t('sign-in-desc-list-3')} </li>
-                        <li className='mb-1'> {t('sign-in-desc-list-4')} </li>
-                        <li className='mb-1'> {t('sign-in-desc-list-5')} </li>
-                        <li className='mb-1'> {t('sign-in-desc-list-6')} </li>
-                    </ul>
+            {!props.isNotModal && (<>
+                <div className='flex justify-between mb-2'>
+                    <button
+                        className='p-3'
+                        type='button'
+                        aria-label={t('close')}
+                        onClick={() => { setDelayedOpen(false) }}
+                    >
+                        <Close className='w-6 h-6 fill-neutral-400' />
+                    </button>
+                    <Link
+                        href="/signin"
+                        className='text-sm hover:text-blue-600 p-3 px-5'
+                    >
+                        {t('sign-in-up')}
+                    </Link>
                 </div>
-            </div>
+                <div className='px-5'>
+                    <div className='bg-blue-gradient text-white p-4 rounded-md'>
+                        <h6 className='mb-4 font-semibold'> {t('sign-in-h6')} </h6>
+                        <ul className='text-2xs list-disc rtl:pr-5 ltr:pl-5'>
+                            <li className='mb-1'> {t('sign-in-desc-list-1')} </li>
+                            <li className='mb-1'> {t('sign-in-desc-list-2')} </li>
+                            <li className='mb-1'> {t('sign-in-desc-list-3')} </li>
+                            <li className='mb-1'> {t('sign-in-desc-list-4')} </li>
+                            <li className='mb-1'> {t('sign-in-desc-list-5')} </li>
+                            <li className='mb-1'> {t('sign-in-desc-list-6')} </li>
+                        </ul>
+                    </div>
+                </div>
 
-            <hr className='my-10' />
+                <hr className='my-10' />
+            </>)
+            }
 
             {loginWithPassword ? (
-                <LognWithPassword />
+                <LognWithPassword
+                    onCloseLogin={() => { setDelayedOpen(false) }}
+                />
             ) : (
                 <OTPLogin
                     onCloseLogin={() => { setDelayedOpen(false) }}

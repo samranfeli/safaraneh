@@ -1,26 +1,23 @@
 import { useState, useEffect } from 'react';
-import { dateDiplayFormat, persianNumbersToEnglish } from '../../helpers';
-import Select from './Select';
-import InputSelect from './InputSelect';
+import { dateDiplayFormat, persianNumbersToEnglish, shamsiToMiladi } from '../../helpers';
 
 type Props = {
-    emptyDefault?: boolean;
     min: string;
     max: string;
     shamsi?: boolean;
     label?: string;
     descending?: boolean;
+    initialValue?: string;
+    onChange?: (value: string) => void;
 }
 
 const DatePickerSelect: React.FC<Props> = props => {
 
+    const { min, max, shamsi, descending } = props;
 
-    const localalizedMin = persianNumbersToEnglish(dateDiplayFormat({ date: props.min, locale: props.shamsi ? 'fa' : 'en', format: "YYYY-MM-DD" }));
-    const localalizedMax = persianNumbersToEnglish(dateDiplayFormat({ date: props.max, locale: props.shamsi ? 'fa' : 'en', format: "YYYY-MM-DD" }));
-
-    const initialValue = props.emptyDefault ? undefined : props.descending ? localalizedMax : localalizedMin;
-
-    const [value, setValue] = useState<string | undefined>(initialValue);
+    const localizedInitialValue = props.initialValue ? persianNumbersToEnglish(dateDiplayFormat({ date: props.initialValue, locale: shamsi ? 'fa' : 'en', format: "YYYY-MM-DD" })) : "";
+    const localalizedMin = persianNumbersToEnglish(dateDiplayFormat({ date: min, locale: shamsi ? 'fa' : 'en', format: "YYYY-MM-DD" }));
+    const localalizedMax = persianNumbersToEnglish(dateDiplayFormat({ date: max, locale: shamsi ? 'fa' : 'en', format: "YYYY-MM-DD" }));
 
     const minYear = localalizedMin.split('-')[0];
     const maxYear = localalizedMax.split('-')[0];
@@ -28,11 +25,33 @@ const DatePickerSelect: React.FC<Props> = props => {
     const minMonth = localalizedMin.split('-')[1];
     const maxMonth = localalizedMax.split('-')[1];
 
+    const minDay = localalizedMin.split('-')[2];
+    const maxDay = localalizedMax.split('-')[2];
+
+    const initialYear = localizedInitialValue ? localizedInitialValue.split("-")[0] : "";
+    const initialMonth = localizedInitialValue ? localizedInitialValue.split("-")[1] : "";
+    const initialDay = localizedInitialValue ? localizedInitialValue.split("-")[2] : "";
+
+    const [year, setYear] = useState<string>(initialYear);
+    const [month, setMonth] = useState<string>(initialMonth);
+    const [day, setDay] = useState<string>(initialDay);
+
+
+    useEffect(() => {
+        if (day && month && year && props.onChange) {
+
+            const dateArray = shamsiToMiladi(+year, +month, +day);
+
+            props.onChange(dateArray.join("-"))
+        }
+    }, [day, month, year]);
+
+
     let yearsArray = [];
     for (let i = +minYear; i <= +maxYear; i++) {
         yearsArray.push(i);
     }
-    if (props.descending) {
+    if (descending) {
         yearsArray.reverse()
     }
 
@@ -51,49 +70,43 @@ const DatePickerSelect: React.FC<Props> = props => {
         '12 - اسفند'
     ];
 
-    const year = value?.split("-")[0];
-    
-    let monthsArray: string[] = [];
 
-    if (year === maxYear){
+    let monthsArray: string[] = [...persianMonths];
+
+    if (year === maxYear) {
         monthsArray = persianMonths.filter(item => {
             const monthNumber = item.split(" - ")[0];
             return (+maxMonth >= +monthNumber);
         })
-    }else{
-        monthsArray = [...persianMonths];
     }
-    debugger
+    if (year === minYear) {
+        monthsArray = persianMonths.filter(item => {
+            const monthNumber = item.split(" - ")[0];
+            return (+minMonth <= +monthNumber);
+        })
+    }
 
     const days = [];
     for (let i = 1; i <= 31; i++) {
         days.push(i.toString());
     }
 
+    let daysArray: string[] = [...days];
 
+    if (+month >= 7) {
+        daysArray = [...daysArray].filter(item => +item !== 31)
+    }
 
-    //const [months, setMonths] = useState([]);
-    //const [days, setDays] = useState([]);
+    if (year === maxYear && month === maxMonth) {
+        daysArray = [...daysArray].filter(item => item <= maxDay);
+    }
 
-    // const initialYear = props.emptyDefault ? undefined : props.shamsi ? moment(props.min, props.format).jYear() : moment(props.min, props.format).get('year');
-    // const [year, setYear] = useState(initialYear);
-
-    // const initialMonth = props.emptyDefault ? undefined : props.shamsi ? moment(props.min, props.format).jMonth() : moment(props.min, props.format).get('month') + 1 ;
-    // const [month, setMonth] = useState(initialMonth);
-
-    // const initialDay = props.emptyDefault ? undefined : props.shamsi ? moment(props.min, props.format).jDate() : moment(props.min, props.format).get('date');
-    // const [day, setDay] = useState(initialDay);
-
-
-
+    if (year === minYear && month === minMonth) {
+        daysArray = [...daysArray].filter(item => item >= minDay);
+    }
 
     const selectClassName = "h-10 px-2 text-sm bg-white border border-neutral-300 focus:border-blue-500 outline-none rounded-md w-full"
 
-    const changeHandle = (value:any, type:"year"|"month"|"day") => {
-        if(type === 'year'){
-            setValue(`${value}-01-01`);
-        }
-    }
 
     return (
         <>
@@ -104,53 +117,57 @@ const DatePickerSelect: React.FC<Props> = props => {
             )}
             <div className='flex rtl:text-right gap-1 rtl:flex-row-reverse'>
 
-            <select 
+                <select
                     className={selectClassName}
-                    onChange={e => { changeHandle(e, 'year') }}
+                    onChange={e => { setYear(e.target.value) }}
+                    value={year}
                 >
-                    {yearsArray.map(item => <option key={item} value={item}> {item} </option>)}
+                    <option disabled value=""> سال </option>
+                    {yearsArray.map(item => (
+                        <option
+                            key={item}
+                            value={item}
+                        >
+                            {item}
+                        </option>
+                    ))}
                 </select>
 
-                <select 
+                <select
                     className={selectClassName}
-                    //onChange={e => { changeHandle(e, 'year') }}
+                    onChange={e => { setMonth(e.target.value) }}
+                    value={month}
                 >
-                    {monthsArray.map(item => <option key={item} value={item}> {item} </option>)}
+                    <option disabled value=""> ماه </option>
+                    {monthsArray.map(item => {
+                        const value = item.split(" - ")[0]
+                        return (
+                            <option
+                                key={item}
+                                value={value}
+                            >
+                                {item}
+                            </option>
+                        )
+                    })}
                 </select>
 
-                
-                <select 
+
+                <select
                     className={selectClassName}
-                    //onChange={e => { changeHandle(e, 'year') }}
+                    onChange={e => { setDay(e.target.value) }}
+                    value={day}
                 >
-                    {days.map(item => <option key={item} value={item}> {item} </option>)}
+                    <option disabled value=""> روز </option>
+                    {daysArray.map(item => (
+                        <option
+                            key={item}
+                            value={item}
+                        >
+                            {item}
+                        </option>
+                    ))}
                 </select>
-
-                {/* <InputSelect
-                    items={yearsArray.map(item => ({ label: item.toString(), value: item.toString() }))}
-                    onChange={e => { changeHandle(e, 'year') }}
-                    value={year?.toString() || ""}
-                    className={selectClassName}
-
-                />
-
-                <InputSelect
-                    items={monthsArray.map(item => ({ label: item, value: item }))}
-                    onChange={e => { debugger }}
-                    value='1'
-                    className={`${selectClassName}`}
-                />
-
-                <InputSelect
-                    items={days.map(item => ({ label: item, value: item }))}
-                    onChange={e => { debugger }}
-                    value='1'
-                    className={selectClassName}
-
-                />  */}
-
-
-
 
             </div>
         </>

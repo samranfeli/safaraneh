@@ -1,16 +1,35 @@
 import Button from "@/modules/shared/components/ui/Button";
+import CheckboxSwitch from "@/modules/shared/components/ui/CheckboxSwitch";
 import DatePickerSelect from "@/modules/shared/components/ui/DatePickerSelect";
 import FormikField from "@/modules/shared/components/ui/FormikField";
 import { dateFormat, goBackYears } from "@/modules/shared/helpers";
 import { validateNationalId, validateRequiedPersianAndEnglish } from "@/modules/shared/helpers/validation";
+import { useAppDispatch, useAppSelector } from "@/modules/shared/hooks/use-store";
 import { Field, Form, Formik } from "formik";
 import { useTranslation } from "next-i18next";
+import { updateCurrentUserProfile, updateNewsletterUserProfile } from "../../actions";
+import { useState } from "react";
+import { setReduxNotification } from "@/modules/shared/store/notificationSlice";
+import EmailActivationForm from "./EmailActivationForm";
+import PhoneActivationForm from "./PhoneActivationForm";
 
-const EditProfileForm = () => {
+type Props = {
+    portalName: string;
+}
+
+const EditProfileForm:React.FC<Props> = props => {
 
     const { t } = useTranslation('common');
 
-    const initialValues = {
+    const dispatch = useAppDispatch();
+
+    const userAuthentication = useAppSelector(state => state.authentication);
+    const user = userAuthentication.user;
+
+    const [submitLoading, setSubmitLoading] = useState<boolean>(false);
+    const [subscriptionLoading, setSubscriptionLoading] = useState<boolean>(false);
+
+    let initialValues = {
         gender: true,
         firstname: "",
         lastname: "",
@@ -21,37 +40,92 @@ const EditProfileForm = () => {
         isNewsLetter: false
     }
 
-    const submitHandler = async (params: any) => {
+    if (userAuthentication?.isAuthenticated) {
+        initialValues = {
+            gender: user.gender === false ? false : true,
+            firstname: user.firstName || "",
+            lastname: user.lastName || "",
+            timezone: "",
+            nationalId: user.nationalId || "",
+            birthDay: user.birthDay ? dateFormat(new Date(user.birthDay)) : "",
+            nationalityId: user.nationalityId || "",
+            isNewsLetter: user.isNewsletter || false,
+        }
+    }
 
-        // setSubmitLoading(true);
+    const submitHandler = async (parameters: any) => {
 
-        // const reserveResponse: any = await domesticHotelPreReserve(params);
+        const token = localStorage.getItem('Token');
+        if (!token) return;
 
-        // if (reserveResponse.data && reserveResponse.data.result) {
-        //   const id = reserveResponse.data.result.id;
-        //   const username = reserveResponse.data.result.username;
+        const params = {
+            ...parameters,
+            birthDay: new Date(parameters.birthDay)
+        }
+        setSubmitLoading(true);
 
-        //   if (discountData?.isValid && promoCode) {
-        //     await registerDiscountCode({ discountPromoCode: promoCode , reserveId: id.toString(), username: username });
-        //   }
+        dispatch(setReduxNotification({
+            status: '',
+            message: "",
+            isVisible: false
+        }));
 
-        //   if (reserveResponse.data.result.rooms.every((x: any) => x.availablityType === "Online")) {
-        //     router.push(`/payment?reserveId=${id}&username=${username}`);
-        //   } else {
-        //     router.push(`/hotel/capacity?reserveId=${id}&username=${username}`);
-        //   }
+        const updateResponse: any = await updateCurrentUserProfile(params, token);
+        setSubmitLoading(false);
 
-        // } else {
+        if (updateResponse.data && updateResponse.data.success) {
 
-        //   dispatch(setReduxError({
-        //     title: tHotel('error-in-reserve-room'),
-        //     message: tHotel('sorry-room-is-full'),
-        //     isVisible: true,
-        //     closeErrorLink: backUrl || "/",
-        //     closeButtonText: backUrl ? tHotel('choose-room') : t("home")
-        //   }));
+            dispatch(setReduxNotification({
+                status: 'success',
+                message: "اطلاعات با موفقیت ارسال شد",
+                isVisible: true
+            }));
 
-        // }
+        } else {
+            dispatch(setReduxNotification({
+                status: 'error',
+                message: "ارسال اطلاعات ناموفق",
+                isVisible: true
+            }));
+
+        }
+    }
+
+    const subscribeNewsLetter = async (active: boolean) => {
+
+        const token = localStorage.getItem('Token');
+        if (!token) return;
+
+        const params = {
+            isNewsLetter: active
+        }
+        setSubscriptionLoading(true);
+
+        dispatch(setReduxNotification({
+            status: '',
+            message: "",
+            isVisible: false
+        }));
+
+        const updateResponse: any = await updateNewsletterUserProfile(params, token);
+        setSubscriptionLoading(false);
+
+        if (updateResponse.data && updateResponse.data.success) {
+
+            dispatch(setReduxNotification({
+                status: 'success',
+                message: "اطلاعات با موفقیت ارسال شد",
+                isVisible: true
+            }));
+
+        } else {
+            dispatch(setReduxNotification({
+                status: 'error',
+                message: "ارسال اطلاعات ناموفق",
+                isVisible: true
+            }));
+
+        }
     }
 
     const maximumBirthDate = dateFormat(goBackYears(new Date(), 12));
@@ -65,7 +139,7 @@ const EditProfileForm = () => {
                 اطلاعات کاربری
             </h5>
 
-            <Formik
+            {!!userAuthentication?.isAuthenticated && <Formik
                 validate={() => { return {} }}
                 initialValues={initialValues}
                 onSubmit={submitHandler}
@@ -110,7 +184,7 @@ const EditProfileForm = () => {
                                 </label>
                             </div>
 
-                            <div className="sm:grid sm:grid-cols-2 gap-4">
+                            <div className="sm:grid sm:grid-cols-2 gap-4 mb-5">
 
                                 <FormikField
                                     labelIsSimple
@@ -156,14 +230,15 @@ const EditProfileForm = () => {
 
                                 <div>
 
-                                <DatePickerSelect
-                                    //max={maximumBirthDate}
-                                    max="2023-12-11"
-                                    min={minimumBirthDate}
-                                    shamsi={true} 
-                                    label="تاریخ تولد"
-                                    descending
-                                />
+                                    <DatePickerSelect
+                                        max={maximumBirthDate}
+                                        min={minimumBirthDate}
+                                        initialValue={user.birthDay ? dateFormat(new Date(user.birthDay)) : ""}
+                                        shamsi={true}
+                                        label="تاریخ تولد"
+                                        descending
+                                        onChange={value => { setFieldValue('birthDay', value);; }}
+                                    />
                                 </div>
 
 
@@ -171,35 +246,44 @@ const EditProfileForm = () => {
 
 
 
-                            <p> در خبرنامه ما ثبت نام کنید </p>
-                            <input type="checkbox" />
+                            <p className="mb-2"> در خبرنامه ما ثبت نام کنید </p>
+                            <CheckboxSwitch
+                                onChange={value => { subscribeNewsLetter(value) }}
+                                className="mb-5"
+                                initialChecked={user.isNewsletter || false}
+                            />
 
 
                             <Button
                                 type="submit"
                                 className="h-10 px-8 rounded"
+                                loading={submitLoading}
                             >
                                 ذخیره
                             </Button>
 
-                            <hr className="my-5" />
-
-                            اطلاعات تماس
-
-
-
-
-
-
-
-
-
-
-
                         </Form>
                     )
                 }}
-            </Formik>
+            </Formik>}
+
+
+            <hr className="my-5" />
+
+            <h5 className='text-base mb-5'>
+            اطلاعات تماس
+            </h5>
+
+
+            <EmailActivationForm />
+
+            
+            <PhoneActivationForm
+                portalName={props.portalName}
+            />
+
+
+
         </>
 
     )

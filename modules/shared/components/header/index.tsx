@@ -53,7 +53,7 @@ const Header: React.FC<Props> = props => {
 
                 { !userIsAuthenticated && <TrackOrder />}
 
-                <Language className="ltr:float-right rtl:float-left rtl:ml-5 ltr:mr-5 hidden md:block" buttonClassName="h-12" />
+                {/* <Language className="ltr:float-right rtl:float-left rtl:ml-5 ltr:mr-5 hidden md:block" buttonClassName="h-12" /> */}
             </div>
 
         </header>

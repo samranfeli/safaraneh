@@ -31,7 +31,15 @@ export const Header = {
   export const Identity = {
     SendOTP: "/api/services/app/OTP/SendOTP",
     RegisterOrLogin: "/api/services/app/OTP/RegisterOrLogin",
-    GetCurrentUserProfileForEdit: "/api/services/app/Profile/GetCurrentUserProfileForEdit"
+    GetCurrentUserProfileForEdit: "/api/services/app/Profile/GetCurrentUserProfileForEdit",
+    UpdateCurrentUserProfile:"/api/services/app/Profile/UpdateCurrentUserProfile",
+    UpdateNewsletterUserProfile:"/api/services/app/Profile/UpdateNewsletterUserProfile",
+    UpdateProfileEmail:"/api/services/app/Profile/UpdateProfileEmail",
+    UpdateProfilePhoneNumber:"/api/services/app/Profile/UpdateProfilePhoneNumber",
+    SendVerificationSms:"/api/services/app/Profile/SendVerificationSms",
+    VerifySmsCode:"/api/services/app/Profile/VerifySmsCode",
+    LoginWithPassword:"/api/TokenAuth/Login",
+    ForgotPasswordByPhoneNumber: "/api/services/app/Account/ForgotPasswordByPhoneNumber"
   };
 
   export const Flight = {

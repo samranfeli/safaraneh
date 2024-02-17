@@ -1,5 +1,6 @@
 import { Field } from 'formik';
 import { ChangeEvent, useState, useEffect } from 'react';
+import { Eye, Eye2 } from './icons';
 
 type Props = {
     errorText?: string;
@@ -15,12 +16,13 @@ type Props = {
     value: string;
     labelIsSimple?:boolean;
     showRequiredStar?:boolean;
+    isPassword?:boolean;
 }
 
 const FormikField: React.FC<Props> = props => {
 
     const [labelUp, setLabelUp] = useState<boolean>(false);
-
+    const [isPassword, setIsPassword] = useState<boolean>(props.isPassword || false);
 
     useEffect(()=>{
         if (props.labelIsSimple){
@@ -34,6 +36,22 @@ const FormikField: React.FC<Props> = props => {
 
     },[props.value]);
 
+    let passwordToggleBtn = null;
+    
+    if (props.isPassword){
+        passwordToggleBtn = <button
+            type='button'
+            className='absolute top-1/2 left-3 -translate-y-1/2'
+            onClick={() => {setIsPassword(prevState => !prevState)}}
+        >
+            {isPassword ? (
+                <Eye2 className='w-5 h-5 fill-neutral-500' /> 
+            ):(
+                <Eye className='w-5 h-5 fill-neutral-500' />
+            )}            
+        </button>
+    }
+
     return (
         <div className={`${props.errorText ? "has-validation-error" : ""} ${props.className || ""}`}>
             <div className='relative'>
@@ -46,26 +64,29 @@ const FormikField: React.FC<Props> = props => {
                         {props.label}
                     </label>
                 )}
+                <div className='relative'>
+                    <Field
+                        maxLength={props.maxLength || undefined}
+                        validate={props.validateFunction}
+                        onFocus={() => {props.labelIsSimple? null :setLabelUp(true) }}
+                        onBlur={(e: any) => { props.labelIsSimple? null : setLabelUp(e.currentTarget.value.trim()) }}
+                        id={props.id}
+                        name={props.name}
+                        autoComplete="off"
+                        className={`h-10 px-3 bg-white border ${props.errorText && props.isTouched ? "border-red-500" : "border-neutral-300 focus:border-blue-500"} outline-none rounded-md w-full`}
+                        onChange={(e:ChangeEvent<HTMLInputElement>) => {
+                            props.setFieldValue(props.name, e.target.value, true);
+                            if(props.onChange){
+                                props.onChange(e.target.value);
+                            }
+                        }}
+                        value={props.value}
+                        type={isPassword?"password":"text"}
 
-                <Field
-                    maxLength={props.maxLength || undefined}
-                    validate={props.validateFunction}
-                    onFocus={() => {props.labelIsSimple? null :setLabelUp(true) }}
-                    onBlur={(e: any) => { props.labelIsSimple? null : setLabelUp(e.currentTarget.value.trim()) }}
-                    id={props.id}
-                    name={props.name}
-                    autoComplete="off"
-                    className={`h-10 px-3 bg-white border ${props.errorText && props.isTouched ? "border-red-500" : "border-neutral-300 focus:border-blue-500"} outline-none rounded-md w-full`}
-                    onChange={(e:ChangeEvent<HTMLInputElement>) => {
-                        props.setFieldValue(props.name, e.target.value, true);
-                        if(props.onChange){
-                            props.onChange(e.target.value);
-                        }
-                    }}
-                    value={props.value}
-
-                />
-
+                    />
+                    
+                    {passwordToggleBtn}
+                </div>
             </div>
 
             {props.errorText && props.isTouched && <div className='text-red-500 text-xs'>{props.errorText}</div>}
