@@ -7,6 +7,7 @@ import {useAppDispatch, useAppSelector } from "../hooks/use-store";
 import PageLoadingBar from "./ui/PageLoadingBar";
 import { setReduxUser } from "@/modules/authentication/store/authenticationSlice";
 import { getCurrentUserProfile } from "@/modules/authentication/actions";
+import Notification from "./Notification";
 
 type Props = {
     logo:string;
@@ -92,6 +93,8 @@ const Layout: React.FC<PropsWithChildren<Props>> = props => {
             <PageLoadingBar active={loading} />
 
             <Error />
+            <Notification />
+
             <Header logo={props.logo} siteName={props.siteName} />
             <main id="main" className={`min-h-desktop-main relative ${isHeaderUnderMain?"z-50":"z-10"}`}>
                 {props.children}

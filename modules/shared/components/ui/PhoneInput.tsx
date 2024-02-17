@@ -6,6 +6,7 @@ import { validateMobileNumberId } from '../../helpers/validation';
 import { useTranslation } from 'next-i18next';
 
 type Props = {
+    disabled?:boolean;
     errorText?: string;
     isTouched?: boolean;
     label?: string;
@@ -18,8 +19,9 @@ type Props = {
         format?: string
     }
     initialValue?: string;
-    labelIsSimple?:boolean;
-    showRequiredStar?:boolean;
+    labelIsSimple?: boolean;
+    showRequiredStar?: boolean;
+    showNotConfirmedBadge?: boolean;
 }
 
 type CountryObject = {
@@ -69,10 +71,10 @@ const PhoneInput: React.FC<Props> = props => {
         }
     };
 
-    const closeOnTab = (event:any) => {
+    const closeOnTab = (event: any) => {
         if (event.keyCode === 9) {
             setOpenCodes(false);
-          }
+        }
     }
 
     useEffect(() => {
@@ -135,14 +137,21 @@ const PhoneInput: React.FC<Props> = props => {
     return (
         <div className={props.className || ""}>
             <div className='relative'>
-                {!!props.label && (
-                    <label
-                        className={`select-none pointer-events-none block leading-4 ${props.labelIsSimple?"mb-3":"z-10 absolute px-2 bg-white transition-all duration-300 -translate-y-1/2 right-1"} ${props.labelIsSimple ? "text-base" : labelUp ? "top-0 text-xs" : "top-1/2 text-sm"}`}
-                    >
-                        {!!(props.labelIsSimple && props.showRequiredStar) && <span className='text-red-600'>* </span>}
-                        {props.label}
-                    </label>
-                )}
+                <div className='flex justify-between items-start'>
+                    {!!props.label ? (
+                        <label
+                            className={`select-none pointer-events-none block leading-4 ${props.labelIsSimple ? "mb-3" : "z-10 absolute px-2 bg-white transition-all duration-300 -translate-y-1/2 right-1"} ${props.labelIsSimple ? "text-base" : labelUp ? "top-0 text-xs" : "top-1/2 text-sm"}`}
+                        >
+                            {!!(props.labelIsSimple && props.showRequiredStar) && <span className='text-red-600'>* </span>}
+                            {props.label}
+                        </label>
+                    ) : (<div />)}
+                    {props.showNotConfirmedBadge && (
+                        <div className='bg-amber-100 text-xs text-neutral-500 leading-6 px-3 rounded-lg after:inline-block after:w-2 after:h-2 after:bg-amber-400 after:rounded-full after:align-middle after:rtl:mr-1 after:ltr:ml-1'>
+                            تایید نشده
+                        </div>
+                    )}
+                </div>
                 <div className='relative grid grid-cols-5 text-sm' dir='ltr' ref={codeRef}>
 
                     {!typedCode && <div className='absolute left-3 top-1/2 -translate-y-1/2 flex gap-2 items-center pointer-events-none'>
@@ -159,17 +168,19 @@ const PhoneInput: React.FC<Props> = props => {
                         className={`h-10 border ${errorText && isTouched ? "border-red-500" : "border-neutral-300 focus:border-blue-500"} px-22 rounded-l-md col-span-2 px-2 outline-none`}
                         type='text'
                         autoComplete="off"
+                        disabled={props.disabled}
                         onChange={(e: any) => { setTypedCode(e.target.value) }}
                         value={typedCode || ""}
                         onFocus={() => { setOpenCodes(true); }}
                     />
 
                     <input
+                        disabled={props.disabled}
                         type='text'
                         onFocus={() => { setLabelUp(true) }}
                         onBlur={(e: any) => { setLabelUp(e.currentTarget.value.trim()) }}
                         autoComplete="off"
-                        onChange={(e: any) => { if (["0","۰","٠"].includes(e.target.value[0])) return; setPhoneNumberValue(e.target.value) }}
+                        onChange={(e: any) => { if (["0", "۰", "٠"].includes(e.target.value[0])) return; setPhoneNumberValue(e.target.value) }}
                         value={phoneNumberValue}
                         maxLength={expectedLength || 15}
                         className={`h-10 border ${errorText && isTouched ? "border-red-500" : "border-neutral-300 focus:border-blue-500"} px-2 col-span-3 border-l-none rounded-r-md outline-none`}
@@ -201,7 +212,7 @@ const PhoneInput: React.FC<Props> = props => {
                             )
                         })}
                     </div>}
-                    
+
                 </div>
             </div>
             {errorText && isTouched && <div className='text-red-500 text-xs'>{errorText}</div>}

@@ -1,18 +1,23 @@
 import AccountSidebar from '@/modules/authentication/components/AccountSidebar';
 import EditProfileForm from '@/modules/authentication/components/profile/EditProfileForm';
 import { User2 } from '@/modules/shared/components/ui/icons';
+import { PortalDataType } from '@/modules/shared/types/common';
 import type { GetServerSideProps, NextPage } from 'next';
 import { useTranslation } from 'next-i18next';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 
 
 
-const DomesticHotelReserveDetail: NextPage = () => {
+const Profile: NextPage = ({ portalData }: { portalData?: PortalDataType }) => {
 
     const { t } = useTranslation('common');
     const { t: tHotel } = useTranslation('hotel');
     const { t: tPayment } = useTranslation('payment');
 
+    let portalName = "";
+    if (portalData) {
+        portalName = portalData.Phrases?.find(item => item.Keyword === "Name")?.Value || "";
+    }
 
 
     return (
@@ -25,7 +30,7 @@ const DomesticHotelReserveDetail: NextPage = () => {
                     </div>
                     <div className='md:col-span-2'>
                         <div className='border border-neutral-300 bg-white rounded-md mb-4'>
-                            
+
                             <div className='flex items-center gap-5 whitespace-nowrap p-5 border-b border-neutral-300'>
                                 <User2 className='w-12 h-12' />
                                 <div className='text-lg'>
@@ -37,9 +42,11 @@ const DomesticHotelReserveDetail: NextPage = () => {
                             </div>
 
                             <div className='p-5'>
-                                
-                                <EditProfileForm />
-                                
+
+                                <EditProfileForm
+                                    portalName={portalName}
+                                />
+
                             </div>
 
                         </div>
@@ -59,4 +66,4 @@ export const getServerSideProps: GetServerSideProps = async (context: any) => {
     })
 }
 
-export default DomesticHotelReserveDetail;
+export default Profile;

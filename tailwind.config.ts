@@ -65,7 +65,8 @@ const config: Config = {
 
       },
       width: {
-        '520':'520px'
+        '520':'520px',
+        '480':'480px'
       },
       maxWidth: {
         container: 'var(--container-max-width)'
