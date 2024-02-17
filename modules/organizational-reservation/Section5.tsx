@@ -64,7 +64,7 @@ const Section5: NextPage = () => {
             className={`${errors.email&&touched.email ? 'border-red-600' : 'border-gray-300' } border-2 p-2 w-full rounded outline-none  translation-all duration-300`}
             validate={(value: string) => validateEmailNotReqired({value,invalidMessage: 'ایمیل معتبر نیست'}) || validateRequied(value,'ایمیل را وارد کنید')}
             />
-            {errors.email && <small className="text-red-600">{errors.email}</small>}
+            {errors.email && touched.email && <small className="text-red-600">{errors.email}</small>}
             <Field name="name" placeholder="عنوان"
             className={`${errors.title&&touched.title ? 'border-red-600' : 'border-gray-300' } border-2 p-2 w-full rounded outline-none translation-all duration-300`}
             />

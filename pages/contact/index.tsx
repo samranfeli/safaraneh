@@ -32,29 +32,30 @@ const contact: NextPage = () => {
                 <div className="pl-5 pr-5 pt-10 pb-10 border-2 border-gray mt-7 rounded-md bg-white grid grid-cols-2 gap-8 max-lg:grid-cols-1">
                     <div className="space-y-3">
                         <h5 className="text-xl font-semibold">با ما در ارتباط باشید</h5>
-                        <address className="not-italic flex gap-1">
-                            <b>آدرس</b>:
-                            <p className="text-sm ">
-                            {portalData?.Phrases?.find(item => item.Keyword == "Address")?.Value}
+                        <address className="not-italic">
+                            <p className="text-sm space-x-1 whitespace-nowrap max-xl:whitespace-normal">
+                                <b className="text-base">آدرس</b>
+                                <span className="font-semibold text-base">:</span> 
+                                {portalData?.Phrases?.find(item => item.Keyword == "Address")?.Value}
                             </p>
                         </address>
-                        <div className="flex gap-2">
+                        <div className="flex gap-1">
                             <b>تلفن</b>:
                             <Link href={`tel:${portalData?.Phrases?.find(item => item.Keyword == "PhoneNumber")?.Value}`} className="font-semibold text-lg">
                             {portalData?.Phrases?.find(item => item.Keyword == "PhoneNumber")?.Value}
                             </Link>
                         </div>
-                        <div className="flex gap-2">
+                        <div className="flex gap-1">
                             <b>فکس</b>:
                             <Link href={`tel:+982126150054`} className="font-semibold text-lg">2126150054 98+</Link>
                         </div>
-                        <div className="flex gap-2">
+                        <div className="flex gap-1">
                             <b>ایمیل</b>:
                             <Link href={`mailto:${portalData?.Phrases?.find(item => item.Keyword == "Email")?.Value}`} className="font-semibold">
                                 {portalData?.Phrases?.find(item => item.Keyword == "Email")?.Value}
                             </Link>
                         </div>
-                        <div className="flex gap-2">
+                        <div className="flex gap-1">
                             <b>کد پستی</b>:
                             <b className="font-semibold text-lg">1957644595</b>
                         </div>
