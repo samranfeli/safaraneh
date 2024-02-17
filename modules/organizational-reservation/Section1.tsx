@@ -18,7 +18,7 @@ const Section1: NextPage = () => {
             </div>
             <div className="w-1/2 max-md:w-full z-10">
                 <p className="text-yellow-700 font-bold">رزرو های سازمانی</p>
-                <h2 className="leading-normal mt-3 font-semibold text-5xl max-lg:text-4xl max-md:text-3xl max-sm:text-2xl">سفرانه به شرکت‌ها و سازمان‌ها چه خدماتی ارائه می‌کند؟</h2>
+                <h2 className="leading-normal mt-3 font-bold text-5xl max-lg:text-4xl max-md:text-3xl max-sm:text-2xl">سفرانه به شرکت‌ها و سازمان‌ها چه خدماتی ارائه می‌کند؟</h2>
                 <div className="flex gap-5 mt-7 text-gray-500">
                     <div className="relative">
                         <span className="w-12 h-12 -right-2 bg-green-600 absolute -z-10 opacity-60"></span>

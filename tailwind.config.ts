@@ -91,7 +91,7 @@ const config: Config = {
         '2xl': '22px',
         '3xl': '24px',
         '4xl': '28px',
-        '5xl': '35px'
+        '5xl': '40px'
       },
       gridTemplateColumns: {
         '14': 'repeat(14, minmax(0, 1fr))',
