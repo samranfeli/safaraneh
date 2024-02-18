@@ -7,6 +7,7 @@ import RoomItem from './RoomItem';
 import { addSomeDays, dateFormat } from '@/modules/shared/helpers';
 import { GetRooms, domesticHotelValidateRoom } from '../../actions';
 import { InfoCircle } from '@/modules/shared/components/ui/icons';
+import Skeleton from '@/modules/shared/components/ui/Skeleton';
 
 type Props = {
     hotelId: number;
@@ -104,10 +105,10 @@ const Rooms: React.FC<Props> = props => {
                         </div>
                     </div>
                 </div>
-            ) : (
+            ) : availabilites ? (
                 <>
                     <h2 className="text-lg lg:text-3xl font-semibold mb-3 md:mb-7"> {tHotel('choose-room')}  </h2>
-                    {availabilites?.map(availability => {
+                    {availabilites.map(availability => {
                         return availability.rates?.map(rateItem => (
                             <RoomItem
                                 key={rateItem.bookingToken}
@@ -118,6 +119,30 @@ const Rooms: React.FC<Props> = props => {
                             />
                         ))
                     })}
+                </>
+            ) : (
+                <>
+                    <h2 className="text-lg lg:text-3xl font-semibold mb-3 md:mb-7"> {tHotel('choose-room')}  </h2>
+                    {[1, 2, 3, 4, 5].map(item => (
+                        <div key={item} className='bg-white border border-neutral-300 rounded-xl mb-4 overflow-hidden grid grid-cols-4'>
+                            <Skeleton type='image' />
+                            <div className='col-span-3 p-4'>
+                                <div className='flex  justify-between mb-4'>
+                                    <Skeleton className='w-40' />
+                                    <Skeleton className='w-20' />
+                                </div>
+                                <div className='flex  justify-between mb-4'>
+                                    <Skeleton className='w-24' />
+                                    <Skeleton className='w-48' />
+                                </div>
+                                <div className='flex  justify-between'>
+                                    <Skeleton className='w-20' />
+                                    <Skeleton className='w-60' />
+                                </div>
+
+                            </div>
+                        </div>
+                    ))}
                 </>
             )}
         </div>

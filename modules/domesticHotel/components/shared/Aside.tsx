@@ -258,52 +258,59 @@ const Aside: React.FC<Props> = props => {
 
                     <div className="border-t border-neutral-300 mt-4 pt-4 text-sm">
 
-                        {(hasDiscount || !!activeExtraBedPrice || !!reserveInformation.promoCodePrice || !!promoCodePrice) && (
-                            <div className="flex items-center justify-between">
-                                {t("sum")}
-                                <span>{numberWithCommas(reserveInformation.boardPrice)} {t('rial')} </span>
-                            </div>
+                        {reserveInformation.salePrice && reserveInformation.salePrice > 500000 ? (
+                            <>
+                                {(hasDiscount || !!activeExtraBedPrice || !!reserveInformation.promoCodePrice || !!promoCodePrice) && (
+                                    <div className="flex items-center justify-between">
+                                        {t("sum")}
+                                        <span>{numberWithCommas(reserveInformation.boardPrice)} {t('rial')} </span>
+                                    </div>
+                                )}
+        
+                                {!!activeExtraBedPrice && (
+                                    <div className="flex items-center justify-between">
+                                        {tHotel("extra-bed")} (x{activeExtraBedCount})
+                                        <span>{numberWithCommas(activeExtraBedPrice)} {t('rial')} </span>
+                                    </div>
+                                )}
+        
+                                {!!hasDiscount && (
+                                    <div className="flex items-center justify-between">
+                                        {t("site-discount")}
+                                        <span>{numberWithCommas(reserveInformation.boardPrice - reserveInformation.salePrice)} {t('rial')}</span>
+        
+                                    </div>
+                                )}
+        
+        
+                                {!!discountLoading && (
+                                    <Skeleton className="my-1" />
+                                )}
+        
+                                {!!promoCodePrice && (
+                                    <div className="flex items-center justify-between">
+                                        کد تخفیف
+                                        <span>{numberWithCommas(promoCodePrice)} {t('rial')}</span>
+                                    </div>
+                                )}
+        
+                                {!!reserveInformation.salePrice && (
+                                    <div className="flex items-center justify-between">
+                                        {t("price-paid")}
+                                        <strong className="font-bold text-sm">
+                                            {!!discountResponse && discountResponse.orderSubTotalDiscount >= 10000 ?
+                                                numberWithCommas(discountResponse.orderSubTotalDiscount + (activeExtraBedPrice || 0)) + " " + t('rial')
+                                                :
+                                                numberWithCommas(reserveInformation.salePrice + (activeExtraBedPrice || 0) - (reserveInformation.promoCodePrice || 0)) + " " + t('rial')
+                                            }
+                                        </strong>
+                                    </div>
+                                )}
+                            </>
+                        ):(
+                            <span className='text-xs font-semibold text-red-500'>قیمت نیازمند استعلام است </span>
                         )}
 
-                        {!!activeExtraBedPrice && (
-                            <div className="flex items-center justify-between">
-                                {tHotel("extra-bed")} (x{activeExtraBedCount})
-                                <span>{numberWithCommas(activeExtraBedPrice)} {t('rial')} </span>
-                            </div>
-                        )}
-
-                        {!!hasDiscount && (
-                            <div className="flex items-center justify-between">
-                                {t("site-discount")}
-                                <span>{numberWithCommas(reserveInformation.boardPrice - reserveInformation.salePrice)} {t('rial')}</span>
-
-                            </div>
-                        )}
-
-
-                        {!!discountLoading && (
-                            <Skeleton className="my-1" />
-                        )}
-
-                        {!!promoCodePrice && (
-                            <div className="flex items-center justify-between">
-                                کد تخفیف
-                                <span>{numberWithCommas(promoCodePrice)} {t('rial')}</span>
-                            </div>
-                        )}
-
-                        {!!reserveInformation.salePrice && (
-                            <div className="flex items-center justify-between">
-                                {t("price-paid")}
-                                <strong className="font-bold text-sm">
-                                    {!!discountResponse && discountResponse.orderSubTotalDiscount >= 10000 ?
-                                        numberWithCommas(discountResponse.orderSubTotalDiscount + (activeExtraBedPrice || 0)) + " " + t('rial')
-                                        :
-                                        numberWithCommas(reserveInformation.salePrice + (activeExtraBedPrice || 0) - (reserveInformation.promoCodePrice || 0)) + " " + t('rial')
-                                    }
-                                </strong>
-                            </div>
-                        )}
 
                     </div>
 

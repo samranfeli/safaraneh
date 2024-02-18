@@ -41,7 +41,8 @@ const FormikField: React.FC<Props> = props => {
     if (props.isPassword){
         passwordToggleBtn = <button
             type='button'
-            className='absolute top-1/2 left-3 -translate-y-1/2'
+            className='absolute top-1/2 left-3 -translate-y-1/2 outline-none'
+            tabIndex={-1}
             onClick={() => {setIsPassword(prevState => !prevState)}}
         >
             {isPassword ? (

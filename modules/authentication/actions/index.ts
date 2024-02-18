@@ -246,3 +246,68 @@ export const forgotPasswordByPhoneNumber = async (phoneNumber: string , acceptLa
         return error
     }
 }
+
+
+
+export const forgotPasswordVerification =  async (params:{userId: string; code:string;} , acceptLanguage: string = 'fa-IR') => {
+
+    try {
+        let response = await axios.post(
+            `${ServerAddress.Type}${ServerAddress.Identity}${Identity.ForgotPasswordVerification}`,
+                params,
+            {
+                headers: {
+                    Accept: 'application/json;charset=UTF-8',
+                    apikey: process.env.PROJECT_SERVER_APIKEY,
+                    "Accept-Language": acceptLanguage,
+                    Tenantid: process.env.PROJECT_SERVER_TENANTID
+                },
+            },
+        )
+        return response
+    } catch (error) {
+        return error
+    }
+}
+
+export const resetPassword =  async (params:{userId: string; code:string; password:string;} , acceptLanguage: string = 'fa-IR') => {
+
+    try {
+        let response = await axios.post(
+            `${ServerAddress.Type}${ServerAddress.Identity}${Identity.ResetPassword}`,
+                params,
+            {
+                headers: {
+                    Accept: 'application/json;charset=UTF-8',
+                    apikey: process.env.PROJECT_SERVER_APIKEY,
+                    "Accept-Language": acceptLanguage,
+                    Tenantid: process.env.PROJECT_SERVER_TENANTID
+                },
+            },
+        )
+        return response
+    } catch (error) {
+        return error
+    }
+}
+
+export const forgotPasswordByEmail = async (emailAddress: string, acceptLanguage: string = 'fa-IR') => {
+
+    try {
+        let response = await axios.post(
+            `${ServerAddress.Type}${ServerAddress.Identity}${Identity.ForgotPasswordByEmail}`,
+            { emailAddress: emailAddress },
+            {
+                headers: {
+                    Accept: 'application/json;charset=UTF-8',
+                    apikey: process.env.PROJECT_SERVER_APIKEY,
+                    "Accept-Language": acceptLanguage,
+                    Tenantid: process.env.PROJECT_SERVER_TENANTID
+                },
+            },
+        )
+        return response
+    } catch (error) {
+        return error
+    }
+}
