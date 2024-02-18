@@ -39,7 +39,10 @@ export const Header = {
     SendVerificationSms:"/api/services/app/Profile/SendVerificationSms",
     VerifySmsCode:"/api/services/app/Profile/VerifySmsCode",
     LoginWithPassword:"/api/TokenAuth/Login",
-    ForgotPasswordByPhoneNumber: "/api/services/app/Account/ForgotPasswordByPhoneNumber"
+    ForgotPasswordByPhoneNumber: "/api/services/app/Account/ForgotPasswordByPhoneNumber",
+    ForgotPasswordVerification:"/api/services/app/Account/ForgotPasswordVerification",
+    ResetPassword : "/api/services/app/Account/ResetPassword",
+    ForgotPasswordByEmail:"/api/services/app/Account/ForgotPassword"
   };
 
   export const Flight = {
