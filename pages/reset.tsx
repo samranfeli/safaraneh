@@ -1,51 +1,33 @@
 import { useState } from 'react';
-import LoginSidebar from '@/modules/authentication/components/LoginSidebar';
 import BreadCrumpt from '@/modules/shared/components/ui/BreadCrumpt';
 import type { GetServerSideProps, NextPage } from 'next';
 import { useTranslation } from 'next-i18next';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 import Head from 'next/head';
 import Image from 'next/image';
-import { useRouter } from 'next/router';
-import { useAppSelector } from '@/modules/shared/hooks/use-store';
+import PasswordResetForm from '@/modules/authentication/components/PasswordResetForm';
 
 const ForgetPassword: NextPage = () => {
 
     const { t } = useTranslation('common');
 
-    const router = useRouter();
-
-    const userIsAuthenticated = useAppSelector(state => state.authentication.isAuthenticated)
-    if (userIsAuthenticated){
-        router.push("/myaccount/profile")
-    }
-
-    const type = router.query?.type || "";
-
-    const [loginWithPassword, setLoginWithPassword] = useState<boolean>(type === "withPassword" ? true : false);
-
     return (
         <>
             <Head>
-                <title> {t('sign-in-up')} </title>
+                <title>بازنشانی کلمه عبور </title>
             </Head>
             <div className='max-w-container mx-auto px-5 py-4'>
 
                 <BreadCrumpt
                     items={[
-                        { label: t('sign-in-up') },
+                        { label: "بازنشانی کلمه عبور" },
                     ]}
                 />
 
                 <div className='grid gap-4 md:grid-cols-3'>
-                    <div className='border border-neutral-300 bg-white rounded-md mb-4 py-6'>
-                        <LoginSidebar
-                            loginWithPassword={loginWithPassword}
-                            setLoginWithPassword={setLoginWithPassword}
-                            toggleLoginType={() => { setLoginWithPassword(prevState => !prevState) }}
-                            isNotModal
-                        />
-                    </div>
+
+                    <PasswordResetForm />
+
                     <div className='md:col-span-2'>
                         <div className='flex flex-col items-center justify-center px-5 py-10 gap-3 text-center'>
 

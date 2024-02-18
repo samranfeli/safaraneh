@@ -181,7 +181,7 @@ const TrackOrder: React.FC = () => {
                                                 }}
                                                 name='phoneNumber'
                                                 isTouched={touched.phoneNumber}
-                                                label={t("phone-number") + " (بدون صفر)"}
+                                                label={"شماره موبایل"}
                                                 errorText={errors.phoneNumber}
                                                 className="mb-5"
                                             //initialValue='+989374755674'
