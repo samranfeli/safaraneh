@@ -11,7 +11,7 @@ import { useEffect, useState } from "react";
 import { getPortal } from "@/modules/shared/actions/portalActions";
 import { PortalDataType } from "@/modules/shared/types/common";
 
-const contact: NextPage = () => {
+const Contact: NextPage = () => {
     const [portalData, setPortalData] = useState<PortalDataType>()
 
     useEffect(() => {
@@ -83,7 +83,7 @@ const contact: NextPage = () => {
     )
 }
 
-export default contact;
+export default Contact;
 
 
 export async function  getStaticProps (context: any)  {
