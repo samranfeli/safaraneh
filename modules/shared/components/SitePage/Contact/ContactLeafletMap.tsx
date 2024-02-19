@@ -22,15 +22,24 @@ const MapContact: NextPage = () => {
         getData()
     }, [])
 
+    var greenIcon = L.icon({
+        iconUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.3.1/images/marker-icon.png',
+        shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.3.1/images/marker-icon.png',
     
+        iconSize:     [25, 40], // size of the icon
+        shadowSize:   [0, 0], // size of the shadow
+  
+    });
     
     return (
     <>
         {
             MapZone.length ?
                 <MapContainer
-                    center={[MapZone[0], MapZone[1]]}
-                    zoom={MapZone[2]} scrollWheelZoom={false} className="h-72 w-full mt-3 rounded-md">
+                        center={[MapZone[0] || 20, MapZone[1] || 10]}
+                        zoom={MapZone[2]}
+                        scrollWheelZoom={true}
+                        className="h-72 w-full mt-3 rounded-md">
                     <TileLayer
                         attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
                         url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
@@ -38,7 +47,7 @@ const MapContact: NextPage = () => {
 
                     <Marker
                         position={[35.804149, 51.472863]}
-                        
+                        icon={greenIcon}
                     />
             </MapContainer> 
             :

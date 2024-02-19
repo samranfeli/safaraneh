@@ -7,7 +7,7 @@ import { Tik } from "../../ui/icons";
 const Section4: NextPage = () => {
     return (
         <div className="grid grid-cols-2 max-lg:grid-cols-1 mt-10 rounded overflow-hidden">
-            <Image src={phonepic} alt="خدمات ویژه سفرانه" width={300} height={160} priority={true}
+            <Image src={phonepic} alt="خدمات ویژه سفرانه" width={400} height={160} priority={true}
                 onContextMenu={e => e.preventDefault() } className="w-full h-full max-lg:h-80 max-md:h-full object-cover" />
             <div className="bg-blue-900 p-18 max-sm:p-10 ">
                 <h2 className="text-4xl text-white mb-12 font-bold">
@@ -56,7 +56,7 @@ const Section4: NextPage = () => {
                     </li>
                 </ul>
             </div>
-            <Image src={conferancepic} alt="خدمات ویژه سفرانه" width={380} height={150} priority={true}
+            <Image src={conferancepic} alt="خدمات ویژه سفرانه" width={400} height={150} priority={true}
                 onContextMenu={e => e.preventDefault() } className="w-full h-full max-lg:h-80 max-md:h-full object-cover" />
         </div>
     )
