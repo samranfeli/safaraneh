@@ -184,7 +184,7 @@ const EditProfileForm:React.FC<Props> = props => {
                                 </label>
                             </div>
 
-                            <div className="sm:grid sm:grid-cols-2 gap-4 mb-5">
+                            <div className="grid sm:grid-cols-2 gap-4 mb-5">
 
                                 <FormikField
                                     labelIsSimple

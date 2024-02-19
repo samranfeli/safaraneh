@@ -81,7 +81,7 @@ const TravelServices: React.FC<Props> = props => {
                             <User className={iconClassName} />
                             {t('sign-in')}
                         </Link>
-                        <Link onClick={()=>{setOpenMenu(false)}} href="" className={`${linkWithIconClassName} md:hidden`}>
+                        <Link onClick={()=>{setOpenMenu(false)}} href="/register" className={`${linkWithIconClassName} md:hidden`}>
                             <UserAdd className={iconClassName} />
                             {t('create-account')}
                         </Link>
@@ -91,7 +91,7 @@ const TravelServices: React.FC<Props> = props => {
                             {t('retrieve-my-booking')}
                         </Link>
 
-                        <Link onClick={()=>{setOpenMenu(false)}} href="" className={`${linkWithIconClassName} md:hidden border-b border-neutral-200 md:border-none mb-5 md:mb-0 pb-5 md:pb-0`}>
+                        <Link onClick={()=>{setOpenMenu(false)}} href="/myaccount/wallet" className={`${linkWithIconClassName} md:hidden border-b border-neutral-200 md:border-none mb-5 md:mb-0 pb-5 md:pb-0`}>
                             <Wallet className={iconClassName} />
                             0 ریال
                         </Link>                       

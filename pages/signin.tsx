@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import LoginSidebar from '@/modules/authentication/components/LoginSidebar';
 import BreadCrumpt from '@/modules/shared/components/ui/BreadCrumpt';
 import type { GetServerSideProps, NextPage } from 'next';
@@ -15,10 +15,13 @@ const ForgetPassword: NextPage = () => {
 
     const router = useRouter();
 
-    const userIsAuthenticated = useAppSelector(state => state.authentication.isAuthenticated)
-    if (userIsAuthenticated){
-        router.push("/myaccount/profile")
-    }
+    const userIsAuthenticated = useAppSelector(state => state.authentication.isAuthenticated);
+
+    useEffect(()=>{
+        if (userIsAuthenticated){
+            router.push("/myaccount/profile")
+        }
+    },[userIsAuthenticated]);
 
     const type = router.query?.type || "";
 
@@ -75,7 +78,7 @@ const ForgetPassword: NextPage = () => {
 export const getServerSideProps: GetServerSideProps = async (context: any) => {
     return ({
         props: {
-            ...await (serverSideTranslations(context.locale, ['common', 'hotel', 'payment']))
+            ...await (serverSideTranslations(context.locale, ['common']))
         },
     })
 }

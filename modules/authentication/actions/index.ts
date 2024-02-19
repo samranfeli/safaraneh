@@ -311,3 +311,94 @@ export const forgotPasswordByEmail = async (emailAddress: string, acceptLanguage
         return error
     }
 }
+
+export const register = async (params: { emailOrPhoneNumber: string, password: string }, acceptLanguage: string = 'fa-IR') => {
+
+    try {
+        let response = await axios.post(
+            `${ServerAddress.Type}${ServerAddress.Identity}${Identity.Register}`,
+            params,
+            {
+                headers: {
+                    Accept: 'application/json;charset=UTF-8',
+                    apikey: process.env.PROJECT_SERVER_APIKEY,
+                    "Accept-Language": acceptLanguage,
+                    Tenantid: process.env.PROJECT_SERVER_TENANTID
+                },
+            },
+        )
+        return response
+    } catch (error) {
+        return error
+    }
+}
+
+
+export const changePassword = async (params: { currentPassword: string; newPassword: string; token: string }, acceptLanguage: string = 'fa-IR') => {
+
+    try {
+        let response = await axios.post(
+            `${ServerAddress.Type}${ServerAddress.Identity}${Identity.ChangePassword}`,
+            {
+                currentPassword: params.currentPassword,
+                newPassword: params.newPassword
+            },
+            {
+                headers: {
+                    Accept: 'application/json;charset=UTF-8',
+                    apikey: process.env.PROJECT_SERVER_APIKEY,
+                    "Accept-Language": acceptLanguage,
+                    Authorization: `Bearer ${params.token}`,
+                    Tenantid: process.env.PROJECT_SERVER_TENANTID
+                },
+            },
+        )
+        return response
+    } catch (error) {
+        return error
+    }
+}
+
+export const sendEmailActivation = async (emailAddress: string, token: string, acceptLanguage: string = 'fa-IR') => {
+
+    try {
+        let response = await axios.post(
+            `${ServerAddress.Type}${ServerAddress.Identity}${Identity.SendEmailActivation}`,
+            {
+                emailAddress: emailAddress
+            },
+            {
+                headers: {
+                    Accept: 'application/json;charset=UTF-8',
+                    apikey: process.env.PROJECT_SERVER_APIKEY,
+                    "Accept-Language": acceptLanguage,
+                    Authorization: `Bearer ${token}`,
+                    Tenantid: process.env.PROJECT_SERVER_TENANTID
+                },
+            },
+        )
+        return response
+    } catch (error) {
+        return error
+    }
+}
+
+export const activateEmail = async (params: { code: string, userId: string }, acceptLanguage: string = 'fa-IR') => {
+    try {
+        let response = await axios.post(
+            `${ServerAddress.Type}${ServerAddress.Identity}${Identity.ActivateEmail}`,
+            params,
+            {
+                headers: {
+                    Accept: 'application/json;charset=UTF-8',
+                    apikey: process.env.PROJECT_SERVER_APIKEY,
+                    "Accept-Language": acceptLanguage,
+                    Tenantid: process.env.PROJECT_SERVER_TENANTID
+                }
+            }
+        )
+        return response
+    } catch (error) {
+        return error
+    }
+}
