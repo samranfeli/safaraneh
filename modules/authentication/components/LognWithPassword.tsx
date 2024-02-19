@@ -57,8 +57,6 @@ const LognWithPassword: React.FC<Props> = props => {
         });
         setLoding(false);
 
-        debugger;
-
         if (response.status == 200) {
 
             onSuccessLogin(response);
@@ -128,7 +126,7 @@ const LognWithPassword: React.FC<Props> = props => {
                                     }}
                                     name='phoneNumber'
                                     isTouched={touched.phoneNumber}
-                                    label={t("phone-number") + " (بدون صفر)"}
+                                    label={"شماره موبایل"}
                                     errorText={errors.phoneNumber}
                                     className="mb-5"
                                 />

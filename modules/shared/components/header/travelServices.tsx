@@ -4,6 +4,8 @@ import { useState, useEffect, useRef } from "react";
 
 import { Menu, DownCaret, Home, Close, User, UserAdd, Ticket, Wallet, Bed, Blog, Suitcase, Travel } from "../ui/icons";
 import Image from "next/image";
+import TrackOrder from "./TrackOrder";
+import { useAppSelector } from "../../hooks/use-store";
 
 type Props = {
     logo: string;
@@ -16,6 +18,8 @@ const TravelServices: React.FC<Props> = props => {
     const { t } = useTranslation('common');
 
     const { logo, siteName } = props;
+
+    const userIsAuthenticated = useAppSelector(state => state.authentication.isAuthenticated);
 
     const [openMenu, setOpenMenu] = useState(false);
 
@@ -69,11 +73,11 @@ const TravelServices: React.FC<Props> = props => {
                     </div>
                     <nav className="py-3 max-h-mobile-nav overflow-auto md:max-h-none">
                         
-                        <Link onClick={()=>{setOpenMenu(false)}} href="" className={`${linkWithIconClassName} md:hidden`}>
+                        <Link onClick={()=>{setOpenMenu(false)}} href="/" className={`${linkWithIconClassName} md:hidden`}>
                             <Home className={iconClassName} />
                             {t('home')}
                         </Link>
-                        <Link onClick={()=>{setOpenMenu(false)}} href="" className={`${linkWithIconClassName} md:hidden`}>
+                        <Link onClick={()=>{setOpenMenu(false)}} href="/signin" className={`${linkWithIconClassName} md:hidden`}>
                             <User className={iconClassName} />
                             {t('sign-in')}
                         </Link>
@@ -81,10 +85,12 @@ const TravelServices: React.FC<Props> = props => {
                             <UserAdd className={iconClassName} />
                             {t('create-account')}
                         </Link>
+                        
                         <Link onClick={()=>{setOpenMenu(false)}} href="" className={`${linkWithIconClassName} md:hidden`}>
                             <Ticket className={iconClassName} />
                             {t('retrieve-my-booking')}
                         </Link>
+
                         <Link onClick={()=>{setOpenMenu(false)}} href="" className={`${linkWithIconClassName} md:hidden border-b border-neutral-200 md:border-none mb-5 md:mb-0 pb-5 md:pb-0`}>
                             <Wallet className={iconClassName} />
                             0 ریال
