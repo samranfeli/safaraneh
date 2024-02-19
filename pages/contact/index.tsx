@@ -1,35 +1,34 @@
 import { NextPage } from "next";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 import Link from "next/link";
-import Map from '../../modules/shared/components/SitePage/Contact/ContactMap';
 import instagram from '../../public/images/footer/Instagram.svg';
 import twitter from '../../public/images/footer/Twitter.svg';
 import linkden from '../../public/images/footer/Linkedin.svg';
 import Image from "next/image";
-import { useEffect, useState } from "react";
-import { getPortal } from "@/modules/shared/actions/portalActions";
 import { PortalDataType } from "@/modules/shared/types/common";
 import BreadCrumpt from "@/modules/shared/components/ui/BreadCrumpt";
+import dynamic from "next/dynamic";
 
-const Contact: NextPage = () => {
-    const [portalData, setPortalData] = useState<PortalDataType>()
+const LeafletNoSsr = dynamic(() => import('../../modules/shared/components/ui/LeafletMap'), {
+    ssr: false
+});
 
-    useEffect(() => {
-        const getData = async () => {
-            const data = await getPortal()
-            setPortalData(data.data)
-            console.log(data);
-            
-        }
-        getData()
-    }, [])
+const Contact: NextPage = ({portalData }: { portalData?: PortalDataType}) => {
+
+    let longitude, latitude, zoom;
+
+    if(portalData){
+        latitude = portalData.Phrases.find(item => item.Keyword === "Latitude")?.Value;
+        longitude = portalData.Phrases.find(item => item.Keyword === "Longitude")?.Value;
+        zoom = portalData.Phrases.find(item => item.Keyword === "MapZoom")?.Value;
+    }
 
     return (
         <>
+        <div className="max-w-container mx-auto px-5 py-4 max-sm:p-2">
             <BreadCrumpt items={[{ label: 'تماس ما' }]} />
-            <div className="max-w-container m-auto p-5 max-sm:p-2 mt-5">
-            <h2 className="text-3xl font-bold">تماس با ما</h2>
-                <div className="pl-5 pr-5 pt-10 pb-10 border-2 border-gray mt-7 rounded-md bg-white grid grid-cols-2 gap-8 max-lg:grid-cols-1">
+            <h2 className="text-3xl font-bold mt-5">تماس با ما</h2>
+                <div className="pl-5 pr-5 pt-10 pb-10 border-2 border-gray mt-7 mb-10 rounded-md bg-white grid grid-cols-2 gap-8 max-lg:grid-cols-1">
                     <div className="space-y-3">
                         <h5 className="text-xl font-semibold">با ما در ارتباط باشید</h5>
                         <address className="not-italic">
@@ -74,8 +73,14 @@ const Contact: NextPage = () => {
                         </div>
                     </div>
                     <div>
-                        <h5 className="text-xl font-semibold">آدرس ما بر روی نقشه</h5>
-                        <Map />
+                        <h5 className="text-xl font-semibold mb-5">آدرس ما بر روی نقشه</h5>
+                      
+                        {!!(latitude && longitude) && <LeafletNoSsr
+                            className='h-80 w-full rounded-xl'
+                            location={[+latitude, +longitude]}
+                            zoom={zoom ? +zoom : 15}
+                        />}
+
                     </div>
                 </div>
             </div>
