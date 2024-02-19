@@ -15,7 +15,7 @@ const Section2: NextPage = () => {
                 </p>
                 <p className="font-bold">سفرانه مشرق زمین</p>
             </div>
-            <Image src={alley} alt="سفرانه مشرق زمین" width={500} height={200} className="w-full object-cover z-0"
+            <Image src={alley} alt="سفرانه مشرق زمین" width={200} height={100} className="w-full object-cover z-0" priority={true}
             onContextMenu={e => e.preventDefault()}/>
         </div>
     )
