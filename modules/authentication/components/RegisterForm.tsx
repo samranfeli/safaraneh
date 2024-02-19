@@ -1,19 +1,18 @@
-import { useState } from 'react'
-import Button from "@/modules/shared/components/ui/Button";
-import PhoneInput from "@/modules/shared/components/ui/PhoneInput";
-import { Form, Formik } from "formik";
-import { useTranslation } from "next-i18next";
-import FormikField from '@/modules/shared/components/ui/FormikField';
-import { validateEmail, validateRequied } from '@/modules/shared/helpers/validation';
+import { useState } from 'react';
+import { useTranslation } from "next-i18next"
+import { Form, Formik } from 'formik';
+
 import { useAppDispatch } from '@/modules/shared/hooks/use-store';
 import { setReduxUser } from '../store/authenticationSlice';
-import { loginWithPassword } from '../actions';
+import PhoneInput from '@/modules/shared/components/ui/PhoneInput';
+import FormikField from '@/modules/shared/components/ui/FormikField';
+import { validateEmail, validateRequied } from '@/modules/shared/helpers/validation';
+import Button from '@/modules/shared/components/ui/Button';
 import { setReduxError } from '@/modules/shared/store/errorSlice';
+import { loginWithPassword, register } from '../actions';
+import Link from 'next/link';
 
-type Props = {
-    onCloseLogin: () => void;
-}
-const LognWithPassword: React.FC<Props> = props => {
+const RegisterForm: React.FC = () => {
 
     const { t } = useTranslation('common');
 
@@ -25,7 +24,6 @@ const LognWithPassword: React.FC<Props> = props => {
     const onSuccessLogin = (response: any) => {
         const token = response.data?.result?.accessToken
         localStorage.setItem('Token', token);
-        props.onCloseLogin();
 
         dispatch(setReduxUser({
             isAuthenticated: true,
@@ -42,7 +40,7 @@ const LognWithPassword: React.FC<Props> = props => {
     }) => {
 
         if (!values.email && !values.phoneNumber) return;
-        
+
         setLoding(true);
 
         dispatch(setReduxUser({
@@ -51,17 +49,32 @@ const LognWithPassword: React.FC<Props> = props => {
             getUserLoading: true
         }));
 
-        const response: any = await loginWithPassword({
+        const response: any = await register({
             password: values.password,
             emailOrPhoneNumber: (type === 'email' ? values.email : values.phoneNumber) as string
         });
-        setLoding(false);
 
         if (response.status == 200) {
 
-            onSuccessLogin(response);
+            const loginResponse: any = await loginWithPassword({
+                password: values.password,
+                emailOrPhoneNumber: (type === 'email' ? values.email : values.phoneNumber) as string
+            });
+
+            if (loginResponse.status == 200) {
+                onSuccessLogin(loginResponse);
+            } else {
+                if (response?.response?.data?.error?.message) {
+                    dispatch(setReduxError({
+                        title: t('error'),
+                        message: response.response.data.error.message,
+                        isVisible: true
+                    }))
+                }
+            }
 
         } else {
+            setLoding(false);
 
             dispatch(setReduxUser({
                 isAuthenticated: false,
@@ -69,7 +82,8 @@ const LognWithPassword: React.FC<Props> = props => {
                 getUserLoading: false
             }));
 
-            if(response?.response?.data?.error?.message){
+
+            if (response?.response?.data?.error?.message) {
                 dispatch(setReduxError({
                     title: t('error'),
                     message: response.response.data.error.message,
@@ -137,8 +151,8 @@ const LognWithPassword: React.FC<Props> = props => {
                                 <FormikField
                                     labelIsSimple
                                     showRequiredStar
-                                    className="mb-5 font-sans"
                                     fieldClassName="rtl:text-right ltr"
+                                    className="mb-5 font-sans"
                                     //onChange={() => { setError(false); }}
                                     setFieldValue={setFieldValue}
                                     errorText={errors.email as string}
@@ -153,7 +167,8 @@ const LognWithPassword: React.FC<Props> = props => {
 
                             <FormikField
                                 isPassword
-                                className="mb-5"
+                                className="mb-8"
+                                fieldClassName="rtl:text-right ltr"
                                 labelIsSimple
                                 showRequiredStar
                                 setFieldValue={setFieldValue}
@@ -173,8 +188,23 @@ const LognWithPassword: React.FC<Props> = props => {
                                 className="h-12 w-full"
                                 loading={loading}
                             >
-                                {t("sign-in")}
+                                {t('create-account')}
                             </Button>
+
+                            <p className='text-sm text-center my-4'>
+                                حساب کاربری دارید؟
+                                <Link
+                                    href={'/signin'}
+                                    className='text-blue-500 mx-1'
+                                >
+                                    {t('sign-in')}
+                                </Link>
+                            </p>
+
+                            <p className='text-neutral-400 text-2xs'>
+                                با ثبت نام شما در وب سایت ما قوانین و مقررات و همچنین شرایط مربوط به حفظ حریم خصوصی توسط شما تایید می شود.
+                            </p>
+
 
                         </Form>
                     )
@@ -184,4 +214,4 @@ const LognWithPassword: React.FC<Props> = props => {
     )
 }
 
-export default LognWithPassword;
+export default RegisterForm;

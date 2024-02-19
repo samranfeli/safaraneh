@@ -41,7 +41,7 @@ const Header: React.FC<Props> = props => {
                 </a>
             </div>}
 
-            <div className="max-w-container mx-auto px-3 md:px-5 py-3 clearfix">
+            <div className="max-w-container mx-auto px-3 md:px-5 py-3 clearfix relative">
 
                 {!!logo && <Link href="/" className="block md:rtl:float-right md:ltr:float-left md:rtl:ml-5 md:ltr:mr-5">
                     <Image src={logo} alt={siteName} width={115} height={48} onContextMenu={e => { e.preventDefault() }} className="h-12 mx-auto" />

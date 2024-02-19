@@ -61,7 +61,7 @@ const AccountSidebar: React.FC<Props> = props => {
                         {t("hello")} {user?.firstName || t('dear-user')}
                     </h5>
 
-                    {!!user?.emailAddress && <div className='mb-2 sm:mb-5'>
+                    {!!user?.emailAddress && <div className='mb-2 sm:mb-5 font-sans'>
                         {user.emailAddress}
                     </div>}
 

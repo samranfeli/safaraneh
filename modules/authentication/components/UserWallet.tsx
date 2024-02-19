@@ -1,15 +1,12 @@
 import { getUserBalance } from "@/modules/payment/actions";
 import { useAppDispatch, useAppSelector } from "@/modules/shared/hooks/use-store";
-import { useTranslation } from "next-i18next";
 import Link from "next/link";
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { setReduxBalance } from "../store/authenticationSlice";
 import { numberWithCommas } from "@/modules/shared/helpers";
 
 
 const UserWallet = () => {
-    const { t } = useTranslation('common');
-
     const dispatch = useAppDispatch();
 
     const balance = useAppSelector(state => state.authentication.balance);
@@ -20,7 +17,7 @@ const UserWallet = () => {
             if (token) {
                 const response: any = await getUserBalance(token, "IRR");
                 if (response.data?.result?.amount !== null) {
-                    dispatch(setReduxBalance(response.data.result.amount))
+                    dispatch(setReduxBalance(response?.data?.result?.amount))
                 }
             }
         }
