@@ -26,10 +26,10 @@ const NewBlog: NextPage<Props> = (props) => {
                         </Link>
     
                     <div className="w-full col-span-2 rounded p-5 border-gray-200 border-2 max-sm:border-0 max-sm:p-2 max-sm:pt-0 max-sm:mb-6">
-                        <Link href={`/blog/category/${blog.categories[0]}`} className="pr-2 max-sm:text-xs text-red-600 block hover:text-red-400 translation-all duration-300">
+                        <Link href={`/blog/category/${blog.categories[0]}`} className="pr-2 max-sm:text-xs text-red-600 block hover:text-red-400 duration-300">
                                 {blog.categories_names[0]}
                         </Link>
-                        <Link href={`/blog/${blog.slug}`} className="leading-9 font-bold text-lg max-sm:text-base p-2 pt-1 hover:text-blue-900 block translation-all duration-300">
+                        <Link href={`/blog/${blog.slug}`} className="leading-9 font-bold text-lg max-sm:text-base p-2 pt-1 hover:text-blue-900 block duration-300">
                             {blog.title.rendered}
                         </Link>
                         <div className="text-xs max-md:text-3xs text-gray-500 pr-2 max-sm:mt-1">{parse(blog.excerpt.rendered)} </div>
@@ -39,12 +39,12 @@ const NewBlog: NextPage<Props> = (props) => {
                                 <p className="font-bold text-3xl">.</p>
                                 <p>{blog.acf.time_read}</p>
                             </div>
-                            <Link href={`blog/${blog.slug}`} className="flex ml-4 font-bold text-sm hover:text-blue-700 translation-all duraction-300 max-sm:hidden">        
+                            <Link href={`blog/${blog.slug}`} className="flex ml-4 font-bold text-sm hover:text-blue-700 duraction-300 max-sm:hidden">        
                                     <p>ادامه مطلب</p>
                                     <ArrowLeft
-                                    className="w-7 mr-2 bg-gray-200 rounded-2xl p-1 ltr:hidden hover:bg-blue-600 translation-all duration-300" />
+                                    className="w-7 mr-2 bg-gray-200 rounded-2xl p-1 ltr:hidden hover:bg-blue-600 duration-300" />
                                     <ArrowRight
-                                    className="w-7 mr-2 bg-gray-200 rounded-2xl p-1 rtl:hidden hover:bg-blue-500 translation-all duration-300" />    
+                                    className="w-7 mr-2 bg-gray-200 rounded-2xl p-1 rtl:hidden hover:bg-blue-500 duration-300" />    
                             </Link>
                         </div>
                     </div>
@@ -53,7 +53,7 @@ const NewBlog: NextPage<Props> = (props) => {
                 )
             }
             <Link href='/blog-list'>
-            <div  className="w-full rounded text-center mt-14 relative bottom-5 p-4 hover:bg-gray-100 translation-all duration-300 border-gray-200 border-2">
+            <div  className="w-full rounded text-center mt-14 relative bottom-5 p-4 hover:bg-gray-100 duration-300 border-gray-200 border-2">
                         <p>مشاهده مطالب بیشتر</p>
             </div>
             </Link>

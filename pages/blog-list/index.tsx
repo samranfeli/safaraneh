@@ -1,10 +1,10 @@
 import { getBlogs , GetCategories, } from "@/modules/blogs/actions";
-import BreadCrumpt from "@/modules/blogs/components/template/BreadCrumpt";
 import Title from "@/modules/blogs/components/template/Title";
 import { BlogItemType, CategoriesNameType } from "@/modules/blogs/types/blog";
 import { NextPage } from "next";
 import Content from "@/modules/blogs/components/template/Content";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
+import BreadCrumpt from "@/modules/shared/components/ui/BreadCrumpt";
 
 
 const BlogList: NextPage<any> = ({ blogsPage, categories_name, pages,recentBlogs }:
@@ -12,10 +12,10 @@ const BlogList: NextPage<any> = ({ blogsPage, categories_name, pages,recentBlogs
 
         return (
             <div className="bg-white">
-                <BreadCrumpt data={'جدیدترین مقالات'} page="بلاگ" />
+                <BreadCrumpt items={[{label:"بلاگ" , link : '/blog'}, {label: "جدیدترین مقالات"}]} />
                 <Title data={'جدیدترین مطالب'} />
                 <Content Blogs={blogsPage} LastBlogs={recentBlogs?.slice(0, 3)} CategoriesName={categories_name} blogPages={pages} />
-        </div>
+            </div>
     )
 }
 

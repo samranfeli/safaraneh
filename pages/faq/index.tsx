@@ -1,5 +1,5 @@
-import BreadCrumpt from "@/modules/blogs/components/template/BreadCrumpt";
 import Accordion from "@/modules/shared/components/ui/Accordion";
+import BreadCrumpt from "@/modules/shared/components/ui/BreadCrumpt";
 import { NextPage } from "next";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 
@@ -162,7 +162,7 @@ const faq: NextPage = () => {
 
     return (
         <>
-        <BreadCrumpt page="سوالات متداول"/>
+        <BreadCrumpt items={[{ label: 'سوالات متداول' }]} />
         <div className="max-w-container m-auto p-5 max-sm:p-2 mt-5">
         <h2 className="font-bold text-3xl">سوالات متداول</h2>
         <div className="pl-5 pr-5 pt-5 pb-10 mt-5 border-2 border-gray rounded-md space-y-3 bg-white">

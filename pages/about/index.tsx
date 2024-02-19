@@ -1,4 +1,3 @@
-import BreadCrumpt from "@/modules/blogs/components/template/BreadCrumpt";
 import { NextPage } from "next";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 import mojavez from '../../public/images/about/mojavez .jpg';
@@ -7,6 +6,7 @@ import honor1 from '../../public/images/about/download.png';
 import honor2 from '../../public/images/about/download (1).png';
 import honor3 from '../../public/images/about/download (2).png';
 import honor4 from '../../public/images/about/download (3).png';
+import BreadCrumpt from "@/modules/shared/components/ui/BreadCrumpt";
 
 const about: NextPage = () => {
     const list1 = [
@@ -40,9 +40,10 @@ const about: NextPage = () => {
         'کسب تقدیرنامه از جانب سفیر محترم بلغارستان در تهران، به دلیل میزبانی و اجرای کلیه امور اقامتی سفر وزیر اقتصاد بلغارستان و هیئت همراه به تهران',
         'کسب لوح تقدیر از جانب ریاست محترم دانشگاه آزاد اسلامی واحد تهران غرب به دلیل برگزاری جشنواره گردشگری خوراک'
     ]
+
     return (
         <>
-            <BreadCrumpt page="درباره ما" />
+            <BreadCrumpt items={[{ label: 'درباره ما' }]} />
             <div className="max-w-container m-auto p-5 max-sm:p-2 mt-6">
             <h2 className="text-3xl font-bold">درباره ما</h2>
                 <div className="bg-white rounded-md border-2 border-gray mt-10 p-7 max-md:p-3 pt-10 pb-10 space-y-7">

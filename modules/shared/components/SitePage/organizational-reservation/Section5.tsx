@@ -6,7 +6,7 @@ import { Field, Form, Formik } from "formik";
 import { useState } from "react";
 import { ServerAddress } from "@/enum/url";
 import axios from "axios";
-import { validateEmailNotReqired, validateRequied } from "../shared/helpers/validation";
+import { validateEmailNotReqired, validateRequied } from "../../../helpers/validation";
 
 const Section5: NextPage = () => {
 
@@ -56,21 +56,21 @@ const Section5: NextPage = () => {
         <Form>
         <div className="space-y-5">
             <Field name="name" placeholder='نام'
-            className={`${errors.name&&touched.name ? 'border-red-600' : 'border-gray-300' } border-2 p-2 w-full rounded outline-none translation-all duration-300`}
+            className={`${errors.name&&touched.name ? 'border-red-600' : 'border-gray-300' } border-2 p-2 w-full rounded outline-none duration-300`}
             validate={(value: string) => validateRequied(value, 'لطفا نام خود را وارد کنید')}/>
-            {errors.name && touched.name && <small className="text-red-600 translation-all duration-200">{errors.name}</small>}
+            {errors.name && touched.name && <small className="text-red-600 duration-200">{errors.name}</small>}
             <br/>  
             <Field name="email" placeholder="ایمیل"
-            className={`${errors.email&&touched.email ? 'border-red-600' : 'border-gray-300' } border-2 p-2 w-full rounded outline-none  translation-all duration-300`}
+            className={`${errors.email&&touched.email ? 'border-red-600' : 'border-gray-300' } border-2 p-2 w-full rounded outline-none  duration-300`}
             validate={(value: string) => validateEmailNotReqired({value,invalidMessage: 'ایمیل معتبر نیست'}) || validateRequied(value,'ایمیل را وارد کنید')}
             />
             {errors.email && touched.email && <small className="text-red-600">{errors.email}</small>}
             <Field name="name" placeholder="عنوان"
-            className={`${errors.title&&touched.title ? 'border-red-600' : 'border-gray-300' } border-2 p-2 w-full rounded outline-none translation-all duration-300`}
+            className={`${errors.title&&touched.title ? 'border-red-600' : 'border-gray-300' } border-2 p-2 w-full rounded outline-none duration-300`}
             />
             <br/>        
             <Field name="text" as='textarea' placeholder="متن"
-                className={`${errors.text&&touched.text ? 'border-red-600' : 'border-gray-300' } border-2 p-2 h-32 w-full rounded outline-none translation-all duration-300`}
+                className={`${errors.text&&touched.text ? 'border-red-600' : 'border-gray-300' } border-2 p-2 h-32 w-full rounded outline-none duration-300`}
                 validate={(value: any) => validateRequied(value, 'متن درخواست را وارد کنید')}/>
             {errors.text && touched.text && <small className="text-red-600">{errors.text}</small>}
                 <button

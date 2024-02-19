@@ -2,7 +2,7 @@ import { NextPage } from "next";
 import { MapContainer, Marker, TileLayer } from "react-leaflet";
 import "leaflet/dist/leaflet.css";
 import { useEffect, useState } from "react";
-import { getPortal } from "../shared/actions/portalActions";
+import { getPortal } from "../../../actions/portalActions";
 import MapIcon from '../../public/images/organizational-reservation/marker-icon-2x.png';
 
 const MapContact: NextPage = () => {
@@ -20,10 +20,12 @@ const MapContact: NextPage = () => {
         }
         getData()
     }, [])
+
+    
     return (
     <>
         {
-            MapZone.length &&
+            MapZone.length ?
                 <MapContainer
                     center={[MapZone[0], MapZone[1]]}
                     zoom={MapZone[2]} scrollWheelZoom={false} className="h-72 w-full mt-3 rounded-md">
@@ -33,7 +35,9 @@ const MapContact: NextPage = () => {
                     />
 
                     <Marker position={[35.804149, 51.472863]}   />
-                </MapContainer> 
+            </MapContainer> 
+            :
+            <div></div>              
         }
     </>        
     )

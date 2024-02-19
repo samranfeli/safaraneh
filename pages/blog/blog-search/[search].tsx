@@ -1,20 +1,20 @@
 import {  GetCategories, getBlogs } from "@/modules/blogs/actions";
-import BreadCrumpt from "@/modules/blogs/components/template/BreadCrumpt";
 import Title from "@/modules/blogs/components/template/Title";
 import Content from "@/modules/blogs/components/template/Content";
 import { NextPage } from "next";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 import { useRouter } from "next/router";
 import { BlogItemType, CategoriesNameType } from "@/modules/blogs/types/blog";
+import BreadCrumpt from "@/modules/shared/components/ui/BreadCrumpt";
 
 const Search: NextPage<any> = ({ SearchBlog, LastBlogs, categories_name, pages }:
     {SearchBlog: BlogItemType[], LastBlogs:BlogItemType[], categories_name:CategoriesNameType[],pages:string}) => {
     
-    const NavData = useRouter().query.search
+    const SearchValue = useRouter().query.search
     return (
         <div className="bg-white">
-                <BreadCrumpt data={`جستوجوی"${NavData}"`} page='بلاگ' />
-                <Title data={'جستجوی'} searchValue={NavData} />
+                <BreadCrumpt items={[{label: "بلاگ", link: "/blog"}, {label: `جستجوی"${SearchValue}"`}]} />
+                <Title data={'جستجوی'} searchValue={`"${SearchValue}"`} />
                 <Content Blogs={SearchBlog} LastBlogs={LastBlogs.slice(0,3)} CategoriesName={categories_name} blogPages={pages}/>
         </div>
     )

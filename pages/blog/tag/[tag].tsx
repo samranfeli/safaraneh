@@ -1,18 +1,19 @@
 import { GetTagName , GetCategories , getBlogs} from "@/modules/blogs/actions";
 import Title from "@/modules/blogs/components/template/Title";
-import BreadCrumpt from "@/modules/blogs/components/template/BreadCrumpt";
 import { NextPage } from "next";
 import Content from "@/modules/blogs/components/template/Content";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 import { BlogItemType, CategoriesNameType } from "@/modules/blogs/types/blog";
+import BreadCrumpt from "@/modules/shared/components/ui/BreadCrumpt";
 
 
 const Tag: NextPage<any> = ({ TagBlogs, TagName, categories_name, recentBlogs, pages } :
     {TagBlogs : BlogItemType[] , TagName:any , categories_name:CategoriesNameType[], recentBlogs: BlogItemType[],pages:string}) => {
     
+    const tagname : string = TagName.name || ''
     return (
         <div className="bg-white">
-                <BreadCrumpt data={TagName.name} page="بلاگ" />
+                <BreadCrumpt items={[{label: "بلاگ", link: "/blog"}, {label: tagname}]} />
                 <Title data={TagName?.name} />
                 <Content Blogs={TagBlogs} blogPages={pages}  LastBlogs={recentBlogs?.slice(0,3)} CategoriesName={categories_name}  />
         </div>
