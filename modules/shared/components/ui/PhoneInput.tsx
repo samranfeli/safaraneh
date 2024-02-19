@@ -147,7 +147,7 @@ const PhoneInput: React.FC<Props> = props => {
                         </label>
                     ) : (<div />)}
                     {props.showNotConfirmedBadge && (
-                        <div className='bg-amber-100 text-xs text-neutral-500 leading-6 px-3 rounded-lg after:inline-block after:w-2 after:h-2 after:bg-amber-400 after:rounded-full after:align-middle after:rtl:mr-1 after:ltr:ml-1'>
+                        <div className='bg-amber-100 text-xs text-neutral-500 leading-6 px-3 rounded-lg before:inline-block before:w-2 before:h-2 before:bg-amber-400 before:rounded-full before:align-middle before:ltr:mr-1 before:rtl:ml-1'>
                             تایید نشده
                         </div>
                     )}

@@ -1,28 +1,46 @@
-import BreadCrumpt from '@/modules/shared/components/ui/BreadCrumpt';
-import type { GetServerSideProps, NextPage } from 'next';
-import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 import Head from 'next/head';
 import Image from 'next/image';
-import PasswordResetForm from '@/modules/authentication/components/PasswordResetForm';
+import { useRouter } from 'next/router';
+import type { GetServerSideProps, NextPage } from 'next';
+import { useTranslation } from 'next-i18next';
+import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
+import { useEffect } from 'react';
 
-const ForgetPassword: NextPage = () => {
+import BreadCrumpt from '@/modules/shared/components/ui/BreadCrumpt';
+import { useAppSelector } from '@/modules/shared/hooks/use-store';
+import RegisterForm from '@/modules/authentication/components/RegisterForm';
+
+const Register: NextPage = () => {
+
+    const { t } = useTranslation('common');
+
+    const router = useRouter();
+
+    const userIsAuthenticated = useAppSelector(state => state.authentication.isAuthenticated)
+    useEffect(() => {
+        if (userIsAuthenticated) {
+            router.push("/myaccount/profile")
+        }
+    }, [userIsAuthenticated]);
 
     return (
         <>
             <Head>
-                <title>بازنشانی کلمه عبور </title>
+                <title> {t('create-account')} </title>
             </Head>
             <div className='max-w-container mx-auto px-5 py-4'>
 
                 <BreadCrumpt
                     items={[
-                        { label: "بازنشانی کلمه عبور" },
+                        { label: t('create-account') },
                     ]}
                 />
 
                 <div className='grid gap-4 md:grid-cols-3'>
 
-                    <PasswordResetForm />
+                    <div className='border border-neutral-300 bg-white rounded-md mb-4 py-6'>
+                        <RegisterForm />
+                    </div>
 
                     <div className='md:col-span-2'>
                         <div className='flex flex-col items-center justify-center px-5 py-10 gap-3 text-center'>
@@ -58,4 +76,4 @@ export const getServerSideProps: GetServerSideProps = async (context: any) => {
     })
 }
 
-export default ForgetPassword;
+export default Register;
