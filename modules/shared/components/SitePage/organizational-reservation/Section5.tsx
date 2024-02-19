@@ -1,6 +1,6 @@
 import { NextPage } from "next";
-import SendCommentPic from '../../public/images/organizational-reservation/SendCommentPic.jpg';
-import SendCommentpng from '../../public/images/organizational-reservation/send-symbol-or.png';
+import SendCommentPic from '../../../../../public/images/organizational-reservation/SendCommentPic.jpg';
+import SendCommentpng from '../../../../../public/images/organizational-reservation/send-symbol-or.png';
 import Image from "next/image";
 import { Field, Form, Formik } from "formik";
 import { useState } from "react";

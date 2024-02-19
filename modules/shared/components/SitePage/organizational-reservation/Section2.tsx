@@ -1,5 +1,5 @@
 import { NextPage } from "next";
-import alley from '../../public/images/organizational-reservation/street.jpg';
+import alley from '../../../../../public/images/organizational-reservation/street.jpg';
 import Image from "next/image";
 
 const Section2: NextPage = () => {

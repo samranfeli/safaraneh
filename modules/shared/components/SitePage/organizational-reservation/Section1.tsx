@@ -1,8 +1,8 @@
 import { NextPage } from "next";
-import pic from '../../public/images/organizational-reservation/em-company.jpg';
-import winningpic from '../../public/images/organizational-reservation/winner.png';
-import supportpic from '../../public/images/organizational-reservation/customer-service.png';
-import handeShakeepic from '../../public/images/organizational-reservation/handshake.png';
+import pic from '../../../../../public/images/organizational-reservation/em-company.jpg';
+import winningpic from '../../../../../public/images/organizational-reservation/winner.png';
+import supportpic from '../../../../../public/images/organizational-reservation/customer-service.png';
+import handeShakeepic from '../../../../../public/images/organizational-reservation/handshake.png';
 import Image from "next/image";
 
 const Section1: NextPage = () => {

@@ -1,6 +1,6 @@
 import { NextPage } from "next";
-import phonepic from '../../public/images/organizational-reservation/Phone.jpg';
-import conferancepic from '../../public/images/organizational-reservation/conference.jpg';
+import phonepic from '../../../../../public/images/organizational-reservation/Phone.jpg';
+import conferancepic from '../../../../../public/images/organizational-reservation/conference.jpg';
 import Image from "next/image";
 
 const Section4: NextPage = () => {
