@@ -1,10 +1,8 @@
 import Button from "@/modules/shared/components/ui/Button";
-import FormikField from "@/modules/shared/components/ui/FormikField";
-import { validateEmail } from "@/modules/shared/helpers/validation";
 import { useAppDispatch, useAppSelector } from "@/modules/shared/hooks/use-store";
 import { Form, Formik } from "formik";
 import { useTranslation } from "next-i18next";
-import { sendVerificationSms, updateProfileEmail, updateProfilePhoneNumber, verifySmsCode } from "../../actions";
+import { sendVerificationSms, updateProfilePhoneNumber, verifySmsCode } from "../../actions";
 import { useState, useEffect } from "react";
 import { setReduxNotification } from "@/modules/shared/store/notificationSlice";
 import PhoneInput from "@/modules/shared/components/ui/PhoneInput";
@@ -47,12 +45,12 @@ const PhoneActivationForm: React.FC<Props> = props => {
         }
     }
 
-    const submitHandler = async (params: any) => {
+    const submitHandler = async (values: {phoneNumber:string}) => {
 
         const token = localStorage.getItem('Token');
         if (!token) return;
 
-        setSavedPhoneNumber(params.phoneNumber);
+        setSavedPhoneNumber(values.phoneNumber);
 
         setSubmitLoading(true);
 
@@ -62,7 +60,7 @@ const PhoneActivationForm: React.FC<Props> = props => {
             isVisible: false
         }));
 
-        const updateResponse: any = await updateProfilePhoneNumber(params, token);
+        const updateResponse: any = await updateProfilePhoneNumber(values.phoneNumber, token);
 
         setSubmitLoading(false);
 
@@ -124,7 +122,6 @@ const PhoneActivationForm: React.FC<Props> = props => {
 
         const token = localStorage.getItem('Token');
         if (!token) return;
-        debugger;
 
         setSubmitVerificationCodeLoading(true);
 
@@ -188,10 +185,10 @@ const PhoneActivationForm: React.FC<Props> = props => {
                     return (
                         <Form autoComplete='off' >
 
-
-                            <div className="sm:grid sm:grid-cols-2 gap-4 mb-5">
+                            <div className="grid sm:grid-cols-4 gap-3 mb-2 lg:w-1/2 mb-5">
                                 <PhoneInput
                                     disabled={!!user?.isPhoneNumberConfirmed}
+                                    className="sm:col-span-3"
                                     labelIsSimple
                                     showRequiredStar
                                     defaultCountry={
@@ -209,13 +206,13 @@ const PhoneActivationForm: React.FC<Props> = props => {
                                     label={t("phone-number") + " (بدون صفر)"}
                                     errorText={errors.phoneNumber}
                                     initialValue={user.phoneNumber}
-                                    showNotConfirmedBadge={user.isPhoneNumberConfirmed === false}
+                                    showNotConfirmedBadge={user?.phoneNumber && user.isPhoneNumberConfirmed === false}
                                 />
 
                                 <div>
                                     {!!user?.isPhoneNumberConfirmed || <Button
                                         type="submit"
-                                        className="h-10 px-8 rounded w-auto mt-7"
+                                        className="h-10 px-3 rounded w-24 sm:w-full sm:mt-7"
                                         loading={submitLoading}
                                     >
                                         ذخیره
@@ -229,7 +226,7 @@ const PhoneActivationForm: React.FC<Props> = props => {
                 }}
             </Formik>}
 
-            {!!(user.isPhoneNumberConfirmed === false) && (
+            {!!(user?.phoneNumber && user.isPhoneNumberConfirmed === false) && (
                 <>
                     <p className="bg-amber-100 text-neutral-500 px-3 text-xs rounded-lg inline-block">
                         <InfoCircle className="w-5 h-5 fill-amber-600 inline-block align-middle rtl:ml-2 ltr:mr-2" />
