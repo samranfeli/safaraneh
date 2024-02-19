@@ -368,7 +368,7 @@ const ForgetPasswordForm: React.FC<Props> = props => {
                             <p className='mb-1'>
                                 لینک فعالسازی برای ایمیل زیر ارسال گردید :
                             </p>
-                            <p className='mb-5'> {savedEmail} </p>
+                            <p className='mb-5 font-sans'> {savedEmail} </p>
 
                             <p className='text-xs text-neutral-400'> اگر ایمیل مورد نظر را دریافت نکردید! لطفا پوشه spam یا junk را بررسی کنید. </p>
 
