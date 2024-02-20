@@ -15,9 +15,12 @@ const UserWallet = () => {
         const fetchBalance = async () => {
             const token = localStorage.getItem('Token');
             if (token) {
+                dispatch(setReduxBalance({balance:undefined, loading:true}));
                 const response: any = await getUserBalance(token, "IRR");
                 if (response.data?.result?.amount !== null) {
-                    dispatch(setReduxBalance(response?.data?.result?.amount))
+                    dispatch(setReduxBalance({balance: response?.data?.result?.amount, loading:false}))
+                }else{
+                    dispatch(setReduxBalance({balance:undefined, loading:false}));
                 }
             }
         }

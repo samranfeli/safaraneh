@@ -17,7 +17,7 @@ import Services from '@/modules/home/components/Services';
 import { PortalDataType } from '@/modules/shared/types/common';
 
 const Home: NextPage = ({ blogs, portalData }: { blogs?: BlogItemType[], portalData?: PortalDataType}) => {
-    
+
   const logo = portalData?.Phrases?.find(item => item.Keyword === "Logo")?.ImageUrl || "";
   const siteName = portalData?.Phrases?.find(item => item.Keyword === "Name")?.Value || "";
 

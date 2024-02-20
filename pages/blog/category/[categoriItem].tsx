@@ -1,4 +1,3 @@
-import NavbarBlog from "@/modules/blogs/components/template/BreadCrumpt";
 import Title from "@/modules/blogs/components/template/Title";
 import { NextPage } from "next";
 import { GetCategories, getBlogs } from "@/modules/blogs/actions";
@@ -6,6 +5,7 @@ import { BlogItemType, CategoriesNameType } from "@/modules/blogs/types/blog";
 import { useRouter } from "next/router";
 import Content from "@/modules/blogs/components/template/Content";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
+import BreadCrumpt from "@/modules/shared/components/ui/BreadCrumpt";
 
 
 const Category: NextPage<any> = ({ LastBlogs, BlogCategory, categories_name, pages }:
@@ -13,12 +13,12 @@ const Category: NextPage<any> = ({ LastBlogs, BlogCategory, categories_name, pag
     
     
     const query: any = useRouter().query.categoriItem;
-    const NavData = categories_name?.find(item => item.id == +query)?.name || null
+    const CategoryName : string = categories_name?.find(item => item.id == +query)?.name || ""
     const TitleData = BlogCategory?.find((item : any) => item.categories[0] == +query)?.categories_names?.[0]
 
     return (
         <div className="bg-white">
-            <NavbarBlog data={NavData} />
+            <BreadCrumpt items={[{label: "بلاک" , link : "/blog"}, {label: CategoryName}]} />
             <Title data={TitleData} />
             <Content Blogs={BlogCategory} blogPages={pages}  LastBlogs={LastBlogs?.slice(0,3)} CategoriesName={categories_name} />
         </div>
