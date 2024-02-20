@@ -6,7 +6,7 @@ export const numberWithCommas = (x: number) => {
     }
 }
 
-export const dateDiplayFormat = ({ date, format, locale }: { date: string; format?: "ddd dd mm" | "dd mm yyyy" | "yyyy/mm/dd" | "YYYY-MM-DD", locale?: string }): string => {
+export const dateDiplayFormat = ({ date, format, locale }: { date: string; format?: "ddd dd mm" | "dd mm yyyy" | "yyyy/mm/dd" | "YYYY-MM-DD" | "yyyy/mm/dd h:m" , locale?: string }): string => {
 
     if (!date) return "";
 
@@ -17,6 +17,9 @@ export const dateDiplayFormat = ({ date, format, locale }: { date: string; forma
     const day2digit = dateObject.toLocaleString(locale, { day: "2-digit" })
     const month2digit = dateObject.toLocaleString(locale, { month: "2-digit" });
     const year = dateObject.toLocaleString(locale, { year: "numeric" });
+
+    let h = dateObject.getHours().toString().padStart(2, '0');
+    let m = dateObject.getMinutes().toString().padStart(2, '0');
 
     if (format === "ddd dd mm") {
         return (`${weekDay} ${day} ${month}`)
@@ -31,6 +34,10 @@ export const dateDiplayFormat = ({ date, format, locale }: { date: string; forma
     }
     if (format === "YYYY-MM-DD") {
         return (`${year}-${month2digit}-${day2digit}`)
+    }
+
+    if (format === "yyyy/mm/dd h:m"){
+        return (`${year}/${month2digit}/${day2digit} - ${h}:${m}`)
     }
 
     return date;

@@ -3,6 +3,7 @@ import { ChangeEvent, useState, useEffect } from 'react';
 import { Eye, Eye2 } from './icons';
 
 type Props = {
+    groupStart?:boolean;
     errorText?: string;
     isTouched?: boolean;
     label?: string;
@@ -86,7 +87,7 @@ const FormikField: React.FC<Props> = props => {
                         id={props.id}
                         name={props.name}
                         autoComplete="off"
-                        className={`${props.fieldClassName || ""} h-10 px-3 bg-white border ${props.errorText && props.isTouched ? "border-red-500" : "border-neutral-300 focus:border-blue-500"} outline-none rounded-md w-full`}
+                        className={`${props.fieldClassName || ""} h-10 px-3 bg-white border ${props.errorText && props.isTouched ? "border-red-500" : "border-neutral-300 focus:border-blue-500"} outline-none ${props.groupStart?"rtl:rounded-r-md ltr:rounded-l-md":"rounded-md"} w-full`}
                         onChange={(e: ChangeEvent<HTMLInputElement>) => {
                             props.setFieldValue(props.name, e.target.value, true);
                             if (props.onChange) {

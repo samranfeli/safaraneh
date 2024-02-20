@@ -18,6 +18,7 @@ import Tag from '@/modules/shared/components/ui/Tag';
 import DownloadPdfVoucher from '@/modules/domesticHotel/components/booking/DownloadPdfVoucher';
 import Rating from '@/modules/shared/components/ui/Rating';
 import HotelMap from '@/modules/domesticHotel/components/hotelDetails/HotelMap';
+import AccountSidebar from '@/modules/authentication/components/AccountSidebar';
 
 const DomesticHotelReserveDetail: NextPage = ({ portalData }: { portalData?: PortalDataType }) => {
 
@@ -146,9 +147,7 @@ const DomesticHotelReserveDetail: NextPage = ({ portalData }: { portalData?: Por
 
                 <div className='grid gap-4 md:grid-cols-3'>
                     <div>
-                        <div className='border border-neutral-300 bg-white rounded-md mb-4'>
-                            login form
-                        </div>
+                        <AccountSidebar />
                     </div>
                     <div className='md:col-span-2'>
                         <div className='border border-neutral-300 bg-white rounded-md mb-4'>
