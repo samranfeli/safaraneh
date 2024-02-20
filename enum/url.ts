@@ -92,7 +92,10 @@ export const Header = {
     RegisterDiscountCode: "/api/services/app/Discount/Register",
     GetBankGateway:"/api/services/app/ReserveBankGateway/GetAll",
     MakeToken:"/api/services/app/ReserveBankGateway/MakeToken",
-    GetBalance:"/api/services/app/Deposit/GetBalance"
+    GetBalance:"/api/services/app/Deposit/GetBalance",
+    GetTransactionDeposit:"/api/services/app/TransactionDeposit/GetAll",
+    GetDepositBankGateway:"/api/services/app/UserDepositBankGateway/GetAll",
+    MakeDepositToken:"/api/services/app/UserDepositBankGateway/MakeToken"
   };
   
   export const ServerStatus = {
