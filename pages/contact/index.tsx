@@ -1,21 +1,33 @@
 import { NextPage } from "next";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 import Link from "next/link";
-import Map from '../../modules/shared/components/SitePage/Contact/ContactMap';
 import instagram from '../../public/images/footer/Instagram.svg';
 import twitter from '../../public/images/footer/Twitter.svg';
 import linkden from '../../public/images/footer/Linkedin.svg';
 import Image from "next/image";
-import { useEffect, useState } from "react";
-import { getPortal } from "@/modules/shared/actions/portalActions";
 import { PortalDataType } from "@/modules/shared/types/common";
 import BreadCrumpt from "@/modules/shared/components/ui/BreadCrumpt";
 
-const Contact: NextPage<any> = ({portalData}: {portalData : PortalDataType}) => {
+import dynamic from "next/dynamic";
+
+const LeafletNoSsr = dynamic(() => import('../../modules/shared/components/ui/LeafletMap'), {
+    ssr: false
+});
+
+
+const Contact: NextPage = ({portalData }: { portalData?: PortalDataType}) => {
+
+    let longitude, latitude, zoom;
+
+    if(portalData){
+        latitude = portalData.Phrases.find(item => item.Keyword === "Latitude")?.Value;
+        longitude = portalData.Phrases.find(item => item.Keyword === "Longitude")?.Value;
+        zoom = portalData.Phrases.find(item => item.Keyword === "MapZoom")?.Value;
+    }
 
     return (
         <>
-            <div className="max-w-container m-auto p-5 max-sm:p-2 mt-2">
+            <div className="max-w-container m-auto p-5 max-sm:p-2 mt-5">
             <BreadCrumpt items={[{ label: 'تماس ما' }]} />
             <h2 className="text-3xl font-bold">تماس با ما</h2>
                 <div className="pl-5 pr-5 pt-10 pb-10 border-2 border-gray mt-7 rounded-md bg-white grid grid-cols-2 gap-8 max-lg:grid-cols-1">
@@ -63,8 +75,14 @@ const Contact: NextPage<any> = ({portalData}: {portalData : PortalDataType}) => 
                         </div>
                     </div>
                     <div>
-                        <h5 className="text-xl font-semibold">آدرس ما بر روی نقشه</h5>
-                        <Map />
+                        <h5 className="text-xl font-semibold mb-5">آدرس ما بر روی نقشه</h5>
+                      
+                        {!!(latitude && longitude) && <LeafletNoSsr
+                            className='h-80 w-full rounded-xl'
+                            location={[+latitude, +longitude]}
+                            zoom={zoom ? +zoom : 15}
+                        />}
+
                     </div>
                 </div>
             </div>
