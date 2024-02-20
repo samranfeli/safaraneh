@@ -282,43 +282,6 @@ const ForgetPasswordForm: React.FC<Props> = props => {
                                 }}
                             />
 
-                            {/* {savedPhoneNumber && remaindSeconds === 0 ? (
-                            <button
-                                type='button'
-                                className='mb-4 text-sm'
-                                onClick={() => { sendOtpCode(savedPhoneNumber) }}
-                            >
-                                ارسال مجدد کد
-                            </button>
-                        ) : loading ? (
-
-                            <Skeleton className='w-24 mt-1 mb-4' />
-
-                        ) : (
-                            <div className='mb-4 text-sm'>
-                                <CountDown
-                                    seconds={remaindSeconds}
-                                    simple
-                                />
-                                <span className='rtl:mr-3 ltr:ml-3'> تا درخواست مجدد کد </span>
-                            </div>
-                        )}
-
-                        <Button
-                            type='button'
-                            className='h-12 w-full sm:w-44 shrink-0'
-                            onClick={() => { registerOtp(enteredCode) }}
-                        >
-                            تایید و ادامه
-                        </Button>
-
-                        <button
-                            type='button'
-                            onClick={props.onBackToLoginWithPassword}
-                            className='text-sm text-blue-700 hover:text-blue-600'
-                        >
-                            ورود با کلمه عبور
-                        </button> */}
                             <Button
                                 loading={verificationLoading}
                                 onClick={() => {

@@ -20,7 +20,7 @@ const Logout: React.FC<Props> = props => {
             getUserLoading: false
         }));
 
-        dispatch(setReduxBalance(undefined));
+        dispatch(setReduxBalance({balance:undefined, loading:false}));
 
         localStorage.removeItem('Token');
 
