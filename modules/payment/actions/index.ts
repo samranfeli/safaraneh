@@ -1,5 +1,6 @@
 import axios from 'axios';
 import { Header, ServerAddress, Payment } from "../../../enum/url";
+import { GetTransactionParams } from '../types';
 
 type DiscountType = "Undefined"| "HotelDomestic"| "FlightDomestic"| "Bus"| "Package"| "Flight"| "Hotel"| "PnrOutside"| "Cip"| "Activity";
 
@@ -108,4 +109,67 @@ export const getReserveBankGateway = async (id:string, acceptLanguage: string = 
     } catch (error) {
         return error
     }
+}
+
+
+export const getTransactionDeposit = async (params:GetTransactionParams, token:string, acceptLanguage: string = 'fa-IR') => {
+  try {
+    const response = await axios.get(
+      `${ServerAddress.Type}${ServerAddress.Payment}${Payment.GetTransactionDeposit}`,
+      {
+        params:params,
+        headers: {
+          "Accept-Language": acceptLanguage,
+          Accept: 'application/json;charset=UTF-8',
+          apikey: process.env.PROJECT_SERVER_APIKEY,
+          Authorization: `Bearer ${token}`,
+          Tenantid: process.env.PROJECT_SERVER_TENANTID,
+          Currency: params.CurrencyType
+        },
+      },
+    )
+    return response
+  } catch (error) {
+    return error
+  }
+
+}
+
+export const getDepositBankGateway = async (CurrencyType:"IRR" | "USD", token:string, acceptLanguage: string = 'fa-IR') => {
+  try {
+    const response = await axios.get(
+      `${ServerAddress.Type}${ServerAddress.Payment}${Payment.GetDepositBankGateway}?CurrencyType=${CurrencyType}`,
+      {
+        headers: {
+          "Accept-Language": acceptLanguage,
+          Accept: 'application/json;charset=UTF-8',
+          apikey: process.env.PROJECT_SERVER_APIKEY,
+          Authorization: `Bearer ${token}`,
+          Tenantid: process.env.PROJECT_SERVER_TENANTID,
+          Currency: CurrencyType
+        },
+      },
+    )
+    return response
+  } catch (error) {
+    return error
+  }
+}
+
+
+export const makeDepositToken = async (params:{gatewayId: number; callBackUrl: string ; amount: number ; currencyType: string ;ipAddress: number}, token:string) => {
+  try {
+    const response = await axios.post(
+      `${ServerAddress.Type}${ServerAddress.Payment}${Payment.MakeDepositToken}`,
+      params,
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      },
+    )
+    return response
+  } catch (error) {
+    return error
+  }
 }

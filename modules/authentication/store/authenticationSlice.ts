@@ -5,13 +5,15 @@ type Authentication = {
     getUserLoading: boolean;
     user: any;
     balance?: number;
+    balanceLoading? : boolean;
 };
 
 const initialState: Authentication = {
     isAuthenticated: false,
     getUserLoading: false,
     user: {},
-    balance: undefined
+    balance: undefined,
+    balanceLoading: false
 };
 
 export const authenticationSlice = createSlice({
@@ -24,7 +26,8 @@ export const authenticationSlice = createSlice({
             state.getUserLoading = action.payload.getUserLoading;
         },
         setReduxBalance: (state, action) => {
-            state.balance = action.payload;
+            state.balance = action.payload.balance;
+            state.balanceLoading = action.payload.loading;
         }
     }
 });
