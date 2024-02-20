@@ -1,13 +1,12 @@
 import { GetStaticProps, NextPage } from "next";
 import { GetBestCategory, GetCategories, GetCities, getBlogs } from "@/modules/blogs/actions";
-import NavbarBlog from "@/modules/blogs/components/template/BreadCrumpt";
 import CategoryBlog from "@/modules/blogs/components/BlogHome/CategoryHomeBlog";
 import SearchBox from "@/modules/blogs/components/BlogHome/SearchBox";
 import NewBlog from "@/modules/blogs/components/BlogHome/NewBlogItem";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 import { BlogItemType, CategoriesNameType, CityItemType, HomeCategoryItemType } from "@/modules/blogs/types/blog";
 import BlogCities from "@/modules/blogs/components/BlogHome/BlogCities";
-
+import BreadCrumpt from "@/modules/shared/components/ui/BreadCrumpt";
 
 
 const Blog: NextPage<any> = ({ NewBlogs, Cities, Categories , Categories2 ,Categories3}:
@@ -15,7 +14,9 @@ const Blog: NextPage<any> = ({ NewBlogs, Cities, Categories , Categories2 ,Categ
     
     return (
         <div className="bg-white">
-            <NavbarBlog />
+            <div className="max-w-container m-auto pr-5 pl-5 max-sm:p-4">
+                <BreadCrumpt items={[{label : "بلاگ"}]} />
+            </div>
             <BlogCities data={Cities} />
             <div className="bg-slate-100 pt-14 pb-14">
             <CategoryBlog data={Categories} data2={Categories2} CategoriesData={Categories3} />
