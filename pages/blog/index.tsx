@@ -14,7 +14,9 @@ const Blog: NextPage<any> = ({ NewBlogs, Cities, Categories , Categories2 ,Categ
     
     return (
         <div className="bg-white">
-            <BreadCrumpt items={[{label : "بلاگ"}]} />
+            <div className="max-w-container m-auto pr-5 pl-5 max-sm:p-4">
+                <BreadCrumpt items={[{label : "بلاگ"}]} />
+            </div>
             <BlogCities data={Cities} />
             <div className="bg-slate-100 pt-14 pb-14">
             <CategoryBlog data={Categories} data2={Categories2} CategoriesData={Categories3} />

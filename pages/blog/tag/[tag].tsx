@@ -13,7 +13,9 @@ const Tag: NextPage<any> = ({ TagBlogs, TagName, categories_name, recentBlogs, p
     const tagname : string = TagName.name || ''
     return (
         <div className="bg-white">
-                <BreadCrumpt items={[{label: "بلاگ", link: "/blog"}, {label: tagname}]} />
+            <div className="max-w-container m-auto pr-5 pl-5 max-sm:p-4">
+                <BreadCrumpt items={[{ label: "بلاگ", link: "/blog" }, { label: tagname }]} />
+            </div>
                 <Title data={TagName?.name} />
                 <Content Blogs={TagBlogs} blogPages={pages}  LastBlogs={recentBlogs?.slice(0,3)} CategoriesName={categories_name}  />
         </div>

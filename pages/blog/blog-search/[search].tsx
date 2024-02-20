@@ -13,7 +13,9 @@ const Search: NextPage<any> = ({ SearchBlog, LastBlogs, categories_name, pages }
     const SearchValue = useRouter().query.search
     return (
         <div className="bg-white">
-                <BreadCrumpt items={[{label: "بلاگ", link: "/blog"}, {label: `جستجوی"${SearchValue}"`}]} />
+            <div className="max-w-container m-auto pr-5 pl-5 max-sm:p-4">
+                <BreadCrumpt items={[{ label: "بلاگ", link: "/blog" }, { label: `جستجوی"${SearchValue}"` }]} />
+            </div>
                 <Title data={'جستجوی'} searchValue={`"${SearchValue}"`} />
                 <Content Blogs={SearchBlog} LastBlogs={LastBlogs.slice(0,3)} CategoriesName={categories_name} blogPages={pages}/>
         </div>

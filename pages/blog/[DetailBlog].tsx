@@ -33,7 +33,9 @@ console.log(CategoriesName);
     return (
         <div className="bg-white">
             <div className="max-w-container m-auto">
-                <BreadCrumpt items={[{label: "بلاگ" , link : "/blog"} , {label : category, link: `category/${CategoryId}`}, {label: PostTitle}]} /> 
+                <div className="pr-5 pl-5 max-sm:p-4">
+                    <BreadCrumpt items={[{ label: "بلاگ", link: "/blog" }, { label: category, link: `category/${CategoryId}` }, { label: PostTitle }]} /> 
+                </div>
                 <TitlePost BlogPost={BlogPost} />
                     <ContentPost content={BlogPost?.[0]} recentBlogs={recentBlogs?.slice(0,3)} CategoriesNames={CategoriesName} />
                 <hr className="m-3 mt-10"/>
