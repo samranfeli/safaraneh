@@ -42,7 +42,11 @@ export const Header = {
     ForgotPasswordByPhoneNumber: "/api/services/app/Account/ForgotPasswordByPhoneNumber",
     ForgotPasswordVerification:"/api/services/app/Account/ForgotPasswordVerification",
     ResetPassword : "/api/services/app/Account/ResetPassword",
-    ForgotPasswordByEmail:"/api/services/app/Account/ForgotPassword"
+    ForgotPasswordByEmail:"/api/services/app/Account/ForgotPassword",
+    Register:"/api/services/app/Account/Register",
+    ChangePassword:"/api/services/app/Account/ChangePassword",
+    SendEmailActivation:"/api/services/app/Account/SendEmailActivation",
+    ActivateEmail:"/api/services/app/Account/ActivateEmail"
   };
 
   export const Flight = {
