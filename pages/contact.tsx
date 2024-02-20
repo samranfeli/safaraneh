@@ -1,16 +1,16 @@
 import { NextPage } from "next";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 import Link from "next/link";
-import instagram from '../../public/images/footer/Instagram.svg';
-import twitter from '../../public/images/footer/Twitter.svg';
-import linkden from '../../public/images/footer/Linkedin.svg';
+import instagram from '../public/images/footer/Instagram.svg';
+import twitter from '../public/images/footer/Twitter.svg';
+import linkden from '../public/images/footer/Linkedin.svg';
 import Image from "next/image";
 import { PortalDataType } from "@/modules/shared/types/common";
 import BreadCrumpt from "@/modules/shared/components/ui/BreadCrumpt";
 
 import dynamic from "next/dynamic";
 
-const LeafletNoSsr = dynamic(() => import('../../modules/shared/components/ui/LeafletMap'), {
+const LeafletNoSsr = dynamic(() => import('../modules/shared/components/ui/LeafletMap'), {
     ssr: false
 });
 
@@ -27,7 +27,7 @@ const Contact: NextPage = ({portalData }: { portalData?: PortalDataType}) => {
 
     return (
         <>
-            <div className="max-w-container m-auto p-5 max-sm:p-2 mt-5">
+            <div className="max-w-container m-auto p-5 max-sm:p-3 mt-3">
             <BreadCrumpt items={[{ label: 'تماس ما' }]} />
             <h2 className="text-3xl font-bold">تماس با ما</h2>
                 <div className="pl-5 pr-5 pt-10 pb-10 border-2 border-gray mt-7 rounded-md bg-white grid grid-cols-2 gap-8 max-lg:grid-cols-1">

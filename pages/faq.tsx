@@ -162,9 +162,9 @@ const faq: NextPage = () => {
 
     return (
         <>
-        <div className="max-w-container m-auto p-5 max-sm:p-2 mt-5">
+        <div className="max-w-container m-auto p-5 max-sm:p-3 mt-5">
         <BreadCrumpt items={[{ label: 'سوالات متداول' }]} />
-        <h2 className="font-bold text-3xl">سوالات متداول</h2>
+        <h2 className="font-bold mt-10 text-3xl">سوالات متداول</h2>
         <div className="pl-5 pr-5 pt-5 pb-10 mt-5 border-2 border-gray rounded-md space-y-3 bg-white">
             <h2 className="mt-6 mb-6 fnt-bold text-lg">هتل داخلی</h2>
             {

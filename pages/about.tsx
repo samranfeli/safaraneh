@@ -1,11 +1,11 @@
 import { NextPage } from "next";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
-import mojavez from '../../public/images/about/mojavez .jpg';
 import Image from "next/image";
-import honor1 from '../../public/images/about/download.png';
-import honor2 from '../../public/images/about/download (1).png';
-import honor3 from '../../public/images/about/download (2).png';
-import honor4 from '../../public/images/about/download (3).png';
+import mojavez from '../public/images/about/mojavez .jpg';
+import honor1 from '../public/images/about/download.png';
+import honor2 from '../public/images/about/download (1).png';
+import honor3 from '../public/images/about/download (2).png';
+import honor4 from '../public/images/about/download (3).png';
 import BreadCrumpt from "@/modules/shared/components/ui/BreadCrumpt";
 
 const about: NextPage = () => {
@@ -43,9 +43,9 @@ const about: NextPage = () => {
 
     return (
         <>
-            <div className="max-w-container m-auto p-5 max-sm:p-2 mt-2">
+            <div className="max-w-container m-auto p-5 max-sm:p-3 mt-2">
             <BreadCrumpt items={[{ label: 'درباره ما' }]} />
-            <h2 className="text-3xl font-bold mt-3">درباره ما</h2>
+            <h2 className="text-3xl font-bold mt-10">درباره ما</h2>
                 <div className="bg-white rounded-md border-2 border-gray mt-10 p-7 max-md:p-3 pt-10 pb-10 space-y-7">
                     <h5 className="text-xl font-semibold">سفرانه مشرق زمین</h5>
                     <p className="text-sm">
