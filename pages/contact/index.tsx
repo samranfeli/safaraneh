@@ -11,23 +11,12 @@ import { getPortal } from "@/modules/shared/actions/portalActions";
 import { PortalDataType } from "@/modules/shared/types/common";
 import BreadCrumpt from "@/modules/shared/components/ui/BreadCrumpt";
 
-const Contact: NextPage = () => {
-    const [portalData, setPortalData] = useState<PortalDataType>()
-
-    useEffect(() => {
-        const getData = async () => {
-            const data = await getPortal()
-            setPortalData(data.data)
-            console.log(data);
-            
-        }
-        getData()
-    }, [])
+const Contact: NextPage<any> = ({portalData}: {portalData : PortalDataType}) => {
 
     return (
         <>
+            <div className="max-w-container m-auto p-5 max-sm:p-2 mt-2">
             <BreadCrumpt items={[{ label: 'تماس ما' }]} />
-            <div className="max-w-container m-auto p-5 max-sm:p-2 mt-5">
             <h2 className="text-3xl font-bold">تماس با ما</h2>
                 <div className="pl-5 pr-5 pt-10 pb-10 border-2 border-gray mt-7 rounded-md bg-white grid grid-cols-2 gap-8 max-lg:grid-cols-1">
                     <div className="space-y-3">
@@ -36,7 +25,7 @@ const Contact: NextPage = () => {
                             <p className="text-sm space-x-1 whitespace-nowrap max-xl:whitespace-normal">
                                 <b className="text-base">آدرس</b>
                                 <span className="font-semibold text-base">:</span> 
-                                {portalData?.Phrases?.find(item => item.Keyword == "Address")?.Value}
+                                {portalData?.Phrases?.find((item : any) => item.Keyword == "Address")?.Value}
                             </p>
                         </address>
                         <div className="flex gap-1">

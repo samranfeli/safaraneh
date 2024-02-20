@@ -4,15 +4,17 @@ import Section3 from "@/modules/shared/components/SitePage/organizational-reserv
 import Section4 from "@/modules/shared/components/SitePage/organizational-reservation/Section4";
 import Section5 from "@/modules/shared/components/SitePage/organizational-reservation/Section5";
 import BreadCrumpt from "@/modules/shared/components/ui/BreadCrumpt";
+import { PortalDataType } from "@/modules/shared/types/common";
 import { NextPage } from "next";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 
-const organizational: NextPage<any> = () => {
+const Organizational: NextPage<any> = ({portalData}: {portalData: PortalDataType}) => {
+    console.log(portalData);
     
     return (
         <div className="bg-white">
-            <BreadCrumpt items={[{ label: 'رزرو های سازمانی' }]} />
             <div className="max-w-container m-auto p-5 relative max-sm:p-3">
+            <BreadCrumpt items={[{ label: 'رزرو های سازمانی' }]} />
                 <Section1 />
                 <Section2 />
                 <Section3 />
@@ -23,7 +25,7 @@ const organizational: NextPage<any> = () => {
     )
 }
 
-export default organizational;
+export default Organizational;
 
 export async function  getStaticProps (context: any)  {
     return (

@@ -5,9 +5,10 @@ import { useEffect, useState } from "react";
 import { getPortal } from "../../../actions/portalActions";
 import MapIcon from '../../public/images/organizational-reservation/marker-icon-2x.png';
 import Skeleton from "../../ui/Skeleton";
+import { PortalDataType } from "@/modules/shared/types/common";
 
-const MapContact: NextPage = () => {
-
+const MapContact: NextPage<any> = () => {
+    
     const [MapZone, setMapZone] : any = useState([]);
     
     useEffect(() => {
@@ -36,7 +37,7 @@ const MapContact: NextPage = () => {
         {
             MapZone.length ?
                 <MapContainer
-                        center={[MapZone[0] || 20, MapZone[1] || 10]}
+                        center={[MapZone[0] || 0, MapZone[1] || 0]}
                         zoom={MapZone[2]}
                         scrollWheelZoom={true}
                         className="h-72 w-full mt-3 rounded-md">

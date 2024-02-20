@@ -43,9 +43,9 @@ const about: NextPage = () => {
 
     return (
         <>
+            <div className="max-w-container m-auto p-5 max-sm:p-2 mt-2">
             <BreadCrumpt items={[{ label: 'درباره ما' }]} />
-            <div className="max-w-container m-auto p-5 max-sm:p-2 mt-6">
-            <h2 className="text-3xl font-bold">درباره ما</h2>
+            <h2 className="text-3xl font-bold mt-3">درباره ما</h2>
                 <div className="bg-white rounded-md border-2 border-gray mt-10 p-7 max-md:p-3 pt-10 pb-10 space-y-7">
                     <h5 className="text-xl font-semibold">سفرانه مشرق زمین</h5>
                     <p className="text-sm">
