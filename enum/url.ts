@@ -84,7 +84,8 @@ export const Header = {
   };
 
   export const Reserve = {
-     GetReserveFromCoordinator : "/api/services/app/Order/Get"
+     GetReserveFromCoordinator : "/api/services/app/Order/Get",
+     GetUserAllReserves:"/api/services/app/Order/GetAll"
   };
 
   export const Payment = {
