@@ -38,3 +38,24 @@ export const getReserveFromCoordinator = async (params:{reserveId:string, userna
         return error
     }
 }
+
+export const getUserAllReserves = async (params:{SkipCount?:number;MaxResultCount?:number;Statue?:string;}, token: string, acceptLanguage: string = "fa-IR") => {
+    try {
+        let response = await axios.get(
+            `${ServerAddress.Type}${ServerAddress.Coordinator}${Reserve.GetUserAllReserves}`,
+            {
+                params: params,
+                headers: {
+                    'Content-Type': 'application/json',
+                    accept: 'text/plain',
+                    "Accept-Language": acceptLanguage,                   
+                    "TenantId": process.env.PROJECT_SERVER_TENANTID,
+                    Authorization: `Bearer ${token}`
+                }
+            },
+        )
+        return response
+    } catch (error) {
+        return error
+    }
+}
