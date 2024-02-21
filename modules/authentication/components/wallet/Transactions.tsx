@@ -24,7 +24,6 @@ const Transactions: React.FC = () => {
         if (!token) return;
 
         setTransactionLoading(true);
-        setTransactionList([]);
 
         const response: any = await getTransactionDeposit(params, token, "en-US");
 
@@ -48,7 +47,7 @@ const Transactions: React.FC = () => {
             {
                 CurrencyType: "IRR",
                 MaxResultCount: 10,
-                SkipCount: page - 1
+                SkipCount: (page - 1)*10
             }
         );
     }, [page]);
@@ -69,7 +68,7 @@ const Transactions: React.FC = () => {
                                 </tr>
                             </thead>
                             <tbody>
-                                {!!transactionLoading && [1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map(loadingItem => <tr key={loadingItem} className='border-t border-neutral-300'>
+                                {!!(transactionLoading && !transactionList.length) && [1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map(loadingItem => <tr key={loadingItem} className='border-t border-neutral-300'>
                                     {[1, 2, 3, 4, 5].map(skeletonItem => <td key={skeletonItem} className='p-1 md:p-5'> <Skeleton className='h-5' /> </td>)}
                                 </tr>)}
                                 {transactionList.map(transactionItem => <TransactionItem data={transactionItem} key={transactionItem.id} />)}

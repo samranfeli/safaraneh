@@ -71,7 +71,7 @@ const SimilarHotelItem: React.FC<Props> = props => {
     return (
         <div className='bg-white border-2 border-white rounded-xl flex flex-col justify-between'>
             <div>
-                <Link href={hotel.Url! + props.searchInfo} target='_blank'>
+                <Link href={hotel.Url! + props.searchInfo} target='_blank' title={hotel.HotelTypeName + " " +hotel.HotelName + " " + hotel.CityName}>
                     <Image
                         src={hotel.ImageUrl || "/images/default-hotel.JPG"}
                         alt={hotel.ImageAlt || hotel.ImageTitle || ""}
