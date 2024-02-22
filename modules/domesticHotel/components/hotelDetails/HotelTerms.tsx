@@ -29,7 +29,7 @@ const HotelTerms: React.FC<Props> = props => {
             <h2 className='text-lg lg:text-3xl font-semibold mb-3 md:mb-7'> {t("terms")} </h2>
 
             <div className='p-3 sm:p-5 lg:p-7 bg-white rounded-xl'>
-                <h5 className='text-sm md:text-base font-semibold mb-5'>{tHotel("hotel-terms")}</h5>
+                <strong className='block text-sm md:text-base font-semibold mb-5'>{tHotel("hotel-terms")}</strong>
 
                 <div className='grid grid-cols-1 md:grid-cols-3 gap-3 md:gap-16'>
                     <div>
