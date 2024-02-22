@@ -34,7 +34,7 @@ const Attractions: React.FC<Props> = props => {
             <strong className='block font-semibold text-md lg:text-lg mb-3'> فاصله هتل تا اماکن مهم </strong>
             {attractions.map(item => (
                 <div key={item.AttractionName} className={`flex justify-between text-sm ${props.isSmall?"text-neutral-500":"md:text-base md:mb-2"}`}>
-                    <h6><LocationCircle className='w-4 h-4 fill-current inline-block align-middle rtl:ml-1 ltr:mr-1' /> {tHotel('distance-to')} {item.AttractionName} </h6>
+                    <strong className='font-semibold'><LocationCircle className='w-4 h-4 fill-current inline-block align-middle rtl:ml-1 ltr:mr-1' /> {tHotel('distance-to')} {item.AttractionName} </strong>
                     <span>
                         {item.DurationText} {distanceDurationByMode(item.Mode)}
                     </span>
