@@ -15,7 +15,7 @@ const Section2: NextPage<any> = ({logo, sitename}) => {
                 </p>
                 {
                     sitename && logo &&
-                        <Image src={logo} height={40} width={80} className="w-32" alt={sitename} />
+                        <Image src={logo} height={40} width={100} className="w-32" alt={sitename} />
                 }
                 <p className="font-bold">سفرانه مشرق زمین</p>
             </div>
