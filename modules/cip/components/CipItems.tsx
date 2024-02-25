@@ -11,7 +11,7 @@ const CipItem: NextPage<any> = ({ AirportsDetail, AirportsList }) => {
     
     return (
         <div>
-            <h2 className="mt-16 text-xl">رزرو تشریفات فرودگاهی CIP</h2>
+            <h2 className="mt-16 text-3xl">رزرو تشریفات فرودگاهی CIP</h2>
             {
                 Airports && 
                 Airports.map((airport: AirportDetailType , index) => 
@@ -25,7 +25,7 @@ const CipItem: NextPage<any> = ({ AirportsDetail, AirportsList }) => {
                         </Link>
                         <div className="w-full bg-white col-span-2 p-5 pt-3 pb-2">
                             <Link href={airport.url} className="font-bold">{airport.name}</Link>
-                            <p className="text-2xs text-gray-400">{airport.address}</p>
+                            <p className="text-2xs max-sm:text-4xs text-gray-400">{airport.address}</p>
                             <div className="text-xs max-sm:text-2xs h-28 mt-2 text-gray-700 overflow-hidden relative">
                                 {
                                     <p>{airport.description}</p>
@@ -33,14 +33,14 @@ const CipItem: NextPage<any> = ({ AirportsDetail, AirportsList }) => {
                                 <span className="w-full h-12 absolute bottom-0 opacity-50"
                                 style={{backgroundImage: 'linear-gradient(rgba(250,250,250,0.4), rgba(250,250,250,1))'}}></span>
                             </div>
-                            <div className="flex justify-between mt-2">
+                            <div className="flex justify-between mt-2 max-sm:mt-5">
                                 {
                                     AirportsList.AirPorts[index].Price ? 
                                         <div>
                                             <p className="max-sm:text-sm">{AirportsList.AirPorts[index].Price} ریال</p>
                                             <p className="text-2xs text-gray-400 relative bottom-2">شروع قیمت</p>
                                         </div> :
-                                        <p className="max-sm:text-sm">قیمت موجود نیست</p>
+                                        <p className="max-sm:text-xs text-gray-400">قیمت موجود نیست</p>
                                 }
                                 <Link href={airport.url}
                                     className="bg-blue-700 max-md:text-sm rounded-md flex h-fit relative

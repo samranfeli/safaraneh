@@ -14,7 +14,8 @@ const CipDescription: NextPage<any> = ({ content }) => {
             <h2 className="text-2xl font-bold">تشریفات فرودگاهی</h2>
             <div className={`mt-14 text-sm max-sm:text-xs ${!open && 'h-44'} overflow-hidden relative`}>
                 {content && parse(content.Content)}
-                <span className="bg-slate-100 opacity-50 h-14 absolute bottom-0 z-90 w-full"></span>
+                <span className="opacity-50 h-14 max-sm:h-24 absolute bottom-0 z-90 w-full"
+                style={{backgroundImage: 'linear-gradient(rgba(235,235,235,0.2), rgba(240,240,240,1))'}}></span>
             </div>
             <div className="flex justify-center cursor-pointer" onClick={e => setopen(!open)}>
                 <h5>{open ? 'بستن' : 'اطلاعات بیشتر'}</h5>

@@ -4,14 +4,16 @@ import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 import { GetAirportList, GetAirportsDetail } from "../../modules/cip/actions/index";
 import CipDescribtion from "@/modules/cip/components/CipDescription";
 import CipItem from "@/modules/cip/components/CipItems";
+import CipRules from "@/modules/cip/components/CipRules";
 
 const CipMainPage: NextPage<any> = ({  data, data2 }) => {
     
     return (
-        <div className="max-w-container m-auto pr-5 pl-5 max-sm:p-3">
+        <div className="max-w-container m-auto pr-5 pl-5 max-md:p-3">
             <CipImages  />
             <CipDescribtion content={data} />
             <CipItem AirportsDetail={data2} AirportsList={data} />
+            <CipRules />
         </div>
     )
 }
