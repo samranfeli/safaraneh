@@ -29,7 +29,7 @@ const HotelFacilities: React.FC<Props> = props => {
                 <div className={`grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 overflow-hidden ${open ? "" : "max-h-60"}`}>
                     <div className='columns-2 md:columns-1'>
                         {facilities?.map(item => (
-                            <div key={item.Keyword} className='text-sm md:text-base font-semibold text-green-600 mb-3'>
+                            <div key={item.Keyword} className='text-sm md:text-base font-semibold text-green-800 mb-3'>
                                 <Image src={item.Image!} alt={item.ImageAlt || item.Title || ""} width={17} height={17} className='inline-block align-middle rtl:ml-2 ltr:mr-2' />
                                 {item.Title}
                             </div>))}
