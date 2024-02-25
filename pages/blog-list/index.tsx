@@ -12,7 +12,7 @@ const BlogList: NextPage<any> = ({ blogsPage, categories_name, pages,recentBlogs
 
         return (
             <div className="bg-white">
-               <div className="max-w-container m-auto pr-5 pl-5 max-sm:p-4"> 
+                <div className="max-w-container m-auto pr-5 pl-5 max-sm:p-4"> 
                     <BreadCrumpt items={[{ label: "بلاگ", link: '/blog' }, { label: "جدیدترین مقالات" }]} />
                 </div>    
                 <Title data={'جدیدترین مطالب'} />

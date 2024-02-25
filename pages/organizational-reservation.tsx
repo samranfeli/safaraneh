@@ -9,14 +9,15 @@ import { NextPage } from "next";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 
 const Organizational: NextPage<any> = ({portalData}: {portalData: PortalDataType}) => {
-    console.log(portalData);
     
+    const logo = portalData?.Phrases?.find(item => item.Keyword === "Logo")?.ImageUrl || "";
+    const siteName = portalData?.Phrases?.find(item => item.Keyword === "Name")?.Value || "";
     return (
         <div className="bg-white">
             <div className="max-w-container m-auto p-5 relative max-sm:p-3">
             <BreadCrumpt items={[{ label: 'رزرو های سازمانی' }]} />
                 <Section1 />
-                <Section2 />
+                <Section2 logo={logo} sitename={siteName} />
                 <Section3 />
                 <Section4 />
                 <Section5 />
