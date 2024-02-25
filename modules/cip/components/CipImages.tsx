@@ -5,7 +5,7 @@ import CipGallery from "./CipGallery";
 
 const CipImages: NextPage = () => {
     
-    const a = [
+    const images = [
         {
             Image: 'https://cdn2.safaraneh.com/images/cip/ika/cip-ika-01.jpg',
             Alt: '',
@@ -51,7 +51,7 @@ const CipImages: NextPage = () => {
 
     return (
         <div>   
-            <CipGallery images={a} />
+            <CipGallery images={images} />
         </div>
     )
 }
