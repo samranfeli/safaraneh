@@ -6,8 +6,8 @@ import Link from "next/link";
 import { ArrowLeft, DownCaret } from "@/modules/shared/components/ui/icons";
 
 
-const CipItem: NextPage<any> = ({ data2, data }) => {
-    const Airports: AirportDetailType[] = data2 || null
+const CipItem: NextPage<any> = ({ AirportsDetail, AirportsList }) => {
+    const Airports: AirportDetailType[] = AirportsDetail || null
     
     return (
         <div>
@@ -18,7 +18,10 @@ const CipItem: NextPage<any> = ({ data2, data }) => {
                     <div className="grid grid-cols-3 max-sm:grid-cols-1 w-full mt-8 rounded-md overflow-hidden shadow-md" key={index}>
                         <Link href={airport.url}>
                             <Image src={airport.picture.path || ''} alt={airport.picture.altAttribute || airport.nameLong || 'cip-picture'} width={400} height={100}
-                                className="w-full h-full object-cover" />
+                                className="w-full h-full object-cover"
+                                priority={!index}
+                                onContextMenu={e => e.preventDefault()}
+                            />
                         </Link>
                         <div className="w-full bg-white col-span-2 p-5 pt-3 pb-2">
                             <Link href={airport.url} className="font-bold">{airport.name}</Link>
@@ -32,9 +35,9 @@ const CipItem: NextPage<any> = ({ data2, data }) => {
                             </div>
                             <div className="flex justify-between mt-2">
                                 {
-                                    data.AirPorts[index].Price ? 
+                                    AirportsList.AirPorts[index].Price ? 
                                         <div>
-                                            <p className="max-sm:text-sm">{data.AirPorts[index].Price} ریال</p>
+                                            <p className="max-sm:text-sm">{AirportsList.AirPorts[index].Price} ریال</p>
                                             <p className="text-2xs text-gray-400 relative bottom-2">شروع قیمت</p>
                                         </div> :
                                         <p className="max-sm:text-sm">قیمت موجود نیست</p>

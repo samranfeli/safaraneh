@@ -5,12 +5,13 @@ import { GetAirportList, GetAirportsDetail } from "../../modules/cip/actions/ind
 import CipDescribtion from "@/modules/cip/components/CipDescription";
 import CipItem from "@/modules/cip/components/CipItems";
 
-const CipMainPage: NextPage<any> = ({images, data , data2}) => {
+const CipMainPage: NextPage<any> = ({  data, data2 }) => {
+    
     return (
         <div className="max-w-container m-auto pr-5 pl-5 max-sm:p-3">
-            <CipImages images={images} />
+            <CipImages  />
             <CipDescribtion content={data} />
-            <CipItem data2={data2} data={data} />
+            <CipItem AirportsDetail={data2} AirportsList={data} />
         </div>
     )
 }
@@ -22,20 +23,11 @@ export async function getStaticProps(context: any) {
     const AirportsList = await GetAirportList()
     const data = AirportsList?.data
     const data2 = AirportsDetail?.data.result.items
-    const images: any = []
-    if (AirportsDetail) {
-        console.log(AirportsDetail);
-        
-        for (let i = 0; i < 8; i++) {
-            images.push(AirportsDetail?.data.result.items[0].galleries[i].path)
-        }
-    }
 
     return (
         {
             props: {
                 ...await (serverSideTranslations(context.locale, ['common'])),
-                images: images,
                 data: data || null,
                 data2: data2 || null
             },

@@ -1,32 +1,57 @@
 import { NextPage } from "next";
 import { useEffect, useState } from "react";
-import Gallery from "@/modules/domesticHotel/components/hotelDetails/Gallery";
+import CipGallery from "./CipGallery";
 
-type Props = {
-    images?: []
-}
-const CipImages: NextPage<Props> = ({ images }) => {
 
-    const [imagestate, setimagestate] = useState<[{}]>([{}])
-    useEffect(() => {
-        let list : [{}] = [{}]
-        if (images?.length) {
-            for (let i = 0; i < images.length; i++) {
-                list.push({Image : images[i], Alt: '', Title:''})
-            }
-            setimagestate(list)
-        }
-    } ,[])
+const CipImages: NextPage = () => {
+    
+    const a = [
+        {
+            Image: 'https://cdn2.safaraneh.com/images/cip/ika/cip-ika-01.jpg',
+            Alt: '',
+            Title:''
+        },
+        {
+            Image: 'https://cdn2.safaraneh.com/images/cip/ika/cip-ika-02.jpg',
+            Alt: '',
+            Title:''
+        },
+        {
+            Image: 'https://cdn2.safaraneh.com/images/cip/thr/cip-thr-02.jpg',
+            Alt: '',
+            Title:''
+        },
+        {
+            Image: 'https://cdn2.safaraneh.com/images/cip/tbz.jpg',
+            Alt: '',
+            Title:''
+        },
+        {
+            Image: 'https://cdn2.safaraneh.com/images/cip/thr/cip-thr-04.jpg',
+            Alt: '',
+            Title:''
+        },
+        {
+            Image: 'https://cdn2.safaraneh.com/images/cip/ika/cip-ika-04.jpg',
+            Alt: '',
+            Title:''
+        },
+        {
+            Image: 'https://cdn2.safaraneh.com/images/cip/awh/cip-awh-02.jpg',
+            Alt: '',
+            Title:''
+        },
+        {
+            Image: 'https://cdn2.safaraneh.com/images/cip/thr/cip-thr-07.jpg',
+            Alt: '',
+            Title:''
+       },
+    ]
     
 
     return (
-        <div>
-            {
-                images?.length && imagestate &&
-                
-                    <Gallery images={imagestate} />
-                
-            }
+        <div>   
+            <CipGallery images={a} />
         </div>
     )
 }
