@@ -7,7 +7,6 @@ import Rating from './Rating';
 import { useTranslation } from 'next-i18next';
 import Skeleton from './Skeleton';
 import Image from 'next/image';
-import HotelScore from '@/modules/domesticHotel/components/shared/HotelScore';
 import Button from './Button';
 import { ErrorIcon } from './icons';
 
@@ -21,7 +20,7 @@ type HotelItem = {
     imageUrl?: string;
     guestRate?: "loading" | { Satisfaction: number; TotalRowCount: number; };
     price: "loading" | "notPriced" | "need-to-inquire" | { boardPrice: number; salePrice: number; };
-}
+} 
 type Props = {
     hoveredHotelId?: number;
     clickedHotelId?: number;
