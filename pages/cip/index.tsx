@@ -5,6 +5,7 @@ import { GetAirportList, GetAirportsDetail } from "../../modules/cip/actions/ind
 import CipDescribtion from "@/modules/cip/components/CipDescription";
 import CipItem from "@/modules/cip/components/CipItems";
 import CipRules from "@/modules/cip/components/CipRules";
+import CipFaq from "@/modules/cip/components/CipFaq";
 
 const CipMainPage: NextPage<any> = ({  data, data2 }) => {
     
@@ -14,6 +15,7 @@ const CipMainPage: NextPage<any> = ({  data, data2 }) => {
             <CipDescribtion content={data} />
             <CipItem AirportsDetail={data2} AirportsList={data} />
             <CipRules />
+            <CipFaq />
         </div>
     )
 }
