@@ -1,11 +1,11 @@
+import { LeftCircle, RightCircle } from '@/modules/shared/components/ui/icons';
 import { useTranslation } from 'next-i18next';
 import Image from 'next/image';
-import Carousel from 'react-multi-carousel';
-import 'react-multi-carousel/lib/styles.css';
+import Slider from "react-slick";
 
 const PopularCities: React.FC = () => {
 
-    const { t:tHome } = useTranslation('home');
+    const { t: tHome } = useTranslation('home');
 
     const cities: {
         imageUrl: string;
@@ -52,23 +52,45 @@ const PopularCities: React.FC = () => {
 
         ];
 
-    const responsive = {
-        largeDesktop: {
-            breakpoint: { max: 5000, min: 1200 },
-            items: 5
+
+    const settings = {
+        speed: 500,
+        slidesToShow: 5,
+        slidesToScroll: 1,
+        nextArrow: <RightCircle />,
+        prevArrow: <LeftCircle />,
+        customPaging: function () {
+            return (
+                <a className='w-3.5 h-3.5 border-2 border-neutral-500 inline-block rounded-full' />
+            );
         },
-        desktop: {
-            breakpoint: { max: 1200, min: 992 },
-            items: 4
-        },
-        tablet: {
-            breakpoint: { max: 992, min: 460 },
-            items: 3
-        },
-        mobile: {
-            breakpoint: { max: 640, min: 0 },
-            items: 1
-        }
+        responsive: [
+            {
+                breakpoint: 1200,
+                settings: {
+                    slidesToShow: 4,
+                    slidesToScroll: 1,
+                }
+            },
+            {
+                breakpoint: 992,
+                settings: {
+                    slidesToShow: 3,
+                    slidesToScroll: 1,
+                    dots: true,
+                    arrows: false
+                }
+            },
+            {
+                breakpoint: 640,
+                settings: {
+                    slidesToShow: 1,
+                    slidesToScroll: 1,
+                    dots: true,
+                    arrows: false
+                }
+            }
+        ]
     };
 
 
@@ -79,20 +101,14 @@ const PopularCities: React.FC = () => {
                 شهرهای محبوب
             </h2>
 
-            <div className='sm:-mx-2'>
-                <Carousel
-                    className='home-carousel'
-                    rtl
-                    responsive={responsive}
-                    renderDotsOutside
-                    showDots
-                >
+
+                <Slider {...settings}>
 
                     {cities.map(city => (
-                        <div key={city.name} className='sm:px-2'>
+                        <div key={city.name} className='sm:px-2 rtl:rtl'>
                             <a href={city.url} className='grid grid-cols-9 bg-white rounded-lg overflow-hidden' target='_blank' title={city.name}>
                                 <Image
-                                    onContextMenu={e => {e.preventDefault()}}
+                                    onContextMenu={e => { e.preventDefault() }}
                                     src={city.imageUrl}
                                     alt={city.title}
                                     width={272}
@@ -111,8 +127,7 @@ const PopularCities: React.FC = () => {
 
                     ))}
 
-                </Carousel>
-            </div>
+                </Slider>
 
         </>
 

@@ -1,9 +1,9 @@
 import { useTranslation } from 'next-i18next';
 import Image from 'next/image';
-import Carousel from 'react-multi-carousel';
-import 'react-multi-carousel/lib/styles.css';
+import Slider from "react-slick";
 
 import Rating from '../../shared/components/ui/Rating';
+import { LeftCircle, RightCircle } from '@/modules/shared/components/ui/icons';
 
 const SuggestedHotels: React.FC = () => {
 
@@ -75,24 +75,46 @@ const SuggestedHotels: React.FC = () => {
 
         ]
 
-    const responsive = {
-        largeDesktop: {
-            breakpoint: { max: 5000, min: 1200 },
-            items: 4
+    const settings = {
+        speed: 500,
+        slidesToShow: 4,
+        slidesToScroll: 1,
+        nextArrow: <RightCircle />,
+        prevArrow: <LeftCircle />,
+        customPaging: function () {
+            return (
+                <a className='w-3.5 h-3.5 border-2 border-neutral-500 inline-block rounded-full' />
+            );
         },
-        desktop: {
-            breakpoint: { max: 1200, min: 992 },
-            items: 3
-        },
-        tablet: {
-            breakpoint: { max: 992, min: 460 },
-            items: 2
-        },
-        mobile: {
-            breakpoint: { max: 640, min: 0 },
-            items: 1
-        }
+        responsive: [
+            {
+                breakpoint: 1200,
+                settings: {
+                    slidesToShow: 3,
+                    slidesToScroll: 1,
+                }
+            },
+            {
+                breakpoint: 992,
+                settings: {
+                    slidesToShow: 2,
+                    slidesToScroll: 1,
+                    dots: true,
+                    arrows: false
+                }
+            },
+            {
+                breakpoint: 640,
+                settings: {
+                    slidesToShow: 1,
+                    slidesToScroll: 1,
+                    dots: true,
+                    arrows: false
+                }
+            }
+        ]
     };
+
 
 
     return (
@@ -100,39 +122,30 @@ const SuggestedHotels: React.FC = () => {
             <h2 className='text-xl font-semibold mb-4'>
                 {tHome('suggested-hotels')}
             </h2>
-            <div className='sm:-mx-2'>
-                <Carousel
-                    className='home-carousel'
-                    rtl
-                    responsive={responsive}
-                    renderDotsOutside
-                    showDots
-                >
 
-                    {hotels.map(hotel => (
-                        <div className='sm:px-2' key={hotel.name}>
-                            <a href={hotel.url} className='block bg-white rounded-lg overflow-hidden' target='_blank'>
-                                <Image
-                                    onContextMenu={e => {e.preventDefault()}}
-                                    src={hotel.imageUrl}
-                                    alt={hotel.alt}
-                                    width={272}
-                                    height={142}
-                                    className='w-full h-auto'
-                                />
-                                <div className='p-3'>
-                                    <h2 className='mb-1 text-sm font-semibold'>
-                                        {hotel.name}
-                                    </h2>
-                                    {!!hotel.rating && <Rating number={hotel.rating} />}
-                                </div>
+            <Slider {...settings}>
+                {hotels.map(hotel => (
+                    <div className='sm:px-2 rtl:rtl' key={hotel.name}>
+                        <a href={hotel.url} className='block bg-white rounded-lg overflow-hidden' target='_blank'>
+                            <Image
+                                onContextMenu={e => { e.preventDefault() }}
+                                src={hotel.imageUrl}
+                                alt={hotel.alt}
+                                width={272}
+                                height={142}
+                                className='w-full h-auto'
+                            />
+                            <div className='p-3'>
+                                <h2 className='mb-1 text-sm font-semibold'>
+                                    {hotel.name}
+                                </h2>
+                                {!!hotel.rating && <Rating number={hotel.rating} />}
+                            </div>
 
-                            </a>
-                        </div>
-                    ))}
-
-                </Carousel>
-            </div>
+                        </a>
+                    </div>
+                ))}
+            </Slider>
         </>
 
     )

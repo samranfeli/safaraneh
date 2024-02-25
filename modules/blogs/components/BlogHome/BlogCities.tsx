@@ -1,24 +1,43 @@
 import { NextPage } from "next";
-import Carousel from 'react-multi-carousel';
 import Image from "next/image";
 import { CityItemType } from "../../types/blog";
 import Link from "next/link";
-import 'react-multi-carousel/lib/styles.css';
+import Slider from "react-slick";
+import { LeftCircle, RightCircle } from "@/modules/shared/components/ui/icons";
 
-//carousel responsive
-const responsive = {
-    desktop: {
-        breakpoint: { max: 5000, min: 992 },
-        items: 3
+
+
+const settings = {
+    speed: 500,
+    slidesToShow: 3,
+    slidesToScroll: 1,
+    nextArrow: <RightCircle />,
+    prevArrow: <LeftCircle />,
+    customPaging: function () {
+        return (
+            <a className='w-3.5 h-3.5 border-2 border-neutral-500 inline-block rounded-full' />
+        );
     },
-    tablet: {
-        breakpoint: { max: 992, min: 460 },
-        items: 2
-    },
-    mobile: {
-        breakpoint: { max: 640, min: 0 },
-        items: 1
-    }
+    responsive: [
+        {
+            breakpoint: 992,
+            settings: {
+                slidesToShow: 2,
+                slidesToScroll: 1,
+                dots: true,
+                arrows: false
+            }
+        },
+        {
+            breakpoint: 640,
+            settings: {
+                slidesToShow: 1,
+                slidesToScroll: 1,
+                dots: true,
+                arrows: false
+            }
+        }
+    ]
 };
 
 interface Props {
@@ -38,18 +57,12 @@ const BlogCities: NextPage<Props> = ({data}) => {
 
             <div className='max-xl:p-3 m-auto max-w-container'>
 
-            <Carousel
-                className='home-carousel'
-                rtl
-                responsive={responsive}
-                renderDotsOutside
-                showDots
-            >
+            <Slider {...settings}>
             {
                 data ?
                 data.map((city ,index) => 
                     <Link href={city.excerpt.rendered.slice(3, city.excerpt.rendered.length - 5)}
-                    target="_blank" className="max-sm:relative max-sm:top-9" key={city.title.rendered}>
+                    target="_blank" className="max-sm:relative max-sm:top-9 rtl:rtl" key={city.title.rendered}>
                         <div className="p-2">
                             <Image src={city.images.medium} alt={city.title.rendered} width={397} height={266}
                                 className="object-fit rounded-md w-full" priority={!index} />
@@ -59,7 +72,7 @@ const BlogCities: NextPage<Props> = ({data}) => {
                 ):<p></p>
 
             }
-            </Carousel>
+            </Slider>
 
             </div>
         </div>
