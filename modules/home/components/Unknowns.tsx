@@ -2,12 +2,12 @@
 import { useTranslation } from 'next-i18next';
 import { Fragment } from 'react';
 import Image from 'next/image';
-import Carousel from 'react-multi-carousel';
-import 'react-multi-carousel/lib/styles.css';
+import Slider from "react-slick";
+import { LeftCircle, RightCircle } from '@/modules/shared/components/ui/icons';
 
 const Unknowns: React.FC = () => {
     const { t } = useTranslation('common');
-    const { t:tHome } = useTranslation('home');
+    const { t: tHome } = useTranslation('home');
 
     const items: {
         imageUrl: string;
@@ -54,41 +54,63 @@ const Unknowns: React.FC = () => {
 
         ];
 
-    const responsive = {
-        desktop: {
-            breakpoint: { max: 5000, min: 992 },
-            items: 3
+
+    const settings = {
+        speed: 500,
+        slidesToShow: 3,
+        slidesToScroll: 1,
+        nextArrow: <RightCircle />,
+        prevArrow: <LeftCircle />,
+        customPaging: function () {
+            return (
+                <a className='w-3.5 h-3.5 border-2 border-neutral-500 inline-block rounded-full' />
+            );
         },
-        tablet: {
-            breakpoint: { max: 992, min: 460 },
-            items: 2
-        },
-        mobile: {
-            breakpoint: { max: 640, min: 0 },
-            items: 1
-        }
+        responsive: [
+            {
+                breakpoint: 1200,
+                settings: {
+                    slidesToShow: 3,
+                    slidesToScroll: 1,
+                }
+            },
+            {
+                breakpoint: 992,
+                settings: {
+                    slidesToShow: 2,
+                    slidesToScroll: 1,
+                    dots: true,
+                    arrows: false
+                }
+            },
+            {
+                breakpoint: 640,
+                settings: {
+                    slidesToShow: 1,
+                    slidesToScroll: 1,
+                    dots: true,
+                    arrows: false
+                }
+            }
+        ]
     };
+
+
 
     return (
         <Fragment>
             <h2 className='text-xl font-semibold my-4 md:mt-10'>
                 ناشناخته ها
             </h2>
-            <div className='sm:-mx-2'>
-                <Carousel
-                    className='home-carousel'
-                    rtl
-                    responsive={responsive}
-                    renderDotsOutside
-                    showDots
-                >
+
+                <Slider {...settings}>
 
                     {items.map(item => (
-                        <div className='sm:px-2' key={item.title}>
+                        <div className='sm:px-2 rtl:rtl' key={item.title}>
                             <a href={item.url} className='block bg-white rounded-lg overflow-hidden' target='_blank' title={item.title}>
                                 <div className='relative'>
                                     <Image
-                                        onContextMenu={e => {e.preventDefault()}}
+                                        onContextMenu={e => { e.preventDefault() }}
                                         src={item.imageUrl}
                                         alt={`رزرو ${item.title}`}
                                         width={272}
@@ -110,8 +132,7 @@ const Unknowns: React.FC = () => {
                         </div>
                     ))}
 
-                </Carousel>
-            </div>
+                </Slider>
 
         </Fragment>
 
