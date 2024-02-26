@@ -14,6 +14,7 @@ import OtpInput from '@/modules/shared/components/ui/OtpInput';
 import { setReduxNotification } from '@/modules/shared/store/notificationSlice';
 import { useAppDispatch } from '@/modules/shared/hooks/use-store';
 import { useRouter } from 'next/router';
+import { persianNumbersToEnglish } from '@/modules/shared/helpers';
 
 type Props = {
     portalName: string;
@@ -276,9 +277,9 @@ const ForgetPasswordForm: React.FC<Props> = props => {
                             <OtpInput
                                 onChange={(e: string) => {
                                     if (!enteredCode && e) {
-                                        verifyCode(e);
+                                        verifyCode(persianNumbersToEnglish(e));
                                     }
-                                    setEnteredCode(e);
+                                    setEnteredCode(persianNumbersToEnglish(e));
                                 }}
                             />
 
