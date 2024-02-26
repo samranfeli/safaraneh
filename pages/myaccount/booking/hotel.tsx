@@ -19,6 +19,7 @@ import DownloadPdfVoucher from '@/modules/domesticHotel/components/booking/Downl
 import Rating from '@/modules/shared/components/ui/Rating';
 import HotelMap from '@/modules/domesticHotel/components/hotelDetails/HotelMap';
 import AccountSidebar from '@/modules/authentication/components/AccountSidebar';
+import { useAppSelector } from '@/modules/shared/hooks/use-store';
 
 const DomesticHotelReserveDetail: NextPage = ({ portalData }: { portalData?: PortalDataType }) => {
 
@@ -27,6 +28,8 @@ const DomesticHotelReserveDetail: NextPage = ({ portalData }: { portalData?: Por
     const { t: tPayment } = useTranslation('payment');
 
     const router = useRouter();
+
+    const userIsAuthenticated = useAppSelector(state => state.authentication.isAuthenticated);
 
     const pathArray = router.asPath.split("?")[1]?.split("#")[0].split("&");
     const username: string | undefined = pathArray.find(item => item.includes("username="))?.split("username=")[1];
@@ -213,15 +216,14 @@ const DomesticHotelReserveDetail: NextPage = ({ portalData }: { portalData?: Por
                                         <div
                                             className='absolute top-0 bottom-0 right-0 left-0 bg-[#00314380]'
                                         />
-                                        <button
-                                            type='button'
+                                        <Link
+                                            href={userIsAuthenticated ? "/myaccount/booking" : "/signin"}
                                             className='absolute top-5 rtl:right-5 ltr:left-5 text-sm outline-none'
-                                        //onClick={()=>goBooksPage()}
                                         >
                                             <RightCaret className='w-5 h-5 fill-current inline-block' />
                                             بازگشت به لیست رزروها
 
-                                        </button>
+                                        </Link>
 
                                         <h4 className='text-4xl font-semibold absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2'> {hotelData.city.name || hotelData.displayName || ""} </h4>
 
