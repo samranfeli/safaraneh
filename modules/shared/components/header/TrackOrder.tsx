@@ -4,7 +4,7 @@ import { useState, useEffect } from 'react';
 import ModalPortal from "../ui/ModalPortal";
 import { useAppDispatch } from "../../hooks/use-store";
 import { setBodyScrollable } from "../../store/stylesSlice";
-import { Close } from "../ui/icons";
+import { Close, Ticket } from "../ui/icons";
 import { Form, Formik } from "formik";
 import PhoneInput from "../ui/PhoneInput";
 import FormikField from "../ui/FormikField";
@@ -13,7 +13,13 @@ import Button from "../ui/Button";
 import { useRouter } from "next/router";
 import { getReserveFromCoordinator } from "../../actions";
 
-const TrackOrder: React.FC = () => {
+type Props ={
+    isInMobileMenu?: boolean;
+    onCloseNavigation?:() => void;
+    iconClassName?:string;
+}
+
+const TrackOrder: React.FC<Props> = props => {
 
     const { t } = useTranslation('common');
 
@@ -99,8 +105,9 @@ const TrackOrder: React.FC = () => {
                 onClick={() => { setOpen(true) }}
                 type="button"
                 aria-label={t('retrieve-my-booking')}
-                className="h-12 text-sm text-blue-700 hover:text-blue-500 ltr:float-right rtl:float-left rtl:ml-5 ltr:mr-5 hidden md:block"
+                className={`${props.isInMobileMenu?"px-5 py-1 block my-2 transition-all duration-200 hover:text-blue-700 flex items-center gap-3 md:hidden":"h-12 text-sm text-blue-700 hover:text-blue-500 ltr:float-right rtl:float-left rtl:ml-5 ltr:mr-5 hidden md:block"}`}
             >
+                {!!props.isInMobileMenu && !!props.iconClassName && <Ticket className={props.iconClassName} />}
                 {t('retrieve-my-booking')}
             </button>
 
