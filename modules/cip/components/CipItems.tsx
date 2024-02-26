@@ -36,7 +36,7 @@ const CipItem: NextPage<any> = ({ AirportsDetail, AirportsList }) => {
                                     AirportsList.AirPorts[index].Price ?
                                         <div>
                                             <p className="max-sm:text-sm">{AirportsList.AirPorts[index].Price.toLocaleString()} ریال</p>
-                                            <p className="text-2xs text-gray-400 relative bottom-2">شروع قیمت</p>
+                                            <p className="text-2xs max-sm:text-4xs text-gray-400 relative bottom-2">شروع قیمت</p>
                                         </div> :
                                         <p className="max-sm:text-xs text-gray-400">قیمت موجود نیست</p>
                                 }
@@ -44,7 +44,7 @@ const CipItem: NextPage<any> = ({ AirportsDetail, AirportsList }) => {
                                     className="bg-blue-700 max-md:text-sm rounded-md flex h-fit relative
                                      text-white p-2 max-sm:p-1 pl-12 pr-12 whitespace-nowrap max-sm:pl-4 max-sm:pr-4 hover:bg-blue-600 duration-300">
                                     <p>مشاهده جزییات رزرو</p>
-                                    <DownCaret className="w-5 rotate-90 ltr:rotate-45 absolute left-1 top-3 max-sm:static" />
+                                    <DownCaret className="w-5 rotate-90 ltr:rotate-45 absolute left-1 top-3 max-sm:static fill-white" />
                                 </Link>
                             </div>    
                         </div>
