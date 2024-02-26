@@ -6,7 +6,7 @@ import Skeleton from '@/modules/shared/components/ui/Skeleton';
 import { CalendarBeautiful, ErrorCircle } from '@/modules/shared/components/ui/icons';
 import { useAppDispatch } from '@/modules/shared/hooks/use-store';
 import { setReduxError } from '@/modules/shared/store/errorSlice';
-import { PortalDataType, UserReserveListItem } from '@/modules/shared/types/common';
+import { PortalDataType, ReserveType, UserReserveListItem } from '@/modules/shared/types/common';
 import type { GetServerSideProps, NextPage } from 'next';
 import { useTranslation } from 'next-i18next';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
@@ -31,7 +31,7 @@ const Profile: NextPage = ({ portalData }: { portalData?: PortalDataType }) => {
         portalName = portalData.Phrases?.find(item => item.Keyword === "Name")?.Value || "";
     }
 
-    const fetchReserves = async (params: { MaxResultCount: number; SkipCount: number; Statue?: string; }) => {
+    const fetchReserves = async (params: { MaxResultCount: number; SkipCount: number; Statue?: string; Types?: ReserveType;}) => {
 
         const token = localStorage.getItem('Token');
         if (!token) {
@@ -56,7 +56,7 @@ const Profile: NextPage = ({ portalData }: { portalData?: PortalDataType }) => {
     }
 
     useEffect(() => {
-        fetchReserves({ MaxResultCount: 10, SkipCount: (page - 1) * 10 });
+        fetchReserves({ MaxResultCount: 10, SkipCount: (page - 1) * 10 , Types:'HotelDomestic'});
     }, [page]);
 
 
@@ -142,7 +142,7 @@ const Profile: NextPage = ({ portalData }: { portalData?: PortalDataType }) => {
 export const getServerSideProps: GetServerSideProps = async (context: any) => {
     return ({
         props: {
-            ...await (serverSideTranslations(context.locale, ['common']))
+            ...await (serverSideTranslations(context.locale, ['common','hotel', 'payment']))
         },
     })
 }
