@@ -51,7 +51,7 @@ const CipServices: NextPage = () => {
             {
                 list.map(item => 
                     <div className="pt-4 pb-4 pl-4 pr-4 max-lg:pl-2 max-lg:pr-2 bg-white rounded shadow-base text-center text-sm place-content-center">
-                        <Image src={item.image} alt="x" width={200} height={150} className="w-20 m-auto" />
+                        <Image src={item.image} alt="x" width={10} height={10} className="w-14 m-auto" />
                         <p className="mt-1">{item.content}</p>
                     </div>)
             }

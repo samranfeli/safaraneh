@@ -2,7 +2,8 @@ import { NextPage } from "next";
 import Image from "next/image";
 import { AirportDetailType } from "../types/cip";
 import Link from "next/link";
-import { ArrowLeft, DownCaret } from "@/modules/shared/components/ui/icons";
+import { DownCaret } from "@/modules/shared/components/ui/icons";
+import parse from 'html-react-parser';
 
 
 const CipItem: NextPage<any> = ({ AirportsDetail, AirportsList }) => {
@@ -27,16 +28,14 @@ const CipItem: NextPage<any> = ({ AirportsDetail, AirportsList }) => {
                             <p className="text-2xs text-gray-400">{airport.address}</p>
                             <div className="text-xs max-sm:text-2xs h-28 mt-2 text-gray-700 overflow-hidden relative">
                                 {
-                                    <p>{airport.description}</p>
+                                    parse(airport.description || '')
                                 }
-                                <span className="w-full h-12 absolute bottom-0 opacity-50"
-                                style={{backgroundImage: 'linear-gradient(rgba(250,250,250,0.5), rgba(250,250,250,05))'}}></span>
                             </div>
                             <div className="flex justify-between mt-2 max-sm:mt-5">
                                 {
                                     AirportsList.AirPorts[index].Price ?
                                         <div>
-                                            <p className="max-sm:text-sm">{AirportsList.AirPorts[index].Price} ریال</p>
+                                            <p className="max-sm:text-sm">{AirportsList.AirPorts[index].Price.toLocaleString()} ریال</p>
                                             <p className="text-2xs text-gray-400 relative bottom-2">شروع قیمت</p>
                                         </div> :
                                         <p className="max-sm:text-xs text-gray-400">قیمت موجود نیست</p>
