@@ -43,7 +43,6 @@ const DownloadPdfVoucher: React.FC<Props> = props => {
             }
 
         } catch (error) {
-            debugger;
         }
         setLoading(false);
     }

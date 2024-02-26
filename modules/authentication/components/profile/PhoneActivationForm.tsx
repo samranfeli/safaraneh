@@ -10,6 +10,7 @@ import { InfoCircle, Loading } from "@/modules/shared/components/ui/icons";
 import ModalPortal from "@/modules/shared/components/ui/ModalPortal";
 import Image from "next/image";
 import OtpInput from "@/modules/shared/components/ui/OtpInput";
+import { persianNumbersToEnglish } from "@/modules/shared/helpers";
 
 
 type Props = {
@@ -273,9 +274,9 @@ const PhoneActivationForm: React.FC<Props> = props => {
                                 <OtpInput
                                     onChange={(e: string) => {
                                         if (!enteredCode && e) {
-                                            verificationSubmit(e);
+                                            verificationSubmit(persianNumbersToEnglish(e));
                                         }
-                                        setEnteredCode(e);
+                                        setEnteredCode(persianNumbersToEnglish(e));
                                     }}
                                 />
 
