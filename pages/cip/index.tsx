@@ -6,17 +6,21 @@ import CipDescribtion from "@/modules/cip/components/CipDescription";
 import CipItem from "@/modules/cip/components/CipItems";
 import CipRules from "@/modules/cip/components/CipRules";
 import CipFaq from "@/modules/cip/components/CipFaq";
+import CipServices from "@/modules/cip/components/CipServices";
 
 const CipMainPage: NextPage<any> = ({  data, data2 }) => {
     
     return (
-        <div className="max-w-container m-auto pr-5 pl-5 max-md:p-3">
+        <>
             <CipImages  />
-            <CipDescribtion content={data} />
-            <CipItem AirportsDetail={data2} AirportsList={data} />
-            <CipRules />
-            <CipFaq />
-        </div>
+            <div className="max-w-container m-auto pr-5 pl-5 max-md:p-3">
+                <CipDescribtion content={data} />
+                <CipItem AirportsDetail={data2} AirportsList={data} />
+                <CipServices />
+                <CipRules />
+                <CipFaq />
+            </div>
+         </>   
     )
 }
 

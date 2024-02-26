@@ -83,7 +83,7 @@ const CipFaq: NextPage = () => {
     ]
     return (
         <>
-        <h2 className="text-3xl mt-16 mb-5">سوالات متدوال</h2>
+        <h2 className="text-3xl mt-20 mb-5">سوالات متدوال</h2>
         <div className="space-y-5">
             {
                     faqs.map((faq, index) =>
