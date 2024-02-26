@@ -10,8 +10,8 @@ import { ApartmentOutline, Home2, Location } from "../../../shared/components/ui
 import { EntitySearchResultItemType } from "@/modules/domesticHotel/types/hotel";
 import { useAppDispatch } from "@/modules/shared/hooks/use-store";
 import { setReduxError } from "@/modules/shared/store/errorSlice";
-// import DatePicker from "../../../shared/components/ui/RangePicker";
-// import { localeFa } from "@mobiscroll/react";
+import DatePicker from "../../../shared/components/ui/RangePicker";
+import { localeFa } from "@mobiscroll/react";
 import Button from "../../../shared/components/ui/Button";
 
 
@@ -226,15 +226,12 @@ const SearchForm: React.FC<Props> = props => {
             </div>
             <div className="col-span-1 md:col-span-3 relative">
 
-                <input type="date" className="border border-neutral-400 rounded-md w-full px-5 h-12" />
-
-                {/* <DatePicker
+                <DatePicker
                     value={dates}
                     onChange={dateChangeHandle}
                     rtl
                     locale={localeFa}
-                /> */}
-                {/* انتخاب تاریخ */}
+                />
 
             </div>
 

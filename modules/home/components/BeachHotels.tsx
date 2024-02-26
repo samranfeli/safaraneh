@@ -1,14 +1,14 @@
 import { useTranslation } from 'next-i18next';
 import { Fragment } from 'react';
 import Image from 'next/image';
-import Carousel from 'react-multi-carousel';
-import 'react-multi-carousel/lib/styles.css';
+import Slider from "react-slick";
 
 import Rating from '../../shared/components/ui/Rating';
+import { LeftCircle, RightCircle } from '@/modules/shared/components/ui/icons';
 
 const BeachHotels: React.FC = () => {
 
-    const { t:tHome } = useTranslation('home');
+    const { t: tHome } = useTranslation('home');
 
     const hotels: {
         imageUrl: string;
@@ -56,41 +56,61 @@ const BeachHotels: React.FC = () => {
 
         ];
 
-    const responsive = {
-        desktop: {
-            breakpoint: { max: 5000, min: 992 },
-            items: 3
+    const settings = {
+        speed: 500,
+        slidesToShow: 3,
+        slidesToScroll: 1,
+        nextArrow: <RightCircle />,
+        prevArrow: <LeftCircle />,
+        customPaging: function () {
+            return (
+                <a className='w-3.5 h-3.5 border-2 border-neutral-500 inline-block rounded-full' />
+            );
         },
-        tablet: {
-            breakpoint: { max: 992, min: 460 },
-            items: 2
-        },
-        mobile: {
-            breakpoint: { max: 640, min: 0 },
-            items: 1
-        }
+        responsive: [
+            {
+                breakpoint: 1200,
+                settings: {
+                    slidesToShow: 3,
+                    slidesToScroll: 1,
+                }
+            },
+            {
+                breakpoint: 992,
+                settings: {
+                    slidesToShow: 2,
+                    slidesToScroll: 1,
+                    dots: true,
+                    arrows: false
+                }
+            },
+            {
+                breakpoint: 640,
+                settings: {
+                    slidesToShow: 1,
+                    slidesToScroll: 1,
+                    dots: true,
+                    arrows: false
+                }
+            }
+        ]
     };
+
 
     return (
         <Fragment>
             <h2 className='text-xl font-semibold my-4 md:mt-10'>
                 هتل‌‌های ساحلی
             </h2>
-            <div className='sm:-mx-2'>
 
-                <Carousel
-                    className='home-carousel'
-                    rtl
-                    responsive={responsive}
-                    renderDotsOutside
-                    showDots
-                >
+
+                <Slider {...settings}>
 
                     {hotels.map(hotel => (
-                        <div className='sm:px-2' key={hotel.name}>
+                        <div className='sm:px-2 rtl:rtl' key={hotel.name}>
                             <a href={hotel.url} className='outline-none block bg-white rounded-lg overflow-hidden' target='_blank' title={hotel.name}>
                                 <Image
-                                    onContextMenu={e => {e.preventDefault()}}
+                                    onContextMenu={e => { e.preventDefault() }}
                                     src={hotel.imageUrl}
                                     alt={`رزرو ${hotel.name}`}
                                     width={376}
@@ -107,9 +127,8 @@ const BeachHotels: React.FC = () => {
                             </a>
                         </div>
                     ))}
+                </Slider>
 
-                </Carousel>
-            </div>
 
         </Fragment>
 

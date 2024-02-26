@@ -2,6 +2,7 @@
 import { TabItem } from '@/modules/shared/types/common';
 import React, { Fragment, useState } from 'react';
 import { Tik } from './icons';
+import { useRouter } from 'next/router';
 
 type Props = {
     items: TabItem[];
@@ -12,6 +13,8 @@ type Props = {
 const Tab: React.FC<Props> = props => {
 
     const { items , style2,style3} = props;
+
+    const router = useRouter();
 
     const [activetabKey, setActiveTabKey] = useState(items[0].key);
 
@@ -31,7 +34,13 @@ const Tab: React.FC<Props> = props => {
                 {items.map(item => <button
                     type="button"
                     key={item.key}
-                    onClick={() => setActiveTabKey(item.key)}
+                    onClick={() =>{
+                        if (item.href){
+                            router.push(item.href);
+                        }else{
+                            setActiveTabKey(item.key);
+                        }
+                    }}
                     className={tabClassName(activetabKey === item.key)}
                 >
                     {!!(style2 && activetabKey === item.key) && (
