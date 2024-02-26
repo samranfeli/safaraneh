@@ -89,7 +89,7 @@ const RangePicker: React.FC<Props> = props => {
     }
 
     return (
-        <div className={`${locale === localeFa ? 'persian-datepicker-wrapper' : ''} relative`} >
+        <div className={`${locale === localeFa ? 'persian-datepicker-wrapper' : ''} relative text-xs`} >
 
             <div className='grid grid-cols-2'>
 
@@ -141,19 +141,19 @@ const RangePicker: React.FC<Props> = props => {
 
                     <header className='direction-root font-samim mobi-date-picker-header px-5 py-3 border-b border-neutral-300  gap-5 text-sm hidden md:flex h-12 '>
 
-                        <div className={`min-w-24 bold text-sm border-b-2 border-transparent ${values && values[0] && !values[1] ? "border-blue-600" : ""}`}>
+                        <div className={`font-semibold text-sm border-b-2 border-transparent ${values && values[0] && !values[1] ? "border-blue-600" : ""}`}>
                             {startFormated}
                         </div>
 
                         <ArrowLeft className='w-6 h-6 fill-current' />
 
-                        <div className={`min-w-24 bold text-sm border-b-2 border-transparent ${values && values[0] && !values[1] ? "border-blue-600" : ""}`}>
+                        <div className={`font-semibold text-sm border-b-2 border-transparent ${values && values[0] && !values[1] ? "border-blue-600" : ""}`}>
                             {endFormated}
                         </div>
 
                     </header>
 
-                    <footer className='direction-root font-samim mobi-date-picker-footer flex justify-center md:justify-between items-center px-5 py-4 border-t border-neutral-300'>
+                    <footer className='direction-root font-samim mobi-date-picker-footer flex justify-center gap-5 md:justify-between items-center px-5 py-4 border-t border-neutral-300'>
                         <button type='button' onClick={goToday} className='text-primary-700 text-sm'>
                             {t('goToToday')}
                         </button>

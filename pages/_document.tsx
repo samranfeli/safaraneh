@@ -11,6 +11,7 @@ export default function Document() {
         <div id="modal_portal" className='relative z-50'></div>
         <div id="modal_portal_2" className='relative z-50'></div>
         <div id="error_modal_portal" className='relative z-50'></div>
+        <div id="notification_modal_portal" className='relative z-50'></div>
         <NextScript />
       </body>
     </Html>
