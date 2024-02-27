@@ -156,7 +156,8 @@ const Checkout: NextPage = () => {
 
     setSubmitLoading(true);
 
-    const reserveResponse: any = await domesticHotelPreReserve(params);
+    const token = localStorage.getItem('Token');
+    const reserveResponse: any = await domesticHotelPreReserve(params, token);
 
     if (reserveResponse.data && reserveResponse.data.result) {
       const id = reserveResponse.data.result.id;

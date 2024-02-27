@@ -264,7 +264,7 @@ export const domesticHotelGetValidate = async (key: string, acceptLanguage: stri
 }
 
 
-export const domesticHotelPreReserve = async (param: DomesticHotelPrereserveParams, acceptLanguage: string = 'fa-IR') => {
+export const domesticHotelPreReserve = async (param: DomesticHotelPrereserveParams,token?:string | null , acceptLanguage: string = 'fa-IR') => {
 
     try {
         let response = await axios.post(
@@ -277,6 +277,7 @@ export const domesticHotelPreReserve = async (param: DomesticHotelPrereservePara
                     apikey: process.env.PROJECT_SERVER_APIKEY,
                     'Accept-Language': acceptLanguage,
                     TenantId: process.env.PROJECT_SERVER_TENANTID,
+                    Authorization: `Bearer ${token}`,
                     Currency: 'IRR'
                 },
             },
