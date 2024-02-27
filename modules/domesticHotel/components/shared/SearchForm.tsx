@@ -52,12 +52,11 @@ const SearchForm: React.FC<Props> = props => {
         if (defaultDestination) {
             setSelectedDestination(defaultDestination);
         }
-    }, [defaultDestination]);
+    }, [defaultDestination?.name]);
 
     useEffect(() => {
         setSubmitLoading(false);
     }, [routerPath]);
-
 
     const autoCompleteUrl = `${ServerAddress.Type}${ServerAddress.Hotel_Data}${Hotel.GetEntity}`;
 
