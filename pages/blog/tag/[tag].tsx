@@ -39,7 +39,7 @@ export async function getServerSideProps(context: any) {
     
     return ({
         props: {
-            ...await (serverSideTranslations(context.locale, ['common'])),
+            ...await serverSideTranslations(context.locale, ['common']),
             TagName: TagName?.data || null,
             TagBlogs: TagBlogs?.data || null,
             pages: TagBlogs?.headers?.['x-wp-totalpages'],

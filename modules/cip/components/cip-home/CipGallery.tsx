@@ -44,8 +44,8 @@ const CipGallery: React.FC<Props> = props => {
     return (
         <>
 
-            <div className='flex gap-1 h-480 max-xl:h-full'>
-                <div className='grid grid-rows-1 grid-cols-3 gap-1 w-1/2 max-md:w-full relative'>
+            <div className='flex gap-1 h-480 max-lg:h-full'>
+                <div className='grid grid-rows-3 grid-cols-3 gap-1 w-1/2 max-md:w-full relative'>
 
                         {slides.slice(0, 4).map((slide, index) => (
                             <Image
@@ -58,7 +58,7 @@ const CipGallery: React.FC<Props> = props => {
                                 width={index ? 287 : 430}
                                 height={index ? 191 : 270}
                                 onClick={() => { openLightBox(index); }}
-                                className={`cursor-pointer w-full h-full object-cover ${!index && "col-span-3" }`}
+                                className={`cursor-pointer w-full h-full object-cover ${!index && "col-span-3 row-span-2"  }`}
                             />
                         ))}
                     
