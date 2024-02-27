@@ -8,6 +8,8 @@ import parse from 'html-react-parser';
 
 const CipItem: NextPage<any> = ({ AirportsDetail, AirportsList }) => {
     const Airports: AirportDetailType[] = AirportsDetail || null
+    console.log(AirportsDetail,);
+    
     
     return (
         <div>
@@ -25,7 +27,7 @@ const CipItem: NextPage<any> = ({ AirportsDetail, AirportsList }) => {
                         </Link>
                         <div className="w-full bg-white col-span-2 p-5 pt-3 pb-2 max-sm:p-3">
                             <Link href={airport.url} className="font-bold">{airport.name}</Link>
-                            <div className="flex">
+                            <div className="flex gap-1">
                                 <Location className="w-4 fill-gray-400" />
                                 <p className="text-2xs text-gray-400">{airport.address}</p>
                             </div>

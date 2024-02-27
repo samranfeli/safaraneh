@@ -36,7 +36,7 @@ export async function getServerSideProps(context: any) {
     ])
     return ({
         props: {
-            ...await (serverSideTranslations(context.locale, ['common'])),
+            ...await serverSideTranslations(context.locale, ['common']),
             categories_name: categories_name?.data || null,
             LastBlogs: recentBlogs?.data || null,
             pages: SearchBlog?.headers?.['x-wp-totalpages'],
