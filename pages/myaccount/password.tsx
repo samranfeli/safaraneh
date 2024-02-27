@@ -31,7 +31,7 @@ const Password: NextPage = ({ portalData }: { portalData?: PortalDataType }) => 
             <div className='max-w-container mx-auto px-5 py-4'>
 
                 <div className='grid gap-4 md:grid-cols-3'>
-                    <div>
+                    <div className='max-md:hidden'>
                         <AccountSidebar />
                     </div>
                     <div className='md:col-span-2'>

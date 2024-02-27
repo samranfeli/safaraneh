@@ -173,3 +173,23 @@ export const makeDepositToken = async (params:{gatewayId: number; callBackUrl: s
     return error
   }
 }
+
+
+
+export const confirmByDeposit = async (params:{username: string,reserveId: number}, token:string) => {
+  try {
+    const response = await axios.post(
+      `${ServerAddress.Type}${ServerAddress.Payment}${Payment.ConfirmByDeposit}`,
+      params,
+      {
+        headers: {
+          'Accept-Language': 'fa-IR',
+          Authorization: `Bearer ${token}`,
+        },
+      },
+    )
+    return response
+  } catch (error) {
+    return error
+  }
+}
