@@ -8,6 +8,7 @@ import TrackOrder from "./TrackOrder";
 import { useAppSelector } from "../../hooks/use-store";
 import { numberWithCommas } from "../../helpers";
 import Logout from "@/modules/authentication/components/Logout";
+import Skeleton from "../ui/Skeleton";
 
 type Props = {
     logo: string;
@@ -22,6 +23,7 @@ const TravelServices: React.FC<Props> = props => {
     const { logo, siteName } = props;
 
     const userIsAuthenticated = useAppSelector(state => state.authentication.isAuthenticated);
+    const userLoading = useAppSelector(state => state.authentication.getUserLoading);
 
     const depositBalance = useAppSelector(state => state.authentication.balance);
     const depositBalanceLoading = useAppSelector(state => state.authentication.balanceLoading);
@@ -83,7 +85,12 @@ const TravelServices: React.FC<Props> = props => {
                             {t('home')}
                         </Link>
 
-                        {userIsAuthenticated ? (
+                        {userLoading ? (
+                            <div className="px-5">
+                                <Skeleton className="w-32 mb-4" />
+                                <Skeleton className="w-32 mb-4" />
+                            </div>
+                        ) : userIsAuthenticated ? (
                             <>
                                 <Link onClick={()=>{setOpenMenu(false)}} href="/myaccount/profile" className={`${linkWithIconClassName} md:hidden`}>
                                     <User className={iconClassName} />
