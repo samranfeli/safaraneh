@@ -2,7 +2,7 @@ import { NextPage } from "next";
 import Image from "next/image";
 import { AirportDetailType } from "../types/cip";
 import Link from "next/link";
-import { DownCaret } from "@/modules/shared/components/ui/icons";
+import { DownCaret, Location } from "@/modules/shared/components/ui/icons";
 import parse from 'html-react-parser';
 
 
@@ -25,11 +25,16 @@ const CipItem: NextPage<any> = ({ AirportsDetail, AirportsList }) => {
                         </Link>
                         <div className="w-full bg-white col-span-2 p-5 pt-3 pb-2 max-sm:p-3">
                             <Link href={airport.url} className="font-bold">{airport.name}</Link>
-                            <p className="text-2xs text-gray-400">{airport.address}</p>
+                            <div className="flex">
+                                <Location className="w-4 fill-gray-400" />
+                                <p className="text-2xs text-gray-400">{airport.address}</p>
+                            </div>
                             <div className="text-xs max-sm:text-2xs h-28 mt-2 text-gray-700 overflow-hidden relative">
                                 {
                                     parse(airport.description || '')
                                 }
+                                <span className="h-18 w-full absolute bottom-0 left-0 right-0 z-20"
+                                style={{background: "linear-gradient(0, #fff, transparent)"}}></span>
                             </div>
                             <div className="flex justify-between mt-2 max-sm:mt-5">
                                 {
