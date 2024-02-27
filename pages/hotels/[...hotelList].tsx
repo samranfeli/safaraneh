@@ -607,7 +607,7 @@ export const getServerSideProps: GetServerSideProps = async (context: any) => {
       Hotels: SearchHotelItem[];
       Content?: string;
     };
-  } = await SearchHotels(url, locale);
+  } = await SearchHotels({url:url, cityId: +query.hotelList.find((item:string) => item.includes("location-"))?.split("location-")[1]}, locale);
 
   let faqResponse: any;
   if (searchHotelsResponse?.data?.Hotels[0]?.CityId) {
