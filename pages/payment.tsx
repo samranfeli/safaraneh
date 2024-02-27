@@ -123,8 +123,6 @@ const Payment: NextPage = () => {
         `https://payline.safaraneh.com/fa/Reserves/Payment/PaymentRequest?tokenId=${response.data.result.tokenId}`
       );
     } else {
-      
-      debugger;
       dispatch(setReduxError({
         title: t('error'),
         message:response.data.error.message,
@@ -160,7 +158,7 @@ const Payment: NextPage = () => {
     {
       key: '3',
       label: ("اعتباری"),
-      children: (<CreditPayment />),
+      children: (<CreditPayment price={coordinatorPrice} />),
     }
   ];
 
