@@ -1,17 +1,17 @@
-import CipImages from "@/modules/cip/components/CipImages";
+import CipImages from "@/modules/cip/components/cip-home/CipImages";
 import { NextPage } from "next";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
-import { GetAirportList, GetAirportsDetail } from "../../modules/cip/actions/index";
-import CipDescribtion from "@/modules/cip/components/CipDescription";
-import CipItem from "@/modules/cip/components/CipAirports";
-import CipRules from "@/modules/cip/components/CipRules";
-import CipFaq from "@/modules/cip/components/CipFaq";
-import CipServices from "@/modules/cip/components/CipServices";
+import { GetAirportList, GetAirportsDetail } from "../modules/cip/actions/index";
+import CipDescribtion from "@/modules/cip/components/cip-home/CipDescription";
+import CipAirportsList from "@/modules/cip/components/cip-home/CipAirportsList";
+import CipRules from "@/modules/cip/components/cip-home/CipRules";
+import CipFaq from "@/modules/cip/components/cip-home/CipFaq";
+import CipServices from "@/modules/cip/components/cip-home/CipServices";
 import { AirportDetailType } from "@/modules/cip/types/cip";
 
 const CipMainPage: NextPage<any> = ({ generalData, priceData }: { generalData: AirportDetailType[]; priceData: any}) => {
 
-    const airportsList =  generalData.map(item => {
+    const airportsList =  generalData?.map(item => {
         
         const displayPrice = priceData?.AirPorts.find((i:any) => i.AirportId === item.id)?.Price;
         
@@ -25,8 +25,8 @@ const CipMainPage: NextPage<any> = ({ generalData, priceData }: { generalData: A
         <>
             <CipImages  />
             <div className="max-w-container m-auto pr-5 pl-5 max-md:p-3">
-                <CipDescribtion content={priceData.Content} />
-                <CipItem AirportsAllData={airportsList}  />
+                <CipDescribtion content={priceData?.Content} />
+                <CipAirportsList AirportsAllData={airportsList}  />
                 <CipServices />
                 <CipRules />
                 <CipFaq />

@@ -1,12 +1,12 @@
 import { NextPage } from "next";
 import Image from "next/image";
-import { AirportDetailType } from "../types/cip";
+import { AirportDetailType } from "../../types/cip";
 import Link from "next/link";
 import { DownCaret, Location } from "@/modules/shared/components/ui/icons";
 import parse from 'html-react-parser';
 
 
-const CipItem: NextPage<any> = ({ AirportsAllData}) => {
+const CipAirportsList: NextPage<any> = ({ AirportsAllData}) => {
     const Airports: AirportDetailType[] = AirportsAllData || null
     
     return (
@@ -60,4 +60,4 @@ const CipItem: NextPage<any> = ({ AirportsAllData}) => {
     )
 }
 
-export default CipItem;
+export default CipAirportsList;
