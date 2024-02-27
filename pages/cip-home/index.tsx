@@ -9,16 +9,24 @@ import CipFaq from "@/modules/cip/components/CipFaq";
 import CipServices from "@/modules/cip/components/CipServices";
 import { AirportDetailType } from "@/modules/cip/types/cip";
 
-const CipMainPage: NextPage<any> = ({ AirportsList, AirportsDetail }: { AirportsDetail: AirportDetailType[]; AirportsList: any}) => {
-    
-    const AirportsAllData = AirportsDetail.map((i: any) => Object.assign(i, { 'Price': AirportsList.AirPorts.find((e: any) => e.AirportId == i.id).Price }))
+const CipMainPage: NextPage<any> = ({ generalData, priceData }: { generalData: AirportDetailType[]; priceData: any}) => {
+
+    const airportsList =  generalData.map(item => {
+        
+        const displayPrice = priceData?.AirPorts.find((i:any) => i.AirportId === item.id)?.Price;
+        
+        return({
+            ...item,
+            Price: displayPrice
+        })
+    })
     
     return (
         <>
             <CipImages  />
             <div className="max-w-container m-auto pr-5 pl-5 max-md:p-3">
-                <CipDescribtion content={AirportsList} />
-                <CipItem AirportsAllData={AirportsAllData}  />
+                <CipDescribtion content={priceData.Content} />
+                <CipItem AirportsAllData={airportsList}  />
                 <CipServices />
                 <CipRules />
                 <CipFaq />
@@ -34,15 +42,15 @@ export async function getStaticProps(context: any) {
         GetAirportsDetail(),
         GetAirportList()
     ])
-    const data = AirportsList?.data
-    const data2 = AirportsDetail?.data.result.items
+    const priceData = AirportsList?.data
+    const generalData = AirportsDetail?.data.result.items
 
     return (
         {
             props: {
                 ...await serverSideTranslations(context.locale, ['common']),
-                AirportsList: data || null,
-                AirportsDetail: data2 || null
+                priceData: priceData || null,
+                generalData: generalData || null
             },
 
         }
