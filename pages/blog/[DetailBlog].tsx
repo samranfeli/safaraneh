@@ -60,7 +60,7 @@ export async function getServerSideProps(context: any) {
     return (
         {
             props: {
-                ...await (serverSideTranslations(context.locale, ['common'])),
+                ...await serverSideTranslations(context.locale, ['common']),
                 BlogPost: BlogPost?.data || null,
                 recentBlogs: recentBlogs?.data || null,
                 CategoriesName: CategoriesName?.data || null,

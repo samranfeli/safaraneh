@@ -18,4 +18,5 @@ export interface AirportDetailType {
     }
     id: number;
     description: string;
+    Price: number
 }

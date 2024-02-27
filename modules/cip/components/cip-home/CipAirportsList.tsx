@@ -1,13 +1,13 @@
 import { NextPage } from "next";
 import Image from "next/image";
-import { AirportDetailType } from "../types/cip";
-import parse from 'html-react-parser';
+import { AirportDetailType } from "../../types/cip";
 import Link from "next/link";
-import { ArrowLeft, DownCaret } from "@/modules/shared/components/ui/icons";
+import { DownCaret, Location } from "@/modules/shared/components/ui/icons";
+import parse from 'html-react-parser';
 
 
-const CipItem: NextPage<any> = ({ AirportsDetail, AirportsList }) => {
-    const Airports: AirportDetailType[] = AirportsDetail || null
+const CipAirportsList: NextPage<any> = ({ AirportsAllData}) => {
+    const Airports: AirportDetailType[] = AirportsAllData || null
     
     return (
         <div>
@@ -23,22 +23,25 @@ const CipItem: NextPage<any> = ({ AirportsDetail, AirportsList }) => {
                                 onContextMenu={e => e.preventDefault()}
                             />
                         </Link>
-                        <div className="w-full bg-white col-span-2 p-5 pt-3 pb-2">
+                        <div className="w-full bg-white col-span-2 p-5 pt-3 pb-2 max-sm:p-3">
                             <Link href={airport.url} className="font-bold">{airport.name}</Link>
-                            <p className="text-2xs max-sm:text-4xs text-gray-400">{airport.address}</p>
+                            <div className="flex gap-1">
+                                <Location className="w-4 fill-gray-400" />
+                                <p className="text-2xs text-gray-400">{airport.address}</p>
+                            </div>
                             <div className="text-xs max-sm:text-2xs h-28 mt-2 text-gray-700 overflow-hidden relative">
                                 {
-                                    <p>{airport.description}</p>
+                                    parse(airport.description || '')
                                 }
-                                <span className="w-full h-12 absolute bottom-0 opacity-50"
-                                style={{backgroundImage: 'linear-gradient(rgba(250,250,250,0.4), rgba(250,250,250,1))'}}></span>
+                                <span className="h-18 w-full absolute bottom-0 left-0 right-0 z-20"
+                                style={{background: "linear-gradient(0, #fff, transparent)"}}></span>
                             </div>
                             <div className="flex justify-between mt-2 max-sm:mt-5">
                                 {
-                                    AirportsList.AirPorts[index].Price ? 
+                                    airport.Price ?
                                         <div>
-                                            <p className="max-sm:text-sm">{AirportsList.AirPorts[index].Price} ریال</p>
-                                            <p className="text-2xs text-gray-400 relative bottom-2">شروع قیمت</p>
+                                            <p className="max-sm:text-sm">{airport.Price.toLocaleString()} ریال</p>
+                                            <p className="text-2xs max-sm:text-4xs text-gray-400 relative bottom-2">شروع قیمت</p>
                                         </div> :
                                         <p className="max-sm:text-xs text-gray-400">قیمت موجود نیست</p>
                                 }
@@ -46,7 +49,7 @@ const CipItem: NextPage<any> = ({ AirportsDetail, AirportsList }) => {
                                     className="bg-blue-700 max-md:text-sm rounded-md flex h-fit relative
                                      text-white p-2 max-sm:p-1 pl-12 pr-12 whitespace-nowrap max-sm:pl-4 max-sm:pr-4 hover:bg-blue-600 duration-300">
                                     <p>مشاهده جزییات رزرو</p>
-                                    <DownCaret className="w-5 rotate-90 ltr:rotate-45 absolute left-1 top-3 max-sm:static" />
+                                    <DownCaret className="w-5 rotate-90 ltr:rotate-45 absolute left-1 top-3 max-sm:static fill-white" />
                                 </Link>
                             </div>    
                         </div>
@@ -57,4 +60,4 @@ const CipItem: NextPage<any> = ({ AirportsDetail, AirportsList }) => {
     )
 }
 
-export default CipItem;
+export default CipAirportsList;
