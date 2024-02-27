@@ -6,10 +6,8 @@ import { DownCaret, Location } from "@/modules/shared/components/ui/icons";
 import parse from 'html-react-parser';
 
 
-const CipItem: NextPage<any> = ({ AirportsDetail, AirportsList }) => {
-    const Airports: AirportDetailType[] = AirportsDetail || null
-    console.log(AirportsDetail,);
-    
+const CipItem: NextPage<any> = ({ AirportsAllData}) => {
+    const Airports: AirportDetailType[] = AirportsAllData || null
     
     return (
         <div>
@@ -40,9 +38,9 @@ const CipItem: NextPage<any> = ({ AirportsDetail, AirportsList }) => {
                             </div>
                             <div className="flex justify-between mt-2 max-sm:mt-5">
                                 {
-                                    AirportsList.AirPorts[index].Price ?
+                                    airport.Price ?
                                         <div>
-                                            <p className="max-sm:text-sm">{AirportsList.AirPorts[index].Price.toLocaleString()} ریال</p>
+                                            <p className="max-sm:text-sm">{airport.Price.toLocaleString()} ریال</p>
                                             <p className="text-2xs max-sm:text-4xs text-gray-400 relative bottom-2">شروع قیمت</p>
                                         </div> :
                                         <p className="max-sm:text-xs text-gray-400">قیمت موجود نیست</p>
