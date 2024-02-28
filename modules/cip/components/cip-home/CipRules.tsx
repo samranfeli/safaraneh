@@ -1,6 +1,4 @@
-import { NextPage } from "next"
-
-const CipRules: NextPage = () => {
+const CipRules = () => {
     return (
         <>
         <h2 className="text-3xl mt-20 mb-5">قوانین و مقررات</h2>

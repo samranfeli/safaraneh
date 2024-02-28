@@ -1,7 +1,6 @@
 import Accordion from "@/modules/shared/components/ui/Accordion";
-import { NextPage } from "next";
 
-const CipFaq: NextPage = () => {
+const CipFaq = () => {
     const faqs = [
         {
             title: 'رزرو خدمات CIP سفرانه چگونه است؟',
