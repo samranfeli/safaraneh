@@ -35,8 +35,6 @@ const Section5: NextPage = () => {
             message: values.text,
         }
         const post = await axios.post(`https://api.emailjs.com/api/v1.0/email/send-form`, CommentUser)
-        console.log(post);
-        
     }
 
     return (
