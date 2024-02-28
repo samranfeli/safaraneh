@@ -1,6 +1,6 @@
 import { NextPage } from "next";
 
-const CipDetailGallery: NextPage = () => {
+const Flights: NextPage = () => {
     return (
         <div>
             
@@ -8,4 +8,4 @@ const CipDetailGallery: NextPage = () => {
     )
 }
 
-export default CipDetailGallery;
+export default Flights;
