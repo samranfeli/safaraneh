@@ -12,7 +12,7 @@ type Props = {
 
 const Pagination: React.FC<Props> = props => {
 
-    const {t} = useTranslation("common");
+    const { t } = useTranslation("common");
 
     const [activePage, setActivePage] = useState<number>(1);
 
@@ -71,16 +71,26 @@ const Pagination: React.FC<Props> = props => {
                 <LeftCaret className="w-6 h-6 inline-block fill-current rtl:rotate-180 leading-4" />
             </button>
 
-            {pagesArray.map((_, index) => (
-                <button
-                    key={index}
-                    type="button"
-                    onClick={() => { setActivePage(index + 1) }}
-                    className={`outline-none bg-white border rounded w-9 h-9 leading-4 text-center cursor-pointer select-none hover:text-blue-500 hover:border-blue-500 ${activePage === index + 1 ? "text-blue-500 border-blue-500" : "text-neutral-700 border-neutral-200"}`}
-                >
-                    {index + 1}
-                </button>
-            ))}
+            {pagesArray.map((_, index) => {
+
+                if (pagesArray.length > 10 && ((index > 0 && activePage - 4 === index) || (index < pagesArray.length - 1 && activePage + 2 === index)) ) {
+                    return "..."
+                }
+
+                if (pagesArray.length > 10 && ((index > 0 && activePage - 4 > index) || (index < pagesArray.length - 1 && activePage + 2 < index))) {
+                    return null;
+                }
+                return (
+                    <button
+                        key={index}
+                        type="button"
+                        onClick={() => { setActivePage(index + 1) }}
+                        className={`outline-none bg-white border rounded w-9 h-9 leading-4 text-center cursor-pointer select-none hover:text-blue-500 hover:border-blue-500 ${activePage === index + 1 ? "text-blue-500 border-blue-500" : "text-neutral-700 border-neutral-200"}`}
+                    >
+                        {index + 1}
+                    </button>
+                )
+            })}
 
             <button
                 onClick={nextPage}

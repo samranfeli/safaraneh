@@ -91,3 +91,5 @@ export interface UserReserveListItem {
     //   }
     // ]
 }
+
+export type ReserveType = "Undefined"| "HotelDomestic"| "FlightDomestic"| "Bus"| "Package"| "Flight"| "Hotel"| "PnrOutside"| "Cip"| "Activity";

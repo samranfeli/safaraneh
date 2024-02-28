@@ -516,7 +516,7 @@ const HotelList: NextPage<Props> = props => {
 
               {hotels.length > 0 && pricesData && cityName ? (
                 <div className='text-sm max-sm:hidden'>
-                  <b> {hotels.length} </b> هتل در <b> {cityName} </b> پیدا کردیم
+                  <b> {hotels.length} </b> هتل در <b> {entity?.EntityName || cityName} </b> پیدا کردیم
                 </div>
               ) : (
                 <Skeleton className='w-52 max-sm:hidden' />
@@ -607,7 +607,7 @@ export const getServerSideProps: GetServerSideProps = async (context: any) => {
       Hotels: SearchHotelItem[];
       Content?: string;
     };
-  } = await SearchHotels(url, locale);
+  } = await SearchHotels({url:url, cityId: +query.hotelList.find((item:string) => item.includes("location-"))?.split("location-")[1]}, locale);
 
   let faqResponse: any;
   if (searchHotelsResponse?.data?.Hotels[0]?.CityId) {

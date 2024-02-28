@@ -96,7 +96,8 @@ export const Header = {
     GetBalance:"/api/services/app/Deposit/GetBalance",
     GetTransactionDeposit:"/api/services/app/TransactionDeposit/GetAll",
     GetDepositBankGateway:"/api/services/app/UserDepositBankGateway/GetAll",
-    MakeDepositToken:"/api/services/app/UserDepositBankGateway/MakeToken"
+    MakeDepositToken:"/api/services/app/UserDepositBankGateway/MakeToken",
+    ConfirmByDeposit:"/api/services/app/DepositReserve/ConfirmByDeposit"
   };
   
   export const ServerStatus = {

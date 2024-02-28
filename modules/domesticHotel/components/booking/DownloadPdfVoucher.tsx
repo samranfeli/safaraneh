@@ -7,6 +7,7 @@ type Props = {
     reserveId: string;
     username: string;
     className: string;
+    simple?:boolean;
 }
 
 const DownloadPdfVoucher: React.FC<Props> = props => {
@@ -42,7 +43,6 @@ const DownloadPdfVoucher: React.FC<Props> = props => {
             }
 
         } catch (error) {
-            debugger;
         }
         setLoading(false);
     }
@@ -57,12 +57,12 @@ const DownloadPdfVoucher: React.FC<Props> = props => {
 
             {loading ? (
                 <>
-                    <span className="animate-spin block border-2 border-white rounded-full border-r-transparent border-t-transparent w-5 h-5" />
-                    {t("loading-recieve-voucher")}
+                    {!props.simple && <span className="animate-spin block border-2 border-white rounded-full border-r-transparent border-t-transparent w-5 h-5" />}
+                    {t("loading-recieve-voucher")} {!!props.simple && " ..." }
                 </>
             ) : (
                 <>
-                    <Ticket className='w-5 h-5 fill-current -rotate-45' />
+                    {!props.simple && <Ticket className='w-5 h-5 fill-current -rotate-45' />}
                     {t("recieve-voucher")}
                 </>
             )}
