@@ -1,13 +1,13 @@
-import CipImages from "@/modules/cip/components/cip-home/CipImages";
 import { NextPage } from "next";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 import { GetAirportList, GetAirportsDetail } from "../modules/cip/actions/index";
-import CipDescribtion from "@/modules/cip/components/cip-home/CipDescription";
+import CipDescription from "@/modules/cip/components/cip-home/CipDescription";
 import CipAirportsList from "@/modules/cip/components/cip-home/CipAirportsList";
 import CipRules from "@/modules/cip/components/cip-home/CipRules";
 import CipFaq from "@/modules/cip/components/cip-home/CipFaq";
 import CipServices from "@/modules/cip/components/cip-home/CipServices";
 import { AirportDetailType } from "@/modules/cip/types/cip";
+import CipGallery from "@/modules/cip/components/cip-home/CipGallery";
 
 const CipMainPage: NextPage<any> = ({ generalData, priceData }: { generalData: AirportDetailType[]; priceData: any}) => {
 
@@ -17,16 +17,16 @@ const CipMainPage: NextPage<any> = ({ generalData, priceData }: { generalData: A
         
         return({
             ...item,
-            Price: displayPrice
+            displayPrice: displayPrice
         })
     })
     
     return (
         <>
-            <CipImages  />
+            <CipGallery />
             <div className="max-w-container m-auto pr-5 pl-5 max-md:p-3">
-                <CipDescribtion content={priceData?.Content} />
-                <CipAirportsList AirportsAllData={airportsList}  />
+                <CipDescription content={priceData?.Content} />
+                <CipAirportsList airports={airportsList}  />
                 <CipServices />
                 <CipRules />
                 <CipFaq />
