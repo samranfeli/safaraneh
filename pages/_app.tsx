@@ -11,6 +11,7 @@ import '../styles/carousel.scss';
 import '../styles/mobiscroll.scss';
 import '../styles/globals.scss';
 import '../styles/leaflet.css';
+import '../styles/modernDatePicker.scss';
 
 import { store } from '../modules/shared/store';
 import { PortalDataType } from '@/modules/shared/types/common';
@@ -59,8 +60,26 @@ function MyApp({ Component, pageProps, portalData }: TProps) {
 
   return (
     <Provider store={store}>
-      
       <Head>
+        
+       
+       
+       
+       
+       
+        {/* TODO: _-_-_S_T_A_R_T_-_-_ delete when mobiscroll is activated */}
+        <link
+          rel="stylesheet"
+          type="text/css"
+          href="https://cdn2.safaraneh.com/libs/react-modern-calendar-datepicker/3.1.6/css/datepicker.min.css"
+        />
+        {/* TODO: _-_-_E_N_D_-_-_ delete when mobiscroll is activated */}
+
+
+
+
+
+
         
         <link rel="icon" type="image/x-icon" href={favIconLink} />
         

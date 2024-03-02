@@ -80,6 +80,13 @@ export const getDatesDiff = (a: Date, b: Date, unit?: "seconds") => {
     return Math.abs(Math.floor((utcb - utca) / _MS_PER_DAY));
 }
 
+export const checkDateIsAfterDate = (a: Date, b: Date) => {
+    if (b.getTime() > a.getTime()){
+        return false;
+    }
+    return true;
+}
+
 export const persianNumbersToEnglish = (number: string) => {
 
     const persianNumbers = [/۰/g, /۱/g, /۲/g, /۳/g, /۴/g, /۵/g, /۶/g, /۷/g, /۸/g, /۹/g];
