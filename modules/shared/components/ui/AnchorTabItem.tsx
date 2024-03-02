@@ -52,8 +52,11 @@ const AnchorTabItem: React.FC<Props> = props => {
         const target = document.getElementById(props.target);
 
         if (target) {
-
-            const targetOffsetTop = target.offsetTop + 15;
+            let offset = 85;
+            if (window?.innerWidth < 768){
+                offset = 75;
+            }
+            const targetOffsetTop = target.offsetTop + offset;
 
             window.scrollTo({
                 top: targetOffsetTop,

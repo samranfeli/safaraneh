@@ -1,11 +1,11 @@
-import { useTranslation } from 'next-i18next';
 import AnchorTabItem from './AnchorTabItem';
 import { useEffect, useRef, useState } from 'react';
 
-const AnchorTabs: React.FC = () => {
+type Props ={
+    items: {id:string, title:string}[];
+}
 
-    const { t } = useTranslation('common');
-    const { t: tHotel } = useTranslation('hotel');
+const AnchorTabs: React.FC<Props> = props => {
 
     const [sticky, setSticky] = useState<boolean>(false);
 
@@ -13,17 +13,7 @@ const AnchorTabs: React.FC = () => {
 
     const wrapperHeight = wrapperRef.current?.offsetHeight;
 
-    const items: { id: string, title: string }[] = [
-        { id: "pictures_section", title: tHotel('pictures') },
-        { id: "hotel_intro", title: tHotel('hotel-intro') },
-        { id: "rooms_section", title: tHotel('choose-room') },
-        { id: "amenities_section", title: tHotel('hotel-facilities') },
-        { id: "terms_section", title: t('terms') },
-        { id: "about_section", title: tHotel('about-hotel') },
-        { id: "attractions_section", title: tHotel('attraction') },
-        { id: "reviews_section", title: tHotel('suggestion') },
-        { id: "similarhotels_section", title: tHotel('similar-hotels') }
-    ];
+    const {items} = props;
 
     const makeSticky = () => {
         const wrapperTop = wrapperRef.current?.getBoundingClientRect().top;
