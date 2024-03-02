@@ -18,5 +18,48 @@ export interface AirportDetailType {
     }
     id: number;
     description: string;
-    Price: number
+    Price: number,
+    displayPrice: number;
+}
+
+export interface CipGetAirportByUrlResponseType {
+    galleries: {
+        path?: string;
+        altAttribute?: string;
+        titleAttribute?: string;
+        id: number;
+    }[];
+    address?: string;
+    name?: string;
+    description?: string;
+    facilities: {
+        id: number;
+        picture: {
+            path?: string;
+            altAttribute?: string;
+            titleAttribute?: string;
+        },
+        description?: string;
+        keyword?: string;
+        name?: string;
+    }[];
+    latitude?:string;
+    longitude?:string;
+    // "url": "string",
+    // "nameLong": "string",
+    // "city": {
+    //     "name": "string",
+    //     "code": "string"
+    // },
+    // "country": {
+    //     "name": "string",
+    //     "code": "string"
+    // },
+    // "code": "string",
+    // "picture": {
+    //     "path": "string",
+    //     "altAttribute": "string",
+    //     "titleAttribute": "string"
+    // },
+    // "id": 0
 }

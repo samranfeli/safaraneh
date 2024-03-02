@@ -1,6 +1,3 @@
-import { ImageGallery } from '@/modules/shared/components/ui/icons';
-import { DomesticHotelDetailType } from '@/modules/domesticHotel/types/hotel';
-import { useTranslation } from 'next-i18next';
 import Image from 'next/image';
 import { useState } from 'react';
 import Lightbox from "yet-another-react-lightbox";
@@ -10,14 +7,50 @@ import "yet-another-react-lightbox/styles.css";
 import "yet-another-react-lightbox/plugins/thumbnails.css";
 import "yet-another-react-lightbox/plugins/captions.css";
 
-type Props = {
-    images?: DomesticHotelDetailType['Gallery']
-}
+const CipGallery: React.FC = () => {
 
-const CipGallery: React.FC<Props> = props => {
-
-    const { t: tHotel } = useTranslation('hotel');
-    const { images } = props;
+    const images = [
+        {
+            Image: 'https://cdn2.safaraneh.com/images/cip/ika/cip-ika-01.jpg',
+            Alt: '',
+            Title:''
+        },
+        {
+            Image: 'https://cdn2.safaraneh.com/images/cip/ika/cip-ika-02.jpg',
+            Alt: '',
+            Title:''
+        },
+        {
+            Image: 'https://cdn2.safaraneh.com/images/cip/thr/cip-thr-02.jpg',
+            Alt: '',
+            Title:''
+        },
+        {
+            Image: 'https://cdn2.safaraneh.com/images/cip/tbz.jpg',
+            Alt: '',
+            Title:''
+        },
+        {
+            Image: 'https://cdn2.safaraneh.com/images/cip/thr/cip-thr-04.jpg',
+            Alt: '',
+            Title:''
+        },
+        {
+            Image: 'https://cdn2.safaraneh.com/images/cip/ika/cip-ika-04.jpg',
+            Alt: '',
+            Title:''
+        },
+        {
+            Image: 'https://cdn2.safaraneh.com/images/cip/awh/cip-awh-02.jpg',
+            Alt: '',
+            Title:''
+        },
+        {
+            Image: 'https://cdn2.safaraneh.com/images/cip/thr/cip-thr-07.jpg',
+            Alt: '',
+            Title:''
+       },
+    ];
 
     const [open, setOpen] = useState(false);
     const [slideIndex, setSlideIndex] = useState(0);
@@ -54,9 +87,9 @@ const CipGallery: React.FC<Props> = props => {
                                 onContextMenu={(e)=> e.preventDefault()}
                                 src={slide.src}
                                 alt={slide.alt}
-                                sizes={index?"(max-width: 768px) 100vh, 578px" : "(max-width: 768px) 100vh, 287"}
-                                width={index ? 287 : 430}
-                                height={index ? 191 : 270}
+                                //sizes={index?"(max-width: 768px) 100vh, 578px" : "(max-width: 768px) 100vh, 287"}
+                                width={index ? 252 : 800}
+                                height={index ? 157 : 318}
                                 onClick={() => { openLightBox(index); }}
                                 className={`cursor-pointer w-full h-full object-cover ${!index && "col-span-3 row-span-2"  }`}
                             />
@@ -68,13 +101,12 @@ const CipGallery: React.FC<Props> = props => {
                 {slides.slice(4, 8).map((slide, index) => (
                             <Image
                                 key={slide.src}
-                                priority={!index}
                                 onContextMenu={(e)=> e.preventDefault()}
                                 src={slide.src}
                                 alt={slide.alt}
-                                sizes={index?"(max-width: 768px) 100vh, 578px" : "(max-width: 768px) 100vh, 287"}
-                                width={index ? 287 : 430}
-                                height={index ? 191 : 270}
+                                //sizes={index?"(max-width: 768px) 100vh, 578px" : "(max-width: 768px) 100vh, 287"}
+                                width={380}
+                                height={238}
                                 onClick={() => { openLightBox(index); }}
                                 className={`cursor-pointer w-full h-full object-cover `}
                             />
