@@ -32,7 +32,10 @@
         background-color:  #0d5ab9;
     }
     .datepicker-today-date{
-        border: 1px solid #0d5ab9;
-        text-decoration: none;   
+        border: 1px solid #0d5ab9 !important; 
     }
+}
+
+.Calendar__day.-today:not(.-selectedStart):not(.-selectedEnd):not(.-selectedBetween)::after{
+    display: none;
 }
