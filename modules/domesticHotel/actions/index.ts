@@ -55,17 +55,21 @@ export const getDomesticHotelDetailsByUrl = async (url: string, acceptLanguage: 
     }
 }
 
-export const SearchHotels = async (url: string, acceptLanguage: string = 'fa-IR') => {
+export const SearchHotels = async (parameters: {url: string; cityId?: number}, acceptLanguage: string = 'fa-IR') => {
     try {
-        const params = {
+        const params : any = {
             IsInstant: null,
             MaxPrice: 20000000,
             PageNumber: 1,
             PageSize: 500,
             SortColumn: 'Priority',
             SortDirection: 'Desc',
-            filterUrl: url
+            filterUrl: parameters.url
         };
+
+        if (parameters.cityId){
+            params.CityId = parameters.cityId;
+        }
 
         const response = await axios({
             method: "post",
@@ -264,7 +268,7 @@ export const domesticHotelGetValidate = async (key: string, acceptLanguage: stri
 }
 
 
-export const domesticHotelPreReserve = async (param: DomesticHotelPrereserveParams, acceptLanguage: string = 'fa-IR') => {
+export const domesticHotelPreReserve = async (param: DomesticHotelPrereserveParams,token?:string | null , acceptLanguage: string = 'fa-IR') => {
 
     try {
         let response = await axios.post(
@@ -277,6 +281,7 @@ export const domesticHotelPreReserve = async (param: DomesticHotelPrereservePara
                     apikey: process.env.PROJECT_SERVER_APIKEY,
                     'Accept-Language': acceptLanguage,
                     TenantId: process.env.PROJECT_SERVER_TENANTID,
+                    Authorization: `Bearer ${token}`,
                     Currency: 'IRR'
                 },
             },

@@ -4,6 +4,7 @@ import Image from 'next/image';
 import { useState, useEffect, useRef } from 'react';
 import { validateMobileNumberId } from '../../helpers/validation';
 import { useTranslation } from 'next-i18next';
+import { persianNumbersToEnglish } from '../../helpers';
 
 type Props = {
     disabled?:boolean;
@@ -94,7 +95,8 @@ const PhoneInput: React.FC<Props> = props => {
 
     useEffect(() => {
         if (country && phoneNumberValue) {
-            props.onChange("+" + country.dialCode + phoneNumberValue)
+            const transformedDigits = persianNumbersToEnglish(country.dialCode + phoneNumberValue)
+            props.onChange("+" + transformedDigits)
         }
     }, [country.dialCode, phoneNumberValue])
 

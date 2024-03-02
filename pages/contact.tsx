@@ -27,7 +27,7 @@ const Contact: NextPage = ({portalData }: { portalData?: PortalDataType}) => {
 
     return (
         <>
-            <div className="max-w-container m-auto p-5 max-sm:p-3 mt-3">
+            <div className="max-w-container m-auto p-5 max-sm:p-3">
             <BreadCrumpt items={[{ label: 'تماس ما' }]} />
             <h2 className="text-3xl font-bold">تماس با ما</h2>
                 <div className="pl-5 pr-5 pt-10 pb-10 border-2 border-gray mt-7 rounded-md bg-white grid grid-cols-2 gap-8 max-lg:grid-cols-1">
@@ -97,7 +97,7 @@ export async function  getStaticProps (context: any)  {
     return (
         {
             props: {
-                ...await (serverSideTranslations(context.locale, ['common'])),
+                ...await serverSideTranslations(context.locale, ['common']),
             },
 
         }

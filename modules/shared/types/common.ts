@@ -2,6 +2,7 @@ export type TabItem = {
     key: string | number;
     label: React.ReactNode;
     children: React.ReactNode;
+    href?:string;
 };
 
 export interface PageDataType {
@@ -90,3 +91,5 @@ export interface UserReserveListItem {
     //   }
     // ]
 }
+
+export type ReserveType = "Undefined"| "HotelDomestic"| "FlightDomestic"| "Bus"| "Package"| "Flight"| "Hotel"| "PnrOutside"| "Cip"| "Activity";

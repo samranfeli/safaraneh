@@ -18,7 +18,9 @@ const Category: NextPage<any> = ({ LastBlogs, BlogCategory, categories_name, pag
 
     return (
         <div className="bg-white">
-            <BreadCrumpt items={[{label: "بلاک" , link : "/blog"}, {label: CategoryName}]} />
+            <div className="max-w-container m-auto pr-5 pl-5 max-sm:p-4">
+            <BreadCrumpt items={[{label: "بلاگ" , link : "/blog"}, {label: CategoryName}]} />
+            </div>
             <Title data={TitleData} />
             <Content Blogs={BlogCategory} blogPages={pages}  LastBlogs={LastBlogs?.slice(0,3)} CategoriesName={categories_name} />
         </div>
@@ -40,7 +42,7 @@ export async function getServerSideProps(context: any) {
     return (
         {
             props: {
-                ...await (serverSideTranslations(context.locale, ['common'])),
+                ...await serverSideTranslations(context.locale, ['common']),
                 LastBlogs: LastBlog?.data || null,
                 pages: BlogCategory?.headers?.['x-wp-totalpages'],
                 BlogCategory: BlogCategory?.data || null,

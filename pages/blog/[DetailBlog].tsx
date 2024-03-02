@@ -14,14 +14,12 @@ import BreadCrumpt from "@/modules/shared/components/ui/BreadCrumpt";
 
 const DetailBlog: NextPage<any> = ({ BlogPost, CategoriesName, recentBlogs }:
     {BlogPost: BlogItemType[], CategoriesName: CategoriesNameType[], recentBlogs:BlogItemType[]}) => {
-console.log(CategoriesName);
 
     const [Related, setRelatedPost] = useState<any>('');
     useEffect(() => {
         const getRelatedPost = async () => {
             let getRelatedPost : any = await getBlogs({ page: 1, category: BlogPost?.[0].categories?.[0],per_page:4 })
             setRelatedPost(getRelatedPost.data)
-            console.log(getRelatedPost);
             
         }
         getRelatedPost()
@@ -60,7 +58,7 @@ export async function getServerSideProps(context: any) {
     return (
         {
             props: {
-                ...await (serverSideTranslations(context.locale, ['common'])),
+                ...await serverSideTranslations(context.locale, ['common']),
                 BlogPost: BlogPost?.data || null,
                 recentBlogs: recentBlogs?.data || null,
                 CategoriesName: CategoriesName?.data || null,

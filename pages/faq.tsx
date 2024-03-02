@@ -1,5 +1,6 @@
 import Accordion from "@/modules/shared/components/ui/Accordion";
 import BreadCrumpt from "@/modules/shared/components/ui/BreadCrumpt";
+import { QuestionCircle } from "@/modules/shared/components/ui/icons";
 import { NextPage } from "next";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 
@@ -162,13 +163,22 @@ const faq: NextPage = () => {
 
     return (
         <>
-        <div className="max-w-container m-auto p-5 max-sm:p-3 mt-5">
+        <div className="max-w-container m-auto p-5 max-sm:p-3">
         <BreadCrumpt items={[{ label: 'سوالات متداول' }]} />
         <h2 className="font-bold mt-10 text-3xl">سوالات متداول</h2>
         <div className="pl-5 pr-5 pt-5 pb-10 mt-5 border-2 border-gray rounded-md space-y-3 bg-white">
             <h2 className="mt-6 mb-6 fnt-bold text-lg">هتل داخلی</h2>
             {
-                        faqs.map((item, index) => <Accordion content={item.a} title={item.q} key={index} />)
+                        faqs.map((item, index) =>
+                            <Accordion
+                                content={item.a}
+                                title={(
+                                    <>
+                                    <QuestionCircle className='w-5 h-5 mt-.5 rtl:ml-2 ltr:mr-2 fill-current inline-block' />
+                                    {item.q}
+                                    </>
+                                )}
+                                key={index} />)
             }
         </div>
         </div>
@@ -183,7 +193,7 @@ export async function  getStaticProps (context: any)  {
     return (
         {
             props: {
-                ...await (serverSideTranslations(context.locale, ['common'])),
+                ...await serverSideTranslations(context.locale, ['common']),
             },
 
         }

@@ -2,10 +2,13 @@ import Link from "next/link";
 import { useTranslation } from "next-i18next";
 import { useState, useEffect, useRef } from "react";
 
-import { Menu, DownCaret, Home, Close, User, UserAdd, Ticket, Wallet, Bed, Blog, Suitcase, Travel } from "../ui/icons";
+import { Menu, DownCaret, Home, Close, User, UserAdd,Wallet, Bed, Blog, Suitcase, Travel, Loading } from "../ui/icons";
 import Image from "next/image";
 import TrackOrder from "./TrackOrder";
 import { useAppSelector } from "../../hooks/use-store";
+import { numberWithCommas } from "../../helpers";
+import Logout from "@/modules/authentication/components/Logout";
+import Skeleton from "../ui/Skeleton";
 
 type Props = {
     logo: string;
@@ -20,6 +23,10 @@ const TravelServices: React.FC<Props> = props => {
     const { logo, siteName } = props;
 
     const userIsAuthenticated = useAppSelector(state => state.authentication.isAuthenticated);
+    const userLoading = useAppSelector(state => state.authentication.getUserLoading);
+
+    const depositBalance = useAppSelector(state => state.authentication.balance);
+    const depositBalanceLoading = useAppSelector(state => state.authentication.balanceLoading);
 
     const [openMenu, setOpenMenu] = useState(false);
 
@@ -77,42 +84,95 @@ const TravelServices: React.FC<Props> = props => {
                             <Home className={iconClassName} />
                             {t('home')}
                         </Link>
-                        <Link onClick={()=>{setOpenMenu(false)}} href="/signin" className={`${linkWithIconClassName} md:hidden`}>
-                            <User className={iconClassName} />
-                            {t('sign-in')}
-                        </Link>
-                        <Link onClick={()=>{setOpenMenu(false)}} href="/register" className={`${linkWithIconClassName} md:hidden`}>
-                            <UserAdd className={iconClassName} />
-                            {t('create-account')}
-                        </Link>
-                        
-                        <Link onClick={()=>{setOpenMenu(false)}} href="" className={`${linkWithIconClassName} md:hidden`}>
-                            <Ticket className={iconClassName} />
-                            {t('retrieve-my-booking')}
-                        </Link>
 
-                        <Link onClick={()=>{setOpenMenu(false)}} href="/myaccount/wallet" className={`${linkWithIconClassName} md:hidden border-b border-neutral-200 md:border-none mb-5 md:mb-0 pb-5 md:pb-0`}>
-                            <Wallet className={iconClassName} />
-                            0 ریال
-                        </Link>                       
+                        {userLoading ? (
+                            <div className="px-5">
+                                <Skeleton className="w-32 mb-4" />
+                                <Skeleton className="w-32 mb-4" />
+                            </div>
+                        ) : userIsAuthenticated ? (
+                            <>
+                                <Link onClick={()=>{setOpenMenu(false)}} href="/myaccount/profile" className={`${linkWithIconClassName} md:hidden`}>
+                                    <User className={iconClassName} />
+                                    حساب کاربری
+                                </Link>
+                                
+                                <Link onClick={()=>{setOpenMenu(false)}} href="/myaccount/wallet" className={`${linkWithIconClassName} md:hidden`}>
+                                    <Wallet className={iconClassName} />
 
-                        <Link onClick={()=>{setOpenMenu(false)}} href='/hotels-home' className={linkWithIconClassName} >
+                                    {depositBalanceLoading ? (
+                                        <Loading className='fill-white w-9 h-9 animate-spin' />
+                                    ) : (
+                                        <b className='font-semibold text-base block'>
+                                            <span className='font-sans'> {numberWithCommas(depositBalance || 0)}  </span> {t('rial')}
+                                        </b>
+                                    )}
+                                </Link>
+
+                                <div className="px-5 md:hidden">
+                                    <Logout closeModal={()=>{setOpenMenu(false)}} />
+                                </div> 
+
+                            </>
+                        ) : (
+                            <>
+                                <Link onClick={()=>{setOpenMenu(false)}} href="/signin" className={`${linkWithIconClassName} md:hidden`}>
+                                    <User className={iconClassName} />
+                                    {t('sign-in')}
+                                </Link>
+                                
+                                <Link onClick={()=>{setOpenMenu(false)}} href="/register" className={`${linkWithIconClassName} md:hidden`}>
+                                    <UserAdd className={iconClassName} />
+                                    {t('create-account')}
+                                </Link>
+
+                                { !userIsAuthenticated && <TrackOrder isInMobileMenu iconClassName={iconClassName} onCloseNavigation={()=>{setOpenMenu(false)}}  />}
+
+                            </>
+                        )}
+
+                        <Link 
+                            onClick={()=>{setOpenMenu(false)}} 
+                            //href='/hotels-home' 
+                            href="/"
+                            className={`max-sm:border-t max-sm:border-neutral-300 max-sm:mt-3 max-sm:pt-3 ${linkWithIconClassName}`} 
+                        >
                             <Bed className={iconClassName} />
                             {t('domestic-hotel')}
                         </Link>
-                        <Link onClick={()=>{setOpenMenu(false)}} href='/flights-home' className={linkWithIconClassName} >
+                        <Link 
+                            onClick={()=>{setOpenMenu(false)}} 
+                            //href='/flights-home' 
+                            href="https://www.mrbilet.ir/fa/flights-home"
+                            className={linkWithIconClassName} 
+                        >
                             <Travel className={iconClassName} />
                             {t('domestic-flight')}
                         </Link>
-                        <Link onClick={()=>{setOpenMenu(false)}} href='/hotels-foreign-home' className={linkWithIconClassName} >
+                        <Link 
+                            onClick={()=>{setOpenMenu(false)}} 
+                            //</nav>href='/hotels-foreign-home' 
+                            href="https://www.mrbilet.ir/fa/hotels-foreign-home"
+                            className={linkWithIconClassName} 
+                        >
                             <Bed className={iconClassName} />
                             {t('foreign-hotel')}
                         </Link>
-                        <Link onClick={()=>{setOpenMenu(false)}} href='/flight-foreign-home' className={linkWithIconClassName} >
+                        <Link 
+                            onClick={()=>{setOpenMenu(false)}} 
+                            //href='/flight-foreign-home' 
+                            href="https://www.mrbilet.ir/fa/flights-foreign-home"
+                            className={linkWithIconClassName} 
+                            >
                             <Travel className={iconClassName} />
                             {t('foreign-flight')}
                         </Link>
-                        <Link onClick={()=>{setOpenMenu(false)}} href='/cip' className={linkWithIconClassName} >
+                        <Link 
+                            onClick={()=>{setOpenMenu(false)}} 
+                            //href='/cip' 
+                            href="https://www.mrbilet.ir/fa/cip-home"
+                            className={linkWithIconClassName} 
+                        >
                             <Suitcase className={iconClassName} />
                             {t('cip')}
                         </Link>

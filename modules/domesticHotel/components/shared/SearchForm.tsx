@@ -6,13 +6,15 @@ import { useRouter } from "next/router";
 import { getDomesticHotelSummaryDetailById } from "@/modules/domesticHotel/actions";
 import { Header, ServerAddress, Hotel } from "../../../../enum/url";
 import AutoComplete from "../../../shared/components/ui/AutoComplete";
-import { ApartmentOutline, Home2, Location } from "../../../shared/components/ui/icons";
+import { ApartmentOutline, Calendar, Home2, Location } from "../../../shared/components/ui/icons";
 import { EntitySearchResultItemType } from "@/modules/domesticHotel/types/hotel";
 import { useAppDispatch } from "@/modules/shared/hooks/use-store";
 import { setReduxError } from "@/modules/shared/store/errorSlice";
-// import DatePicker from "../../../shared/components/ui/RangePicker";
-// import { localeFa } from "@mobiscroll/react";
+import DatePicker from "../../../shared/components/ui/RangePicker";
+import { localeFa } from "@mobiscroll/react";
 import Button from "../../../shared/components/ui/Button";
+import DatePickerModern from "@/modules/shared/components/ui/DatePickerModern";
+import { addSomeDays, checkDateIsAfterDate, dateDiplayFormat, dateFormat } from "@/modules/shared/helpers";
 
 
 
@@ -52,12 +54,11 @@ const SearchForm: React.FC<Props> = props => {
         if (defaultDestination) {
             setSelectedDestination(defaultDestination);
         }
-    }, [defaultDestination]);
+    }, [defaultDestination?.name]);
 
     useEffect(() => {
         setSubmitLoading(false);
     }, [routerPath]);
-
 
     const autoCompleteUrl = `${ServerAddress.Type}${ServerAddress.Hotel_Data}${Hotel.GetEntity}`;
 
@@ -193,6 +194,38 @@ const SearchForm: React.FC<Props> = props => {
     }
 
 
+
+
+
+    //start sholud be removed when modern datepicker replaced with mobiscroll:
+    const [locale, setLocale] = useState<"fa"|"en">("fa");
+    const onChangeCheckin = (d:string) => {
+        setDates(prevState => {
+            if (!d) {return prevState;}
+            const prevCheckout = prevState?.length ? prevState[1] : "";
+            if (prevCheckout){
+                const isAfter  = checkDateIsAfterDate(new Date(d), new Date(prevCheckout));
+                if (isAfter) {
+                    const firstAvailableCheckout = dateFormat(addSomeDays(new Date(d)));
+                    return ([d, firstAvailableCheckout]);
+                }
+            }
+            return ( [d, prevCheckout])
+        })
+    }
+    const onChangeCheckout = (d:string) => {
+        setDates(prevState => {
+            if (!d) {return prevState;}
+            const prevCheckin = prevState?.length ? prevState[0] : "";
+            return ( [prevCheckin, d])
+        })
+    }
+    //end sholud be removed when modern datepicker replaced with mobiscroll:
+
+
+
+
+
     return (
         <div className={`domestic-hotel-search-form grid grid-cols-1 md:grid-cols-7 gap-2 ${props.wrapperClassName || ""}`}>
             <div className="relative col-span-1 md:col-span-3">
@@ -226,7 +259,51 @@ const SearchForm: React.FC<Props> = props => {
             </div>
             <div className="col-span-1 md:col-span-3 relative">
 
-                <input type="date" className="border border-neutral-400 rounded-md w-full px-5 h-12" />
+
+
+
+
+
+
+
+                {/* TODO: delete when mobiscroll is activated */}
+                <div className="modernCalendar-dates-wrapper grid grid-cols-2 gap-2">
+                    <div className="relative modernDatePicker-checkin">
+                        <DatePickerModern 
+                            wrapperClassName="block"
+                            minimumDate={dateDiplayFormat({date:new Date().toISOString(), locale:'en',format:"YYYY-MM-DD" })}
+                            inputPlaceholder="ورود"
+                            inputClassName="border border-neutral-400 h-12 rounded-lg focus:border-neutral-900 outline-none pt-7 text-xs w-full pr-10"
+                            inputName="checkin"
+                            toggleLocale={()=>{setLocale(prevState => prevState === 'fa'? "en":"fa")}}
+                            locale={locale}
+                            onChange={(v:string) => {onChangeCheckin(v)}}
+                            value={dates ? dates[0] : undefined}
+                        />
+                        <Calendar className="w-5 h-5 fill-neutral-600 top-1/2 -mt-2.5 right-3 absolute z-[100] select-none pointer-events-none" />
+                        <label className="absolute top-1.5 leading-5 rtl:right-10 text-4xs z-[100] select-none pointer-events-none">
+                            تاریخ ورود
+                        </label>
+                    </div>
+                    <div className="relative modernDatePicker-checkout">
+                        <DatePickerModern 
+                            wrapperClassName="block"
+                            minimumDate={dateDiplayFormat({date:dates ? dateFormat(addSomeDays(new Date(dates[0]))) : dateFormat(addSomeDays(new Date())) , locale:'en',format:"YYYY-MM-DD" })}
+                            inputPlaceholder="ورود"
+                            inputClassName="border border-neutral-400 h-12 rounded-lg focus:border-neutral-900 outline-none pt-7 text-xs w-full pr-10"
+                            inputName="checkin"
+                            toggleLocale={()=>{setLocale(prevState => prevState === 'fa'? "en":"fa")}}
+                            locale={locale}
+                            onChange={(v:string) => {onChangeCheckout(v)}}
+                            value={dates ? dates[1] : undefined}
+                        />
+                        <Calendar className="w-5 h-5 fill-neutral-600 top-1/2 -mt-2.5 right-3 absolute z-[100] select-none pointer-events-none" />
+                        <label className="absolute top-1.5 leading-5 rtl:right-10 text-4xs z-[100] select-none pointer-events-none">
+                            تاریخ خروج
+                        </label>
+                    </div>                    
+                </div>
+                
 
                 {/* <DatePicker
                     value={dates}
@@ -234,7 +311,12 @@ const SearchForm: React.FC<Props> = props => {
                     rtl
                     locale={localeFa}
                 /> */}
-                {/* انتخاب تاریخ */}
+
+
+
+
+
+
 
             </div>
 

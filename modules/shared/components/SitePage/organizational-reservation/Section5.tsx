@@ -35,16 +35,14 @@ const Section5: NextPage = () => {
             message: values.text,
         }
         const post = await axios.post(`https://api.emailjs.com/api/v1.0/email/send-form`, CommentUser)
-        console.log(post);
-        
     }
 
     return (
-        <div className="mt-32 mb-20 grid grid-cols-2 max-lg:grid-cols-1 shadow-2xl rounded overflow-hidden">
+        <div className="mt-32 mb-20 grid grid-cols-2 max-lg:grid-cols-1 shadow-2xl">
             <Image src={SendCommentPic} alt="SendCommentpic" width={200} height={100} className="w-full h-full max-lg:h-96 max-sm:h-72 object-cover"
                 onContextMenu={e => e.preventDefault()} priority={true} />
             <div>
-            <div className="p-12 max-md:p-4 max-md:pt-8">
+            <div className="p-12 max-md:p-4">
                     <h2 className="text-2xl font-semibold pb-5">ارسال درخواست</h2>
                     <p className="text-sm pb-5 text-gray-500 max-sm:text-xs">
                     در صورتی که تمایل دارید تیم فروش سازمانی سفرانه با شما تماس بگیرد، لطفاً از طریق پر کردن فرم ذیل اطلاعات خود را برای ما ارسال نمایید.
