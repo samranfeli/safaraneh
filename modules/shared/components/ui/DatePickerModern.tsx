@@ -84,6 +84,7 @@ const DatePickerModern: React.FC<Props> = props => {
 
     return (
 
+        <>
         <DatePicker
             inputClassName={`rtl:text-right ltr:text-left ${inputClassName}`}
             wrapperClassName={wrapperClassName}
@@ -111,6 +112,33 @@ const DatePickerModern: React.FC<Props> = props => {
                 </div>
             )}
         />
+
+            {/* <Calendar
+
+                calendarSelectedDayClassName="datepicker-selected-date"
+                calendarTodayClassName="datepicker-today-date"
+
+                value={displayValue}
+                onChange={(value: DateObject) => { changeHandler(value) }}
+                locale={locale}
+                minimumDate={minimum}
+                renderFooter={() => (
+                    <div className="px-6 pb-3 text-right">
+                        {!!props.toggleLocale && (
+                            <button
+                                type="button"
+                                onClick={toggleLocale}
+                                className="border-none outline-none bg-transparent cursor-pointer text-xs"
+                            >
+                                {locale == 'en' ? 'شمسی' : 'میلادی'}
+                            </button>
+                        )}
+                    </div>
+                )}
+
+            /> */}
+
+        </>
 
     )
 }
