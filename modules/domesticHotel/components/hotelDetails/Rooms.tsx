@@ -53,7 +53,7 @@ const Rooms: React.FC<Props> = props => {
             fetchRooms();
         }
 
-    }, [hotelId]);
+    }, [hotelId, checkin, checkout]);
 
     useEffect(() => {
         if (selectedRoomToken) {
