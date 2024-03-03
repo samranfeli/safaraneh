@@ -102,3 +102,24 @@ label.mbsc-form-control-wrapper .mbsc-textfield {
     }
   }
 }
+
+
+.mobi-date-picker .mbsc-calendar-controls {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 15px;
+  .mbsc-calendar-title-wrapper{
+    order: 2;
+    text-align: center;
+    button{
+      margin-left: auto;
+      margin-right: auto;
+    }
+  }
+  .mbsc-calendar-button-prev{
+    order: 1;
+  }
+  .mbsc-calendar-button-next{
+    order: 3;
+  }
+}
