@@ -14,9 +14,7 @@ interface Props {
 }
 
 
-const Content: NextPage<Props> = ({Blogs,LastBlogs,CategoriesName,blogPages}) => {
-    console.log(useRouter());
-    
+const Content: NextPage<Props> = ({Blogs,LastBlogs,CategoriesName,blogPages}) => {   
 
     return (
         <div className="grid grid-cols-8 gap-5 max-w-container m-auto p-5 max-sm:p-2 max-sm: max-lg:grid-cols-1">

@@ -20,7 +20,7 @@ import SimilarHotels from '@/modules/domesticHotel/components/hotelDetails/Simil
 import Comments from '@/modules/domesticHotel/components/hotelDetails/comments';
 import Rooms from '@/modules/domesticHotel/components/hotelDetails/Rooms';
 import { addSomeDays, dateFormat } from '@/modules/shared/helpers';
-import AnchorTabs from '@/modules/domesticHotel/components/hotelDetails/AnchorTabs';
+import AnchorTabs from '@/modules/shared/components/ui/AnchorTabs';
 
 type Props = {
   allData: {
@@ -153,8 +153,19 @@ const HotelDetail: NextPage<Props> = props => {
         {!!hotelData.Gallery?.length && <Gallery images={hotelData.Gallery} />}
       </div>
 
-
-      <AnchorTabs />
+      <AnchorTabs
+        items={[
+          { id: "pictures_section", title: tHotel('pictures') },
+          { id: "hotel_intro", title: tHotel('hotel-intro') },
+          { id: "rooms_section", title: tHotel('choose-room') },
+          { id: "amenities_section", title: tHotel('hotel-facilities') },
+          { id: "terms_section", title: t('terms') },
+          { id: "about_section", title: tHotel('about-hotel') },
+          { id: "attractions_section", title: tHotel('attraction') },
+          { id: "reviews_section", title: tHotel('suggestion') },
+          { id: "similarhotels_section", title: tHotel('similar-hotels') }
+        ]}
+      />
 
       <div className="max-w-container mx-auto px-3 sm:px-5" id="hotel_intro">
 

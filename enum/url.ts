@@ -25,7 +25,8 @@ export const Header = {
     Blog: process.env.PROJECT_SERVER_BLOG,
     Payment: process.env.PROJECT_SERVER_PAYMENT,
     Flight: process.env.PROJECT_SERVER_FLIGHT,
-    Crm:process.env.PROJECT_SERVER_CRM
+    Crm:process.env.PROJECT_SERVER_CRM,
+    Cip: process.env.PROJECT_SERVER_CIP
   };
 
   export const Identity = {
@@ -99,6 +100,10 @@ export const Header = {
     MakeDepositToken:"/api/services/app/UserDepositBankGateway/MakeToken",
     ConfirmByDeposit:"/api/services/app/DepositReserve/ConfirmByDeposit"
   };
+
+  export const Cip = {
+    GetAirportByUrl:"/api/services/app/Airport/GetByUrl"
+  }
   
   export const ServerStatus = {
     Success: 1,
