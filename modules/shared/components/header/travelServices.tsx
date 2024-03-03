@@ -143,7 +143,7 @@ const TravelServices: React.FC<Props> = props => {
                         <Link 
                             onClick={()=>{setOpenMenu(false)}} 
                             //href='/flights-home' 
-                            href="https://www.mrbilet.ir/fa/flights-home"
+                            href="https://www.tickets.safaraneh.com/fa/flights-home"
                             className={linkWithIconClassName} 
                         >
                             <Travel className={iconClassName} />
@@ -152,7 +152,7 @@ const TravelServices: React.FC<Props> = props => {
                         <Link 
                             onClick={()=>{setOpenMenu(false)}} 
                             //</nav>href='/hotels-foreign-home' 
-                            href="https://www.mrbilet.ir/fa/hotels-foreign-home"
+                            href="https://www.tickets.safaraneh.com/fa/hotels-foreign-home"
                             className={linkWithIconClassName} 
                         >
                             <Bed className={iconClassName} />
@@ -161,7 +161,7 @@ const TravelServices: React.FC<Props> = props => {
                         <Link 
                             onClick={()=>{setOpenMenu(false)}} 
                             //href='/flight-foreign-home' 
-                            href="https://www.mrbilet.ir/fa/flights-foreign-home"
+                            href="https://www.tickets.safaraneh.com/fa/flights-foreign-home"
                             className={linkWithIconClassName} 
                             >
                             <Travel className={iconClassName} />
@@ -170,7 +170,7 @@ const TravelServices: React.FC<Props> = props => {
                         <Link 
                             onClick={()=>{setOpenMenu(false)}} 
                             //href='/cip' 
-                            href="https://www.mrbilet.ir/fa/cip-home"
+                            href="https://www.tickets.safaraneh.com/fa/cip-home"
                             className={linkWithIconClassName} 
                         >
                             <Suitcase className={iconClassName} />
