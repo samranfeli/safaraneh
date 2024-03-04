@@ -9,13 +9,13 @@ const FlightSearchData: React.FC = () => {
                         <p className="text-sm max-md:text-2xs">SYZ</p>
                         <p className="text-gray-500 text-sm max-lg:text-xs max-md:text-3xs">شیراز</p>
                     </div>
-                    <ArrowLeft className="w-5 max-sm:w-4 fill-gray-400" />
+                    <ArrowLeft className="w-5 max-sm:w-4 fill-gray-400 ltr:rotate-180" />
                     <div>
                         <p className="text-sm max-md:text-2xs">AWZ</p>
                         <p className="text-gray-500 text-sm max-lg:text-xs max-md:text-3xs">اهواز</p>
                     </div>
 
-                    <span className="border-e-2 border-gray-200 h-14 max-sm:hidden"></span>
+                    <span className="border-e-1 border-gray-300 h-14 max-sm:hidden"></span>
             
                     <div>
                         <p className="text-xs max-lg:text-4xs text-gray-400">تاریخ رفت</p>
@@ -31,7 +31,7 @@ const FlightSearchData: React.FC = () => {
                     </div>
                 
                     <button className="bg-blue-800 text-white text-sm max-md:text-xs rounded-md p-1 pl-2 pr-2 h-fit whitespace-nowrap mt-auto mb-auto
-                    absolute left-0 max-sm:sticky max-sm:w-full hover:bg-blue-600 duration-300"
+                    absolute rtl:left-0 ltr:right-0 max-sm:sticky max-sm:w-full hover:bg-blue-600 duration-300"
                         type="submit">
                         تغییر جستجو
             </button>

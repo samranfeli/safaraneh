@@ -1,5 +1,7 @@
 import { useEffect, useState } from "react";
 import Image from "next/image";
+import Checkbox from "../shared/components/ui/Checkbox";
+import Select from "../shared/components/ui/Select";
 
 const FlightTollbar: React.FC = () => {
 
@@ -19,87 +21,115 @@ const FlightTollbar: React.FC = () => {
     return (
         <>
             <div className={`w-1/4 max-lg:fixed max-lg:top-0 max-lg:-right-1 max-lg:overflow-y-auto p-4 divide-y-2 space-y-2 max-lg:w-2/5 max-md:w-3/5
-            max-sm:w-10/12 max-lg:h-screen bg-white shadow-md rounded max-lg:rounded-none z-20 duration-300 max-lg:border-0
+            max-sm:w-10/12 max-lg:h-screen bg-white border-1 border-gray-200 rounded max-lg:rounded-none z-20 duration-300 max-lg:border-0
             ${OpenSide ? 'max-lg:translate-x-0' : 'max-lg:translate-x-full'}`}
             >
                 <div>
                     <h3 className="font-semibold ">نتیجه جستجوی شما</h3>
                     <p className="text-2xs">2 پرواز پیدا شد</p>
                 </div>
-                <div className="space-y-4 pt-2 pb-2">
-                    <h5 className="text-sm font-semibold mb-3">ایرلاین ها</h5>
-
-                        <label htmlFor="a" className="flex justify-between">
-                            <div className="flex">
-                            <input type="checkbox" id="a" className='w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 mt-1' />
-                            <Image
-                            src="https://cdn2.safaraneh.com/images/flights/ep.png"
-                            alt="pic"
-                            height={30} width={30} className="w-6 ml-2 mr-2"/>
-                            <p className="text-xs">آسمان</p>
-                            </div>
-                            <p className="text-gray-500 text-2xs font-semibold">ظرفیت تکمیل است</p>
-                        </label>
-                    
-                        <label htmlFor="b" className="flex justify-between">
-                            <div className="flex">
-                            <input type="checkbox" id="b" className='w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 mt-1' />
-                            <Image
-                            src="https://cdn2.safaraneh.com/images/flights/nv.png"
-                            alt="pic"
-                            height={30} width={30} className="w-6 ml-2 mr-2"/>
-                            <p className="text-xs">آسمان</p>
-                            </div>
-                            <p className="text-xs text-left font-semibold">از 25.000.000 ریال</p>
-                        </label>
-                    </div>
-                <div className="text-xs pt-2 pb-2">
-                    <h5 className="text-sm font-semibold mb-3">زمان پرواز</h5>
-                    <div className="flex gap-2">
-                        <input type="checkbox" id="1" className='w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 mt-1'/>
-                        <label htmlFor="1" className="w-full inline-block">قبل از 6:00 صبح</label>
-                    </div>
-                    <div className="flex gap-2">
-                        <input type="checkbox" id="2" className='w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 mt-1'/>
-                        <label htmlFor="2" className="w-full inline-block">6:00 صبح تا 11:59 ظهر</label>
-                    </div>
-                    <div className="flex gap-2">
-                        <input type="checkbox" id="3" className='w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 mt-1'/>
-                        <label htmlFor="3" className="w-full inline-block">6:00 صبح تا 11:59 ظهر</label>
-                    </div>
-                    <div className="flex gap-2">
-                        <input type="checkbox" id="4" className='w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 mt-1'/>
-                        <label htmlFor="4" className="w-full inline-block">6:00 صبح تا 11:59 ظهر</label>
-                    </div>
-                </div>
-
                 <div className="pt-2 pb-2">
-                    <h5 className="text-sm font-semibold mb-3">مبلغ</h5>
-                    <input type="range" className="w-full" />
+                    <h5 className="text-sm font-semibold mb-2">ایرلاین ها</h5>
+                           
+                    
+                            <Checkbox
+                            label={(<div className="flex w-full justify-between">
+                                <div className="flex gap-1">
+                                    <Image
+                                        src="https://cdn2.safaraneh.com/images/flights/ep.png"
+                                        alt="pic"
+                                        height={30} width={30} className="w-6 h-6"/>
+                                    <p className="text-xs">آسمان</p>
+                                </div>
+                                    <p className="text-2xs text-left font-semibold text-gray-500">قیمت موجود نیست</p>
+                                </div>)}
+                                onChange={c => null}
+                                value=""
+                            />    
+                    
+                            <Checkbox
+                            label={(<div className="flex w-full justify-between">
+                                <div className="flex gap-1">
+                                    <Image
+                                        src="https://cdn2.safaraneh.com/images/flights/nv.png"
+                                        alt="pic"
+                                        height={30} width={30} className="w-6 h-6"/>
+                                    <p className="text-xs">آسمان</p>
+                                </div>
+                                    <p className="text-2xs text-left font-semibold">از 25.000.000 ریال</p>
+                                </div>)}
+                                onChange={c => null}
+                                value=""
+                            />
+
+                            </div>
+                            
+                        
+                <div className="text-xs pt-2 pb-2">
+                    <h5 className="text-sm font-semibold mb-2">زمان پرواز</h5>
+                    <Checkbox
+                        label={<p className="text-xs">قبل از ۶:۰۰ صبح</p>}
+                        onChange={c => null}
+                        value=""
+                        />
+                    <Checkbox
+                        label={<p className="text-xs">۶:۰۰ صبح تا ۱۱:۵۹ ظهر</p>}
+                        onChange={c => null}
+                        value=""
+                        />
+                    <Checkbox
+                        label={<p className="text-xs">۱۲:۰۰ ظهر تا ۱۸:۰۰ بعد از ظهر</p>}
+                        onChange={c => null}
+                        value=""
+                        />
+                    <Checkbox
+                        label={<p className="text-xs">بعد از ۱۸:۰۰ بعد از ظهر</p>}
+                        onChange={c => null}
+                        value=""
+                        />
+                </div>
+
+                <div className="pt-2 pb-2 space-y-3">
+                    <h5 className="text-sm font-semibold mb-2">مبلغ</h5>
+                        <Select value="l" onChange={e => null}
+                        items={[{ label: "10,000,000ریال", value: '' }]}
+                        placeholder="حداقل"
+                        className="h-fit p-2"
+                        />
+                    <Select value="l"
+                        onChange={e => null}
+                        items={[{ label: "30,000,000ریال", value: '' }]}
+                        placeholder="حداکثر"
+                        className="h-fit p-2" />
                 </div>
 
                 <div className="text-sm pt-2 pb-2">
-                    <h5 className="text-sm font-semibold mb-3">نوع بلیط</h5>
-                    <div className="flex gap-2">
-                        <input type="checkbox" id="q3" className='w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 mt-1'/>
-                        <label htmlFor="q3" className="w-full">سیستمی</label>
-                    </div>
-                    <div className="flex gap-2">
-                        <input type="checkbox" id="q4" className='w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 mt-1'/>
-                        <label htmlFor="q4" className="w-full">اکونومی</label>
-                    </div>
+                    <h5 className="text-sm font-semibold mb-2">نوع بلیط</h5>
+                    <Checkbox
+                        label={<p className="text-xs">سیستمی</p>}
+                        onChange={c => null}
+                        value=""
+                        />
+                    <Checkbox
+                        label={<p className="text-xs">چارتری</p>}
+                        onChange={c => null}
+                        value=""
+                        />
                 </div>
 
                 <div className="text-sm pt-2 pb-2">
-                    <h5 className="text-sm font-semibold mb-3">نوع کابین</h5>
-                    <div className="flex gap-2">
-                        <input type="checkbox" id="e3" className='w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 mt-1'/>
-                        <label htmlFor="e3" className="w-full">اکونومی (2)</label>
-                    </div>
-                    <div className="flex gap-2">
-                        <input type="checkbox" id="w4" className='w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 mt-1'/>
-                        <label htmlFor="w4" className="w-full">بیزنس (0)</label>
-                    </div>
+                    <h5 className="text-sm font-semibold mb-2">نوع کابین</h5>
+                    <Checkbox
+                        label={<p className="text-xs">اکونومی (2)</p>}
+                        onChange={c => null}
+                        value=""
+                        />
+                    
+                        <Checkbox
+                        label={<p>بیزنس (0)</p>}
+                        onChange={c => null}
+                        value=""
+                        />
                 </div>
                 </div>
  
@@ -108,11 +138,13 @@ const FlightTollbar: React.FC = () => {
             </div>
 
             <button
-                className={`bg-blue-600 p-2 pl-4 pr-4 rounded-xl z-10 hidden text-white fixed bottom-4 left-1/2 ${OpenSide ? 'hidden' : 'max-lg:inline-block'}`}
+                className={`bg-blue-600 p-2 pl-4 pr-4 rounded-xl z-10 hidden text-white fixed bottom-4 left-1/2 -translate-x-1/2
+                ${OpenSide ? 'hidden' : 'max-lg:inline-block'}`}
                 type="submit"
                 onClick={e => setOpenSide(prevState => !prevState)}>
                 فیلتر
             </button>
+               
             </>
     )
 }

@@ -17,26 +17,26 @@ const FlightFilters: React.FC = () => {
                 <div className="flex gap-3 bg-white w-fit text-sm text-gray-500 rounded
                     h-fit max-md:w-full justify-center max-md:justify-around shadow-md">
                 <p className="flex hover:bg-gray-100 duration-200 p-1 pl-2 pr-2 w-full justify-center cursor-pointer whitespace-nowrap">
-                    <RightCaret className="w-5 fill-gray-400" />
+                    <RightCaret className="w-5 fill-gray-400 ltr:rotate-180" />
                     روز قبل
                 </p>
                 <p className="pr-2 pl-2 p-1 w-full whitespace-nowrap text-center">5 اسفند 1402</p>
                 <p className="flex hover:bg-gray-100 duration-200 p-1 pr-2 pl-2 w-full justify-center cursor-pointer whitespace-nowrap">
                     روز بعد
-                    <RightCaret className="w-5 rotate-180 fill-gray-400"/>
+                    <RightCaret className="w-5 rtl:rotate-180 fill-gray-400"/>
                 </p>
             </div>
             </div>
             
             <div className="flex gap-4 mt-8">
                 <h5 className="font-semibold text-sm whitespace-nowrap max-lg:hidden">مرتب سازی بر اساس:</h5>
-                <div className="flex w-full gap-3 overflow-auto">
-                    <p className="bg-white shadow-md text-sm text-blue-700 text-center h-fit w-full p-1 cursor-pointer
-                    hover:border-blue-800 border-white border-2 duration-100 whitespace-nowrap">کمترین قیمت</p>
-                    <p className="bg-white shadow-md text-sm text-blue-700 text-center h-fit w-full p-1 cursor-pointer
-                    hover:border-blue-800 border-white border-2 duration-100 whitespace-nowrap">بیشترین قیمت</p>
-                    <p className="bg-white shadow-md text-sm text-blue-700 text-center h-fit w-full p-1 cursor-pointer
-                    hover:border-blue-800 border-white border-2 duration-100 whitespace-nowrap">زمان پرواز</p>
+                <div className="flex w-full gap-2 overflow-auto">
+                    <p className="bg-white border-1 text-sm text-blue-700 text-center h-fit w-full p-1 cursor-pointer max-sm:text-xs
+                    hover:border-blue-800 border-white duration-100 whitespace-nowrap">کمترین قیمت</p>
+                    <p className="bg-white shadow-md text-sm text-blue-700 text-center h-fit w-full p-1 cursor-pointer max-sm:text-xs
+                    hover:border-blue-800 border-white border-1 duration-100 whitespace-nowrap">بیشترین قیمت</p>
+                    <p className="bg-white shadow-md text-sm text-blue-700 text-center h-fit w-full p-1 cursor-pointer max-sm:text-xs
+                    hover:border-blue-800 border-white border-1 duration-100 whitespace-nowrap">زمان پرواز</p>
                 </div>
             </div>
 

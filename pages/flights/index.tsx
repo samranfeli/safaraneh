@@ -1,6 +1,7 @@
 import FlightTollbar from "@/modules/flights/FlightSidebar";
 import FlightsMain from "@/modules/flights/FlightsMain";
 import { NextPage } from "next";
+import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 
 const Flights: NextPage = () => {
     return (
@@ -12,3 +13,16 @@ const Flights: NextPage = () => {
 }
 
 export default Flights;
+
+
+export async function  getStaticProps (context: any)  {
+    return (
+        {
+            props: {
+                ...await serverSideTranslations(context.locale, ['common']),
+            },
+
+        }
+    )
+
+}

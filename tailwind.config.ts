@@ -82,6 +82,7 @@ const config: Config = {
         'normal': '0 0 10px 0 rgba(0, 0, 0, 0.1)',
       },
       borderWidth: {
+        '1':'1px',
         '3': '3px'
       },
       fontSize: {
