@@ -30,12 +30,12 @@ const FlightFilters: React.FC = () => {
             
             <div className="flex gap-4 mt-8">
                 <h5 className="font-semibold text-sm whitespace-nowrap max-lg:hidden">مرتب سازی بر اساس:</h5>
-                <div className="flex w-full gap-2 overflow-auto">
-                    <p className="bg-white border-1 text-sm text-blue-700 text-center h-fit w-full p-1 cursor-pointer max-sm:text-xs
+                <div className="flex w-full gap-2">
+                    <p className="bg-white border-1 text-sm text-blue-700 text-center h-fit w-full p-1 cursor-pointer max-sm:text-xs shadow-lg
                     hover:border-blue-800 border-white duration-100 whitespace-nowrap">کمترین قیمت</p>
-                    <p className="bg-white shadow-md text-sm text-blue-700 text-center h-fit w-full p-1 cursor-pointer max-sm:text-xs
+                    <p className="bg-white text-sm text-blue-700 text-center h-fit w-full p-1 cursor-pointer max-sm:text-xs shadow-lg
                     hover:border-blue-800 border-white border-1 duration-100 whitespace-nowrap">بیشترین قیمت</p>
-                    <p className="bg-white shadow-md text-sm text-blue-700 text-center h-fit w-full p-1 cursor-pointer max-sm:text-xs
+                    <p className="bg-white text-sm text-blue-700 text-center h-fit w-full p-1 cursor-pointer max-sm:text-xs shadow-lg
                     hover:border-blue-800 border-white border-1 duration-100 whitespace-nowrap">زمان پرواز</p>
                 </div>
             </div>

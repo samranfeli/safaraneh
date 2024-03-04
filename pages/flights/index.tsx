@@ -1,4 +1,4 @@
-import FlightTollbar from "@/modules/flights/FlightSidebar";
+import FlightTollbar from "@/modules/flights/FlightSidebarFilters";
 import FlightsMain from "@/modules/flights/FlightsMain";
 import { NextPage } from "next";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
