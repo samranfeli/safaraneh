@@ -8,7 +8,7 @@ import { dateDiplayFormat } from '../../helpers';
 import { Field } from 'formik';
 
 type Props = {
-    onChange: (args: any, inst: any) => void;
+    onChange?: (args: any, inst: any) => void;
     rtl?: boolean;
     setFieldValue: any;
     locale?: any;
@@ -76,6 +76,12 @@ const DatePicker: React.FC<Props> = props => {
         dateValue = dateDiplayFormat({date:value, format:"yyyy/mm/dd", locale:locale === localeFa ? "fa": "en" });
     }
 
+    useEffect(()=>{
+        if (value){
+            props.setFieldValue(props.name, value, true);
+        }
+    },[value]);
+
     return (
         <div className={`${locale === localeFa ? 'persian-datepicker-wrapper' : ''} relative text-xs`} >
 
@@ -125,11 +131,10 @@ const DatePicker: React.FC<Props> = props => {
                     }}
                     min={new Date()}
                     marked={marked}
-                    value={value+"T00:00"}
+                    value={value}
                     showRangeLabels={false}
                     onChange={(args:any) => {
                         setValue(args.value);
-                        props.setFieldValue(props.name, args.value, true);
                     }}
                 >
 
