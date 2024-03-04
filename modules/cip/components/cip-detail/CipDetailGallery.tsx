@@ -7,12 +7,15 @@ import Captions from "yet-another-react-lightbox/plugins/captions";
 import "yet-another-react-lightbox/styles.css";
 import "yet-another-react-lightbox/plugins/thumbnails.css";
 import "yet-another-react-lightbox/plugins/captions.css";
+import { ImageGallery } from "@/modules/shared/components/ui/icons";
+import { useTranslation } from "next-i18next";
 
 
 const CipDetailGallery: React.FC<{ items: CipGetAirportByUrlResponseType['galleries'] }> = ({ items }) => {
 
     const [open, setOpen] = useState(false);
     const [slideIndex, setSlideIndex] = useState(0);
+    const {t:tCip} = useTranslation('cip');
 
     const openLightBox = (index?: number) => {
         setSlideIndex(index || 0);
@@ -23,7 +26,7 @@ const CipDetailGallery: React.FC<{ items: CipGetAirportByUrlResponseType['galler
 
     return (
         <>
-            <div className="md:grid md:grid-cols-4 gap-1">
+            <div className="md:grid md:grid-cols-4 gap-1 relative">
                 {imageItems.slice(0, 5).map((item, index) => (
                     <Image
                         key={index}
@@ -41,6 +44,10 @@ const CipDetailGallery: React.FC<{ items: CipGetAirportByUrlResponseType['galler
 
                     />
                 ))}
+                <span className='text-xs absolute bottom-3 rtl:left-3 ltr:right-3 bg-black/75 text-white px-5 py-2 rounded-lg pointer-events-none flex gap-2 items-center'>
+                    <ImageGallery className='w-6 h-6 fill-current' />
+                    {tCip("morePicyures")}
+                </span>
 
             </div>
 
