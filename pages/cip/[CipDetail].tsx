@@ -146,13 +146,13 @@ const CipDetails: NextPage = ({ airportData }: { airportData?: CipGetAirportByUr
 
                                     <DatePicker
                                         setFieldValue={setFieldValue}
-                                        onChange={g => {debugger;}}
                                         label="تاریخ پرواز"
                                         errorText={errors.flightDate as string}
                                         isTouched={touched.flightDate}
                                         fieldClassName="pt-1 text-base"
                                         name="flightDate"
                                         id="flightDate"
+                                        //initialvalue="2024-03-05"
                                         validateFunction={(value: string) => validateRequied(value, "لطفا تاریخ پرواز را وارد نمایید")}
                                     />
 
