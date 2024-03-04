@@ -18,6 +18,7 @@
     "leaflet": "^1.9.4",
     "next": "14.0.3",
     "next-i18next": "^15.0.0",
+    "next-pwa": "^5.6.0",
     "parse": "^4.3.1",
     "react": "^18",
     "react-dom": "^18",
@@ -28,7 +29,6 @@
     "yet-another-react-lightbox": "^3.15.6"
   },
   "devDependencies": {
-    "@next/bundle-analyzer": "^14.0.4",
     "@types/leaflet": "^1.9.8",
     "@types/node": "^20",
     "@types/react": "^18",
