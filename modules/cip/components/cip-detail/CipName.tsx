@@ -37,7 +37,7 @@ const CipName: React.FC<Props> = props => {
                 {!!location && <LeafletNoSsr
                     className='h-40 w-full rounded' 
                     location={location}
-                    zoom={14}
+                    zoom={13.5}
                 />}
             </div>
 
