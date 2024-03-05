@@ -11,7 +11,7 @@ import { validateRequied } from "@/modules/shared/helpers/validation";
 //import DatePicker from "@hassanmojab/react-modern-calendar-datepicker";
 import DatePicker from "@/modules/shared/components/ui/DatePicker";
 import { Form, Formik } from "formik";
-import { NextPage } from "next";
+import { GetServerSideProps, NextPage } from "next";
 import { useTranslation } from "next-i18next";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 import Link from "next/link";
@@ -187,18 +187,7 @@ const CipDetails: NextPage = ({ airportData }: { airportData?: CipGetAirportByUr
 
 export default CipDetails;
 
-
-
-export async function getStaticPaths() {
-    return {
-        paths: [{
-            params: { CipDetail: "فرودگاه-بین-المللی-امام-خمینی-Cip-خدمات" }
-        }],
-        fallback: true,
-    };
-}
-
-export async function getStaticProps(context: any) {
+export const getServerSideProps: GetServerSideProps = async (context: any) => {
 
     const { locale, params } = context;
 
