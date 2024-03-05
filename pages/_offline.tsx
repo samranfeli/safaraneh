@@ -8,12 +8,12 @@ const Offline: NextPage = () => {
     const {t} = useTranslation('common');
     return (
         <div className="max-w-container m-auto p-5 max-sm:p-3">
-            <div className="flex flex-col text-center items-center py-20">
+            <div className="flex flex-col text-center items-center p2-20 pb-32">
                 <InternetError className="fill-red-500 w-20 h-20 mx-auto mb-8" />
-                <strong className="block mb-3">
+                <strong className="block mb-3 text-xl">
                     {t("noInternetConnection")}
                 </strong>
-                <p>
+                <p className="text-sm">
                     {t('pleaseEnsureYourInternetConnection')}
                 </p>
             </div>
