@@ -5,7 +5,7 @@ const Offline: NextPage = () => {
 
     return (
         <div className="max-w-container m-auto p-5 max-sm:p-3">
-            offline ....
+            offline ....................................
         </div>
     )
 }
