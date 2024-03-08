@@ -1,29 +1,59 @@
-import { getAirportByUrl } from "@/modules/cip/actions";
+import { useState, useEffect } from 'react';
+import { availabilityByIataCode, getAirportByUrl } from "@/modules/cip/actions";
 import CipDetailGallery from "@/modules/cip/components/cip-detail/CipDetailGallery";
 import CipName from "@/modules/cip/components/cip-detail/CipName";
-import { CipGetAirportByUrlResponseType } from "@/modules/cip/types/cip";
+import { CipAvailabilityItemType, CipFormPassengerItemType, CipGetAirportByUrlResponseType } from "@/modules/cip/types/cip";
 import AnchorTabs from "@/modules/shared/components/ui/AnchorTabs";
 import Button from "@/modules/shared/components/ui/Button";
-import FormikField from "@/modules/shared/components/ui/FormikField";
 import Steps from "@/modules/shared/components/ui/Steps";
 import { RightCaret } from "@/modules/shared/components/ui/icons";
-import { validateRequied } from "@/modules/shared/helpers/validation";
 //import DatePicker from "@hassanmojab/react-modern-calendar-datepicker";
-import DatePicker from "@/modules/shared/components/ui/DatePicker";
 import { Form, Formik } from "formik";
 import { GetServerSideProps, NextPage } from "next";
 import { useTranslation } from "next-i18next";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 import Link from "next/link";
+import CipReserverInformation from "@/modules/cip/components/cip-detail/CipReserverInformation";
+import CipAirportInformation from "@/modules/cip/components/cip-detail/CipAirportInformation";
+import { useAppSelector } from '@/modules/shared/hooks/use-store';
+import CipPassengersInformation from '@/modules/cip/components/cip-detail/CipPassengersInformation';
 
-const CipDetails: NextPage = ({ airportData }: { airportData?: CipGetAirportByUrlResponseType }) => {
+const CipDetails: NextPage = ({ airportData, availabilities }: { airportData?: CipGetAirportByUrlResponseType, availabilities?: {latitude:string; longitude: string; availability: CipAvailabilityItemType[] }}) => {
 
     const { t } = useTranslation('common');
     const { t: tCip } = useTranslation('cip');
 
-    if (airportData) {
+    const user = useAppSelector(state => state.authentication.isAuthenticated ? state.authentication.user : undefined);
+
+    const [passengers, setPassengers] = useState<CipFormPassengerItemType[]>([
+        {
+            id: '1',
+            gender: user ? user.gender : true,
+            type: "Adult",
+            services: []
+        }
+    ]);
+
+    const [reserverIsPassenger, setReserverIsPassenger] = useState<boolean>(true);
+
+    // useEffect(()=>{
+    //     const fetch =async (code:string) => {
+    //         const rrr = await availabilityByIataCode(code);
+    //         debugger;
+
+    //     }
+
+    //     if(airportData?.code){
+    //         fetch(airportData?.code);
+    //     }
+
+    // },[airportData]);
+
+
+    if (availabilities) {
         debugger;
     }
+
     let airportLocation: [number, number] | undefined = undefined;
     if (airportData?.latitude && airportData?.longitude) {
         airportLocation = [+(airportData.latitude.replace("/", ".")), +(airportData.longitude.replace("/", "."))]
@@ -31,6 +61,38 @@ const CipDetails: NextPage = ({ airportData }: { airportData?: CipGetAirportByUr
 
     const submitHandler = async (values: any) => {
         debugger;
+    }
+
+    const formInitialValue = {
+        reserver: {
+            firstName: "",
+            lastName: "",
+            phoneNumber: "",
+            email: "",
+            userName: "",
+            gender: true
+        },
+        passengers: [{
+            firstName: "",
+            lastName: "",
+            phoneNumber: "",
+            email: "",
+            userName: "",
+            gender: true,
+            passengerType: "Adult" as "Adult" | "Child",
+            passportNumber: "",
+            nationalId: "",
+            nationality: "",
+            birthday: "",
+            services: []
+        }],
+        originName: "",
+        destinationName: "",
+        airline: "",
+        flightNumber: "",
+        flightDate: "",
+        flightTime: ""
+
     }
 
     return (
@@ -84,83 +146,53 @@ const CipDetails: NextPage = ({ airportData }: { airportData?: CipGetAirportByUr
             >
                 <Formik
                     validate={() => { return {} }}
-                    initialValues={{ originName: "", destinationName: "", airline: "", flightNumber: "", flightDate:"" }}
+                    initialValues={formInitialValue}
                     onSubmit={submitHandler}
                 >
-                    {({ errors, touched, setFieldValue, values }) => {
+                    {({ errors, touched, setFieldValue, values, isValid, isSubmitting }) => {
+
+                        if (isSubmitting && !isValid) {
+                            setTimeout(() => {
+                                const formFirstError = document.querySelector(".has-validation-error");
+                                if (formFirstError) {
+                                    formFirstError.scrollIntoView({ behavior: "smooth" });
+                                }
+                            }, 100)
+                        }
+
                         return (
 
                             <Form className='px-5' autoComplete='off' >
 
-                                <div className="bg-white rounded-lg p-5 sm:grid sm:grid-cols-2 md:grid-cols-4 gap-4 border border-neutral-300">
-                                    <strong className="font-semibold text-base block sm:col-span-2 md:col-span-4 "> اطلاعات سفر </strong>
+                                <CipAirportInformation
+                                    errors={errors}
+                                    setFieldValue={setFieldValue}
+                                    touched={touched}
+                                    values={values}
+                                />
 
-                                    <FormikField
-                                        setFieldValue={setFieldValue}
-                                        errorText={errors.originName as string}
-                                        id='originName'
-                                        name='originName'
-                                        isTouched={!!touched.originName}
-                                        label="مبدا"
-                                        validateFunction={(value: string) => validateRequied(value, "لطفا مبدا را وارد نمایید")}
-                                        onChange={(value: string) => { setFieldValue('originName', value, true) }}
-                                        value={values.originName}
-                                    />
+                                <CipReserverInformation
+                                    reserverIsPassenger={reserverIsPassenger}
+                                    errors={errors}
+                                    setFieldValue={setFieldValue}
+                                    touched={touched}
+                                    values={values}
+                                />
 
-                                    <FormikField
-                                        setFieldValue={setFieldValue}
-                                        errorText={errors.destinationName as string}
-                                        id='destinationName'
-                                        name='destinationName'
-                                        isTouched={touched.destinationName}
-                                        label="مقصد"
-                                        validateFunction={(value: string) => validateRequied(value, "لطفا مقصد را وارد نمایید")}
-                                        onChange={(value: string) => { setFieldValue('destinationName', value, true) }}
-                                        value={values.destinationName}
-                                    />
+                                <CipPassengersInformation
+                                    setFieldValue={setFieldValue}
+                                    values={values}
+                                    errors={errors}
+                                    touched={touched}
+                                    setReserverIsNotPassenger={() => { setReserverIsPassenger(false) }}
+                                    //updatePassenger={updatePassenger}
+                                    //decreasePassengers={decreasePassengers}
+                                    //increasePassengers={increasePassengers}
+                                    //removePassenger={removePassenger}
+                                    setPassengers={setPassengers}
+                                    passengers={passengers}
 
-                                    <FormikField
-                                        setFieldValue={setFieldValue}
-                                        errorText={errors.airline as string}
-                                        id='airline'
-                                        name='airline'
-                                        isTouched={touched.airline}
-                                        label="شرکت هواپیمایی"
-                                        validateFunction={(value: string) => validateRequied(value, "لطفا شرکت هواپیمایی را وارد نمایید")}
-                                        onChange={(value: string) => { setFieldValue('airline', value, true) }}
-                                        value={values.airline}
-                                    />
-
-
-                                    <FormikField
-                                        setFieldValue={setFieldValue}
-                                        errorText={errors.flightNumber as string}
-                                        id='flightNumber'
-                                        name='flightNumber'
-                                        isTouched={touched.flightNumber}
-                                        label="شماره پرواز"
-                                        validateFunction={(value: string) => validateRequied(value, "لطفا شماره پرواز را وارد نمایید")}
-                                        onChange={(value: string) => { setFieldValue('flightNumber', value, true) }}
-                                        value={values.flightNumber}
-                                    />
-
-                                    <DatePicker
-                                        setFieldValue={setFieldValue}
-                                        label="تاریخ پرواز"
-                                        errorText={errors.flightDate as string}
-                                        isTouched={touched.flightDate}
-                                        fieldClassName="pt-1 text-base"
-                                        name="flightDate"
-                                        id="flightDate"
-                                        //initialvalue="2024-03-05"
-                                        validateFunction={(value: string) => validateRequied(value, "لطفا تاریخ پرواز را وارد نمایید")}
-                                    />
-
-
-
-                                </div>
-
-
+                                />
 
                                 <Button
                                     type="submit"
@@ -195,11 +227,27 @@ export const getServerSideProps: GetServerSideProps = async (context: any) => {
 
     const airportData: any = await getAirportByUrl(url, locale === "fa" ? "fa-IR" : "en-US");
 
+    let availibilityData: any = null;
+    if (airportData?.data?.result.code) {
+
+
+        const response: any = await availabilityByIataCode(airportData.data.result.code);
+        if (response?.data?.result) {
+
+            availibilityData = {
+                availability: response.data.result.availability,
+                latitude: response.data.result.latitude?.replace("/","."),
+                longitude: response.data.result.latitude?.replace("/",".")
+            }
+        }
+    }
+
     return (
         {
             props: {
                 ...await serverSideTranslations(context.locale, ['common', 'cip']),
-                airportData: airportData?.data?.result || null
+                airportData: airportData?.data?.result || null,
+                availabilities: availibilityData || null
             },
 
         }

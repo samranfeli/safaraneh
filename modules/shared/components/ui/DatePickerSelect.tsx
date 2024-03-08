@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { dateDiplayFormat, persianNumbersToEnglish, shamsiToMiladi } from '../../helpers';
+import { Field } from 'formik';
 
 type Props = {
     min: string;
@@ -8,7 +9,15 @@ type Props = {
     label?: string;
     descending?: boolean;
     initialValue?: string;
+    labelIsSimple?: boolean;
     onChange?: (value: string) => void;
+    validateFunction?: (value: string) => void;
+    value?: string;
+    name?:string;
+    id?: string;
+    errorText?: string;
+    isTouched?: boolean;
+    setFieldValue?: any;
 }
 
 const DatePickerSelect: React.FC<Props> = props => {
@@ -38,11 +47,18 @@ const DatePickerSelect: React.FC<Props> = props => {
 
 
     useEffect(() => {
-        if (day && month && year && props.onChange) {
+        if (day && month && year) {
 
             const dateArray = shamsiToMiladi(+year, +month, +day);
 
-            props.onChange(dateArray.join("-"))
+            if(props.setFieldValue){
+                props.setFieldValue(props.name,dateArray.join("-"), true);
+            }
+
+            if(props.onChange){
+                props.onChange(dateArray.join("-"))
+            }
+
         }
     }, [day, month, year]);
 
@@ -105,13 +121,15 @@ const DatePickerSelect: React.FC<Props> = props => {
         daysArray = [...daysArray].filter(item => item >= minDay);
     }
 
-    const selectClassName = "h-10 px-2 text-sm bg-white border border-neutral-300 focus:border-blue-500 outline-none rounded-md w-full"
+    const selectClassName = `focus:border-blue-500 h-10 px-2 text-sm bg-white border outline-none rounded-md w-full ${props.errorText && props.isTouched ? "border-red-500" : "border-neutral-300 focus:border-blue-500"}`
 
 
     return (
-        <>
+        <div className='relative'>
             {!!props.label && (
-                <label className='select-none pointer-events-none block leading-4 mb-3 text-base'>
+                <label 
+                    className={`select-none pointer-events-none block leading-4 ${props.labelIsSimple ? "mb-3 text-base" : "top-0 text-xs z-10 text-sm absolute px-2 bg-white transition-all duration-300 -translate-y-1/2 rtl:right-1 ltr:left-1"}  `}
+                >
                     {props.label}
                 </label>
             )}
@@ -170,7 +188,22 @@ const DatePickerSelect: React.FC<Props> = props => {
                 </select>
 
             </div>
-        </>
+
+            <Field
+                hidden
+                validate={props.validateFunction}
+                dir='ltr'
+                name={props.name}
+                id={props.id}
+                type='text'
+                readOnly
+                value={props.value}
+                validateFunction={props.validateFunction}
+            />
+            
+            {props.errorText && props.isTouched && <div className='text-red-500 text-xs'>{props.errorText}</div>} 
+
+        </div>
     )
 }
 
