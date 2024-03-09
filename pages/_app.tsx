@@ -121,13 +121,6 @@ function MyApp({ Component, pageProps, portalData }: TProps) {
           content="dL12BD7zy5YUBkz4xPLy-hKkz1PPUyStFEiXgJks_h0"
         />
 
-        <script
-          id="script_header_1"
-          type="text/javascript"
-          src="/static/scripts/cashback.js"
-        ></script>
-
-
         <link rel="icon" type="image/x-icon" href={favIconLink} />
 
         {!!portalTitle && <title>{portalTitle}</title>}
