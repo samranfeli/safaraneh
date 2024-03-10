@@ -6,6 +6,7 @@ import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 import { useRouter } from "next/router";
 import { BlogItemType, CategoriesNameType } from "@/modules/blogs/types/blog";
 import BreadCrumpt from "@/modules/shared/components/ui/BreadCrumpt";
+import Head from "next/head";
 
 const Search: NextPage<any> = ({ SearchBlog, LastBlogs, categories_name, pages }:
     {SearchBlog: BlogItemType[], LastBlogs:BlogItemType[], categories_name:CategoriesNameType[],pages:string}) => {
@@ -13,6 +14,9 @@ const Search: NextPage<any> = ({ SearchBlog, LastBlogs, categories_name, pages }
     const SearchValue = useRouter().query.search
     return (
         <div className="bg-white">
+            <Head>
+                <title>جستجوی بلاگ | {SearchValue}</title>
+            </Head>
             <div className="max-w-container m-auto pr-5 pl-5 max-sm:p-4">
                 <BreadCrumpt items={[{ label: "بلاگ", link: "/blog" }, { label: `جستجوی"${SearchValue}"` }]} />
             </div>

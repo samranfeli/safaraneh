@@ -5,6 +5,7 @@ import Content from "@/modules/blogs/components/template/Content";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 import { BlogItemType, CategoriesNameType } from "@/modules/blogs/types/blog";
 import BreadCrumpt from "@/modules/shared/components/ui/BreadCrumpt";
+import Head from "next/head";
 
 
 const Tag: NextPage<any> = ({ TagBlogs, TagName, categories_name, recentBlogs, pages } :
@@ -13,6 +14,9 @@ const Tag: NextPage<any> = ({ TagBlogs, TagName, categories_name, recentBlogs, p
     const tagname : string = TagName.name || ''
     return (
         <div className="bg-white">
+            <Head>
+                <title>بلاگ | {tagname}</title>
+            </Head>
             <div className="max-w-container m-auto pr-5 pl-5 max-sm:p-4">
                 <BreadCrumpt items={[{ label: "بلاگ", link: "/blog" }, { label: tagname }]} />
             </div>

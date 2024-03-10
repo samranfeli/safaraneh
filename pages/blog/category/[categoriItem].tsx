@@ -6,6 +6,7 @@ import { useRouter } from "next/router";
 import Content from "@/modules/blogs/components/template/Content";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 import BreadCrumpt from "@/modules/shared/components/ui/BreadCrumpt";
+import Head from "next/head";
 
 
 const Category: NextPage<any> = ({ LastBlogs, BlogCategory, categories_name, pages }:
@@ -18,6 +19,9 @@ const Category: NextPage<any> = ({ LastBlogs, BlogCategory, categories_name, pag
 
     return (
         <div className="bg-white">
+            <Head>
+                <title>بلاگ | {CategoryName}</title>
+            </Head>
             <div className="max-w-container m-auto pr-5 pl-5 max-sm:p-4">
             <BreadCrumpt items={[{label: "بلاگ" , link : "/blog"}, {label: CategoryName}]} />
             </div>
