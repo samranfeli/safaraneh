@@ -15,7 +15,7 @@ const Tag: NextPage<any> = ({ TagBlogs, TagName, categories_name, recentBlogs, p
     return (
         <div className="bg-white">
             <Head>
-                <title>بلاگ | {tagname}</title>
+            <title>بلاگ | حرفه ای ترین شبکه معرفی هتل های ایران | سفرانه</title>
             </Head>
             <div className="max-w-container m-auto pr-5 pl-5 max-sm:p-4">
                 <BreadCrumpt items={[{ label: "بلاگ", link: "/blog" }, { label: tagname }]} />

@@ -45,7 +45,7 @@ const about: NextPage = () => {
     return (
         <>
             <Head>
-                <title>تماس با ما</title>
+                <title>درباره ما</title>
             </Head>
             <div className="max-w-container m-auto p-5 max-sm:p-3">
             <BreadCrumpt items={[{ label: 'درباره ما' }]} />
