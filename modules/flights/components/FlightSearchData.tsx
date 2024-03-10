@@ -1,4 +1,4 @@
-import { ArrowLeft } from "../shared/components/ui/icons";
+import { ArrowLeft } from "../../shared/components/ui/icons";
 
 const FlightSearchData: React.FC = () => {
     return (
