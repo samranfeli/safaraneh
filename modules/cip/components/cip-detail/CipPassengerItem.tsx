@@ -5,11 +5,12 @@ import TimePicker from "@/modules/shared/components/ui/TimePicker";
 import { validateEmail, validateNationalId, validateRequied, validateRequiedPersianAndEnglish } from "@/modules/shared/helpers/validation";
 import { Field, FormikErrors, FormikTouched } from "formik";
 import { useTranslation } from "next-i18next";
-import { CipFormPassengerItemType } from "../../types/cip";
+import { CipAvailabilityItemType, CipFormPassengerItemType } from "../../types/cip";
 import { Close, Loading, Minus, Plus } from "@/modules/shared/components/ui/icons";
 import Quantity from "@/modules/shared/components/ui/Quantity";
 import DatePickerSelect from "@/modules/shared/components/ui/DatePickerSelect";
 import { dateFormat, goBackYears } from "@/modules/shared/helpers";
+import CheckboxGroup from "@/modules/shared/components/ui/CheckboxGroup";
 
 type Props = {
     passengerItem: CipFormPassengerItemType
@@ -21,7 +22,7 @@ type Props = {
     updatePassenger: (property: any, value: any) => void;
     //form;
     //userInfo;
-    //passengerServicesArray,
+    passengerServicesArray: CipAvailabilityItemType['passengerTypeServices'];
 
     setFieldValue: (field: string, value: any, shouldValidate?: boolean | undefined) => Promise<void | FormikErrors<{
         passengers: {
@@ -99,6 +100,8 @@ const CipPassengerItem: React.FC<Props> = props => {
     const { t } = useTranslation('common');
     const { passengerItem, passengerIndex, setReserverIsNotPassenger, updatePassenger, values, errors, touched, setFieldValue } = props;
 
+    const services = props.passengerServicesArray?.find(passengerServicesItem => passengerServicesItem.passengerType === passengerItem.type)?.services;
+
     return (
         <div className="bg-white rounded-lg border border-neutral-300 mb-5 md:mb-8">
 
@@ -109,7 +112,7 @@ const CipPassengerItem: React.FC<Props> = props => {
                     <Close className="w-5 h-5 fill-red-600" />
                 </button>}
             </div>
-            <div className="px-5 py-3 grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-4">
+            <div className="p-5 grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-4">
 
 
                 <div className="leading-4" >
@@ -156,6 +159,7 @@ const CipPassengerItem: React.FC<Props> = props => {
                             onChange={(e: any) => {
                                 const val = e.target.checked;
                                 setFieldValue(`passengers.${passengerIndex}.passengerType`, val ? "Adult" : "Child");
+                                updatePassenger("type", val ? "Adult" : "Child");
                             }}
                             checked={values.passengers[passengerIndex]?.passengerType === "Adult"}
                         />
@@ -168,6 +172,7 @@ const CipPassengerItem: React.FC<Props> = props => {
                             onChange={(e: any) => {
                                 const val = e.target.checked;
                                 setFieldValue(`passengers.${passengerIndex}.passengerType`, val ? "Child" : "Adult");
+                                updatePassenger("type", val ? "Child" : "Adult");
                             }}
                             checked={values.passengers[passengerIndex]?.passengerType === "Child"}
                         />
@@ -238,7 +243,7 @@ const CipPassengerItem: React.FC<Props> = props => {
                     validateFunction={(value: string) => validateRequied(value, "لطفا شماره گذرنامه را وارد کنید.")}
                     value={values.passengers[passengerIndex]?.passportNumber}
                 />
-                
+
                 <div>
                     <DatePickerSelect
                         setFieldValue={setFieldValue}
@@ -249,7 +254,7 @@ const CipPassengerItem: React.FC<Props> = props => {
                         //initialValue={user.birthDay ? dateFormat(new Date(user.birthDay)) : ""}
                         shamsi={true}
                         label="تاریخ تولد"
-                        value={values.passengers[passengerIndex].birthday||""}
+                        value={values.passengers[passengerIndex].birthday || ""}
                         descending
                         errorText={errors.passengers ? (errors.passengers[passengerIndex] as FormikErrors<{
                             birthday: string;
@@ -259,15 +264,31 @@ const CipPassengerItem: React.FC<Props> = props => {
                     />
                 </div>
 
+                {!!services?.length && (
+                    <div className="bg-neutral-100 rounded-lg md:col-span-2 xl:col-span-4 flex items-center gap-5 px-5 py-1.5">
+                        <span className="text-sm">
+                            سرویس هایی بیشتر :
+                        </span>
+
+                        <CheckboxGroup
+                            items={services.map(serviceItem => ({ label: serviceItem.name, value: serviceItem.id.toString() }))}
+                            onChange={value => {
+                                setFieldValue(`passengers.${passengerIndex}.services`, value);
+                                props.updatePassenger("services", value);
+                            }}
+                            values={[]}
+                        />
 
 
-
-
-
-
-
+                    </div>
+                )}
 
             </div>
+
+
+
+
+
 
             {/* <div className={styles.contentPassenger}>
 
@@ -281,27 +302,11 @@ const CipPassengerItem: React.FC<Props> = props => {
                 </Form.Item>
             </Row>    */}
 
-            
-            {/* {passengerServicesArray?.find(serviceItem => serviceItem.passengerType === passengerItem.type)?.services?.length > 0 && <div className={styles.additinalServicePAssenger}>
-                <div className={styles.subject}> سرویس هایی بیشتر :</div>
-                <div className={styles.content}>
-                    <Checkbox.Group
-                        onChange={value => {
-                            UpdatePassenger(passengerItem.id,"services",value);
-                            form.setFieldValue(['passengers', passengerIndex , 'services'], value);
-                        }}
-                        value={passengerItem.services}
-                    >
-                        <Row gutter={[20,20]}>
-                            {passengerServicesArray.find(serviceItem => serviceItem.passengerType === passengerItem.type).services.map(serviceItem => <Col key={serviceItem.id}>
-                                <Checkbox value={serviceItem.id} >
-                                    {serviceItem.name}
-                                </Checkbox>
-                            </Col>)}
-                        </Row>
-                    </Checkbox.Group>
-                </div>
-            </div>}
+
+
+            {/* {props.passengerServicesArray?.find(serviceItem => serviceItem.passengerType === passengerItem.type)?.services?.length > 0 && } */}
+
+            {/*
             <Form.Item
                 hidden
                 name={['passengers', passengerIndex ,'services']}

@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Field } from 'formik';
 import Button from './Button';
 
@@ -37,6 +37,17 @@ const TimePicker: React.FC<Props> = props => {
     if (hour && minute) {
         value = `${hour.toString().padStart(2, "0")}:${minute.toString().padStart(2, "0")}`
     }
+
+    const submit = () =>{
+        setOpen(false);
+        props.setFieldValue(props.name, value);
+    }
+
+    useEffect(()=>{
+        if (minute && hour){
+            submit()
+        }
+    },[minute, hour])
 
 
     return (
@@ -91,10 +102,7 @@ const TimePicker: React.FC<Props> = props => {
                             type='button'
                             className='h-8 block w-full'
                             disabled={!minute || !hour}
-                            onClick={() => {
-                                setOpen(false);
-                                props.setFieldValue(props.name, value)
-                            }}
+                            onClick={submit}
                         >
                             انتخاب
                         </Button>

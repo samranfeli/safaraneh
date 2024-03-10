@@ -34,6 +34,8 @@ const CipDetails: NextPage = ({ airportData, availabilities }: { airportData?: C
         }
     ]);
 
+    const [selectedAvailability, setSelectedAvailability] = useState<CipAvailabilityItemType | undefined>();
+
     const [reserverIsPassenger, setReserverIsPassenger] = useState<boolean>(true);
 
     // useEffect(()=>{
@@ -50,13 +52,23 @@ const CipDetails: NextPage = ({ airportData, availabilities }: { airportData?: C
     // },[airportData]);
 
 
-    if (availabilities) {
-        debugger;
-    }
+    useEffect(()=>{
+        if (availabilities?.availability && availabilities.availability.length === 1 ){
+            setSelectedAvailability(availabilities.availability[0]);
+        }
+    },[availabilities?.latitude]);
+
 
     let airportLocation: [number, number] | undefined = undefined;
-    if (airportData?.latitude && airportData?.longitude) {
-        airportLocation = [+(airportData.latitude.replace("/", ".")), +(airportData.longitude.replace("/", "."))]
+    if (availabilities?.latitude && availabilities.longitude) {
+        airportLocation = [+availabilities.latitude, +availabilities.longitude];
+    }
+
+
+    let passengerServicesArray: CipAvailabilityItemType['passengerTypeServices'];;
+    if (selectedAvailability){
+      passengerServicesArray = selectedAvailability.passengerTypeServices;
+      debugger;
     }
 
     const submitHandler = async (values: any) => {
@@ -180,6 +192,7 @@ const CipDetails: NextPage = ({ airportData, availabilities }: { airportData?: C
                                 />
 
                                 <CipPassengersInformation
+                                    passengerServicesArray={passengerServicesArray}
                                     setFieldValue={setFieldValue}
                                     values={values}
                                     errors={errors}
@@ -237,7 +250,7 @@ export const getServerSideProps: GetServerSideProps = async (context: any) => {
             availibilityData = {
                 availability: response.data.result.availability,
                 latitude: response.data.result.latitude?.replace("/","."),
-                longitude: response.data.result.latitude?.replace("/",".")
+                longitude: response.data.result.longitude?.replace("/",".")
             }
         }
     }
