@@ -48,8 +48,9 @@ const CipServices = () => {
             <h2 className="text-3xl mt-24 mb-5">خدمات CIP موارد متنوعی را شامل می‌شود</h2>
             <div className="grid grid-cols-4 gap-5 max-md:grid-cols-2">
             {
-                list.map(item => 
-                    <div className="pt-4 pb-4 pl-4 pr-4 max-lg:pl-2 max-lg:pr-2 bg-white rounded shadow-base text-center text-sm place-content-center">
+                list.map((item, index) => 
+                    <div className="pt-4 pb-4 pl-4 pr-4 max-lg:pl-2 max-lg:pr-2 bg-white rounded shadow-base text-center text-sm place-content-center"
+                    key={index}>
                         <Image src={item.image} alt="x" width={10} height={10} className="w-14 m-auto" />
                         <p className="mt-1">{item.content}</p>
                     </div>)

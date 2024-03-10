@@ -16,19 +16,23 @@ const Section4: NextPage = () => {
                 <ul className="select-none max-sm:text-sm">
                     
                     <li className="bg-white p-3 max-sm:p-1 mb-5 text-gray-500 relative ">
-                    <span className="w-12 h-full bg-orange-500 absolute bottom-0 right-0"><Tik className="p-3"/></span>
+                        <span className="w-12 h-full bg-orange-500 absolute bottom-0 right-0">
+                            <Tik className="p-2 m-1 fill-white border-2 border-white rounded-full max-sm:m-0 max-sm:border-0 max-sm:p-3" /></span>
                         <p className="mr-12">ارائه تخفیف مازاد به شرکت ها و آژانس‌ها</p>
                     </li>
                     <li className="bg-white p-3 max-sm:p-1 mb-5 text-gray-500 relative ">
-                    <span className="w-12 h-full bg-orange-500 absolute bottom-0 right-0"><Tik className="p-3"/></span>
+                        <span className="w-12 h-full bg-orange-500 absolute bottom-0 right-0">
+                            <Tik className="p-2 m-1 fill-white border-2 border-white rounded-full max-sm:m-0 max-sm:border-0 max-sm:p-3" /></span>
                         <p className="mr-12">تضمین کمترین قیمت</p>
                     </li>
                     <li className="bg-white p-3 max-sm:p-1 mb-5 text-gray-500 relative ">
-                    <span className="w-12 h-full bg-orange-500 absolute bottom-0 right-0"><Tik className="p-3"/></span>
+                        <span className="w-12 h-full bg-orange-500 absolute bottom-0 right-0">
+                            <Tik className="p-2 m-1 fill-white border-2 border-white rounded-full max-sm:m-0 max-sm:border-0 max-sm:p-3" /></span>
                         <p className="mr-12">تنوع در راه‌های پرداخت</p>
                     </li>
                     <li className="bg-white p-3 max-sm:p-1 mb-5 text-gray-500 relative ">
-                    <span className="w-12 h-full bg-orange-500 absolute bottom-0 right-0"><Tik className="p-3"/></span>
+                        <span className="w-12 h-full bg-orange-500 absolute bottom-0 right-0">
+                            <Tik className="p-2 m-1 fill-white border-2 border-white rounded-full max-sm:m-0 max-sm:border-0 max-sm:p-3" /></span>
                         <p className="mr-12">امکان رزرو به صورت تقبل کلیه هزینه‌ها</p>
                     </li>
                 </ul>
@@ -39,19 +43,23 @@ const Section4: NextPage = () => {
                 </h2>
                 <ul className="select-none">
                 <li className="bg-white p-3 max-sm:p-1 mb-5 text-gray-500 relative ">
-                    <span className="w-12 h-full bg-orange-500 absolute bottom-0 right-0"><Tik className="p-3"/></span>
+                        <span className="w-12 h-full bg-orange-500 absolute bottom-0 right-0">
+                            <Tik className="p-2 m-1 fill-white border-2 border-white rounded-full max-sm:m-0 max-sm:border-0 max-sm:p-3" /></span>
                         <p className="mr-12">ارائه فاکتور رسمی</p>
                     </li>
                     <li className="bg-white p-3 max-sm:p-1 mb-5 text-gray-500 relative ">
-                    <span className="w-12 h-full bg-orange-500 absolute bottom-0 right-0"><Tik className="p-3"/></span>
+                        <span className="w-12 h-full bg-orange-500 absolute bottom-0 right-0">
+                            <Tik className="p-2 m-1 fill-white border-2 border-white rounded-full max-sm:m-0 max-sm:border-0 max-sm:p-3" /></span>
                         <p className="mr-12">پشتیبانی اختصاصی برای شرکت‌ها در تمامی روزهای هفته</p>
                     </li>
                     <li className="bg-white p-3 max-sm:p-1 mb-5 text-gray-500 relative ">
-                    <span className="w-12 h-full bg-orange-500 absolute bottom-0 right-0"><Tik className="p-3"/></span>
+                        <span className="w-12 h-full bg-orange-500 absolute bottom-0 right-0">
+                            <Tik className="p-2 m-1 fill-white border-2 border-white rounded-full max-sm:m-0 max-sm:border-0 max-sm:p-3" /></span>
                         <p className="mr-12">برگزاری همایش و رزرو سالن با حداقل قیمت</p>
                     </li>
                     <li className="bg-white p-3 max-sm:p-1 mb-5 text-gray-500 relative ">
-                    <span className="w-12 h-full bg-orange-500 absolute bottom-0 right-0"><Tik className="p-3"/></span>
+                        <span className="w-12 h-full bg-orange-500 absolute bottom-0 right-0">
+                            <Tik className="p-2 m-1 fill-white border-2 border-white rounded-full max-sm:m-0 max-sm:border-0 max-sm:p-3" /></span>
                         <p className="mr-12">طراحی و اجرای تورهای اختصاصی پرسنلی و مأموریتی</p>
                     </li>
                 </ul>
