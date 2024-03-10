@@ -28,8 +28,8 @@ const nextConfig = {
     PROJECT_SERVER_TYPE: "https://",
     PROJECT_SERVER_USER: "",
         
-    PROJECT_SERVER_APIKEY: 'e8fad1497a1244f29f15cde4a242baf0',
-    PROJECT_PORTAL_APIKEY: 'b4fa99cc-3dfd-40a5-8bcf-53acdc2dbd84',
+    PROJECT_SERVER_APIKEY: 'f19c03d2-7d38-4acf-bf29-64af58c4fe39',
+    PROJECT_PORTAL_APIKEY: '68703d73-c92c-4105-9f71-9f718aaad2cc',
     
     PROJECT_SERVER_HOTEL_WP:"wp.safaraneh.com",
     PROJECT_SERVER_HOTEL_MAIN: "api.safaraneh.com",
@@ -42,7 +42,7 @@ const nextConfig = {
     PROJECT_SERVER_IDENTITY:"identity.safaraneh.com",
     PROJECT_SERVER_CIP:"cip.safaraneh.com",
     PROJECT_SERVER_FLIGHT: "",
-    PROJECT_SERVER_TENANTID: "1040",
+    PROJECT_SERVER_TENANTID: "6",
     PROJECT_SERVER_NATIONALITY: "",
     PORT: '',
     PROJECT_SERVER_GA_ID: ""
