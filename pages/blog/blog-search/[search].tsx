@@ -13,10 +13,11 @@ const Search: NextPage<any> = ({ SearchBlog, LastBlogs, categories_name, pages, 
     {SearchBlog: BlogItemType[], LastBlogs:BlogItemType[], categories_name:CategoriesNameType[],pages:string, portalData: PortalDataType}) => {
     
     const SearchValue = useRouter().query.search
+    const siteName = portalData?.Phrases?.find(item => item.Keyword === "Name")?.Value || "";
     return (
         <div className="bg-white">
             <Head>
-            <title>بلاگ | حرفه ای ترین شبکه معرفی هتل های ایران | {portalData.Phrases[13].Value}</title>
+            <title>بلاگ | حرفه ای ترین شبکه معرفی هتل های ایران | {siteName}</title>
             </Head>
             <div className="max-w-container m-auto pr-5 pl-5 max-sm:p-4">
                 <BreadCrumpt items={[{ label: "بلاگ", link: "/blog" }, { label: `جستجوی"${SearchValue}"` }]} />

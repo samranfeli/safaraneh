@@ -17,11 +17,12 @@ const Category: NextPage<any> = ({ LastBlogs, BlogCategory, categories_name, pag
     const query: any = useRouter().query.categoriItem;
     const CategoryName : string = categories_name?.find(item => item.id == +query)?.name || ""
     const TitleData = BlogCategory?.find((item : any) => item.categories[0] == +query)?.categories_names?.[0]
+    const siteName = portalData?.Phrases?.find(item => item.Keyword === "Name")?.Value || "";
 
     return (
         <div className="bg-white">
             <Head>
-            <title>بلاگ | حرفه ای ترین شبکه معرفی هتل های ایران | {portalData.Phrases[13].Value}</title>
+            <title>بلاگ | حرفه ای ترین شبکه معرفی هتل های ایران | {siteName}</title>
             </Head>
             <div className="max-w-container m-auto pr-5 pl-5 max-sm:p-4">
             <BreadCrumpt items={[{label: "بلاگ" , link : "/blog"}, {label: CategoryName}]} />
