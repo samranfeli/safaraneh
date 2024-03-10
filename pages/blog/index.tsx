@@ -21,7 +21,7 @@ const Blog: NextPage<any> = ({ NewBlogs, Cities, Categories , Categories2 ,Categ
         return (
         <div className="bg-white">
             <Head>
-                <title>بلاگ | حرفه ای ترین شبکه معرفی هتل های ایران | {siteName}</title>
+                <title>وبلاگ | حرفه ای ترین شبکه معرفی هتل های ایران | {siteName}</title>
             </Head>
             <div className="max-w-container m-auto pr-5 pl-5 max-sm:p-4">
                 <BreadCrumpt items={[{label : "بلاگ"}]} />
