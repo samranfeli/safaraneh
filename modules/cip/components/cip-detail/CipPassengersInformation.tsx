@@ -6,7 +6,7 @@ import TimePicker from "@/modules/shared/components/ui/TimePicker";
 import { validateEmail, validateNationalId, validateRequied, validateRequiedPersianAndEnglish } from "@/modules/shared/helpers/validation";
 import { Field, FormikErrors, FormikTouched } from "formik";
 import { useTranslation } from "next-i18next";
-import { CipFormPassengerItemType } from "../../types/cip";
+import { CipAvailabilityItemType, CipFormPassengerItemType } from "../../types/cip";
 import { Loading, Minus, Plus } from "@/modules/shared/components/ui/icons";
 import Quantity from "@/modules/shared/components/ui/Quantity";
 import CipPassengerItem from "./CipPassengerItem";
@@ -20,7 +20,7 @@ type Props = {
     //updatePassenger: (id: string, property: any, value: any) => void;
     //removePassenger: (id: string) => void;
     setReserverIsNotPassenger: () => void;
-    //passengerServicesArray,
+    passengerServicesArray: CipAvailabilityItemType['passengerTypeServices'];
 
 
     setFieldValue: (field: string, value: any, shouldValidate?: boolean | undefined) => Promise<void | FormikErrors<{
@@ -150,6 +150,7 @@ const CipPassengersInformation: React.FC<Props> = props => {
         }
     };
     const updatePassenger = (id: string, property: any, value: any) => {
+        debugger;
         setPassengers((prevPassengers: any) => {
             const updatingPassenger = prevPassengers.find((item: any) => item.id === id);
             const otherPassengers = prevPassengers.filter((item: any) => item.id !== id);
@@ -185,6 +186,7 @@ const CipPassengersInformation: React.FC<Props> = props => {
                 </div>
             </div>
             {passengers && passengers.sort((a, b) => +a.id - +b.id).map((passengerItem, passengerIndex) => <CipPassengerItem
+                passengerServicesArray={props.passengerServicesArray}
                 errors={errors}
                 touched={touched}
                 values={values}
@@ -193,7 +195,6 @@ const CipPassengersInformation: React.FC<Props> = props => {
                 passengerIndex={passengerIndex}
                 setReserverIsNotPassenger={setReserverIsNotPassenger}
                 setFieldValue={setFieldValue}
-                //passengerServicesArray={passengerServicesArray}
                 updatePassenger={(property: any, value: any) => { updatePassenger(passengerItem.id, property, value) }}
                 decreasePassengers={decreasePassengers}
                 isLastItem ={!!passengerIndex && passengerIndex === passengers.length-1} 
