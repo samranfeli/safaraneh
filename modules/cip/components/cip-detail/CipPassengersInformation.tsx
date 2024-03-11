@@ -1,28 +1,16 @@
 import {SetStateAction, Dispatch} from 'react';
-import DatePicker from "@/modules/shared/components/ui/DatePicker";
-import FormikField from "@/modules/shared/components/ui/FormikField"
-import PhoneInput from "@/modules/shared/components/ui/PhoneInput";
-import TimePicker from "@/modules/shared/components/ui/TimePicker";
-import { validateEmail, validateNationalId, validateRequied, validateRequiedPersianAndEnglish } from "@/modules/shared/helpers/validation";
-import { Field, FormikErrors, FormikTouched } from "formik";
+import {FormikErrors, FormikTouched } from "formik";
 import { useTranslation } from "next-i18next";
+
 import { CipAvailabilityItemType, CipFormPassengerItemType } from "../../types/cip";
 import { Loading, Minus, Plus } from "@/modules/shared/components/ui/icons";
-import Quantity from "@/modules/shared/components/ui/Quantity";
 import CipPassengerItem from "./CipPassengerItem";
-import { error } from "console";
 
 type Props = {
     passengers: CipFormPassengerItemType[];
     setPassengers: Dispatch<SetStateAction<CipFormPassengerItemType[]>>;
-    //decreasePassengers: () => void;
-    //increasePassengers: () => void;
-    //updatePassenger: (id: string, property: any, value: any) => void;
-    //removePassenger: (id: string) => void;
     setReserverIsNotPassenger: () => void;
     passengerServicesArray: CipAvailabilityItemType['passengerTypeServices'];
-
-
     setFieldValue: (field: string, value: any, shouldValidate?: boolean | undefined) => Promise<void | FormikErrors<{
         passengers: {
             firstName: string;
@@ -87,7 +75,6 @@ type Props = {
             services: any[]
         }[];
     };
-    // reserverIsPassenger:boolean;
 }
 
 const CipPassengersInformation: React.FC<Props> = props => {
@@ -95,7 +82,6 @@ const CipPassengersInformation: React.FC<Props> = props => {
     const { t } = useTranslation('common');
 
     const { passengers, setReserverIsNotPassenger, setFieldValue, values, touched, errors, setPassengers } = props;
-
 
     const increasePassengers = () => {
         if (passengers.length < 10) {
@@ -138,19 +124,8 @@ const CipPassengersInformation: React.FC<Props> = props => {
             });
         }
     }
-    const removePassenger = (id: string) => {
-        if (passengers.length > 1) {
-            setPassengers(prevPassengers => {
-                const updatedPassengers = prevPassengers.filter(item => item.id !== id);
-                const deletedItemIndex = prevPassengers.findIndex(item => item.id === id);
-                setFieldValue(`passengers.${deletedItemIndex}`,null );
 
-                return updatedPassengers
-            });
-        }
-    };
     const updatePassenger = (id: string, property: any, value: any) => {
-        debugger;
         setPassengers((prevPassengers: any) => {
             const updatingPassenger = prevPassengers.find((item: any) => item.id === id);
             const otherPassengers = prevPassengers.filter((item: any) => item.id !== id);
@@ -158,8 +133,6 @@ const CipPassengersInformation: React.FC<Props> = props => {
             return ([...otherPassengers, updatedPassenger]);
         });
     }
-
-
 
     return (
         <div>
@@ -198,7 +171,6 @@ const CipPassengersInformation: React.FC<Props> = props => {
                 updatePassenger={(property: any, value: any) => { updatePassenger(passengerItem.id, property, value) }}
                 decreasePassengers={decreasePassengers}
                 isLastItem ={!!passengerIndex && passengerIndex === passengers.length-1} 
-            //form={props.form}
             />)}
         </div>
     )

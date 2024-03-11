@@ -71,6 +71,11 @@ export interface CipFormPassengerItemType {
   services: any[]
 }
 
+export interface CipFormCompanionItemType {
+  id: string;
+  services: any[]
+}
+
 export type CipPassengerType =  "Adult" | "Child" | "Infant" | "Accompanying";
 
 export interface CipAvailabilityItemType {
