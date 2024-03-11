@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { availabilityByIataCode, getAirportByUrl } from "@/modules/cip/actions";
 import CipDetailGallery from "@/modules/cip/components/cip-detail/CipDetailGallery";
 import CipName from "@/modules/cip/components/cip-detail/CipName";
-import { CipAvailabilityItemType, CipFormPassengerItemType, CipGetAirportByUrlResponseType } from "@/modules/cip/types/cip";
+import { CipAvailabilityItemType, CipFormCompanionItemType, CipFormPassengerItemType, CipGetAirportByUrlResponseType } from "@/modules/cip/types/cip";
 import AnchorTabs from "@/modules/shared/components/ui/AnchorTabs";
 import Button from "@/modules/shared/components/ui/Button";
 import Steps from "@/modules/shared/components/ui/Steps";
@@ -17,6 +17,7 @@ import CipReserverInformation from "@/modules/cip/components/cip-detail/CipReser
 import CipAirportInformation from "@/modules/cip/components/cip-detail/CipAirportInformation";
 import { useAppSelector } from '@/modules/shared/hooks/use-store';
 import CipPassengersInformation from '@/modules/cip/components/cip-detail/CipPassengersInformation';
+import CipCompanionInformation from '@/modules/cip/components/cip-detail/CipCompanionInformation';
 
 const CipDetails: NextPage = ({ airportData, availabilities }: { airportData?: CipGetAirportByUrlResponseType, availabilities?: {latitude:string; longitude: string; availability: CipAvailabilityItemType[] }}) => {
 
@@ -33,6 +34,14 @@ const CipDetails: NextPage = ({ airportData, availabilities }: { airportData?: C
             services: []
         }
     ]);
+
+    const [companions, setCompanions] = useState<CipFormCompanionItemType[]>([
+        {
+            id: '1',
+            services: []
+        }
+    ]);
+
 
     const [selectedAvailability, setSelectedAvailability] = useState<CipAvailabilityItemType | undefined>();
 
@@ -98,6 +107,7 @@ const CipDetails: NextPage = ({ airportData, availabilities }: { airportData?: C
             birthday: "",
             services: []
         }],
+        companions: [],
         originName: "",
         destinationName: "",
         airline: "",
@@ -198,12 +208,19 @@ const CipDetails: NextPage = ({ airportData, availabilities }: { airportData?: C
                                     errors={errors}
                                     touched={touched}
                                     setReserverIsNotPassenger={() => { setReserverIsPassenger(false) }}
-                                    //updatePassenger={updatePassenger}
-                                    //decreasePassengers={decreasePassengers}
-                                    //increasePassengers={increasePassengers}
-                                    //removePassenger={removePassenger}
                                     setPassengers={setPassengers}
                                     passengers={passengers}
+
+                                />
+
+                                <CipCompanionInformation 
+                                    companions={companions}
+                                    setCompanions={setCompanions}
+                                    passengerServicesArray={passengerServicesArray}
+                                    setFieldValue={setFieldValue}
+                                    errors={errors}
+                                    touched={touched}
+                                    values={values}
 
                                 />
 

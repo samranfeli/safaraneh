@@ -23,11 +23,15 @@ const nextConfig = {
   swcMinify: true,
   i18n,
   env: {
-    PROJECT: "SAFARANEH",
+    PROJECT: "SAMITA",
+    SITE_NAME: 'https://www.samita.com',
     THEME: "THEME1",
     PROJECT_SERVER_TYPE: "https://",
     PROJECT_SERVER_USER: "",
-        
+
+    // GOOGLE_ANALYTIC_ID: 'G-BT6EJ64D29',
+    // GOOGLE_TAG_MANAGER_ID: 'GTM-MJQWGBV',
+
     PROJECT_SERVER_APIKEY: 'f19c03d2-7d38-4acf-bf29-64af58c4fe39',
     PROJECT_PORTAL_APIKEY: '68703d73-c92c-4105-9f71-9f718aaad2cc',
     

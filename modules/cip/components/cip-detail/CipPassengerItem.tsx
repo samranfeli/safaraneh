@@ -1,13 +1,9 @@
-import DatePicker from "@/modules/shared/components/ui/DatePicker";
 import FormikField from "@/modules/shared/components/ui/FormikField"
-import PhoneInput from "@/modules/shared/components/ui/PhoneInput";
-import TimePicker from "@/modules/shared/components/ui/TimePicker";
-import { validateEmail, validateNationalId, validateRequied, validateRequiedPersianAndEnglish } from "@/modules/shared/helpers/validation";
+import { validateNationalId, validateRequied, validateRequiedPersianAndEnglish } from "@/modules/shared/helpers/validation";
 import { Field, FormikErrors, FormikTouched } from "formik";
 import { useTranslation } from "next-i18next";
 import { CipAvailabilityItemType, CipFormPassengerItemType } from "../../types/cip";
-import { Close, Loading, Minus, Plus } from "@/modules/shared/components/ui/icons";
-import Quantity from "@/modules/shared/components/ui/Quantity";
+import { Close } from "@/modules/shared/components/ui/icons";
 import DatePickerSelect from "@/modules/shared/components/ui/DatePickerSelect";
 import { dateFormat, goBackYears } from "@/modules/shared/helpers";
 import CheckboxGroup from "@/modules/shared/components/ui/CheckboxGroup";
@@ -18,10 +14,7 @@ type Props = {
     decreasePassengers: () => void;
     setReserverIsNotPassenger: () => void;
     isLastItem?: boolean;
-    //passengerServicesArray;
     updatePassenger: (property: any, value: any) => void;
-    //form;
-    //userInfo;
     passengerServicesArray: CipAvailabilityItemType['passengerTypeServices'];
 
     setFieldValue: (field: string, value: any, shouldValidate?: boolean | undefined) => Promise<void | FormikErrors<{
@@ -88,7 +81,6 @@ type Props = {
             services: any[]
         }[];
     };
-    // reserverIsPassenger:boolean;
 }
 
 const maximumBirthDate = dateFormat(new Date());
