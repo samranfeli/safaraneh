@@ -223,7 +223,7 @@ const HotelList: NextPage<Props> = props => {
   }, [props.searchHotelsData?.Hotels]);
 
 
-  const firstHotelName = props.searchHotelsData?.Hotels[0].HotelName;
+  const firstHotelName = props.searchHotelsData?.Hotels[0]?.HotelName;
 
   useEffect(() => {
 
