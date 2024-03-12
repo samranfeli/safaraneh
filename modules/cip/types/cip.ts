@@ -76,44 +76,44 @@ export interface CipFormCompanionItemType {
   services: any[]
 }
 
-export type CipPassengerType =  "Adult" | "Child" | "Infant" | "Accompanying";
+export type CipPassengerType = "Adult" | "Child" | "Infant" | "Accompanying";
 
 export interface CipAvailabilityItemType {
   id: number;
   name: string;
   passengerTypeServices: {
     passengerType: CipPassengerType,
-    services:    {
-        name: string;
-        id: number;
-        
-        "description": "string",
-        "hourDescription": "string",
-        "extraDescription": "string",
-        "title": "string",
-        "type": "Pet",
-        "priceType": "PerPassenger",
-        "boardPrice": 0,
-        "netPrice": 0,
-        "salePrice": 0,
-        "currencyType": "USD",
-        "passengerType": "Adult",
-        "extraSalePrice": 0,
-        "extraNetPrice": 0,
-        "extraBoardPrice": 0,
-        "rateId": 0,
-        "hourSalePrice": 0,
-        "hourNetPrice": 0,
-        "hourBoardPrice": 0,
-        "picture": {
-          "path": "string",
-          "altAttribute": "string",
-          "titleAttribute": "string"
-        },
-        "count": 0,
-        "extraCount": 0,
-        "hourCount": 0,
-      }[]
+    services: {
+      name: string;
+      id: number;
+
+      "description": "string",
+      "hourDescription": "string",
+      "extraDescription": "string",
+      "title": "string",
+      "type": "Pet",
+      "priceType": "PerPassenger",
+      "boardPrice": 0,
+      "netPrice": 0,
+      "salePrice": 0,
+      "currencyType": "USD",
+      "passengerType": "Adult",
+      "extraSalePrice": 0,
+      "extraNetPrice": 0,
+      "extraBoardPrice": 0,
+      "rateId": 0,
+      "hourSalePrice": 0,
+      "hourNetPrice": 0,
+      "hourBoardPrice": 0,
+      "picture": {
+        "path": "string",
+        "altAttribute": "string",
+        "titleAttribute": "string"
+      },
+      "count": 0,
+      "extraCount": 0,
+      "hourCount": 0,
+    }[]
   }[];
 
 
@@ -184,4 +184,172 @@ export interface CipAvailabilityItemType {
   //     "id": 0
   //   }
   // ],
+}
+
+export interface CipValidateResponseType {
+  preReserveKey: string;
+  "rate": {
+    "adults": 0,
+    "children": 0,
+    "accompanying": 0,
+    "name": "string",
+    "remark": "string",
+    "description": "string",
+    "boardPrice": 0,
+    "netPrice": 0,
+    "salePrice": 0,
+    "passengers": [
+      {
+        "passengerType": "Adult",
+        "boardPrice": 0,
+        "netPrice": 0,
+        "salePrice": 0,
+        "currencyType": "USD",
+        "id": 0
+      }
+    ],
+    "id": 0
+  },
+  "flightNumber": "string",
+  "originName": "string",
+  "airline": "string",
+  "flightTime": "2024-03-12T06:01:35.791Z",
+  "creationTime": "2024-03-12T06:01:35.791Z",
+  "airport": {
+    "name": "string",
+    "nameLong": "string",
+    "city": {
+      "name": "string",
+      "code": "string"
+    },
+    "country": {
+      "name": "string",
+      "code": "string"
+    },
+    "code": "string",
+    "latitude": "string",
+    "longitude": "string",
+    "picture": {
+      "path": "string",
+      "altAttribute": "string",
+      "titleAttribute": "string"
+    },
+    "id": 0
+  },
+  "services": [
+    {
+      "name": "string",
+      "description": "string",
+      "hourDescription": "string",
+      "extraDescription": "string",
+      "title": "string",
+      "type": "Pet",
+      "priceType": "PerPassenger",
+      "boardPrice": 0,
+      "netPrice": 0,
+      "salePrice": 0,
+      "currencyType": "USD",
+      "passengerType": "Adult",
+      "extraSalePrice": 0,
+      "extraNetPrice": 0,
+      "extraBoardPrice": 0,
+      "rateId": 0,
+      "hourSalePrice": 0,
+      "hourNetPrice": 0,
+      "hourBoardPrice": 0,
+      "picture": {
+        "path": "string",
+        "altAttribute": "string",
+        "titleAttribute": "string"
+      },
+      "count": 0,
+      "extraCount": 0,
+      "hourCount": 0,
+      "id": 0
+    }
+  ],
+  "transport": [
+    {
+      "name": "string",
+      "description": "string",
+      "boardPrice": 0,
+      "netPrice": 0,
+      "salePrice": 0,
+      "currencyType": "USD",
+      "picture": {
+        "path": "string",
+        "altAttribute": "string",
+        "titleAttribute": "string"
+      },
+      "id": 0
+    }
+  ],
+  "passengerTypeServices": [
+    {
+      "passengerType": "Adult",
+      "services": [
+        {
+          "name": "string",
+          "description": "string",
+          "hourDescription": "string",
+          "extraDescription": "string",
+          "title": "string",
+          "type": "Pet",
+          "priceType": "PerPassenger",
+          "boardPrice": 0,
+          "netPrice": 0,
+          "salePrice": 0,
+          "currencyType": "USD",
+          "passengerType": "Adult",
+          "extraSalePrice": 0,
+          "extraNetPrice": 0,
+          "extraBoardPrice": 0,
+          "rateId": 0,
+          "hourSalePrice": 0,
+          "hourNetPrice": 0,
+          "hourBoardPrice": 0,
+          "picture": {
+            "path": "string",
+            "altAttribute": "string",
+            "titleAttribute": "string"
+          },
+          "count": 0,
+          "extraCount": 0,
+          "hourCount": 0,
+          "id": 0
+        }
+      ]
+    }
+  ],
+  optionalServices: {
+    name?: string;
+    description?: string;
+    type: "Pet" | "Passport" | "Wheelchair" | "Suite" | "Lunch" | "FlightCard" | "SpecialService" | "Parking" | "Conference" | "VipRoom" | "Visa" | "FastTrack" | "Transport" | "Lunch_Transport" | "FlightCard_Transport" | "MeetingRoom";
+    salePrice: number;
+    extraSalePrice?: number;
+    hourSalePrice?: number;
+    picture: {
+      path?: string;
+      altAttribute?: string;
+      titleAttribute?: string;
+    },
+    count: number;
+    extraCount?: number;
+    hourCount?: number;
+    id: number;
+    // "hourDescription": "string",
+    // "extraDescription": "string",
+    // "title": "string",
+    // "priceType": "PerPassenger",
+    // "boardPrice": 0,
+    // "netPrice": 0,
+    // "currencyType": "USD",
+    // "passengerType": "Adult",
+    // "extraNetPrice": 0,
+    // "extraBoardPrice": 0,
+    // "rateId": 0,
+    // "hourNetPrice": 0,
+    // "hourBoardPrice": 0,
+  }[]
+
 }
