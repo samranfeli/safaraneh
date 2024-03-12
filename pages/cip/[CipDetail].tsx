@@ -1,8 +1,8 @@
 import { useState, useEffect } from 'react';
-import { availabilityByIataCode, getAirportByUrl } from "@/modules/cip/actions";
+import { CipValidate, availabilityByIataCode, getAirportByUrl } from "@/modules/cip/actions";
 import CipDetailGallery from "@/modules/cip/components/cip-detail/CipDetailGallery";
 import CipName from "@/modules/cip/components/cip-detail/CipName";
-import { CipAvailabilityItemType, CipFormCompanionItemType, CipFormPassengerItemType, CipGetAirportByUrlResponseType } from "@/modules/cip/types/cip";
+import { CipAvailabilityItemType, CipFormCompanionItemType, CipFormPassengerItemType, CipGetAirportByUrlResponseType, CipValidateResponseType } from "@/modules/cip/types/cip";
 import AnchorTabs from "@/modules/shared/components/ui/AnchorTabs";
 import Button from "@/modules/shared/components/ui/Button";
 import Steps from "@/modules/shared/components/ui/Steps";
@@ -18,6 +18,7 @@ import CipAirportInformation from "@/modules/cip/components/cip-detail/CipAirpor
 import { useAppSelector } from '@/modules/shared/hooks/use-store';
 import CipPassengersInformation from '@/modules/cip/components/cip-detail/CipPassengersInformation';
 import CipCompanionInformation from '@/modules/cip/components/cip-detail/CipCompanionInformation';
+import CipExtraServices from '@/modules/cip/components/cip-detail/CipExtraServices';
 
 const CipDetails: NextPage = ({ airportData, availabilities }: { airportData?: CipGetAirportByUrlResponseType, availabilities?: {latitude:string; longitude: string; availability: CipAvailabilityItemType[] }}) => {
 
@@ -41,6 +42,18 @@ const CipDetails: NextPage = ({ airportData, availabilities }: { airportData?: C
             services: []
         }
     ]);
+
+    const [validateResponse,setValidateResponse] = useState<CipValidateResponseType>();
+    const [selectedServicesArray,setSelectedServicesArray] = useState<CipValidateResponseType['optionalServices']>();
+
+    const [addedExtraService,setAddedExtraService] = useState<number[]>([]);
+    
+    const updateAddedExtraService = (id:number) => {
+      setAddedExtraService(prevArr => ([
+          ...prevArr,id
+      ]))
+    }
+
 
 
     const [selectedAvailability, setSelectedAvailability] = useState<CipAvailabilityItemType | undefined>();
@@ -68,6 +81,59 @@ const CipDetails: NextPage = ({ airportData, availabilities }: { airportData?: C
     },[availabilities?.latitude]);
 
 
+    useEffect(()=>{
+        if (selectedAvailability){      
+          const validate = async (iataCode:string, rateId:number) => {
+              
+            const respone: any = await CipValidate({iataCode:iataCode, rateId:rateId});
+
+            if (respone){
+                  setValidateResponse(respone.data.result);
+              const updatedOptionalServices = respone.data.result.optionalServices.map((item:any)=>{
+                if (item.type === "Pet" ){
+                  return({...item,count:1})
+                }else{
+                  return item;
+                }
+              }) 
+              setSelectedServicesArray(updatedOptionalServices);
+            }
+          }
+          if (airportData?.code){
+              validate(airportData.code, selectedAvailability.id);
+          }
+  
+        //   if (selectedAvailability.transport?.length)
+        //   setSelectedTransport(selectedAvailability.transport.map(item => ({...item,count:0})));
+  
+        }
+      },[selectedAvailability, airportData?.code]);
+
+      const updateSelectedServices = (id:number,property:string,change:"inc"|"dec") => {
+        setSelectedServicesArray((prevState:any) => {
+          const updatingService = {...prevState.find((item:any) =>  item.id === id)};
+          const otherServices = prevState.filter((item:any) =>  item.id !== id);
+          if (updatingService[property]){
+            if(change === "inc"){
+              updatingService[property]++;
+            }else{
+              updatingService[property]--;
+            }
+          }else{
+            if(change === "inc"){
+              updatingService[property] = 1;
+            }
+          }
+          return(
+            [...otherServices,updatingService]
+          );
+        })
+      }
+
+
+
+
+
     let airportLocation: [number, number] | undefined = undefined;
     if (availabilities?.latitude && availabilities.longitude) {
         airportLocation = [+availabilities.latitude, +availabilities.longitude];
@@ -77,7 +143,6 @@ const CipDetails: NextPage = ({ airportData, availabilities }: { airportData?: C
     let passengerServicesArray: CipAvailabilityItemType['passengerTypeServices'];;
     if (selectedAvailability){
       passengerServicesArray = selectedAvailability.passengerTypeServices;
-      debugger;
     }
 
     const submitHandler = async (values: any) => {
@@ -223,6 +288,13 @@ const CipDetails: NextPage = ({ airportData, availabilities }: { airportData?: C
                                     values={values}
 
                                 />
+
+                                {!!selectedServicesArray && <CipExtraServices
+                                    selectedServicesArray={selectedServicesArray}
+                                    updateSelectedServices={updateSelectedServices}
+                                    addedExtraService={addedExtraService}
+                                    updateAddedExtraService={updateAddedExtraService}
+                                />}
 
                                 <Button
                                     type="submit"

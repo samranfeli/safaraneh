@@ -66,3 +66,33 @@ export const availabilityByIataCode = async (code: string, acceptLanguage: strin
         return error
     }
 }
+
+
+export const CipValidate = async (params: { iataCode: string; rateId: number; }, acceptLanguage: string = 'fa-IR') => {
+
+    try {
+        let response = await axios.post(
+            `${ServerAddress.Type}${ServerAddress.Cip}${Cip.Validate}`,
+            {
+                "iataCode": params.iataCode,
+                "adults": 1,
+                "children": 0,
+                "accompanying": 0,
+                "originName": "",
+                "destinationName": "",
+                "rateId": params.rateId
+            },
+            {
+                headers: {
+                    Accept: 'application/json;charset=UTF-8',
+                    apikey: process.env.PROJECT_SERVER_APIKEY,
+                    "Accept-Language": acceptLanguage,
+                    Tenantid: process.env.PROJECT_SERVER_TENANTID
+                },
+            },
+        )
+        return response
+    } catch (error) {
+        return error
+    }
+}
