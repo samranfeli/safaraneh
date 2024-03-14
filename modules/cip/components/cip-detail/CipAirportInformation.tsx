@@ -45,7 +45,7 @@ const CipAirportInformation: React.FC<Props> = props => {
 
     return (
         <div className="bg-white rounded-lg p-5 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4 border border-neutral-300 mb-5 md:mb-8">
-            <strong className="font-semibold text-base block sm:col-span-2 md:col-span-4 "> اطلاعات سفر </strong>
+            <strong className="font-semibold text-lg block sm:col-span-2 md:col-span-4 "> اطلاعات سفر </strong>
 
             <FormikField
                 setFieldValue={setFieldValue}
