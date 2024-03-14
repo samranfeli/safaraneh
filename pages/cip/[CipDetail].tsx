@@ -20,11 +20,29 @@ import CipPassengersInformation from '@/modules/cip/components/cip-detail/CipPas
 import CipCompanionInformation from '@/modules/cip/components/cip-detail/CipCompanionInformation';
 import CipExtraServices from '@/modules/cip/components/cip-detail/CipExtraServices';
 import CipTransport from '@/modules/cip/components/cip-detail/CipTransport';
+import Head from 'next/head';
+import CipAboutAirport from '@/modules/cip/components/cip-detail/CipAboutAirport';
+import { PortalDataType } from '@/modules/shared/types/common';
+import CipTerms from '@/modules/cip/components/cip-detail/CipTerms';
+import CipFacilities from '@/modules/cip/components/cip-detail/CipFacilities';
 
-const CipDetails: NextPage = ({ airportData, availabilities }: { airportData?: CipGetAirportByUrlResponseType, availabilities?: { latitude: string; longitude: string; availability: CipAvailabilityItemType[] } }) => {
+const CipDetails: NextPage = ({ airportData, availabilities, portalData }: {portalData?:PortalDataType, airportData?: CipGetAirportByUrlResponseType, availabilities?: { latitude: string; longitude: string; availability: CipAvailabilityItemType[] } }) => {
 
     const { t } = useTranslation('common');
     const { t: tCip } = useTranslation('cip');
+
+    let siteName = "";
+    let tel = "";
+    let twitter = "";
+    let siteURL = "";
+  
+    if (portalData) {
+        debugger;
+      siteName = portalData.Phrases.find(item => item.Keyword === "Name")?.Value || "";
+      siteURL = portalData.PortalName || "";
+    }
+
+
 
     const user = useAppSelector(state => state.authentication.isAuthenticated ? state.authentication.user : undefined);
 
@@ -201,11 +219,16 @@ const CipDetails: NextPage = ({ airportData, availabilities }: { airportData?: C
         airline: "",
         flightNumber: "",
         flightDate: "",
-        flightTime: ""
+        flightTime: "",
+        cip_transport_address:""
 
     }
 
     return (
+        <>
+        <Head>
+            <title>تشریفات فرودگاهی cip || رزرو آنلاین هتل و بلیط هواپیما</title>
+        </Head>
         <div className="max-w-container m-auto">
             <div className="pt-5 px-5 max-md:px-3" id="pictures_section">
                 <div className="p-3 bg-white flex justify-between items-center">
@@ -322,6 +345,10 @@ const CipDetails: NextPage = ({ airportData, availabilities }: { airportData?: C
                                 <CipTransport 
                                 selectedTransport={selectedTransport}
                                 updateTransport={updateTransport}
+                                errors={errors}
+                                setFieldValue={setFieldValue}
+                                touched={touched}
+                                values={values}
                                 />
 
                                 <Button
@@ -331,6 +358,20 @@ const CipDetails: NextPage = ({ airportData, availabilities }: { airportData?: C
                                     ادامه فرایند خرید
 
                                 </Button>
+
+
+
+
+
+
+
+
+
+                                <CipAboutAirport content={airportData?.description} siteName={siteName} siteUrl={siteURL} />
+
+                                <CipTerms />
+
+                                <CipFacilities facilities={airportData?.facilities} />
 
                             </Form>
                         )
@@ -344,6 +385,7 @@ const CipDetails: NextPage = ({ airportData, availabilities }: { airportData?: C
 
 
         </div>
+        </>
     )
 }
 
