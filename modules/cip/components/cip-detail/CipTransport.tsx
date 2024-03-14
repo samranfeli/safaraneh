@@ -1,17 +1,32 @@
+import FormikField from "@/modules/shared/components/ui/FormikField";
 import { Minus, Plus } from "@/modules/shared/components/ui/icons";
 import { numberWithCommas } from "@/modules/shared/helpers";
+import { validateRequied } from "@/modules/shared/helpers/validation";
+import { FormikErrors, FormikTouched } from "formik";
 
 type Props = {
     selectedTransport: any[];
     updateTransport: (id: number, fn: "inc" | "dec") => void;
+    setFieldValue: (field: string, value: any, shouldValidate?: boolean | undefined) => Promise<void | FormikErrors<{
+        cip_transport_address: string
+    }>>;
+    errors: FormikErrors<{
+        cip_transport_address: string
+    }>;
+    touched: FormikTouched<{
+        cip_transport_address: string
+    }>;
+    values: {
+        cip_transport_address: string
+    }
 }
 
 const CipTransport: React.FC<Props> = props => {
 
-    const { updateTransport, selectedTransport } = props;
+    const { updateTransport, selectedTransport, errors, touched, setFieldValue, values } = props;
 
     if (!selectedTransport || selectedTransport.length === 0) {
-        return <div />;
+        return null;
     }
     const someTransportIsSelected = selectedTransport.some(item => item.count > 0);
 
@@ -20,7 +35,9 @@ const CipTransport: React.FC<Props> = props => {
             //className={`${styles.taxiCip} ${process.env.THEME_NAME === "TRAVELO" && styles.taxiCipTravelo}`} 
             id="anchortaxicip"
         >
-            <h3>تاکسی ویژه cip</h3>
+            
+            <strong className="font-semibold text-lg block "> تاکسی ویژه cip </strong>
+
             <div
             //className={styles.content}
             >
@@ -49,19 +66,30 @@ const CipTransport: React.FC<Props> = props => {
                             //className={`${styles.addRemoveCar}`}
                             >
                                 <button type="button" onClick={() => updateTransport(item.id, "inc")} >
-                                    <Plus />
+                                <Plus className="w-6 h-6 fill-white" />
                                 </button>
                                 <input type="text" className="value" value={item.count} readOnly />
                                 <button type="button" onClick={() => updateTransport(item.id, "dec")} >
-                                    <Minus />
+                                    <Minus className="w-6 h-6 fill-white" />
                                 </button>
                             </div>
                         </div>
                     ))}
                 </div>
-                {/* {someTransportIsSelected && <Form.Item name="Address" label="آدرس مقصد از فرودگاه" rules={[{ required: true, message: 'لطفا آدرس مقصد را وارد نمایید.' }]}>
-                    <Input size="large" placeholder="آدرس مقصد " />
-                </Form.Item>} */}
+                {someTransportIsSelected && (
+
+                    <FormikField
+                        setFieldValue={setFieldValue}
+                        id="cip_transport_address"
+                        errorText={errors.cip_transport_address}
+                        name="cip_transport_address"
+                        isTouched={touched.cip_transport_address}
+                        label="آدرس مقصد از فرودگاه"
+                        validateFunction={(value: string) => validateRequied(value, "لطفا آدرس مقصد را وارد نمایید")}
+                        value={values.cip_transport_address}
+                    />
+                )
+                }
             </div>
         </div>
     )

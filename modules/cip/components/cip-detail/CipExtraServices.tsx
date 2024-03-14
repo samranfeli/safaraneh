@@ -21,7 +21,7 @@ const CipExtraServices: React.FC<Props> = props => {
 
     return (
         <div className='bg-white rounded-lg border border-neutral-300 p-5 mb-5 md:mb-8'>
-            <strong className="font-semibold text-base block sm:col-span-2 md:col-span-5 "> انتخاب سرویس های مازاد </strong>
+            <strong className="font-semibold text-lg block "> انتخاب سرویس های مازاد </strong>
 
 
             {selectedServicesArray.sort((a, b) => b.id - a.id).map(serviceItem => (
