@@ -21,6 +21,7 @@ import HotelsOnMap from '@/modules/domesticHotel/components/hotelsList/HotelsOnM
 import Image from 'next/image';
 import { getPageByUrl } from '@/modules/shared/actions';
 import Head from 'next/head';
+import { PortalDataType } from '@/modules/shared/types/common';
 
 type Props = {
   searchHotelsData?: {
@@ -46,11 +47,12 @@ type Props = {
     }[];
     Url?: string;
   };
+  portalData: PortalDataType;
 }
 
 const HotelList: NextPage<Props> = props => {
 
-  const { pageData, faq, searchHotelsData } = props;
+  const { pageData, faq, searchHotelsData, portalData } = props;
 
   type RatesResponseItem = {
     HotelId: number;
@@ -490,14 +492,21 @@ const HotelList: NextPage<Props> = props => {
     fallbackLocation = [firstHotelWithLocation.Latitude!, firstHotelWithLocation.Longitude!];
   }
 
+  
+  let siteName = "";
+
+  if (portalData) {
+    siteName = portalData.Phrases.find(item => item.Keyword === "Name")?.Value || "";
+  }
+
   return (
 
     <>
       <Head>
-        {!!pageData?.PageTitle && <title>{pageData.PageTitle}</title>}
+        {!!pageData?.PageTitle && <title>{pageData.PageTitle.replaceAll("{0}", siteName)}</title>}
 
         {!!pageData.MetaTags && pageData.MetaTags.map(item => (
-          <meta name={item.Name} content={item.Content} key={item.Name} />
+          <meta name={item.Name} content={item.Content?.replaceAll("{0}", siteName)} key={item.Name} />
         ))}
 
         {!!pageData.Url && (
