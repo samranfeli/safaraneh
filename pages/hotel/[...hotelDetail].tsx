@@ -99,8 +99,8 @@ const HotelDetail: NextPage<Props> = props => {
       <Head>
 
         {pageData && <>
-          <title>{pageData.PageTitle}</title>
-          {pageData.MetaTags?.map((item) => <meta name={item.Name} content={item.Content} key={item.Name} />)}
+          <title>{pageData.PageTitle?.replace("{0}",siteName)}</title>
+          {pageData.MetaTags?.map((item) => <meta name={item.Name} content={item.Content.replaceAll("{0}", siteName)} key={item.Name} />)}
         </>}
 
 
@@ -132,10 +132,10 @@ const HotelDetail: NextPage<Props> = props => {
             <meta name="og:locale" content="fa-IR" />
             <meta name="twitter:card" content="summary" />
             <meta name="twitter:site" content={twitter} />
-            <meta name="twitter:title" content={hotelData.PageTitle} />
+            <meta name="twitter:title" content={hotelData.PageTitle?.replaceAll("{0}", siteName)} />
             <meta
               name="twitter:description"
-              content={hotelData.MetaDescription}
+              content={hotelData.MetaDescription?.replaceAll("{0}", siteName)}
             />
           </>
         )}
@@ -148,7 +148,7 @@ const HotelDetail: NextPage<Props> = props => {
             __html: `{
             "@context": "https://schema.org",
             "@type": "Hotel",
-            "name": "${hotelData?.PageTitle}",
+            "name": "${hotelData?.PageTitle?.replaceAll("{0}", siteName)}",
             "description": "${hotelData?.BriefDescription}",
             "address": {
               "@type": "PostalAddress",
