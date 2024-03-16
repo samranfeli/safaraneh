@@ -21,6 +21,7 @@ import HotelsOnMap from '@/modules/domesticHotel/components/hotelsList/HotelsOnM
 import Image from 'next/image';
 import { getPageByUrl } from '@/modules/shared/actions';
 import Head from 'next/head';
+import { PortalDataType } from '@/modules/shared/types/common';
 
 type Props = {
   searchHotelsData?: {
@@ -46,11 +47,12 @@ type Props = {
     }[];
     Url?: string;
   };
+  portalData: PortalDataType;
 }
 
 const HotelList: NextPage<Props> = props => {
 
-  const { pageData, faq, searchHotelsData } = props;
+  const { pageData, faq, searchHotelsData, portalData } = props;
 
   type RatesResponseItem = {
     HotelId: number;
@@ -490,19 +492,57 @@ const HotelList: NextPage<Props> = props => {
     fallbackLocation = [firstHotelWithLocation.Latitude!, firstHotelWithLocation.Longitude!];
   }
 
+  
+  let siteName = "";
+
+  if (portalData) {
+    siteName = portalData.Phrases.find(item => item.Keyword === "Name")?.Value || "";
+  }
+
   return (
 
     <>
       <Head>
-        {!!pageData?.PageTitle && <title>{pageData.PageTitle}</title>}
+        {!!pageData?.PageTitle && <title>{pageData.PageTitle.replaceAll("{0}", siteName)}</title>}
 
         {!!pageData.MetaTags && pageData.MetaTags.map(item => (
-          <meta name={item.Name} content={item.Content} key={item.Name} />
+          <meta name={item.Name} content={item.Content?.replaceAll("{0}", siteName)} key={item.Name} />
         ))}
 
         {!!pageData.Url && (
           <link rel="canonical" href={process.env.SITE_NAME + pageData.Url} />
         )}
+
+
+        {faq && faq.items.length !== 0 ? (
+          <script
+            id="script_hotel_1"
+            type="application/ld+json"
+            dangerouslySetInnerHTML={{
+              __html: `
+              {"@context":"https://schema.org",
+                "@type":"FAQPage",
+                "mainEntity":[
+                  ${faq.items.map(
+                item => `{
+                    "@type":"Question",
+                    "name":"${item.question && item.question}",
+                    "acceptedAnswer":{
+                        "@type":"Answer",
+                        "text":"${item.answer &&
+                  item.answer
+                    .replace(/<\/?[^>]+(>|$)/g, '')
+                    .replace(/&zwnj;/g, '')
+                  }"
+                    }
+                  }`,
+              )
+                }
+                ]
+              }`,
+            }}
+          />
+        ) : null}
 
       </Head>
 
