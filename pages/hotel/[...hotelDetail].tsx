@@ -100,7 +100,7 @@ const HotelDetail: NextPage<Props> = props => {
 
         {pageData && <>
           <title>{pageData.PageTitle?.replace("{0}",siteName)}</title>
-          {pageData.MetaTags?.map((item) => <meta name={item.Name} content={item.Content.replaceAll("{0}", siteName)} key={item.Name} />)}
+          {pageData.MetaTags?.map((item) => <meta name={item.Name} content={item.Content?.replaceAll("{0}", siteName)} key={item.Name} />)}
         </>}
 
 

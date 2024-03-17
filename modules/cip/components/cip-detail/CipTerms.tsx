@@ -28,11 +28,10 @@ const CipTerms: React.FC = () => {
     ]
 
     return (
-        <div className="py-5 " id="anchortermsairport">
-
+        <div className='py-2 md:py-5'>
             <strong className="block font-semibold text-lg mb-5"> قوانین و مقررات  </strong>
 
-            <div className='bg-white inserted-content rounded-lg border border-neutral-300 p-5 mb-5 md:mb-8 text-base leading-4'>
+            <div className='bg-white inserted-content rounded-lg border border-neutral-300 p-5 text-sm leading-4'>
                 {ruleItems.map(ruleItem => (
                     <div key={ruleItem.title} className="mb-8">
                         <b className="font-semibold block mb-5"> {ruleItem.title} </b>
@@ -46,7 +45,6 @@ const CipTerms: React.FC = () => {
                     </div>
                 ))}
             </div>
-
         </div>
     )
 }
