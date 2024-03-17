@@ -93,8 +93,8 @@ const CipCompanionInformation: React.FC<Props> = props => {
     }
 
     return (
-        <div>
-            <div className="flex justify-between items-center mb-4">
+        <div className='py-2 md:py-5'>
+            <div className="flex justify-between items-center">
                 <strong className="font-semibold text-lg block"> مشایعت کنندگان </strong>
                 <div>
                     <button
