@@ -21,7 +21,7 @@ const CipAboutAirport: React.FC<Props> = props => {
         <div className='py-2 md:py-5'>
             <strong className="block font-semibold text-lg mb-5"> درباره فرودگاه </strong>
 
-            <div className='bg-white inserted-content rounded-lg border border-neutral-300 p-5 md:p-8 text-base leading-8 pb-2 sm:pb-5'>
+            <div className='bg-white inserted-content rounded-lg border border-neutral-300 text-justify p-3 md:p-8 text-sm sm:text-base sm:leading-8 pb-2 sm:pb-5'>
                 {parse(editedContent)}
             </div>
         </div>

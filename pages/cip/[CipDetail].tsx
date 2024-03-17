@@ -42,7 +42,6 @@ const CipDetails: NextPage = ({ airportData, availabilities, portalData }: { por
     let siteURL = "";
 
     if (portalData) {
-        debugger;
         siteName = portalData.Phrases.find(item => item.Keyword === "Name")?.Value || "";
         siteURL = portalData.PortalName || "";
     }
@@ -60,12 +59,7 @@ const CipDetails: NextPage = ({ airportData, availabilities, portalData }: { por
         }
     ]);
 
-    const [companions, setCompanions] = useState<CipFormCompanionItemType[]>([
-        {
-            id: '1',
-            services: []
-        }
-    ]);
+    const [companions, setCompanions] = useState<CipFormCompanionItemType[]>([]);
 
     const [validateResponse, setValidateResponse] = useState<CipValidateResponseType>();
     const [selectedServicesArray, setSelectedServicesArray] = useState<CipValidateResponseType['optionalServices']>();
@@ -378,17 +372,20 @@ const CipDetails: NextPage = ({ airportData, availabilities, portalData }: { por
                                         passengers={passengers}
                                         selectedServicesArray={selectedServicesArray}
                                         selectedTransport={selectedTransport}
-                                        discountResponse={"klkl"}
+                                        //discountResponse={"klkl"}
                                         validateResponse={validateResponse}
                                     />
+                                    
+                                    <div className='flex justify-end py-4'>
+                                        <Button
+                                            type="submit"
+                                            className="h-12 px-5 md:w-40"
+                                        >
+                                            ادامه فرایند خرید
+                                        </Button>
 
-                                    <Button
-                                        type="submit"
-                                        className="h-12 px-5 dm:w-40 mt-10"
-                                    >
-                                        ادامه فرایند خرید
+                                    </div>
 
-                                    </Button>
 
                                     <div id="about_section">
                                         <CipAboutAirport content={airportData?.description} siteName={siteName} siteUrl={siteURL} />
