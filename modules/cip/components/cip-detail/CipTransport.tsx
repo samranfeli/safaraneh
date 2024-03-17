@@ -1,4 +1,5 @@
 import FormikField from "@/modules/shared/components/ui/FormikField";
+import Quantity from "@/modules/shared/components/ui/Quantity";
 import { Minus, Plus } from "@/modules/shared/components/ui/icons";
 import { numberWithCommas } from "@/modules/shared/helpers";
 import { validateRequied } from "@/modules/shared/helpers/validation";
@@ -31,51 +32,48 @@ const CipTransport: React.FC<Props> = props => {
     const someTransportIsSelected = selectedTransport.some(item => item.count > 0);
 
     return (
-        <div
-            //className={`${styles.taxiCip} ${process.env.THEME_NAME === "TRAVELO" && styles.taxiCipTravelo}`} 
-            id="anchortaxicip"
-        >
-            
-            <strong className="font-semibold text-lg block "> تاکسی ویژه cip </strong>
+        <div className='py-2 md:py-5'>
 
-            <div
-            //className={styles.content}
-            >
-                <div
-                //className={styles.carList}
-                >
-                    {selectedTransport.sort((a, b) => a.id - b.id).map((item, index) => (
-                        <div
-                            //className={`${styles.car} ${index?"margin-start-10":""}`} 
-                            key={item.name}
-                        >
-                            <div
-                            //className={styles.carDetailsCip}
-                            >
-                                {item.picture.path ?
-                                    <img src={item.picture.path} alt={item.picture.altAttribute} title={item.picture.titleAttribute} />
-                                    : <img src="/images/default-car.jpg" />}
-                                <div
-                                //className={styles.carTextCip}
-                                >
-                                    <h6>{item.name}</h6>
-                                    <small>{numberWithCommas(item.salePrice)} ریال</small>
-                                </div>
-                            </div>
-                            <div
-                            //className={`${styles.addRemoveCar}`}
-                            >
-                                <button type="button" onClick={() => updateTransport(item.id, "inc")} >
-                                <Plus className="w-6 h-6 fill-white" />
-                                </button>
-                                <input type="text" className="value" value={item.count} readOnly />
-                                <button type="button" onClick={() => updateTransport(item.id, "dec")} >
-                                    <Minus className="w-6 h-6 fill-white" />
-                                </button>
+            <strong className="font-semibold text-lg block mb-5"> تاکسی ویژه cip </strong>
+
+            <div className="bg-white rounded-lg border border-neutral-300 p-5 md:p-8">
+                {selectedTransport.sort((a, b) => a.id - b.id).map((item, index) => (
+                    <div key={item.name} className="rounded-lg border border-neutral-300 p-3 md:p-4 mb-5 md:mb-8 flex gap-4 flex-col sm:flex-row sm:justify-between sm:items-center" >
+                        <div className="flex gap-3 items-center">
+                            {item.picture.path ?
+                                <img src={item.picture.path} alt={item.picture.altAttribute} title={item.picture.titleAttribute} />
+                                : <img src="/images/default-car.jpg" />
+                            }
+
+                            <div>
+                                <strong className="block font-semibold">{item.name}</strong>
+                                <small>{numberWithCommas(item.salePrice)} ریال</small>
                             </div>
                         </div>
-                    ))}
-                </div>
+
+                        <div>
+                            <button
+                                type="button"
+                                onClick={() => updateTransport(item.id, "dec")}
+                                className="bg-blue-700 h-9 w-9 inline-flex items-center justify-center rounded outline-none align-middle"
+                            >
+                                <Minus className="w-6 h-6 fill-white" />
+                            </button>
+
+                            <span className="w-10 inline-block text-center align-middle">
+                                {item.count}
+                            </span>
+
+                            <button
+                                type="button"
+                                onClick={() => updateTransport(item.id, "inc")}
+                                className="bg-blue-700 h-9 w-9 inline-flex items-center justify-center rounded outline-none align-middle"
+                            >
+                                <Plus className="w-6 h-6 fill-white" />
+                            </button>
+                        </div>
+                    </div>
+                ))}
                 {someTransportIsSelected && (
 
                     <FormikField
@@ -91,6 +89,7 @@ const CipTransport: React.FC<Props> = props => {
                 )
                 }
             </div>
+
         </div>
     )
 }
