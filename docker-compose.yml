@@ -1,9 +1,9 @@
 version: '3'
 services:
-  server_asli_samita:
-    image: asli_samita
+  main_samita_service:
+    image: main_samita_image
     restart: always
     build: ./
-    command: 'yarn start -p 2098'
+    command: 'yarn start -p 2082'
     ports:
-      - '2098:2098'
+      - '2082:2082'
