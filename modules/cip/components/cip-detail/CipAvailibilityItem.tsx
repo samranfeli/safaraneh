@@ -1,5 +1,5 @@
 import Button from "@/modules/shared/components/ui/Button";
-import { CipAvailabilityItemType, CipFormCompanionItemType } from "../../types/cip";
+import { CipAvailabilityItemType } from "../../types/cip";
 import { numberWithCommas } from "@/modules/shared/helpers";
 import { DownCaret, TikCircle } from "@/modules/shared/components/ui/icons";
 import { useState } from "react";
