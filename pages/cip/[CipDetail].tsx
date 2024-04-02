@@ -6,7 +6,7 @@ import { CipAvailabilityItemType, CipFormCompanionItemType, CipFormPassengerItem
 import AnchorTabs from "@/modules/shared/components/ui/AnchorTabs";
 import Button from "@/modules/shared/components/ui/Button";
 import Steps from "@/modules/shared/components/ui/Steps";
-import { RightCaret } from "@/modules/shared/components/ui/icons";
+import { ArrowRight, RightCaret } from "@/modules/shared/components/ui/icons";
 //import DatePicker from "@hassanmojab/react-modern-calendar-datepicker";
 import { Form, Formik } from "formik";
 import { GetServerSideProps, NextPage } from "next";
@@ -317,7 +317,7 @@ const CipDetails: NextPage = ({ airportData, availabilities, portalData }: { por
 
 
 
-    const [selectedAvailability, setSelectedAvailability] = useState<CipAvailabilityItemType | undefined>();
+    const [selectedAvailability, setSelectedAvailability] = useState<CipAvailabilityItemType | undefined>(undefined);
 
     const [reserverIsPassenger, setReserverIsPassenger] = useState<boolean>(true);
 
@@ -556,15 +556,30 @@ const CipDetails: NextPage = ({ airportData, availabilities, portalData }: { por
                         ]}
                     />}
 
-                    {availabilities && availabilities.availability.length > 1 && !selectedAvailability && (
+                    {availabilities && availabilities.availability.length > 1 && (
                         <>
+                            {!!selectedAvailability ?(
+                                <Button
+                                    className='border border-neutral-400 rounded px-5 h-10 mt-8 inline-block'
+                                    color='gray'
+                                    onClick={()=>{setSelectedAvailability(undefined)}}
+                                >
+                                    <ArrowRight className='w-7 h-7 fill-current'  /> برگشت به نتایج
+                                </Button>
+                            ):(
+                                <> <br/> </>
+                            )}
+
                             {availabilities.availability.map(item =>(
                                 <CipAvailibilityItem 
                                     key={item.id}
                                     item={item}
                                     setSelectedAvailability={setSelectedAvailability}
+                                    selectedAvailibilityId={(selectedAvailability as CipAvailabilityItemType|undefined)?.id || undefined}
                                 />
                             ))}
+
+                            <br/>
                         </>
                     )}
 
