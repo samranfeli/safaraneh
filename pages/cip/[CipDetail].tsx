@@ -249,6 +249,11 @@ const CipDetails: NextPage = ({ airportData, availabilities, portalData }: { por
 
     }
 
+    let unavailable : boolean = false;
+    if(availabilities && availabilities.availability.length === 0){
+        unavailable = true;
+    }
+
     return (
         <>
             <Head>
@@ -310,6 +315,12 @@ const CipDetails: NextPage = ({ airportData, availabilities, portalData }: { por
                             { label: "تکمیل خرید", status: "up-comming" }
                         ]}
                     />}
+
+                    {!!unavailable && (
+                        <p className='border p-5 bg-white text-red-500'>
+                            برای این فرودگاه در حال حاضر خدمات تشریفات فرودگاهی فعال نمی باشد.
+                        </p>
+                    )}
 
                     {availabilities && availabilities.availability.length > 1 && (
                         <>
