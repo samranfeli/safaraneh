@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { CipValidate, availabilityByIataCode, getAirportByUrl } from "@/modules/cip/actions";
 import CipDetailGallery from "@/modules/cip/components/cip-detail/CipDetailGallery";
 import CipName from "@/modules/cip/components/cip-detail/CipName";
-import { CipAvailabilityItemType, CipFormCompanionItemType, CipFormPassengerItemType, CipGetAirportByUrlResponseType, CipValidateResponseType } from "@/modules/cip/types/cip";
+import { CipAvailabilityItemType, CipFormCompanionItemType, CipFormPassengerItemType, CipGetAirportByUrlResponseType, CipPrereservePayload, CipValidateResponseType } from "@/modules/cip/types/cip";
 import AnchorTabs from "@/modules/shared/components/ui/AnchorTabs";
 import Button from "@/modules/shared/components/ui/Button";
 import Steps from "@/modules/shared/components/ui/Steps";
@@ -211,8 +211,101 @@ const CipDetails: NextPage = ({ airportData, availabilities, portalData }: { por
       }
 
 
-    const submitHandler = async (values: any) => {
+    const submitHandler = async (values: {
+        originName: string;
+        destinationName: string;
+        airline: string;
+        flightNumber: string;
+        flightDate: string;
+        flightTime: string;
+
+        cip_transport_address?: string;
+
+        reserver: {
+            firstName: string;
+            lastName: string;
+            phoneNumber: string;
+            email: string;
+            userName: string;
+            gender: boolean;
+        };
+        passengers: {
+            firstName: string;
+            lastName: string;
+            gender: boolean;
+            passengerType: "Adult" | "Child";
+            passportNumber: string;
+            nationalId: string;
+            nationality: string;
+            birthday: string;
+            services: string[]
+        }[];
+        companions: {
+            firstName: string;
+            lastName: string;
+            gender: boolean;
+            services: string[]
+        }[];
+
+    }) => {
+
+        if (!validateResponse?.preReserveKey){
+            debugger;
+            console.log("no preReserveKey!");
+            return;
+        }
+
+        const companionsPassengers: CipPrereservePayload['passengers'] = values.companions.map(item => ({
+            gender: item.gender,
+            firstName: item.firstName,
+            lastName: item.lastName,
+            services: item.services.map(serviceItem => +serviceItem),
+            passengerType: 'Accompanying'
+        }));
+
+        const passengers :CipPrereservePayload['passengers'] = values.passengers.map(passengerItem => (
+            {
+                ...passengerItem,
+                services: passengerItem.services.map(serviceItem => +serviceItem)
+            }
+        ))
+
+        const transportsArray = selectedTransport?.filter(item => item.count > 0)?.map(item => ({
+            count: item.count,
+            address: values.cip_transport_address,
+            id: item.id
+          })) || [];
+
+        let services : CipPrereservePayload['services'] = [];
+        if (selectedServicesArray?.length && activeServices?.length ){
+          services = selectedServicesArray?.filter(item => activeServices.includes(item.id)).map(serviceItem => ({
+            count: serviceItem.count || 1,
+            extraCount: serviceItem.extraCount,
+            hourCount: serviceItem.hourCount,
+            id: serviceItem.id
+          }));
+        }
+
+        const params : CipPrereservePayload = {
+            airline: values.airline,
+            originName: values.originName,
+            destinationName: values.destinationName,
+            flightNumber: values.flightNumber,
+            flightTime : values.flightDate + "T" + values.flightTime + ":00",
+            preReserveKey: validateResponse?.preReserveKey,
+            passengers: [...passengers , ...companionsPassengers],
+            reserver: {
+                ...values.reserver
+                , userName: values.reserver.phoneNumber
+            },
+            services: services,
+            transports: transportsArray
+
+        }
+        
         debugger;
+
+
     }
 
     const formInitialValue = {
@@ -227,9 +320,6 @@ const CipDetails: NextPage = ({ airportData, availabilities, portalData }: { por
         passengers: [{
             firstName: "",
             lastName: "",
-            phoneNumber: "",
-            email: "",
-            userName: "",
             gender: true,
             passengerType: "Adult" as "Adult" | "Child",
             passportNumber: "",

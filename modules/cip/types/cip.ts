@@ -346,3 +346,48 @@ export interface CipValidateResponseType {
   }[];
 
 }
+
+export interface CipPrereservePayload {
+
+  airline: string;
+  flightNumber: string;
+  originName: string;
+  destinationName: string;
+  flightTime: string;
+  preReserveKey: string;
+
+  passengers: {
+    gender: boolean;
+    firstName: string;
+    lastName: string;
+    passengerType: CipPassengerType;
+    passportNumber?: string;
+    nationalId?: string;
+    nationality?: string;
+    birthday?: string;
+    services: number[]
+  }[];
+
+  reserver: {
+    firstName: string;
+    lastName: string;
+    phoneNumber: string;
+    email: string;
+    userName: string;
+    gender: boolean;
+  };
+
+  services?: {
+    count: number;
+    extraCount?: number;
+    hourCount?: number;
+    id: number;
+  }[];
+
+  transports?: {
+    count: number;
+    address?: string;
+    id: number;
+  }[];
+
+}
