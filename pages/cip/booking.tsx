@@ -1,7 +1,7 @@
 import { CipConfirm, CipGetReserveById } from "@/modules/cip/actions";
 import CipBookingContent from "@/modules/cip/components/booking/CipBookingContent";
 import CipAside from "@/modules/cip/components/shared/CipAside";
-import { CipConfirmResponse, CipGetReserveByIdResponse } from "@/modules/cip/types/cip";
+import { CipGetReserveByIdResponse } from "@/modules/cip/types/cip";
 import Steps from "@/modules/shared/components/ui/Steps";
 import { useAppDispatch } from "@/modules/shared/hooks/use-store";
 import { setReduxError } from "@/modules/shared/store/errorSlice";
@@ -16,8 +16,6 @@ import { useEffect, useState } from "react";
 const Booking: NextPage = ({ portalData }: { portalData?: PortalDataType }) => {
 
     const { t } = useTranslation('common');
-    const { t: tHotel } = useTranslation('hotel');
-    const { t: tPayment } = useTranslation('payment');
 
     const phoneLink = portalData?.Phrases?.find(item => item.Keyword === "PhoneNumber")?.Value || "";
     const phoneNumber = phoneLink?.replace("+98", "0");
@@ -53,7 +51,7 @@ const Booking: NextPage = ({ portalData }: { portalData?: PortalDataType }) => {
             }
         };
 
-        if (reserveId && username){
+        if (reserveId && username) {
             fetchCipData(reserveId, username);
         }
 
@@ -69,7 +67,7 @@ const Booking: NextPage = ({ portalData }: { portalData?: PortalDataType }) => {
                     setConfirmStatus(response.data.result.reserve?.status);
                     setConfirmLoading(false);
                 } else {
-                    setTimeout(() => {confirm(reserve_id, user_name)}, 4000);
+                    setTimeout(() => { confirm(reserve_id, user_name) }, 4000);
                 }
             } else {
                 setConfirmLoading(false);
@@ -83,7 +81,7 @@ const Booking: NextPage = ({ portalData }: { portalData?: PortalDataType }) => {
             }
         }
 
-        if (reserveId && username){
+        if (reserveId && username) {
             confirm(reserveId, username);
         }
 
@@ -108,7 +106,6 @@ const Booking: NextPage = ({ portalData }: { portalData?: PortalDataType }) => {
 
                 <div className='grid gap-4 md:grid-cols-3'>
                     <div className='md:col-span-2'>
-
                         <CipBookingContent
                             confirmLoading={confirmLoading}
                             confirmStatus={confirmStatus}
@@ -117,53 +114,12 @@ const Booking: NextPage = ({ portalData }: { portalData?: PortalDataType }) => {
                             portalPhoneLink={phoneLink}
                             portalPhoneNumber={phoneNumber}
                         />
-
                     </div>
                     <div>
-
                         <CipAside
                             loading={cipReserveInfoLoading}
                             reserveInfo={cipReserveInfo}
                         />
-
-
-                        {/* <div className='bg-white border border-neutral-300 rounded-md mb-4 p-4'>
-                            {domesticHotelInformation ? (
-                                <>
-                                    <h5 className='font-semibold leading-6 mb-3 border-b text-sm'>
-                                        {tPayment('need-help')}
-                                    </h5>
-                                    <p className='block mb-3'>{tPayment('24hours-backup')}</p>
-                                    <a href={`tel:${phoneLink}`} className='block mb-1 text-base text-blue-800 rtl:text-right font-semibold underline-offset-2 underline' dir="ltr"> {phoneNumber} </a>
-                                    <a href={`mailto:${email}`} className='block text-base text-blue-800 rtl:text-right font-sans font-semibold underline-offset-2 underline' dir="ltr"> {email} </a>
-                                </>
-                            ) : (
-                                <>
-                                    <Skeleton className='mb-3 w-1/3' />
-                                    <Skeleton className='mb- w-2/3' />
-                                </>
-                            )}
-                        </div> */}
-
-                        {/* <div className='bg-white p-4 border border-neutral-300 rounded-md mb-4 border-t-2 border-t-orange-400'>
-                            {domesticHotelInformation ? (
-                                <>
-                                    <h5 className='font-semibold text-orange-400 mb-2 leading-6'>
-                                        {t('price-will-increase')}
-                                    </h5>
-                                    <p className='text-2xs'>
-                                        {t('price-will-increase-desc')}
-                                    </p>
-                                </>
-                            ) : (
-                                <>
-                                    <Skeleton className='mb-3 w-1/3' />
-                                    <Skeleton className='mb- w-2/3' />
-                                </>
-                            )}
-
-                        </div> */}
-
                     </div>
                 </div>
             </div>

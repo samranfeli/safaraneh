@@ -393,40 +393,10 @@ export interface CipPrereservePayload {
 }
 
 export interface CipGetReserveByIdResponse {
-  // "adults": 0,
-  // "children": 0,
-  // "accompanying": 0,
   flightNumber: string;
-  // "originName": "string",
-  // "destinationName": "string",
   airline: string;
   flightTime: string;
-  // "username": "string",
-  // "creationTime": "2024-04-04T19:46:51.449Z",
-  // "expireTime": "2024-04-04T19:46:51.449Z",
-  // "status": "Undefined",
-  // "rate": {
-  //   "adults": 0,
-  //   "children": 0,
-  //   "accompanying": 0,
-  //   "name": "string",
-  //   "remark": "string",
-  //   "description": "string",
-  //   "boardPrice": 0,
-  //   "netPrice": 0,
-  //   "salePrice": 0,
-  //   "passengers": [
-  //     {
-  //       "passengerType": "Adult",
-  //       "boardPrice": 0,
-  //       "netPrice": 0,
-  //       "salePrice": 0,
-  //       "currencyType": "USD",
-  //       "id": 0
-  //     }
-  //   ],
-  //   "id": 0
-  // },
+  username: string;
   reserver: {
     firstName: string;
     lastName: string;
@@ -435,24 +405,12 @@ export interface CipGetReserveByIdResponse {
     userName: string;
     gender: boolean;
   };
-  // "terminal": {
-  //   "name": "string",
-  //   "id": "3fa85f64-5717-4562-b3fc-2c963f66afa6"
-  // },
   airport: {
     name: string;
-    //"nameLong": "string",
     city: {
       name: string;
       code: string;
     };
-    // "country": {
-    //   "name": "string",
-    //   "code": "string"
-    // },
-    // "code": "string",
-    // "latitude": "string",
-    // "longitude": "string",
     picture: {
       path: string;
       altAttribute: string;
@@ -460,14 +418,6 @@ export interface CipGetReserveByIdResponse {
     },
     id: number;
   };
-  // "promoCode": {
-  //   "value": "string",
-  //   "price": 0
-  // },
-  // "currencyType": "USD",
-  // "totalBoardPrice": 0,
-  // "totalNetPrice": 0,
-  // "totalSalePrice": 0,
   passengers: [
     {
       gender: boolean;
@@ -479,63 +429,14 @@ export interface CipGetReserveByIdResponse {
       nationality: string;
       birthday: string,
       service: {
-        // "boardPrice": 0,
-        // "netPrice": 0,
-        // "salePrice": 0,
         items: [
           {
-            // "totalBoardPrice": 0,
-            // "totalNetPrice": 0,
-            // "totalSalePrice": 0,
-            // "serviceId": 0,
-            // "count": 0,
-            // "extraCount": 0,
-            // "hourCount": 0,
-            // "airportId": 0,
             name: string;
-            // "description": "string",
-            // "hourDescription": "string",
-            // "extraDescription": "string",
-            // "title": "string",
-            // "type": "Pet",
-            // "priceType": "PerPassenger",
-            // "boardPrice": 0,
-            // "netPrice": 0,
-            // "salePrice": 0,
-            // "currencyType": "USD",
-            // "passengerType": "Adult",
-            // "extraSalePrice": 0,
-            // "extraNetPrice": 0,
-            // "extraBoardPrice": 0,
-            // "hourSalePrice": 0,
-            // "hourNetPrice": 0,
-            // "hourBoardPrice": 0,
             picture: {
               path: string;
               altAttribute: string;
               titleAttribute: string;
             };
-            // "airport": {
-            //   "name": "string",
-            //   "nameLong": "string",
-            //   "city": {
-            //     "name": "string",
-            //     "code": "string"
-            //   },
-            //   "country": {
-            //     "name": "string",
-            //     "code": "string"
-            //   },
-            //   "code": "string",
-            //   "latitude": "string",
-            //   "longitude": "string",
-            //   "picture": {
-            //     "path": "string",
-            //     "altAttribute": "string",
-            //     "titleAttribute": "string"
-            //   },
-            //   "id": 0
-            // },
             id: number
           }
         ]
@@ -544,9 +445,6 @@ export interface CipGetReserveByIdResponse {
     }
   ],
   transport: {
-    //   "boardPrice": 0,
-    //   "netPrice": 0,
-    //   salePrice: number;
     items: [
       {
         name: string;
@@ -558,20 +456,10 @@ export interface CipGetReserveByIdResponse {
           altAttribute: string;
           titleAttribute: string;
         };
-        //       "serviceId": 0,
-        //       "description": "string",
-        //       "boardPrice": 0,
-        //       "netPrice": 0,
-        //       "currencyType": "USD",
-        //       "transportId": 0,
-        //       "id": 0
       }
     ]
   };
   service: {
-    // "boardPrice": 0,
-    // "netPrice": 0,
-    // "salePrice": 0,
     items: [
       {
         count: number;
@@ -583,297 +471,8 @@ export interface CipGetReserveByIdResponse {
           altAttribute: string;
           titleAttribute: string;
         };
-        //     "totalBoardPrice": 0,
-        //     "totalNetPrice": 0,
-        //     "totalSalePrice": 0,
-        //     "serviceId": 0,
-        //     "extraCount": 0,
-        //     "hourCount": 0,
-        //     "airportId": 0,
-        //     "description": "string",
-        //     "hourDescription": "string",
-        //     "extraDescription": "string",
-        //     "title": "string",
-        //     "priceType": "PerPassenger",
-        //     "boardPrice": 0,
-        //     "netPrice": 0,
-        //     "currencyType": "USD",
-        //     "passengerType": "Adult",
-        //     "extraSalePrice": 0,
-        //     "extraNetPrice": 0,
-        //     "extraBoardPrice": 0,
-        //     "hourSalePrice": 0,
-        //     "hourNetPrice": 0,
-        //     "hourBoardPrice": 0,
-        //     "picture": {
-        //       "path": "string",
-        //       "altAttribute": "string",
-        //       "titleAttribute": "string"
-        //     },
-        //     "airport": {
-        //       "name": "string",
-        //       "nameLong": "string",
-        //       "city": {
-        //         "name": "string",
-        //         "code": "string"
-        //       },
-        //       "country": {
-        //         "name": "string",
-        //         "code": "string"
-        //       },
-        //       "code": "string",
-        //       "latitude": "string",
-        //       "longitude": "string",
-        //       "id": 0
-        //     },
-        //     "id": 0
       }
     ];
   };
   id: number;
-}
-
-
-export interface CipConfirmResponse {
-  reserve?: {
-    // "adults": 0,
-    // "children": 0,
-    // "accompanying": 0,
-    // "flightNumber": "string",
-    // "originName": "string",
-    // "destinationName": "string",
-    // "airline": "string",
-    // "flightTime": "2024-04-05T09:47:21.254Z",
-    // "username": "string",
-    // "creationTime": "2024-04-05T09:47:21.254Z",
-    // "expireTime": "2024-04-05T09:47:21.254Z",
-    // "status": "Undefined",
-    // "rate": {
-    //   "adults": 0,
-    //   "children": 0,
-    //   "accompanying": 0,
-    //   "name": "string",
-    //   "remark": "string",
-    //   "description": "string",
-    //   "boardPrice": 0,
-    //   "netPrice": 0,
-    //   "salePrice": 0,
-    //   "passengers": [
-    //     {
-    //       "passengerType": "Adult",
-    //       "boardPrice": 0,
-    //       "netPrice": 0,
-    //       "salePrice": 0,
-    //       "currencyType": "USD",
-    //       "id": 0
-    //     }
-    //   ],
-    //   "id": 0
-    // },
-    // "reserver": {
-    //   "firstName": "string",
-    //   "lastName": "string",
-    //   "phoneNumber": "string",
-    //   "email": "string",
-    //   "userName": "string",
-    //   "gender": true
-    // },
-    // "terminal": {
-    //   "name": "string",
-    //   "id": "3fa85f64-5717-4562-b3fc-2c963f66afa6"
-    // },
-    // "airport": {
-    //   "name": "string",
-    //   "nameLong": "string",
-    //   "city": {
-    //     "name": "string",
-    //     "code": "string"
-    //   },
-    //   "country": {
-    //     "name": "string",
-    //     "code": "string"
-    //   },
-    //   "code": "string",
-    //   "latitude": "string",
-    //   "longitude": "string",
-    //   "picture": {
-    //     "path": "string",
-    //     "altAttribute": "string",
-    //     "titleAttribute": "string"
-    //   },
-    //   "id": 0
-    // },
-    // "promoCode": {
-    //   "value": "string",
-    //   "price": 0
-    // },
-    // "currencyType": "USD",
-    // "totalBoardPrice": 0,
-    // "totalNetPrice": 0,
-    // "totalSalePrice": 0,
-    // "passengers": [
-    //   {
-    //     "gender": true,
-    //     "firstName": "string",
-    //     "lastName": "string",
-    //     "passengerType": "Adult",
-    //     "passportNumber": "string",
-    //     "nationalId": "string",
-    //     "nationality": "AF",
-    //     "birthday": "2024-04-05T09:47:21.254Z",
-    //     "service": {
-    //       "boardPrice": 0,
-    //       "netPrice": 0,
-    //       "salePrice": 0,
-    //       "items": [
-    //         {
-    //           "totalBoardPrice": 0,
-    //           "totalNetPrice": 0,
-    //           "totalSalePrice": 0,
-    //           "serviceId": 0,
-    //           "count": 0,
-    //           "extraCount": 0,
-    //           "hourCount": 0,
-    //           "airportId": 0,
-    //           "name": "string",
-    //           "description": "string",
-    //           "hourDescription": "string",
-    //           "extraDescription": "string",
-    //           "title": "string",
-    //           "type": "Pet",
-    //           "priceType": "PerPassenger",
-    //           "boardPrice": 0,
-    //           "netPrice": 0,
-    //           "salePrice": 0,
-    //           "currencyType": "USD",
-    //           "passengerType": "Adult",
-    //           "extraSalePrice": 0,
-    //           "extraNetPrice": 0,
-    //           "extraBoardPrice": 0,
-    //           "hourSalePrice": 0,
-    //           "hourNetPrice": 0,
-    //           "hourBoardPrice": 0,
-    //           "picture": {
-    //             "path": "string",
-    //             "altAttribute": "string",
-    //             "titleAttribute": "string"
-    //           },
-    //           "airport": {
-    //             "name": "string",
-    //             "nameLong": "string",
-    //             "city": {
-    //               "name": "string",
-    //               "code": "string"
-    //             },
-    //             "country": {
-    //               "name": "string",
-    //               "code": "string"
-    //             },
-    //             "code": "string",
-    //             "latitude": "string",
-    //             "longitude": "string",
-    //             "picture": {
-    //               "path": "string",
-    //               "altAttribute": "string",
-    //               "titleAttribute": "string"
-    //             },
-    //             "id": 0
-    //           },
-    //           "id": 0
-    //         }
-    //       ]
-    //     },
-    //     "id": 0
-    //   }
-    // ],
-    // "transport": {
-    //   "boardPrice": 0,
-    //   "netPrice": 0,
-    //   "salePrice": 0,
-    //   "items": [
-    //     {
-    //       "serviceId": 0,
-    //       "name": "string",
-    //       "description": "string",
-    //       "address": "string",
-    //       "count": 0,
-    //       "boardPrice": 0,
-    //       "netPrice": 0,
-    //       "salePrice": 0,
-    //       "currencyType": "USD",
-    //       "transportId": 0,
-    //       "picture": {
-    //         "path": "string",
-    //         "altAttribute": "string",
-    //         "titleAttribute": "string"
-    //       },
-    //       "id": 0
-    //     }
-    //   ]
-    // },
-    // "service": {
-    //   "boardPrice": 0,
-    //   "netPrice": 0,
-    //   "salePrice": 0,
-    //   "items": [
-    //     {
-    //       "totalBoardPrice": 0,
-    //       "totalNetPrice": 0,
-    //       "totalSalePrice": 0,
-    //       "serviceId": 0,
-    //       "count": 0,
-    //       "extraCount": 0,
-    //       "hourCount": 0,
-    //       "airportId": 0,
-    //       "name": "string",
-    //       "description": "string",
-    //       "hourDescription": "string",
-    //       "extraDescription": "string",
-    //       "title": "string",
-    //       "type": "Pet",
-    //       "priceType": "PerPassenger",
-    //       "boardPrice": 0,
-    //       "netPrice": 0,
-    //       "salePrice": 0,
-    //       "currencyType": "USD",
-    //       "passengerType": "Adult",
-    //       "extraSalePrice": 0,
-    //       "extraNetPrice": 0,
-    //       "extraBoardPrice": 0,
-    //       "hourSalePrice": 0,
-    //       "hourNetPrice": 0,
-    //       "hourBoardPrice": 0,
-    //       "picture": {
-    //         "path": "string",
-    //         "altAttribute": "string",
-    //         "titleAttribute": "string"
-    //       },
-    //       "airport": {
-    //         "name": "string",
-    //         "nameLong": "string",
-    //         "city": {
-    //           "name": "string",
-    //           "code": "string"
-    //         },
-    //         "country": {
-    //           "name": "string",
-    //           "code": "string"
-    //         },
-    //         "code": "string",
-    //         "latitude": "string",
-    //         "longitude": "string",
-    //         "picture": {
-    //           "path": "string",
-    //           "altAttribute": "string",
-    //           "titleAttribute": "string"
-    //         },
-    //         "id": 0
-    //       },
-    //       "id": 0
-    //     }
-    //   ]
-    // },
-    // "id": 0
-  },
-  isCompleted: boolean;
 }

@@ -106,7 +106,7 @@ const CipAside: React.FC<Props> = props => {
                                             <Child className="w-5 h-5 fill-current" />
                                         )}
 
-                                        <span>{item.firstName} {item.lastName}</span>
+                                        <span>{item.firstName} {item.lastName}</span> {item.passengerType === 'Accompanying' && <span> (مشایعت کننده) </span>}
 
                                         {item.service.items.map((itemService, keyService) =>
                                             <div key={keyService} className="bg-neutral-100 rounded px-2">

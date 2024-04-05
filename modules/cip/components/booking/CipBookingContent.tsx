@@ -1,17 +1,13 @@
 import { useTranslation } from "next-i18next";
 import { useEffect, useState } from 'react';
-//import { DomesticHotelConfirmType, DomesticHotelGetReserveByIdData } from "../../types/hotel";
-import { Close, ErrorIcon, InfoCircle, Tik, User } from "@/modules/shared/components/ui/icons";
+import { Close, ErrorIcon, Tik } from "@/modules/shared/components/ui/icons";
 import Loading from "@/modules/shared/components/ui/Loading";
 import Skeleton from "@/modules/shared/components/ui/Skeleton";
-import Image from "next/image";
 import { CipGetReserveByIdResponse } from "../../types/cip";
-//import DownloadPdfVoucher from "./DownloadPdfVoucher";
+import DownloadPdfVoucher from "./DownloadPdfVoucher";
 
 type Props = {
     confirmStatus?: "Undefined" | "Registered" | "Pending" | "Issued" | "Canceled" | "WebServiceCancel" | "PaymentSuccessful" | "WebServiceUnsuccessful" | "PriceChange" | "Unavailable" | "Refunded" | "Voided" | "InProgress" | "PaidBack" | "RefundInProgress" | "Changed" | "OnCredit" | "ContactProvider" | "UnConfirmed" | "ReceivedAdvance" | "ExtraReceiving";
-    // reserveId?: string;
-    // username?: string;
     reserveInfo?: CipGetReserveByIdResponse;
     confirmLoading: boolean;
     portalEmail?: string;
@@ -82,40 +78,31 @@ const CipBookingContent: React.FC<Props> = props => {
                     </div>
 
                 ) : confirmStatus === "ContactProvider" ? (
-                    <>
 
-                        ContactProvider
-
-
-                        {/* TODO: ContactProvider */}
-
-                        {/* <div className={styles.successMyBooking}>
-                        <div>
-                            <CheckIcon />
-                            <span className={styles.textSuccessMyBooking}>{t("congratulation-reserve-success")}</span>
+                    <div className="border border-neutral-300 rounded-lg mb-4 bg-white">
+                        <div className="bg-blue-400 text-white flex flex-col sm:flex-row sm:items-center sm:justify-between rounded-t-lg p-4 gap-3 font-semibold text-sm sm:text-base" >
+                            <div className="flex gap-2 items-center">
+                                <Tik className="w-7 h-7 fill-current" />
+                                {tPayment("congratulation-reserve-success")}
+                            </div>
+                            <div className="flex gap-2 items-center">
+                                {t("tracking-code")}
+                                {confirmLoading ? <Loading /> : <span className="text-lg"> {reserveInfo?.id || ""} </span>}
+                            </div>
                         </div>
-                        <div>
-                            <span className={styles.reserveIdSuccessBooking}>{t('tracking-code')} : {this.props.reserveId}</span>
+                        <div className="p-4">
+
+                            <Tik className="w-14 h-14 bg-green-600 fill-white rounded-full block mx-auto my-4" />
+                            <h4 className="font-semibold text-lg text-center mb-1"> {`${t("hello")} ${reserveInfo && reserveInfo.reserver.firstName} ${reserveInfo && reserveInfo.reserver.lastName}`} </h4>
+                            <p className="text-center text-sm mb-1">{tPayment("reserve-success")}</p>
+                            <p className="my-3 text-center text-sm">
+                                برای راهنمایی بهتر در صورت تماس با ما لطفا از <span className="font-semibold"> کد پیگیری : {reserveInfo?.id} </span>   استفاده کنید.
+                            </p>
+
                         </div>
+
                     </div>
-                    <div className={styles.contentMyBooking}>
-                        <div className={styles.successBooking}>
-                            <CheckCircleIcon />
-                            {this.props.reserveInfo && this.props.reserveInfo.reserver.firstName ? <h4> {t('hello')} {this.props.reserveInfo.reserver.firstName} </h4> : ''}
-                            <span>{t("reserve-success")}</span>
-                            {this.props.reserveInfo.email &&
-                                <span>
-                                    {t("email-with-link2")}
-                                    <b> {this.props.reserveInfo.reserver.email} </b>
-                                    {t("sent")}
-                                    {t("for-tracking-with-us")}
-                                    <b> {t("tracking-code")}: {this.props.reserveId || <Spin />} </b>
-                                    {t("use")}
-                                </span>
-                            }
-                        </div>
-                    </div> */}
-                    </>
+
                 ) : (
                     <>
                         <div className="border border-red-400 rounded-lg bg-white p-4 mb-4 text-justify">
@@ -150,22 +137,13 @@ const CipBookingContent: React.FC<Props> = props => {
             </div>
 
 
-            {/* TODO: ContactProvider */}
-            {/* {!!(confirmStatus === "ContactProvider") && (
-                <>
-                    {
-                        this.props.reserveInfo?.id && this.props.reserveInfo?.username ?
-                            <div className={styles.downloadVoucher}>
-                                <a onClick={this.handleClick} disabled={this.state.voucherStatus === "pending" ? null : "disabled"}>
-                                    {this.state.voucherStatus === "pending" ?
-                                        <><BookingTicketIcon />{t("recieve-voucher")}</> :
-                                        <><LoadingOutlined spin /> {t("loading-recieve-voucher")}</>}
-                                </a>
-                            </div>
-                            : null
-                    }
-                </>
-            )} */}
+            {confirmStatus === "ContactProvider" && reserveInfo?.id && reserveInfo?.username && (
+                <DownloadPdfVoucher
+                    reserveId={reserveInfo.id.toString()}
+                    username={reserveInfo.username}
+                    className="bg-primary-700 hover:bg-primary-800 text-white px-5 flex gap-2 items-center justify-center rounded-lg transition-all mb-4 w-full h-12 disabled:bg-neutral-500 disabled:cursor-not-allowed"
+                />
+            )}
 
 
             <div className="border border-neutral-300 rounded-lg bg-white mb-4 p-4">

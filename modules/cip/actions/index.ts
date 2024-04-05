@@ -161,3 +161,24 @@ export const CipConfirm = async (params: { reserveId: string, username: string }
         return error
     }
 }
+
+
+
+export const CipGetVoucher = async (params: { reserveId: string, userName: string }, acceptLanguage: string = 'fa-IR') => {
+    try {
+        let response = await axios.get(
+            `${ServerAddress.Type}${ServerAddress.Cip}${Cip.GetVoucherPdf}?ReserveId=${params.reserveId}&Username=${params.userName}`,
+            {
+                headers: {
+                    Accept: 'application/json;charset=UTF-8',
+                    apikey: process.env.PROJECT_SERVER_APIKEY,
+                    "Accept-Language": acceptLanguage,
+                    Tenantid: process.env.PROJECT_SERVER_TENANTID
+                },
+            },
+        )
+        return response
+    } catch (error) {
+        return error
+    }
+}
