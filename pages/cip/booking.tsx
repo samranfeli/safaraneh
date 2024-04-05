@@ -1,0 +1,183 @@
+import { CipConfirm, CipGetReserveById } from "@/modules/cip/actions";
+import CipBookingContent from "@/modules/cip/components/booking/CipBookingContent";
+import CipAside from "@/modules/cip/components/shared/CipAside";
+import { CipConfirmResponse, CipGetReserveByIdResponse } from "@/modules/cip/types/cip";
+import Steps from "@/modules/shared/components/ui/Steps";
+import { useAppDispatch } from "@/modules/shared/hooks/use-store";
+import { setReduxError } from "@/modules/shared/store/errorSlice";
+import { PortalDataType } from "@/modules/shared/types/common";
+import { GetServerSideProps, NextPage } from "next";
+import { useTranslation } from "next-i18next";
+import { serverSideTranslations } from "next-i18next/serverSideTranslations";
+import Head from "next/head";
+import { useRouter } from "next/router";
+import { useEffect, useState } from "react";
+
+const Booking: NextPage = ({ portalData }: { portalData?: PortalDataType }) => {
+
+    const { t } = useTranslation('common');
+    const { t: tHotel } = useTranslation('hotel');
+    const { t: tPayment } = useTranslation('payment');
+
+    const phoneLink = portalData?.Phrases?.find(item => item.Keyword === "PhoneNumber")?.Value || "";
+    const phoneNumber = phoneLink?.replace("+98", "0");
+    const email = portalData?.Phrases?.find(item => item.Keyword === "Email")?.Value || "";
+
+
+    const dispatch = useAppDispatch();
+
+    const router = useRouter();
+
+    const pathArray = router.asPath.split("?")[1]?.split("#")[0].split("&");
+    const username = pathArray.find(item => item.includes("username="))?.split("username=")[1];
+    const reserveId = pathArray.find(item => item.includes("reserveId="))?.split("reserveId=")[1];
+
+    const [cipReserveInfo, setCipReserveInfo] = useState<CipGetReserveByIdResponse>();
+    const [cipReserveInfoLoading, setCipReserveInfoLoading] = useState<boolean>(true);
+
+    const [confirmStatus, setConfirmStatus] = useState<any>();
+    const [confirmLoading, setConfirmLoading] = useState<boolean>(true);
+
+    useEffect(() => {
+
+        const fetchCipData = async (reserve_id: string, user_name: string) => {
+
+            setCipReserveInfoLoading(true);
+
+            const respone: any = await CipGetReserveById({ reserveId: reserve_id, userName: user_name });
+
+            setCipReserveInfoLoading(false);
+
+            if (respone?.data?.result) {
+                setCipReserveInfo(respone.data.result);
+            }
+        };
+
+        if (reserveId && username){
+            fetchCipData(reserveId, username);
+        }
+
+
+        const confirm = async (reserve_id: string, user_name: string) => {
+
+            setConfirmLoading(true);
+
+            const response: any = await CipConfirm({ reserveId: reserve_id, username: user_name }, 'fa-IR');
+            if (response.status === 200) {
+
+                if (response.data?.result?.isCompleted) {
+                    setConfirmStatus(response.data.result.reserve?.status);
+                    setConfirmLoading(false);
+                } else {
+                    setTimeout(() => {confirm(reserve_id, user_name)}, 4000);
+                }
+            } else {
+                setConfirmLoading(false);
+
+                dispatch(setReduxError({
+                    title: t('error'),
+                    message: response.data?.error?.message || "متاسفانه مشکلی پیش آمده!",
+                    isVisible: true
+                }));
+
+            }
+        }
+
+        if (reserveId && username){
+            confirm(reserveId, username);
+        }
+
+    }, [reserveId, username]);
+
+    return (
+        <>
+            <Head>
+                <title>{t('reserve-page')}</title>
+            </Head>
+
+            <div className='max-w-container mx-auto px-5 py-4'>
+
+                <Steps
+                    className='py-3 mb-4 max-md:hidden'
+                    items={[
+                        { label: t('bank-gateway-page'), status: 'done' },
+                        { label: t('confirm-pay'), status: 'done' },
+                        { label: t('complete-purchase'), status: 'active' }
+                    ]}
+                />
+
+                <div className='grid gap-4 md:grid-cols-3'>
+                    <div className='md:col-span-2'>
+
+                        <CipBookingContent
+                            confirmLoading={confirmLoading}
+                            confirmStatus={confirmStatus}
+                            reserveInfo={cipReserveInfo}
+                            portalEmail={email}
+                            portalPhoneLink={phoneLink}
+                            portalPhoneNumber={phoneNumber}
+                        />
+
+                    </div>
+                    <div>
+
+                        <CipAside
+                            loading={cipReserveInfoLoading}
+                            reserveInfo={cipReserveInfo}
+                        />
+
+
+                        {/* <div className='bg-white border border-neutral-300 rounded-md mb-4 p-4'>
+                            {domesticHotelInformation ? (
+                                <>
+                                    <h5 className='font-semibold leading-6 mb-3 border-b text-sm'>
+                                        {tPayment('need-help')}
+                                    </h5>
+                                    <p className='block mb-3'>{tPayment('24hours-backup')}</p>
+                                    <a href={`tel:${phoneLink}`} className='block mb-1 text-base text-blue-800 rtl:text-right font-semibold underline-offset-2 underline' dir="ltr"> {phoneNumber} </a>
+                                    <a href={`mailto:${email}`} className='block text-base text-blue-800 rtl:text-right font-sans font-semibold underline-offset-2 underline' dir="ltr"> {email} </a>
+                                </>
+                            ) : (
+                                <>
+                                    <Skeleton className='mb-3 w-1/3' />
+                                    <Skeleton className='mb- w-2/3' />
+                                </>
+                            )}
+                        </div> */}
+
+                        {/* <div className='bg-white p-4 border border-neutral-300 rounded-md mb-4 border-t-2 border-t-orange-400'>
+                            {domesticHotelInformation ? (
+                                <>
+                                    <h5 className='font-semibold text-orange-400 mb-2 leading-6'>
+                                        {t('price-will-increase')}
+                                    </h5>
+                                    <p className='text-2xs'>
+                                        {t('price-will-increase-desc')}
+                                    </p>
+                                </>
+                            ) : (
+                                <>
+                                    <Skeleton className='mb-3 w-1/3' />
+                                    <Skeleton className='mb- w-2/3' />
+                                </>
+                            )}
+
+                        </div> */}
+
+                    </div>
+                </div>
+            </div>
+
+        </>
+    )
+}
+
+export const getServerSideProps: GetServerSideProps = async (context: any) => {
+    return ({
+        props: {
+            ...await (serverSideTranslations(context.locale, ['common', 'hotel', 'payment']))
+        },
+    })
+}
+
+export default Booking;
