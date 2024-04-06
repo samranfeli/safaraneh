@@ -397,6 +397,7 @@ export interface CipGetReserveByIdResponse {
   airline: string;
   flightTime: string;
   username: string;
+  status:  "Undefined" | "Registered" | "Pending" | "Issued" | "Canceled" | "WebServiceCancel" | "PaymentSuccessful" | "WebServiceUnsuccessful" | "PriceChange" | "Unavailable" | "Refunded" | "Voided" | "InProgress" | "PaidBack" | "RefundInProgress" | "Changed" | "OnCredit" | "ContactProvider" | "UnConfirmed" | "ReceivedAdvance" | "ExtraReceiving" ;
   reserver: {
     firstName: string;
     lastName: string;
