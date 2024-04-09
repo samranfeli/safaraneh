@@ -21,6 +21,7 @@ import Comments from '@/modules/domesticHotel/components/hotelDetails/comments';
 import Rooms from '@/modules/domesticHotel/components/hotelDetails/Rooms';
 import { addSomeDays, dateFormat } from '@/modules/shared/helpers';
 import AnchorTabs from '@/modules/shared/components/ui/AnchorTabs';
+import { useEffect } from 'react';
 
 type Props = {
   allData: {
@@ -87,6 +88,15 @@ const HotelDetail: NextPage<Props> = props => {
     twitter = portalData.Phrases.find(item => item.Keyword === "Twitter")?.Value || "";
     siteURL = portalData.PortalName || "";
   }
+
+  useEffect(()=>{
+    const locale = router.locale;
+    const url = "/"+locale+router.asPath;
+    const fetch = async () => {
+      const allData: any = await getDomesticHotelDetailsByUrl(url, locale === "en" ? "en-US" : locale === "ar" ? "ar-SA" : "fa-IR");
+    }
+    fetch();
+  },[]);
 
   if (!hotelData) {
     return null;
