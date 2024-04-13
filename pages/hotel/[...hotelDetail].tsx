@@ -1,6 +1,6 @@
 import { getDomesticHotelDetailsByUrl } from '@/modules/domesticHotel/actions';
 import type { GetServerSideProps, NextPage } from 'next';
-import { useTranslation } from 'next-i18next';
+import { i18n, useTranslation } from 'next-i18next';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 import Head from 'next/head';
 import { PageDataType, PortalDataType } from '@/modules/shared/types/common';
@@ -37,14 +37,19 @@ const HotelDetail: NextPage<Props> = props => {
 
   const { portalData, allData } = props;
 
-  const { accommodation, hotel: hotelData, page: pageData, score: hotelScoreData } = allData;
-
-  const accommodationData = accommodation?.result;
-
   const { t } = useTranslation('common');
   const { t: tHotel } = useTranslation('hotel');
 
   const router = useRouter();
+  
+  if (!allData){
+    return null;
+  }
+
+  const { accommodation, hotel: hotelData, page: pageData, score: hotelScoreData } = allData;
+
+  const accommodationData = accommodation?.result;
+
   const searchInfo = router.asPath?.split("?")[0]?.split("#")[0];
 
   let checkin: string = "";
@@ -103,6 +108,19 @@ const HotelDetail: NextPage<Props> = props => {
   }
 
   const configWebsiteUrl = process.env.SITE_NAME || "";
+
+
+  let script_detail_2_Url;
+  if (hotelData.CityName) {
+    if (i18n && i18n.language === "fa") {
+      script_detail_2_Url = `${configWebsiteUrl}/fa/hotels/هتل-های-${hotelData.CityName.replace(/ /g, "-")}`;
+    } else if (i18n && i18n.language === "ar") {
+      script_detail_2_Url = `${configWebsiteUrl}/ar/hotels/فنادق-${hotelData.CityName.replace(/ /g, "-")}`;
+    } else {
+      script_detail_2_Url = `${configWebsiteUrl}/en/hotels/${hotelData.CityName.replace(/ /g, "-")}`;
+    }
+  }
+
 
   return (
     <>
@@ -202,8 +220,7 @@ const HotelDetail: NextPage<Props> = props => {
               "position": 2,
               "item":
               {
-                "@id": "${configWebsiteUrl}/fa/hotels/${hotelData && hotelData.CityName
-              }/location-${hotelData && hotelData.CityId}",
+                "@id": "${script_detail_2_Url}/location-${hotelData && hotelData.CityId}",
                 "name": "هتل های ${hotelData && hotelData.CityName}"
               }
               }
@@ -321,7 +338,7 @@ export const getServerSideProps: GetServerSideProps = async (context: any) => {
 
   const url = encodeURI(`/${locale}/hotel/${query.hotelDetail![0]}`);
 
-  const allData: any = await getDomesticHotelDetailsByUrl(url, locale === "en" ? "en-US" : locale === "ar" ? "ar-SA" : "fa-IR");
+  const allData: any = await getDomesticHotelDetailsByUrl(url, locale === "en" ? "en-US" : locale === "ar" ? "ar-AE" : "fa-IR");
 
   return ({
     props: {
