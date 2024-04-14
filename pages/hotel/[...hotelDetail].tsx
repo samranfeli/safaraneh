@@ -419,7 +419,7 @@ export const getServerSideProps: GetServerSideProps = async (context: any) => {
             redirect: {
               destination: `/ar/hotel/${query.hotelDetail![0]}`,
               locale: false,
-              permanent: false
+              permanent: true
             },
             props: {},
           });
@@ -451,7 +451,7 @@ export const getServerSideProps: GetServerSideProps = async (context: any) => {
           redirect: {
             destination: `/fa/hotel/${query.hotelDetail![0]}`,
             locale: false,
-            permanent: false
+            permanent: true
           },
           props: {},
         });
@@ -467,7 +467,7 @@ export const getServerSideProps: GetServerSideProps = async (context: any) => {
             redirect: {
               destination: `/en/hotel/${query.hotelDetail![0]}`,
               locale: false,
-              permanent: false
+              permanent: true
             },
             props: {},
           });
