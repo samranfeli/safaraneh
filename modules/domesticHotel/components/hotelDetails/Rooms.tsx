@@ -41,25 +41,21 @@ const Rooms: React.FC<Props> = props => {
         if (hotelId) {
 
             const fetchRooms = async () => {
+                setAvailabilities(undefined);
 
-                const response: any = await GetRooms({ id: hotelId, checkin: checkin, checkout: checkout }, i18n?.language === "fa" ? "fa-IR" : "en-US");
+                const response: any = await GetRooms({ id: hotelId, checkin: checkin, checkout: checkout }, i18n?.language === "fa" ? "fa-IR" : i18n?.language === "ar"?"ar-AE" : "en-US");
 
-                if (response?.data.result) {
+                if (response?.data?.result) {
                     setAvailabilities(response.data.result.availabilities);
-                } else if (response.data.success) {
+                } else if (response.data?.success) {
+                    console.error("oops, no available room!")
                 }
             };
 
             fetchRooms();
         }
 
-    }, [hotelId]);
-
-    useEffect(() => {
-        if (selectedRoomToken) {
-            router.push("/hotel/checkout/123")
-        }
-    }, [selectedRoomToken])
+    }, [hotelId, checkin, checkout]);
 
     const selectRoomHandle = async (token: string, count: number) => {
         setSelectedRoomToken(token);
@@ -81,7 +77,7 @@ const Rooms: React.FC<Props> = props => {
             MetaSearchKey: utm?.utmKey || null
         });
 
-        if (preReserveResponse.data) {
+        if (preReserveResponse.data?.result?.preReserveKey) {
             const key = preReserveResponse.data.result.preReserveKey;
             router.push(`/hotel/checkout/key=${key}`);
         }

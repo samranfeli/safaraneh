@@ -12,6 +12,7 @@ type Props = {
     toggleLocale?: () => void;
     value?: string;
     minimumDate?: string;
+    maximumDate?: string;
 }
 
 type DateObject = {
@@ -23,7 +24,7 @@ const DatePickerModern: React.FC<Props> = props => {
 
     {/* TODO: delete this component when mobiscroll is activated */ }
 
-    const { wrapperClassName, inputPlaceholder, inputClassName, minimumDate, inputName, locale, toggleLocale } = props;
+    const { wrapperClassName, inputPlaceholder, inputClassName, minimumDate, maximumDate, inputName, locale, toggleLocale } = props;
 
     const [value, setValue] = useState<string>();
 
@@ -51,11 +52,23 @@ const DatePickerModern: React.FC<Props> = props => {
 
     const displayValue = stringToDateObject(value);
     const minimum = stringToDateObject(minimumDate);
+    const maximum = stringToDateObject(maximumDate);
 
     let minimumDateDisplay: DateObject | undefined;
+    
+    let maximumDateDisplay: DateObject | undefined;
+
     if (minimumDate) {
         const valueArray = minimumDate.split("-");
         minimumDateDisplay = {
+            year: +valueArray[0],
+            month: +valueArray[1],
+            day: +valueArray[2]
+        }
+    }
+    if (maximumDate){
+        const valueArray = maximumDate.split("-");
+        maximumDateDisplay = {
             year: +valueArray[0],
             month: +valueArray[1],
             day: +valueArray[2]
@@ -84,6 +97,7 @@ const DatePickerModern: React.FC<Props> = props => {
 
     return (
 
+        <>
         <DatePicker
             inputClassName={`rtl:text-right ltr:text-left ${inputClassName}`}
             wrapperClassName={wrapperClassName}
@@ -95,6 +109,7 @@ const DatePickerModern: React.FC<Props> = props => {
             inputPlaceholder={inputPlaceholder}
             locale={locale}
             minimumDate={minimum}
+            maximumDate={maximum}
             inputName={inputName || ''}
             calendarPopperPosition="bottom"
             renderFooter={() => (
@@ -111,6 +126,33 @@ const DatePickerModern: React.FC<Props> = props => {
                 </div>
             )}
         />
+
+            {/* <Calendar
+
+                calendarSelectedDayClassName="datepicker-selected-date"
+                calendarTodayClassName="datepicker-today-date"
+
+                value={displayValue}
+                onChange={(value: DateObject) => { changeHandler(value) }}
+                locale={locale}
+                minimumDate={minimum}
+                renderFooter={() => (
+                    <div className="px-6 pb-3 text-right">
+                        {!!props.toggleLocale && (
+                            <button
+                                type="button"
+                                onClick={toggleLocale}
+                                className="border-none outline-none bg-transparent cursor-pointer text-xs"
+                            >
+                                {locale == 'en' ? 'شمسی' : 'میلادی'}
+                            </button>
+                        )}
+                    </div>
+                )}
+
+            /> */}
+
+        </>
 
     )
 }

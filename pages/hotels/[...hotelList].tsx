@@ -19,6 +19,9 @@ import { useAppDispatch } from '@/modules/shared/hooks/use-store';
 import { useRouter } from 'next/router';
 import HotelsOnMap from '@/modules/domesticHotel/components/hotelsList/HotelsOnMap';
 import Image from 'next/image';
+import { getPageByUrl } from '@/modules/shared/actions';
+import Head from 'next/head';
+import { PortalDataType } from '@/modules/shared/types/common';
 
 type Props = {
   searchHotelsData?: {
@@ -35,10 +38,21 @@ type Props = {
       id: number;
     }[];
     totalCount: number;
-  }
+  },
+  pageData: {
+    PageTitle?: string;
+    MetaTags?: {
+      Content?: string;
+      Name?: string;
+    }[];
+    Url?: string;
+  };
+  portalData: PortalDataType;
 }
 
 const HotelList: NextPage<Props> = props => {
+
+  const { pageData, faq, searchHotelsData, portalData } = props;
 
   type RatesResponseItem = {
     HotelId: number;
@@ -73,13 +87,13 @@ const HotelList: NextPage<Props> = props => {
   const [showMap, setShowMap] = useState<boolean>(false);
 
   let hotelIds: (undefined | number)[] = [];
-  if (props.searchHotelsData) {
-    hotelIds = props.searchHotelsData.Hotels?.map(hotel => hotel.HotelId) || [];
+  if (searchHotelsData) {
+    hotelIds = searchHotelsData.Hotels?.map(hotel => hotel.HotelId) || [];
   }
 
   let cityId: number;
-  if (props.searchHotelsData?.Hotels[0]?.CityId) {
-    cityId = props.searchHotelsData.Hotels[0].CityId;
+  if (searchHotelsData?.Hotels[0]?.CityId) {
+    cityId = searchHotelsData.Hotels[0].CityId;
   }
 
 
@@ -89,11 +103,14 @@ const HotelList: NextPage<Props> = props => {
   let checkout = tomorrow;
 
   const router = useRouter();
+  const locale = router.locale;
+  const acceptLanguage = locale === "fa" ? "fa-IR" : locale === "ar" ? "ar-AE" : "en-US";
+
   const pathSegments = router.asPath?.split("/");
 
-  const locationSegment = pathSegments.find(item => item.includes("location"));
-  const checkinSegment = pathSegments.find(item => item.includes("checkin"));
-  const checkoutSegment = pathSegments.find(item => item.includes("checkout"));
+  const locationSegment = pathSegments.find(item => item.includes("location"))?.split("?")[0]?.split("#")[0];
+  const checkinSegment = pathSegments.find(item => item.includes("checkin"))?.split("?")[0]?.split("#")[0];
+  const checkoutSegment = pathSegments.find(item => item.includes("checkout"))?.split("?")[0]?.split("#")[0];
 
   let locationId: number;
   if (locationSegment) {
@@ -158,7 +175,6 @@ const HotelList: NextPage<Props> = props => {
 
   }
 
-
   const saveFacilityOptions = (hotelItems: SearchHotelItem[]) => {
 
     const options: { keyword: string, label: string, count: number }[] = [];
@@ -214,16 +230,17 @@ const HotelList: NextPage<Props> = props => {
   }
 
   useEffect(() => {
-    if (props.searchHotelsData?.Hotels) {
+    if (searchHotelsData?.Hotels) {
 
-      saveHotelType(props.searchHotelsData.Hotels);
+      saveHotelType(searchHotelsData.Hotels);
 
-      saveFacilityOptions(props.searchHotelsData.Hotels);
+      saveFacilityOptions(searchHotelsData.Hotels);
 
     }
-  }, [props.searchHotelsData?.Hotels]);
+  }, [searchHotelsData?.Hotels]);
 
 
+  const firstHotelName = searchHotelsData?.Hotels[0]?.HotelName;
 
   useEffect(() => {
 
@@ -232,8 +249,9 @@ const HotelList: NextPage<Props> = props => {
       setFetchPercentage(10);
 
       setRatesLoading(true);
+      setRatesData(undefined);
 
-      const ratesResponse: { data?: RatesResponseItem[] } = await getRates(hotelIds as number[], "fa-IR");
+      const ratesResponse: { data?: RatesResponseItem[] } = await getRates(hotelIds as number[], acceptLanguage);
 
       if (ratesResponse?.data) {
 
@@ -250,7 +268,8 @@ const HotelList: NextPage<Props> = props => {
 
     const fetchPrices = async () => {
       setPricesLoading(true);
-      const pricesResponse = await AvailabilityByHotelId({ checkin: checkin, checkout: checkout, ids: hotelIds as number[] }, 'fa-IR');
+      setPricesData(undefined);
+      const pricesResponse = await AvailabilityByHotelId({ checkin: checkin, checkout: checkout, ids: hotelIds as number[] }, acceptLanguage);
       if (pricesResponse.data?.result?.hotels) {
         setPricesData(pricesResponse.data.result.hotels);
 
@@ -264,7 +283,7 @@ const HotelList: NextPage<Props> = props => {
 
 
     const fetchEntityDetail = async (id: number) => {
-      const entityResponse: any = await getEntityNameByLocation(id, 'fa-IR');
+      const entityResponse: any = await getEntityNameByLocation(id, acceptLanguage);
 
       if (entityResponse?.data?.result) {
         setEntity({ EntityName: entityResponse.data.result.name, EntityType: entityResponse.data.result.type });
@@ -273,10 +292,10 @@ const HotelList: NextPage<Props> = props => {
 
     fetchEntityDetail(locationId || cityId);
 
-  }, []);
+  }, [firstHotelName, checkin, checkout]);
 
 
-  const hotels: PricedHotelItem[] = props.searchHotelsData?.Hotels?.map(hotel => {
+  const hotels: PricedHotelItem[] = searchHotelsData?.Hotels?.map(hotel => {
 
     const HotelRateData = ratesData?.find(item => item.HotelId === hotel.HotelId);
     const ratesInfo = HotelRateData ? { Satisfaction: HotelRateData.Satisfaction, TotalRowCount: HotelRateData.TotalRowCount } : (ratesLoading || !ratesData) ? "loading" : undefined;
@@ -409,11 +428,11 @@ const HotelList: NextPage<Props> = props => {
 
   const filteredAvailability = urlSegments.find(item => item.includes('available'));
   const filteredName = urlSegments.find(item => item.includes('name-'))?.split("name-")[1];
-  const filteredRating = urlSegments.find(item => item.includes('rating'))?.split("rating-")[1].split(",") || [];
-  const filteredGuestPoints = urlSegments.find(item => item.includes('guestrate'))?.split("guestrate-")[1].split(",") || [];
-  const filteredHotelType = urlSegments.find(item => item.includes('type'))?.split("type-")[1].split(",") || [];
-  const filteredFacility = urlSegments.find(item => item.includes('amenities'))?.split("amenities-")[1].split(",") || [];
-  const filteredPrice = urlSegments.find(item => item.includes('price'))?.split("price-")[1].split(",") || [];
+  const filteredRating = urlSegments.find(item => item.includes('rating'))?.split("rating-")[1]?.split(",") || [];
+  const filteredGuestPoints = urlSegments.find(item => item.includes('guestrate'))?.split("guestrate-")[1]?.split(",") || [];
+  const filteredHotelType = urlSegments.find(item => item.includes('type'))?.split("type-")[1]?.split(",") || [];
+  const filteredFacility = urlSegments.find(item => item.includes('amenities'))?.split("amenities-")[1]?.split(",") || [];
+  const filteredPrice = urlSegments.find(item => item.includes('price'))?.split("price-")[1]?.split(",") || [];
 
   const filteredHotels = hotels.filter(hotelItem => {
 
@@ -476,9 +495,61 @@ const HotelList: NextPage<Props> = props => {
     fallbackLocation = [firstHotelWithLocation.Latitude!, firstHotelWithLocation.Longitude!];
   }
 
+  
+  let siteName = "";
+
+  if (portalData) {
+    siteName = portalData.Phrases.find(item => item.Keyword === "Name")?.Value || "";
+  }
+
+  const canonicalUrl =  pageData?.Url ? `${process.env.SITE_NAME}${pageData?.Url}` : "";
+
   return (
 
     <>
+      <Head>
+        {!!pageData?.PageTitle && <title>{pageData.PageTitle?.replaceAll("{0}", siteName)}</title>}
+
+        {!!pageData?.MetaTags && pageData.MetaTags.map(item => (
+          <meta name={item.Name} content={item.Content?.replaceAll("{0}", siteName)} key={item.Name} />
+        ))}
+
+        {!!canonicalUrl && <link rel="canonical" href={canonicalUrl } /> }
+
+
+
+        {faq && faq.items.length !== 0 ? (
+          <script
+            id="script_hotel_1"
+            type="application/ld+json"
+            dangerouslySetInnerHTML={{
+              __html: `
+              {"@context":"https://schema.org",
+                "@type":"FAQPage",
+                "mainEntity":[
+                  ${faq.items.map(
+                item => `{
+                    "@type":"Question",
+                    "name":"${item.question && item.question}",
+                    "acceptedAnswer":{
+                        "@type":"Answer",
+                        "text":"${item.answer &&
+                  item.answer
+                    .replace(/<\/?[^>]+(>|$)/g, '')
+                    .replace(/&zwnj;/g, '')
+                  }"
+                    }
+                  }`,
+              )
+                }
+                ]
+              }`,
+            }}
+          />
+        ) : null}
+
+      </Head>
+
       <div className='max-w-container mx-auto px-5 py-4'>
 
         <SearchForm wrapperClassName='pb-4' defaultDates={domesticHotelDefaultDates} defaultDestination={defaultDestination} />
@@ -551,7 +622,7 @@ const HotelList: NextPage<Props> = props => {
             {props.faq && props.faq?.items?.length > 0 && (
               <div className='bg-white p-5 rounded-lg mt-10'>
                 <h5 className='font-semibold text-lg'>{t('faq')}</h5>
-                {props.faq.items.map(faq => (
+                {props.faq.items.filter(faq => (faq.answer && faq.question)).map(faq => (
                   <Accordion
                     key={faq.id}
                     title={(<>
@@ -602,23 +673,30 @@ export const getServerSideProps: GetServerSideProps = async (context: any) => {
 
   const url = `/${locale}/hotels/${query.hotelList![0]}`;
 
+  const acceptLanguage = locale === "fa" ? "fa-IR" : locale === "ar" ? "ar-AE" : "en-US";
+
   const searchHotelsResponse: {
     data?: {
       Hotels: SearchHotelItem[];
       Content?: string;
     };
-  } = await SearchHotels({url:url, cityId: +query.hotelList.find((item:string) => item.includes("location-"))?.split("location-")[1]}, locale);
+  } = await SearchHotels({ url: url, cityId: +query.hotelList.find((item: string) => item.includes("location-"))?.split("location-")[1] }, acceptLanguage);
+
+
+  const pageResponse: any = await getPageByUrl(url, acceptLanguage);
+
 
   let faqResponse: any;
   if (searchHotelsResponse?.data?.Hotels[0]?.CityId) {
-    faqResponse = await GetCityFaqById(searchHotelsResponse?.data?.Hotels[0].CityId);
+    faqResponse = await GetCityFaqById(searchHotelsResponse?.data?.Hotels[0].CityId, acceptLanguage);
   }
 
   return ({
     props: {
       ...await (serverSideTranslations(context.locale, ['common', 'hotel'])),
       searchHotelsData: searchHotelsResponse?.data || null,
-      faq: faqResponse?.data?.result || null
+      faq: faqResponse?.data?.result || null,
+      pageData: pageResponse?.data || null
     },
   })
 }

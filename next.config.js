@@ -1,11 +1,28 @@
 /** @type {import('next').NextConfig} */
 const { i18n } = require('./next-i18next.config');
 
-const withBundleAnalyzer = require('@next/bundle-analyzer')({
-  enabled: process.env.ANALYZE === 'true',
-})
-
 const nextConfig = {
+  async redirects() {
+    return [
+      {
+        source: '/hotel/undefined/hotel/:slug',
+        destination: '/hotel/:slug',
+        permanent: true,
+      },
+      {
+        source: '/en/blog/:slug',
+        destination: '/fa/blog/:slug',
+        locale: false,
+        permanent: true,
+      },
+      {
+        source: '/blog/:slug',
+        destination: '/fa/blog/:slug',
+        locale: false,
+        permanent: true,
+      },
+    ]
+  },
   images: {
     domains: [
       'cdn.safaraneh.com',
@@ -24,10 +41,14 @@ const nextConfig = {
   i18n,
   env: {
     PROJECT: "SAFARANEH",
+    SITE_NAME: 'https://www.safaraneh.com',
     THEME: "THEME1",
     PROJECT_SERVER_TYPE: "https://",
     PROJECT_SERVER_USER: "",
-        
+    
+    GOOGLE_ANALYTIC_ID: 'G-BT6EJ64D29',
+    GOOGLE_TAG_MANAGER_ID: 'GTM-MJQWGBV',
+
     PROJECT_SERVER_APIKEY: 'e8fad1497a1244f29f15cde4a242baf0',
     PROJECT_PORTAL_APIKEY: 'b4fa99cc-3dfd-40a5-8bcf-53acdc2dbd84',
     
@@ -52,4 +73,4 @@ const nextConfig = {
   }
 }
 
-module.exports = withBundleAnalyzer(nextConfig);
+module.exports = nextConfig;

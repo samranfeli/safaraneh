@@ -231,6 +231,7 @@ const EditProfileForm: React.FC<Props> = props => {
                                 <div>
 
                                     <DatePickerSelect
+                                        labelIsSimple
                                         max={maximumBirthDate}
                                         min={minimumBirthDate}
                                         initialValue={user.birthDay ? dateFormat(new Date(user.birthDay)) : ""}

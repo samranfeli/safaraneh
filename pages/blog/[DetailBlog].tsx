@@ -10,6 +10,7 @@ import PostComment from "@/modules/blogs/components/BlogPostDetail/PostCommentAd
 import { useEffect, useState } from "react";
 import { BlogItemType, CategoriesNameType } from "@/modules/blogs/types/blog";
 import BreadCrumpt from "@/modules/shared/components/ui/BreadCrumpt";
+import Head from "next/head";
 
 
 const DetailBlog: NextPage<any> = ({ BlogPost, CategoriesName, recentBlogs }:
@@ -18,18 +19,21 @@ const DetailBlog: NextPage<any> = ({ BlogPost, CategoriesName, recentBlogs }:
     const [Related, setRelatedPost] = useState<any>('');
     useEffect(() => {
         const getRelatedPost = async () => {
-            let getRelatedPost : any = await getBlogs({ page: 1, category: BlogPost?.[0].categories?.[0],per_page:4 })
+            let getRelatedPost : any = await getBlogs({ page: 1, category: BlogPost?.[0]?.categories?.[0],per_page:4 })
             setRelatedPost(getRelatedPost.data)
             
         }
         getRelatedPost()
     }, [])
     //data={BlogPost?.[0].title?.rendered} page="بلاگ" category={[BlogPost?.[0].categories_names[0], BlogPost?.[0].categories[0]]} />
-    const category: string = BlogPost?.[0].categories_names[0] || ""
-    const CategoryId : string = BlogPost?.[0].categories[0].toString() || ""
-    const PostTitle : string = BlogPost?.[0].title?.rendered || ""
+    const category: string = BlogPost?.[0]?.categories_names[0] || ""
+    const CategoryId : string = BlogPost?.[0]?.categories[0].toString() || ""
+    const PostTitle : string = BlogPost?.[0]?.title?.rendered || ""
     return (
         <div className="bg-white">
+            <Head>
+                <title>{PostTitle}</title>
+            </Head>
             <div className="max-w-container m-auto">
                 <div className="pr-5 pl-5 max-sm:p-4">
                     <BreadCrumpt items={[{ label: "بلاگ", link: "/blog" }, { label: category, link: `category/${CategoryId}` }, { label: PostTitle }]} /> 
@@ -41,7 +45,7 @@ const DetailBlog: NextPage<any> = ({ BlogPost, CategoriesName, recentBlogs }:
                     <RelatedPost Posts={Related} Blog={BlogPost} />
                     <DetailBlogAcordion blog={BlogPost?.[0]} />
                     <GetComment />
-                    <PostComment postId={BlogPost?.[0].id} />
+                    <PostComment postId={BlogPost?.[0]?.id} />
                 </div>
             </div>
         </div>
